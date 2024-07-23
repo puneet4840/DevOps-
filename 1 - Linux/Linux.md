@@ -13,7 +13,7 @@ They both made changes in UNICS and in 1975 they launched (UNIX V6) operating sy
       |--> IBM-ATX
 
       |--> Sun Solaris
-UNIX
+      
       |--> Mac OS
 
       |--> HP-UX
