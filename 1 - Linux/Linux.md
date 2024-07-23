@@ -10,10 +10,10 @@ In 1969, Dennis Richie and Ken Thompson made an free operating system called **U
 
 They both made changes in UNICS and in 1975 they launched (UNIX V6) operating system which was more popular at that time. Therefore, UNIX was free and open source then many companies made their own version of UNIX which was paid and costly.
 
-UNIX ----> IBM-ATX
+      |--> IBM-ATX
 
       |--> Sun Solaris
-
+UNIX -
       |--> Mac OS
 
       |--> HP-UX
