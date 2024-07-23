@@ -19,3 +19,7 @@ Some UNIX versions:
       |--> Mac OS
 
       |--> HP-UX
+
+In 1991, a student _Linus Trovald_ saw that companies made the UNIX OS paid. Then _Linus Trovald_ inspired from UNIX OS, write the code from scratch and made an operating system for his project that is called **_Linux_**.
+
+Basically Linux is a kernal not an operating system.
