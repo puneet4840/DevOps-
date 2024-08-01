@@ -49,6 +49,6 @@ When we talk about different types of Linux, we are actually referring **Linux D
 
 A linux command has mainly three parts: **Command Name + Options + Arguments**.
 
-e.g. cat abc.txt  , here cat = command name, abc.txt = argument.
+e.g. **cat** **abc.txt**  , here cat = command name, abc.txt = argument.
 
-e.g. cat -n abc.txt   , here cat = command name, -n = option, abc.txt = argument. 
+e.g. **cat** **-n** **abc.txt**   , here cat = command name, -n = option, abc.txt = argument. 
