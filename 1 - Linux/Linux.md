@@ -36,3 +36,11 @@ e.g.,
 
 3 - If your browser needs more memory to open more tabs, the kernel manages this request by allocating more RAM, ensuring the system doesn't run out of memory.
 
+
+### Types of Linux
+
+When we talk about different types of Linux, we are actually referring **Linux Distributions**. There are multiple Linux Distribution like, Debian, Ubuntu, RHEL. These all operating systems built on top of Linux Kernel, bundled with various application, tools and configuration.
+
+### File System Hierarchy in Linux
+
+![image](https://github.com/user-attachments/assets/879fdd56-0690-4a4b-9e22-e81fb115ee41)
