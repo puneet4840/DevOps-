@@ -51,4 +51,7 @@ A linux command has mainly three parts: **Command Name + Options + Arguments**.
 
 e.g. **cat** **abc.txt**  , here cat = command name, abc.txt = argument.
 
-e.g. **cat** **-n** **abc.txt**   , here cat = command name, -n = option, abc.txt = argument. 
+e.g. **cat** **-n** **abc.txt**   , here cat = command name, -n = option, abc.txt = argument. -n is the short option, we can give --number also.
+
+![image](https://github.com/user-attachments/assets/9584c60f-2242-48b8-b6dc-643ecc13ecad)
+
