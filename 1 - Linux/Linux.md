@@ -26,3 +26,13 @@ Basically Linux is a kernal not an operating system.
 
 ### What is Kernal?
 
+A kernal is a program or application in your operating system that allows applications to use hardware resources(CPU, Memory, RAM).
+
+e.g., 
+
+1 - When you open web browser, we know that web browser need RAM, CPU and storage to run smoothly. So Kernel provides all needed hardware resources to Web Browser.
+
+2 - When you open Web Browser and Music Player simultaneously, the kernel allocates CPU time to both so they can run together without crashing.
+
+3 - If your browser needs more memory to open more tabs, the kernel manages this request by allocating more RAM, ensuring the system doesn't run out of memory.
+
