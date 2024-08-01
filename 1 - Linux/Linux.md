@@ -44,3 +44,11 @@ When we talk about different types of Linux, we are actually referring **Linux D
 ### File System Hierarchy in Linux
 
 ![image](https://github.com/user-attachments/assets/879fdd56-0690-4a4b-9e22-e81fb115ee41)
+
+### Structure of Linux Commands:
+
+A linux command has mainly three parts: **Command Name + Options + Arguments**.
+
+e.g. cat abc.txt  , here cat = command name, abc.txt = argument.
+
+e.g. cat -n abc.txt   , here cat = command name, -n = option, abc.txt = argument. 
