@@ -98,6 +98,9 @@ Commands:
 
 1: **ls -a**: It list all hidden files and folders.
 
+      - ![image](https://github.com/user-attachments/assets/f3c9f63d-8d70-47ff-8b78-b85efe362d19)
+
+
 2: **ls -l**: It list all files and folder inside a directory in a long format. It gives all details of files and folders.
 
 3: **ls -h**: It list all files and folder in human readable size. The size of files and folders is written in human readable language like kb, mb and gb.
