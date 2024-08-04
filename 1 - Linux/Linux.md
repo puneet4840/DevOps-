@@ -84,3 +84,18 @@ e.g., **man cat**
 ![image](https://github.com/user-attachments/assets/4c9a942f-63db-4d03-bb05-5bad257c6ba7)
 
 In the above picture we can see the docs of cat command.
+
+
+### List Files and Folders:
+
+**ls** -> It means _list_. This command list all files and folders in the directory.
+
+Syntax:
+
+![image](https://github.com/user-attachments/assets/3ad8712a-66f1-4ea7-ad9d-da6b067d48f6)
+
+e.g.
+
+**1: ls -a**: It list all hidden files and folders.
+
+**2: ls -l**: It list all files and folder inside a directory in a long format. It gives all details of files and folders.
