@@ -57,18 +57,8 @@ e.g., **cat** **-n** **abc.txt**   , here cat = command name, -n = option, abc.t
 
 **NOTE**: We can write multiple options and arguments in a single command. Options are written using - in any command.
 
-e.g., **cat** **ncal** **2024** **-w** **-M**
+e.g., **cat** **ncal** **2024** **-w** **-M**  OR  **cat** **ncal** **2024** **-wM**
 
-                  OR
-
-**cat** **ncal** **2024** **-wM**
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
 <br>
 <br>
 
