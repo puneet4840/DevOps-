@@ -102,5 +102,8 @@ Commands:
 
 
 2: **ls -l**: It list all files and folder inside a directory in a long format. It gives all details of files and folders.
+![image](https://github.com/user-attachments/assets/a809e669-997c-47fa-917e-d89fbef5a042)
+
 
 3: **ls -h**: It list all files and folder in human readable size. The size of files and folders is written in human readable language like kb, mb and gb.
+![image](https://github.com/user-attachments/assets/67ff49b4-2c49-4fff-a0b9-75d73a4dae5c)
