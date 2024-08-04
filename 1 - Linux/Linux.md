@@ -102,8 +102,24 @@ Commands:
 
 
 2: **ls -l**: It list all files and folder inside a directory in a long format. It gives all details of files and folders.
+
 ![image](https://github.com/user-attachments/assets/a809e669-997c-47fa-917e-d89fbef5a042)
 
 
 3: **ls -h**: It list all files and folder in human readable size. The size of files and folders is written in human readable language like kb, mb and gb.
+
 ![image](https://github.com/user-attachments/assets/67ff49b4-2c49-4fff-a0b9-75d73a4dae5c)
+
+4: **ls -t**: It list all files and folders according to time. Sort the files and folders with newest first.
+
+![image](https://github.com/user-attachments/assets/6cf82036-a6b2-4e35-a70e-45783acf3bf7)
+
+5: **ls -tr**: Sort the files and folders with oldest first. -r Simple reverse the order.
+
+![image](https://github.com/user-attachments/assets/3ac417d1-a0b5-4112-b827-0a52deb3edc1)
+
+6: **ls [folder_name/]**: It list all files and folders inside a folder without visiting it. In the below image we are seeing what is inside wslg folder without visiting it.
+
+![image](https://github.com/user-attachments/assets/3cdc18d9-71a1-429b-ac31-18de0e4cdb3e)
+
+
