@@ -119,4 +119,10 @@ Commands:
 
 **Root Directory (/)**: This forward slash represent root driectory which means there is no directory beyond root.
 
-**Home Directory or User Directory (~)**: This tiddle sign represent home directory of a user.
+**Home Directory or User Directory (~)**: This tiddle sign represent home directory of a user. By default we points to home directory when open terminal.
+
+**Relative Path**: Relative path is the path related to present working directory. It start with current working directory.
+
+**Absolute Path**: Absolute path is the complete path form root directory. It start with (/).
+
+**Note**: There are two way to visit a folder. 1- Using Absolute path means we give complete path of a directory starting from root. 2 - Using current working directory meant we can visit a folder which inside our current working directory.
