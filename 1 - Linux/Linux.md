@@ -122,4 +122,11 @@ Commands:
 
 ![image](https://github.com/user-attachments/assets/3cdc18d9-71a1-429b-ac31-18de0e4cdb3e)
 
+<br>
+<br>
 
+### Directory
+
+**Root Directory (/)**: This forward slash represent root driectory which means there is no directory beyond root.
+
+**Home Directory or User Directory (~)**: This tiddle sign represent home directory of a user.
