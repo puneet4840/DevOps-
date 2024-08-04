@@ -63,6 +63,15 @@ e.g., **cat** **ncal** **2024** **-w** **-M**
 
 **cat** **ncal** **2024** **-wM**
 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
 ### Get documentation of any command using CLI:
 
 **man** -> It means _Mannual Pages_. This command gives you the complete details of any command you use in linux.
@@ -71,11 +80,6 @@ Suppose we do not know what cat command does. So we can se its documentation usi
 
 e.g., **man cat**
 
-<br>
-<br>
-<br>
-<br>
-<br>
 
 ![image](https://github.com/user-attachments/assets/4c9a942f-63db-4d03-bb05-5bad257c6ba7)
 
