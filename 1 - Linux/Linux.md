@@ -154,6 +154,18 @@ Syntax: _**file [file_name]**_
 
 This file command is used to check which type of file it is. for e.g., If we use file command with a txt file. It will show ASCII text. If we use file command with python file then it wil show python script output.
 
+**Delete a File**
+
+Syntax: _**rm [file_name]**_
+
+This command removes the file from a directory.
+
+**Delete a Directory**
+
+Syntax: _**rm -r [dir_name]**_
+
+This command removes a directory.
+
 <br>
 <br>
 
@@ -162,6 +174,8 @@ This file command is used to check which type of file it is. for e.g., If we use
 Nano is a text editor for terminal. It edit and save the file.
 
 Syntax: _**nano [file_name]**_ : This command opens up a file to be edited in the editor.
+
+**Navigation in Nano**
 
 1 - **Ctrl + O**: Save the file or Write the file to disk.
 
@@ -176,3 +190,15 @@ Syntax: _**nano [file_name]**_ : This command opens up a file to be edited in th
 6 - **Ctrl + E**: Go to End of the line.
 
 7 - **Alt + G**: Go to specific line number.
+
+**Basic Editing in Nano**
+
+1 - **Alt + U**: Undo.
+
+2 - **Ctrl + U**: Paste.
+
+3 - **Ctrl + K**: Cut a line or cut a selected line.
+
+**Search/Replace in Nano**
+
+1 - **Ctrl + W**: To search a word or character in a nano editor.
