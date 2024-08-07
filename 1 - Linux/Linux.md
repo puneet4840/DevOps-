@@ -126,3 +126,10 @@ Commands:
 **Absolute Path**: Absolute path is the complete path form root directory. It start with (/).
 
 **Note**: There are two way to visit a folder. 1- Using Absolute path means we give complete path of a directory starting from root. 2 - Using current working directory meant we can visit a folder which inside our current working directory.
+
+<br>
+<br>
+
+### File Management
+
+
