@@ -150,7 +150,7 @@ This command is used to create file or change files timestamp of existing file. 
 
 **Determine File Type**
 
-Syntax: _**file [file_name]**_
+Syntax: **file [file_name]**
 
 This file command is used to check which type of file it is. for e.g., If we use file command with a txt file. It will show ASCII text. If we use file command with python file then it wil show python script output.
 
@@ -161,4 +161,4 @@ This file command is used to check which type of file it is. for e.g., If we use
 
 Nano is a text editor for terminal. It edit and save the file.
 
-Syntax: _**nano [file_name]**_
+Syntax: **nano [file_name]**
