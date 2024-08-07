@@ -134,11 +134,12 @@ Commands:
 
 **Create Directory**
 
-1 - **mkdir [directory_name]**: This command is used to create directory or multiple directories.
+1 - _**mkdir [directory_name]**_: This command is used to create directory or multiple directories.
 
-2 - **mkdir -p [directory_name/directory_name]**: This command create nested directory. It means we can create a directory inside a directory.
+2 - _**mkdir -p [directory_name/directory_name]**_: This command create nested directory. It means we can create a directory inside a directory.
 
+<br>
 
 **Create File**
 
-**touch [file_name]**: This command is used to create file or change files timestamp of existing file. It means if we use touch command on an existing file, it change the time of file to when it was last accessed.
+_**touch [file_name]**_: This command is used to create file or change files timestamp of existing file. It means if we use touch command on an existing file, it change the time of file to when it was last accessed.
