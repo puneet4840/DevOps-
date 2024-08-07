@@ -132,4 +132,13 @@ Commands:
 
 ### File Management
 
+**Create Directory**
 
+1 - **mkdir [directory_name]**: This command is used to create directory or multiple directories.
+
+2 - **mkdir -p [directory_name/directory_name]**: This command create nested directory. It means we can create a directory inside a directory.
+
+
+**Create File**
+
+**touch [file_name]**: This command is used to create file or change files timestamp of existing file. It means if we use touch command on an existing file, it change the time of file to when it was last accessed.
