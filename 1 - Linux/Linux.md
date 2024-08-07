@@ -163,6 +163,16 @@ Nano is a text editor for terminal. It edit and save the file.
 
 Syntax: _**nano [file_name]**_ : This command opens up a file to be edited in the editor.
 
-1 - **Ctrl+O**: Save the file or Write the file to disk.
+1 - **Ctrl + O**: Save the file or Write the file to disk.
 
-2 - **Ctrl+X**: Exit the editor.
+2 - **Ctrl + X**: Exit the editor.
+
+3 - **Ctrl + Up Arrow**: Go to start of the text.
+
+4 - **Ctrl + Down Arrow**: Go to end of the text.
+
+5 - **Ctrl + A**: Go to start of the line.
+
+6 - **Ctrl + E**: Go to End of the line.
+
+7 - **Alt + G**: Go to specific line number.
