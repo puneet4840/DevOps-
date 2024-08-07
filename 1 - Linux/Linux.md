@@ -143,3 +143,9 @@ Commands:
 **Create File**
 
 _**touch [file_name]**_: This command is used to create file or change files timestamp of existing file. It means if we use touch command on an existing file, it change the time of file to when it was last accessed.
+
+<br>
+
+**Determine File Type**
+
+_**file [file_name]**_: This file command is used to check which type of file it is. for e.g., If we use file command with a txt file. It will show ASCII text. If we use file command with python file then it wil show python script output.
