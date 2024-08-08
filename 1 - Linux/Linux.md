@@ -309,3 +309,4 @@ e.g., ls > myfile.txt , It overwrite output of ls command into myfile.txt file.
 
 e.g., ls >> myfile.txt , It append output of ls command into myfile.txt file.
 
+![image](https://github.com/user-attachments/assets/c07686e1-1953-4141-a0bb-2bb54ca2cb9d)
