@@ -263,16 +263,19 @@ e.g., cat a.txt >> b.txt
 
 1 - **Head**: This command display specified number of lines from top of the file. By default it display 10 lines of a file from top.
 
-Syntax: _**head file_name**_: It display 10 line of a file from top.
+Syntax: _**head [file_name]**_: It display 10 line of a file from top.
 
-Syntax: _**head -n file_name**_: It display n number of line from top of a file.
+Syntax: _**head -n [file_name]**_: It display n number of line from top of a file.
+
 
 e.g., head -3 movies.txt , It display 3 lines from top.
 
 2 - **Tail**: This command display specified number of lines from bottom of the file. By default it display 10 lines of a file from bottom.
 
-Syntax: _**tail file_name**_: It display 10 lines of a file from bottom.
+Syntax: _**tail [file_name]**_: It display 10 lines of a file from bottom.
 
-Syntax: _**tail -n file_name**_: It display n number of line from bottom of the file.
+Syntax: _**tail -n [file_name]**_: It display n number of line from bottom of the file.
+
+Syntax: _**tail -f [file_name]**_: It display continues changes in the file. If I add some lines then it will show the output continuously.
 
 e.g., tail -3 movies.txt , It display 3 lines from bottom.
