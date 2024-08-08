@@ -359,6 +359,10 @@ e.g., Sort the list of files and forlders present in a directory.
 
 ls -lh | sort
 
+e.g., Sort the list of files and folders with maximum 5 file.
+
+ls -lh | sort -k5h | tail -5
+
 e.g., Finding a word pizza in foods.txt file.
 
 cat foods.txt | grep 'pizza'
