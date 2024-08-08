@@ -168,17 +168,13 @@ This command removes a directory.
 
 **Copy Files**
 
-1 - If you are in the directory where your files and destination directory resides.
-
-Syntax: _**cp [file_name] [destination_folder/]**_
-
-2 - If your files are in a different directory.
+1 - If your files are in a different directory.
 
 Syntax: _**cp [/path/to/source_directory/file_name] [path/to/destination_directory/]**_
 
 e.g., cp /home/action/boom.mp4 /home/movies/
 
-3 - Copy all files to destination directory.
+2 - Copy all files to destination directory.
 
 Syntax: _**cp [/path/to/source_directory/*] [/path/to/destination_directory/]**_
 
@@ -242,3 +238,20 @@ Syntax: _**nano [file_name]**_ : This command opens up a file to be edited in th
 **Search/Replace in Nano**
 
 1 - **Ctrl + W**: To search a word or character in a nano editor.
+
+<br>
+<br>
+
+### Append and Overwrite Content into a file.
+
+1 - Overwrite Content into a file.
+
+Syntax: _**>**_: This symbol overwrite content into a file means replaces new content with old content.
+
+e.g., cat a.txt > b.txt
+
+2 - Append Content into a file.
+
+Syntax: _**>>**_: This symbol append the content into a file means add new content with old content.
+
+e.g., cat a.txt >> b.txt
