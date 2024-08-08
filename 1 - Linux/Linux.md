@@ -287,3 +287,25 @@ e.g., tail -3 movies.txt , It display 3 lines from bottom.
 3 - **Less**: This command is used to viewing the content of a file. It shows one page at a time in a same window. 
 
 Syntax: _**less [file_name]**_
+
+<br>
+<br>
+
+### Standard Output and Error in Linux
+
+**What is Standard Output?**
+
+The output we get on our terminal screen when we run a command is Standard Output.
+
+1 - **Save Standard Output of a command in a file**
+
+We can save the standard outout of a command in a file using **>** and **>>** symbol. We know that we **>** symbol overwrite into the file and **>>** symbol append the content into the file. So, we can use these symbols after any command to store output.
+
+Syntax: _**[command] > [file_name]**_: It overwrite the output of any command into the file.
+
+Syntax: _**[command] >> [file_name]**_: It append or contanate the output of any command into the file.
+
+e.g., ls > myfile.txt , It overwrite output of ls command into myfile.txt file.
+
+e.g., ls >> myfile.txt , It append output of ls command into myfile.txt file.
+
