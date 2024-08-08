@@ -299,14 +299,30 @@ The output we get on our terminal screen when we run a command is Standard Outpu
 
 1 - **Save Standard Output of a command in a file**
 
-We can save the standard outout of a command in a file using **>** and **>>** symbol. We know that we **>** symbol overwrite into the file and **>>** symbol append the content into the file. So, we can use these symbols after any command to store output.
+We can save the standard outout of a command in a file using **>** or **>>** symbol. We know that we **>** symbol overwrite into the file and **>>** symbol append the content into the file. So, we can use these symbols after any command to store output.
 
 Syntax: _**[command] > [file_name]**_: It overwrite the output of any command into the file.
 
-Syntax: _**[command] >> [file_name]**_: It append or contanate the output of any command into the file.
+Syntax: _**[command] >> [file_name]**_: It append or concatanate the output of any command into the file.
 
 e.g., ls > myfile.txt , It overwrite output of ls command into myfile.txt file.
 
 e.g., ls >> myfile.txt , It append output of ls command into myfile.txt file.
 
 ![image](https://github.com/user-attachments/assets/c07686e1-1953-4141-a0bb-2bb54ca2cb9d)
+
+<br>
+
+2 - **Save Standard Error of a command in a file**
+
+We can store the error of any command. If we are using any command, it gives some error then we can save its error into a file as a log. This is way how we can store the log of any script we use in linux into a file. This is done using **2>** or **2>>** symbol.
+
+Syntax: _**[command] 2> [file_name]**_: It overwrite the Standard Error of any command into a file.
+
+Syntax: _**[command] 2>> [file_name]**_: It append or concatanate the Standard Error of any commnd into the file.
+
+Generally we use 2>> symbol to store error as logs.
+
+e.g., cp /movies/* /home/fold1 2>> copy_file.logs
+
+e.g., tail 2>> mylog.logs
