@@ -246,12 +246,12 @@ Syntax: _**nano [file_name]**_ : This command opens up a file to be edited in th
 
 1 - Overwrite Content into a file.
 
-Syntax: _**'>'**_: This symbol overwrite content into a file means replaces new content with old content.
+Syntax: _**>**_: This symbol overwrite content into a file means replaces new content with old content.
 
 e.g., cat a.txt > b.txt
 
 2 - Append Content into a file.
 
-Syntax: _**'>>'**_: This symbol append the content into a file means add new content with old content.
+Syntax: _**>>**_: This symbol append the content into a file means add new content with old content.
 
 e.g., cat a.txt >> b.txt
