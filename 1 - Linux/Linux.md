@@ -366,3 +366,38 @@ ls -lh | sort -k5h | tail -5
 e.g., Finding a word pizza in foods.txt file.
 
 cat foods.txt | grep 'pizza'
+
+<br>
+<br>
+
+### Grep Command 
+
+Grep command is used to search a text in a file. It is case sensitive.
+
+Syntax: _**[grep] [pattern] [file_name]**_
+
+for examples:
+
+**1** - Search a word life in meditation text file.
+
+grep 'life' meditation
+
+**2** - Search all 'life' word present in meditation text file.
+
+grep -i 'life' meditation
+
+**3** - Search how many count of word 'life' present in meditation text file.
+
+grep -ic 'life' meditation
+
+**4** - Search all line numbers in which 'life' word present in meditation text file.
+
+grep -in 'life' meditation
+
+**5** - Search all word 'tomato' in foods.txt
+
+grep -i 'tomato' meditation
+
+**6** - Search a word 'hello' in all files or folders present in current directory.
+
+grep -r 'hello'
