@@ -204,7 +204,7 @@ Syntax: _**mv -r [/path/to/source_directory/*] [/path/to/destination_directory/]
 
 **Rename File**
 
-Syntax: mv [old_file_name] [new_file_name]
+Syntax: _**mv [old_file_name] [new_file_name]**_
 
 <br>
 <br>
