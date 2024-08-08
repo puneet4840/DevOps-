@@ -345,3 +345,20 @@ Syntax: _**[sort] -n [file_name]**_: It sorts a numerical file in ascending orde
 e.g., sort fruits.txt
 
 e.g., sort -n integer.txt
+
+<br>
+<br>
+
+### Pipe Operator
+
+Pipe operator is used to provide standard  output of one command as the input of another command. It means we combine two commands using pipe operator.
+
+Syntax: _**[command 1 | command2]**_: Here output of command1 is providing to the input of command2 and it is giving combined output.
+
+e.g., Sort the list of files and forlders present in a directory.
+
+ls -lh | sort
+
+e.g., Finding a word pizza in foods.txt file.
+
+cat foods.txt | grep 'pizza'
