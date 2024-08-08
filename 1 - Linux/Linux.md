@@ -202,6 +202,10 @@ e.g., cp /home/movies/* /home/newmovies/
 
 Syntax: _**mv -r [/path/to/source_directory/*] [/path/to/destination_directory/]**_
 
+**Rename File**
+
+Syntax: mv [old_file_name] [new_file_name]
+
 <br>
 <br>
 
