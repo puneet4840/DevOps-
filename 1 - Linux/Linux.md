@@ -326,3 +326,22 @@ Generally we use 2>> symbol to store error as logs.
 e.g., cp /movies/* /home/fold1 2>> copy_file.logs
 
 e.g., tail 2>> mylog.logs
+
+e.g., ls -z >> output.txt 2>> erorr.txt , This command store output into output.txt file and error into error.txt file at same time.
+
+<br>
+<br>
+
+### Sort content of file
+
+We can sort the content written inside a file using **sort** command. This command simply sort the content with first character.
+
+Syntax: _**[sort] [file_name]**_: It sorts a text file in alphabetical order.
+
+Syntax: _**[sort] -r [file_name]**_: It sorts a text file in reverse alphabetical order.
+
+Syntax: _**[sort] -n [file_name]**_: It sorts a numerical file in ascending order.
+
+e.g., sort fruits.txt
+
+e.g., sort -n integer.txt
