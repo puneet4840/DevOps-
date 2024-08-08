@@ -281,3 +281,9 @@ Syntax: _**tail -n [file_name]**_: It display n number of line from bottom of th
 Syntax: _**tail -f [file_name]**_: It display continues changes in the file. If I add some lines then it will show the output continuously.
 
 e.g., tail -3 movies.txt , It display 3 lines from bottom.
+
+<br>
+
+3 - **Less**: This command is used to viewing the content of a file. It shows one page at a time in a same window. 
+
+Syntax: _**less [file_name]**_
