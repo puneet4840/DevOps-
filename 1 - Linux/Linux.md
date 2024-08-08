@@ -166,6 +166,42 @@ Syntax: _**rm -r [dir_name]**_
 
 This command removes a directory.
 
+**Copy Files**
+
+1 - If you are in the directory where your files and destination directory resides.
+
+Syntax: _**cp [file_name] [destination_folder/]**_
+
+2 - If your files are in a different directory.
+
+Syntax: _**cp [/path/to/source_directory/file_name] [path/to/destination_directory/]**_
+
+e.g., cp /home/action/boom.mp4 /home/movies/
+
+3 - Copy all files to destination directory.
+
+Syntax: _**cp [/path/to/source_directory/*] [/path/to/destination_directory/]**_
+
+e.g., cp /home/books/* /home/newbooks/
+
+**Copy Directory and Files**
+
+1 - Copy a directory to another directory.
+
+Syntax: _**cp [/path/to/source_directory/directory_name] [/path/to/destination_directory/]**_
+
+2 - Copy all contents including files and folders into other directory.
+
+Syntax: _**cp -r [/path/to/source_directory/*] [/path/to/destination_directory/]**_
+
+e.g., cp /home/movies/* /home/newmovies/
+
+**Move Files**
+
+1 - Move all files and folder to another directory.
+
+Syntax: _**mv -r [/path/to/source_directory/*] [/path/to/destination_directory/]**_
+
 <br>
 <br>
 
