@@ -270,6 +270,8 @@ Syntax: _**head -n [file_name]**_: It display n number of line from top of a fil
 
 e.g., head -3 movies.txt , It display 3 lines from top.
 
+<br>
+
 2 - **Tail**: This command display specified number of lines from bottom of the file. By default it display 10 lines of a file from bottom.
 
 Syntax: _**tail [file_name]**_: It display 10 lines of a file from bottom.
