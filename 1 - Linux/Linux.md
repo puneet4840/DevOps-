@@ -334,7 +334,7 @@ e.g., ls -z >> output.txt 2>> erorr.txt , This command store output into output.
 
 ### Sort content of file
 
-We can sort the content written inside a file using **sort** command. This command simply sort the content with first character.
+We can sort the content written inside a file using **sort** command. This command simply sort the content with first character of a line.
 
 Syntax: _**[sort] [file_name]**_: It sorts a text file in alphabetical order.
 
