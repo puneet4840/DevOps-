@@ -504,5 +504,6 @@ Syntax: _**chmod [mode] [file_name]**_
 
 mode: We can provide three things to mode. 1 - Whom you want to give or remove the permission. 2 - What do you want to do with permission (Give or Remove). 3 - What permission you want to give.
 
-![image](https://github.com/user-attachments/assets/4b09159b-d178-4bbf-954e-9e287ac25803)
+e.g.,
 
+![image](https://github.com/user-attachments/assets/0d8ceec7-b4db-4d09-b413-5486478b73f5 = 100*100)
