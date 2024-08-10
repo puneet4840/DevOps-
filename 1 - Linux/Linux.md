@@ -545,12 +545,19 @@ chmod o+x sample.txt
 In octal mode we use numbers to give and remove permissions. There are 0 to 7 number are used in octal mode.
 
 0 -> 000
+
 1 -> 001
+
 2 -> 010
+
 3 -> 011
+
 4 -> 100
+
 5 -> 101
+
 6 -> 110
+
 7 -> 111
 
 Here these three digits represent Read, Write, Execute. Like 010 -> Read(0) Write(1) Execute(0). This means only write permission.
