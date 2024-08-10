@@ -597,3 +597,12 @@ su - puneet
 **2**: Switch to root user from nginadmin.
 
 su - , but it will require password. Without password we can use **sudo su -**.
+
+<br>
+<br>
+
+### chown command in linux
+
+chown command is used to change the file or directory owenership.
+
+Syntax: _**chown [username] [file_name]**_
