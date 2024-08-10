@@ -576,3 +576,24 @@ Explanation: Here 200 denotes that 2 means user, 0 means group, 0 means other. 2
 chmod 640 sample.txt.
 
 Explanation: Here 640 denotes that 6 means user, 4 means group, 0 means other. 6 for user denotes (110) means read and write permision only. 4 for group denotes (100) means read permission  only. 0 denotes (000) no permission to other.
+
+<br>
+<br>
+
+### su command in linux
+
+su means substitute user. This command is used to switch to another user's account or run commands as a different user.
+
+Syntax: _**su - [username]**_
+
+To exit from user we can type exit or ctrl+d.
+
+e.g., 
+
+**1**: Switch to user puneet from user nginadmin.
+
+su - puneet
+
+**2**: Switch to root user from nginadmin.
+
+su - , but it will require password. Without password we can use **sudo su -**.
