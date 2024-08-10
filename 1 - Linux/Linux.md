@@ -446,4 +446,20 @@ find /home/ooo -name "meditation"
 
 Wildcard Characters:
 
-**'*'**
+**'*'**: It matches any string of characters, including an emoty string.
+
+**?**: It matches any single character.
+
+**[]**: It matches any one of the character inside square bracket. For example [abc] matches 'a', 'b' or 'c'.
+
+Find a file which have .pdf extension in home/ooo directory.
+
+find /home/ooo -name "*.pdf"
+
+**3** - Find a resume in home/ooo directory.
+
+find /home/ooo -name "*Resume*"
+
+We can use i for case insensitive.
+
+find /home/ooo -iname "*resume*"
