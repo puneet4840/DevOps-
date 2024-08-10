@@ -506,4 +506,6 @@ mode: We can provide three things to mode. 1 - Whom you want to give or remove t
 
 e.g.,
 
-![image](https://github.com/user-attachments/assets/0d8ceec7-b4db-4d09-b413-5486478b73f5 = 100*100)
+![image](https://github.com/user-attachments/assets/0d8ceec7-b4db-4d09-b413-5486478b73f5)
+
+<img src="https://github.com/user-attachments/assets/0d8ceec7-b4db-4d09-b413-5486478b73f5" width="150" height="280">
