@@ -485,7 +485,7 @@ Note: - means no permission.
 
 **Reading the Permission in Linux**
 
-![image](https://github.com/user-attachments/assets/4587ef50-3f51-41d1-8f80-071e1a994fae)
+<img src="https://github.com/user-attachments/assets/4587ef50-3f51-41d1-8f80-071e1a994fae" width="600" height="500">
 
 **Directory and Files**
 
@@ -517,9 +517,9 @@ In symbolic mode we make combination of symbols.
 Symbols are: 
 
 <img src="https://github.com/user-attachments/assets/4b7b1c5e-b943-4991-b314-0d65323860ac" width="410" height="180"> 
-
+<br>
 <img src="https://github.com/user-attachments/assets/0aee0af0-7e8a-4d79-bea8-82708ccbeca6" width="410" height="180"> 
-
+<br>
 <img src="https://github.com/user-attachments/assets/880fcb36-ada7-4c31-b836-4ae6ccb97834" width="410" height="180">
 
 e.g.,
