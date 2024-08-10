@@ -485,7 +485,7 @@ Note: - means no permission.
 
 **Reading the Permission in Linux**
 
-<img src="https://github.com/user-attachments/assets/4587ef50-3f51-41d1-8f80-071e1a994fae" width="600" height="500">
+<img src="https://github.com/user-attachments/assets/4587ef50-3f51-41d1-8f80-071e1a994fae" width="600" height="300">
 
 **Directory and Files**
 
