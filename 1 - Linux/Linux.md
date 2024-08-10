@@ -463,3 +463,33 @@ find /home/ooo -name "*Resume*"
 We can use i for case insensitive.
 
 find /home/ooo -iname "*resume*"
+
+<br>
+<br>
+
+### Permissions in Linux
+
+Permission in linux state that who can access files and directories and how. There are three types of permissions in linux - 1: Read (r), 2: Write (w), 3: Execute (x).
+
+![image](https://github.com/user-attachments/assets/ce8e98fd-96c9-44e1-8da7-64255f34ce0b)
+
+In the above image you can see user, group, other.
+
+User: User is the owner of file. It means who create the file.
+
+Group: When we create a user, a group is created by default with the same name as of user. The user lies in the group. We can add users in the group.
+
+Other: Other is the other user created on our machine. 
+
+Note: - means no permission. 
+
+**Reading the Permission in Linux**
+
+![image](https://github.com/user-attachments/assets/4587ef50-3f51-41d1-8f80-071e1a994fae)
+
+**Directory and Files**
+
+![image](https://github.com/user-attachments/assets/95927fde-a435-489e-84d8-d1c31772c5fa)
+
+In the above image you can see **d** or **-** at the beginning. This **d** indicate that this is directory and **-** indicates that this is file.
+
