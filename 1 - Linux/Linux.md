@@ -493,3 +493,16 @@ Note: - means no permission.
 
 In the above image you can see **d** or **-** at the beginning. This **d** indicate that this is directory and **-** indicates that this is file.
 
+<br>
+<br>
+
+### Chmod command in linux
+
+Chmod command is used to change the permission of files and directories.
+
+Syntax: _**chmod [mode] [file_name]**_
+
+mode: We can provide three things to mode. 1 - Whom you want to give or remove the permission. 2 - What do you want to do with permission (Give or Remove). 3 - What permission you want to give.
+
+![image](https://github.com/user-attachments/assets/4b09159b-d178-4bbf-954e-9e287ac25803)
+
