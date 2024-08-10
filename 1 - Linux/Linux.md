@@ -401,3 +401,49 @@ grep -i 'tomato' meditation
 **6** - Search a word 'hello' in all files or folders present in current directory.
 
 grep -r 'hello'
+
+<br>
+<br>
+
+### Terminal Shortcuts
+
+1 - Move start and end of terminal (During Command).
+
+Syntax: _**Ctrl + A**_ -> Starting.
+
+Syntax: _**Ctrl + B**_ -> Ending.
+
+2 - Skip word by word Forward and Backward (During Command).
+
+Syntax: _**Alt + B**_ -> Backward.
+
+Syntax: _**Alt + F**_ -> Forward.
+
+3 - Search any command you used earlier.
+
+Syntax: _**Ctrl + R**_.
+
+4 - Clear the written command.
+
+Syntax: _**Ctrl + U**_.
+
+<br>
+<br>
+
+### Find command in linux
+
+Find command is used to search Files and Directories in Hierarchy File Structure.
+
+Syntax: _**find [path] [option] [expression]**_
+
+e.g.,
+
+**1** - Find a file name meditation in home/ooo directory.
+
+find /home/ooo -name "meditation"
+
+**2** - We can also give wildcard characters with filename to match the file. 
+
+Wildcard Characters:
+
+**'*'**
