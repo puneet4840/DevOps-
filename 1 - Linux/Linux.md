@@ -537,3 +537,42 @@ chmod u-x sample.txt
 **2**: Give execute permission to other users for sample file.
 
 chmod o+x sample.txt
+
+<br>
+
+**Octal Mode**
+
+In octal mode we use numbers to give and remove permissions. There are 0 to 7 number are used in octal mode.
+
+0 -> 000
+
+1 -> 001
+
+2 -> 010
+
+3 -> 011
+
+4 -> 100
+
+5 -> 101
+
+6 -> 110
+
+7 -> 111
+
+Here these three digits represent Read, Write, Execute. Like 010 -> Read(0) Write(1) Execute(0). This means only write permission.
+
+e.g.,
+
+**1**: Give a write permission to user for sample file.
+
+chmod 200 sample.txt
+
+Explanation: Here 200 denotes that 2 means user, 0 means group, 0 means other. 2 for user denotes (010) means write permission only like read(0) write(1) execute(0).
+<br>
+
+**2**: Give a read, write permission to user and read permission to group for sample file.
+
+chmod 640 sample.txt.
+
+Explanation: Here 640 denotes that 6 means user, 4 means group, 0 means other. 6 for user denotes (110) means read and write permision only. 4 for group denotes (100) means read permission  only. 0 denotes (000) no permission to other.
