@@ -504,8 +504,32 @@ Syntax: _**chmod [mode] [file_name]**_
 
 mode: We can provide three things to mode. 1 - Whom you want to give or remove the permission. 2 - What do you want to do with permission (Give or Remove). 3 - What permission you want to give.
 
+**Types of Mode**:
+
+1 - Symbolic Mode.
+
+2 - Octal Mode.
+
+**Symbolic Mode**
+
+In symbolic mode we make combination of symbols.
+
+Symbols are: 
+
+<img src="https://github.com/user-attachments/assets/4b7b1c5e-b943-4991-b314-0d65323860ac" width="200" height="180">
+
 e.g.,
 
-![image](https://github.com/user-attachments/assets/0d8ceec7-b4db-4d09-b413-5486478b73f5)
-
 <img src="https://github.com/user-attachments/assets/0d8ceec7-b4db-4d09-b413-5486478b73f5" width="500" height="400">
+
+In the above image we can see that we are giving execute permission to user for sameple file.
+
+e.g.,
+
+**1**: Remove execute permission from user for sample file.
+
+chmod u-x sample.txt
+
+**2**: Give execute permission to other users for sample file.
+
+chmod o+x sample.txt
