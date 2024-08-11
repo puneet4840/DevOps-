@@ -254,3 +254,30 @@ echo "After slicing ${myVar:3:6}"
 ```
 Output: After slicing Puneet
 ```
+
+<br>
+
+### Get input from a user
+
+To get any input from user, we use read command. In the second example we used -p which means we can directly use string instructions with read command.
+
+e.g.,
+```
+#!/bin/bash
+
+echo "Enter your name-"
+read name
+echo "Your name is $name"
+```
+OR
+```
+#!/bin/bash
+
+read -p "Enter your name: " name
+echo "Your name is $name."
+```
+
+```
+Output: Enter you name:
+        Your name is Puneet.
+```
