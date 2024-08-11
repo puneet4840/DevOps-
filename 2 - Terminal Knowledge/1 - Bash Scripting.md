@@ -40,7 +40,12 @@ You can see your shell type using the command in shell: _**echo $0**_.
 
 This is Hello World Program that will print Hello World. Create a file with .sh extension and give it execute permission.
 
-<img src="https://github.com/user-attachments/assets/d5c46eee-c6b2-4c16-99fe-8f20728dda6d" width="250" height="150">
+  ```
+  #!/bin/bash
+
+  echo "Hello, World!"
+
+  ```
 
 Lets understand it.
 
@@ -85,6 +90,6 @@ Two types we can write comments in shell script:
   This is comment
   ...
   End of comment
-
   comment
+  
   ```
