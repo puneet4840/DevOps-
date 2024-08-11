@@ -100,7 +100,7 @@ Two types we can write comments in shell script:
 
 <br>
 
-### Variables in Linux
+### Variables in Shell Script
 
 A variable is a container to hold some data.
 
@@ -171,5 +171,70 @@ echo "Today's date is $(date)."
 
 <br>
 
-### Array in Linux
+### String Operation in Shell Script
 
+String operation includes get string length, index, sub-string extraction, etc.
+
+**Count the length of string**
+
+To get the string length we use ${#string_name}.
+
+e.g.,
+```
+#!/bin/bash
+
+myVar="Puneet"
+echo "Length of myVar string is ${#myVar}"
+```
+
+```
+Output: 6
+```
+
+**Make chracter in string Uppercase**
+
+To make all characters in a string in uppercase, we use ${string_name^^}
+
+e.g.,
+```
+#!/bin/bash
+
+myVar="Puneet"
+echo "Upper Case is ${myVar^^}"
+```
+
+```
+Output: PUNEET
+```
+
+**Make character in string Lowercase**
+
+To make all character in a string in lowercase, we use ${string_name,,}
+
+e.g.,
+```
+#!/bin/bash
+
+myVar="PUNEET"
+echo "Lower case is ${myVar,,}"
+```
+
+```
+Output: puneet
+```
+
+**Replace a word in string**
+
+To replace a word with another word in string, we use ${string_name/old_word/new_word}
+
+e.g., Here we are replacing Puneet with Buddy.
+```
+#!/bin/bash
+
+myVar="Hi Puneet"
+echo "Replaced word is ${myVar/Puneet/Buddy}"
+
+```
+Output: Hi Buddy
+```
+```
