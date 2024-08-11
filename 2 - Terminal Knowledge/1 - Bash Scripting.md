@@ -46,3 +46,22 @@ Lets understand it.
 
 - The first line of the shell script begin with "she-bang" (#!) followed by the full path where the shell interpreter is located. This shebang line tells the operating system which interpreter to use to parse the script.
 - Usually # sysmbol is used to treat a command as comment. But using shebang it is not interpreted as comment.
+
+**Run Your Script**
+
+Three methods to run shell scripts:
+
+- ./script_name
+- /path/script_name
+- bash script_name
+
+e.g.,
+
+- ./myscript.sh
+- /home/puneet/Scripts/myscript.sh
+- bash myscript.sh
+
+**Stop Your Script**
+
+- "Ctrl + c" to terminate.
+- "Ctrl + z" to stop.
