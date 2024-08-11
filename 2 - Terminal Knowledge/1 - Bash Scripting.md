@@ -78,11 +78,13 @@ Two types we can write comments in shell script:
 
 - Multi-Line comment using <<.
 
-  e.g., <<comment
-        This is comment
-  
-        ...
-  
-        end of comment
-  
-        comment
+  e.g.,
+
+  ```
+  <<comment
+  This is comment
+  ...
+  End of comment
+
+  comment
+  ```
