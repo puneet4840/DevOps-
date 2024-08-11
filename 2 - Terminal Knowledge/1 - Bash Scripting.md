@@ -97,3 +97,43 @@ Two types we can write comments in shell script:
   comment
   
   ```
+
+<br>
+
+### Variables in Linux
+
+A variable is a container to hold some text data.
+
+- A variable name could be an integer, filename or some shell command itself.
+- A variable could contain any alphabet (a-z,A-Z) or any digit (0-9) or an underscore (_).
+
+**Note**
+
+- A variable name must start with an alphabet or underscore.
+- It can never start with a number.
+
+**Vaild variable names**
+
+```
+ABC
+ab
+_AB_3
+AV232
+```
+
+**Invalid variable names**
+
+- We can not use integer or any special character at the beginnig of variable.
+
+```
+2AN
+2_an
+!ABC
+$ABC
+&abc
+
+```
+
+
+**Defining a Variable-**
+
