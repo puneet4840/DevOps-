@@ -168,3 +168,8 @@ host=$(hostname)
 echo "My hostname is $host."
 echo "Today's date is $(date)."
 ```
+
+<br>
+
+### Array in Linux
+
