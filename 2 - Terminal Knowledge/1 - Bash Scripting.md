@@ -102,7 +102,7 @@ Two types we can write comments in shell script:
 
 ### Variables in Linux
 
-A variable is a container to hold some text data.
+A variable is a container to hold some data.
 
 - A variable name could be an integer, filename or some shell command itself.
 - A variable could contain any alphabet (a-z,A-Z) or any digit (0-9) or an underscore (_).
@@ -134,6 +134,17 @@ $ABC
 
 ```
 
-
 **Defining a Variable-**
 
+Syntax: 
+```
+variable_name = <data>
+```
+
+e.g., 
+```
+name = "Puneet"
+age = 24
+
+echo "My name is $name and age is $28."
+```
