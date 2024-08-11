@@ -281,3 +281,48 @@ echo "Your name is $name."
 Output: Enter you name:
         Your name is Puneet.
 ```
+
+<br>
+
+### Arithmetic Operations
+
+Arithmetic operations are Additon, Subtraction, Multiplication, Addition and Division etc. There are two methods to do arithmetic operations: 1 - Using (( )). 2 - Using let command.
+
+e.g., Addition.
+```
+#!/bin/bash
+
+x=10
+y=2
+
+#Using (( ))
+sum=$((x+y))
+echo "$sum"
+
+#Using let command
+
+let sum=$x+$y
+echo "$sum"
+```
+
+```
+Output: Sum=12
+        Sum=12
+```
+
+e.g., Multiplication
+```
+#!/bin/bash
+
+x=10
+y=2
+
+#Using (( ))
+sum=$((x*y))
+echo "$sum"
+
+#Using Let command
+
+let sum=$x*$y
+echo "$sum"
+```
