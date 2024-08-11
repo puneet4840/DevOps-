@@ -233,8 +233,8 @@ e.g., Here we are replacing Puneet with Buddy.
 
 myVar="Hi Puneet"
 echo "Replaced word is ${myVar/Puneet/Buddy}"
+```
 
 ```
 Output: Hi Buddy
-```
 ```
