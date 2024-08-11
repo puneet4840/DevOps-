@@ -366,3 +366,36 @@ else
     echo "Fail"
 fi
 ```
+
+<br>
+
+### Loop in shell scripting (For loop)
+
+To repeat the task we use loops. We are going to learn for loop.
+
+Syntax:
+```
+for <var> in <value1> <value2> ... <valuen>
+do
+  statement
+done
+```
+
+OR
+
+```
+for <var> in {value1 .. valuen}
+do
+  statement
+done
+```
+
+e.g., Print 1 to 10 integers.
+```
+#!/bin/bash
+
+for i in {1..10}
+do
+  echo "$i"
+done
+```
