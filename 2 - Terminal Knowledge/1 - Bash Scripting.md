@@ -38,7 +38,7 @@ You can see your shell type using the command in shell: _**echo $0**_.
 
 ### Our First Program in shell scripting.
 
-This is Hello World Program that will print Hello World.
+This is Hello World Program that will print Hello World. Create a file with .sh extension and give it execute permission.
 
 <img src="https://github.com/user-attachments/assets/d5c46eee-c6b2-4c16-99fe-8f20728dda6d" width="250" height="150">
 
