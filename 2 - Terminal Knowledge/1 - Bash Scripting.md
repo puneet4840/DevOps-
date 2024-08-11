@@ -79,7 +79,11 @@ Two types we can write comments in shell script:
 
 - Using #.
 
-  e.g., #This is comment.
+  e.g.,
+
+  ```
+  #This is comment.
+  ```
 
 - Multi-Line comment using <<.
 
