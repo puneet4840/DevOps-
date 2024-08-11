@@ -184,11 +184,11 @@ e.g.,
 #!/bin/bash
 
 myVar="Puneet"
-echo "Length of myVar string is ${#myVar}"
+echo "Length of $myVar string is ${#myVar}"
 ```
 
 ```
-Output: 6
+Output: Length of puneet string is 6
 ```
 
 **Make chracter in string Uppercase**
@@ -204,7 +204,7 @@ echo "Upper Case is ${myVar^^}"
 ```
 
 ```
-Output: PUNEET
+Output: Upper Case is PUNEET
 ```
 
 **Make character in string Lowercase**
@@ -220,7 +220,7 @@ echo "Lower case is ${myVar,,}"
 ```
 
 ```
-Output: puneet
+Output: Lower case is puneet
 ```
 
 **Replace a word in string**
@@ -236,5 +236,21 @@ echo "Replaced word is ${myVar/Puneet/Buddy}"
 ```
 
 ```
-Output: Hi Buddy
+Output: Replaced word is Hi Buddy
+```
+
+**Slicing a String**
+
+To pick a small part from a string, we use ${string_name:start_char_index:lenght_of_string}. By default string starts with 0 index.
+
+e.g., Here we are pincking Puneet from string.
+```
+#!/bin/bash
+
+myVar="Hi Puneet"
+echo "After slicing ${myVar:3:6}"
+```
+
+```
+Output: After slicing Puneet
 ```
