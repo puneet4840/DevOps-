@@ -399,3 +399,63 @@ do
   echo "$i"
 done
 ```
+
+<br>
+
+### Functions in shell scripting
+
+Function is a block of code which perform some task and run when it is called. Can be use many times in our program.
+
+There are two ways to write a function code.
+
+Syntax: 
+```
+function <function_name> {
+
+    statements
+
+}
+```
+
+OR
+
+```
+<function_name>() {
+
+    statements
+
+}
+```
+
+To call the function: <function_name>
+
+e.g., Writing a basic function.
+```
+#!/bin/bash
+
+myFun() {
+    echo "Hi"
+}
+
+myFun
+```
+
+e.g., Adding two values with passing in arguments.
+```
+#!/bin/bash
+
+add(){
+
+  num1=$1
+  num2=$2
+  sum=$((num1+num2))
+  echo "Sum is $sum"
+}
+
+add 10 20
+```
+```
+Ouput: Sum is 30
+```
+
+Note: Here $1 and $2 are number of arguments.
