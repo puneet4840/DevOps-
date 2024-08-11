@@ -65,3 +65,17 @@ e.g.,
 
 - "Ctrl + c" to terminate.
 - "Ctrl + z" to stop.
+
+<br>
+
+### Comments in Shell Scripting
+
+Two types we can write comments in shell script:
+
+- Using #.
+
+  e.g., #This is comment.
+
+- Multi-Line comment using <<.
+
+  e.g., <<This is comment.
