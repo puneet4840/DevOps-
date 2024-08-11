@@ -21,4 +21,18 @@ But **Bash** is the most common shell used by the people.
 ### What is Shell Scripting?
 
 Shell Scripting is the practise of writing scripts using the shell's command language to automate tasks.
-A shell script is the text file that contains a series of commands to be executed by shell.
+
+It is kind of a programming language in we write the series of commands.
+
+A shell script is the text file that contains a series of commands to perform a task to be executed by shell.
+
+### What is shell type in my linux?
+
+You can see your shell type using the command in shell: _**echo $0**_.
+
+### Our First Program in shell scripting.
+
+This is Hello World Program that will print Hello World.
+
+_**#!/bin/bash
+echo "Hello World"**_
