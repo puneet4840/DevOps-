@@ -286,7 +286,7 @@ Output: Enter you name:
 
 ### Arithmetic Operations
 
-Arithmetic operations are Additon, Subtraction, Multiplication, Addition and Division etc. There are two methods to do arithmetic operations: 1 - Using (( )). 2 - Using let command.
+Arithmetic operations are Additon(+), Subtraction(-), Multiplication(*), Division(/), etc. There are two methods to do arithmetic operations: 1 - Using (( )). 2 - Using let command.
 
 e.g., Addition.
 ```
@@ -325,4 +325,44 @@ echo "$sum"
 
 let sum=$x*$y
 echo "$sum"
+```
+
+<br>
+
+### Conditional Statements
+
+Conditional statements are If-else, switch case.
+
+**Operators**
+```
+Equal: ==
+Greater Then: -gt
+Less Then: -lt
+Greater Then Equals To: -ge
+Less Then Equals To: -le
+Not Equals to: !=
+```
+
+Syntax: if-else statement
+```
+if [expression]
+then
+    statement1
+else
+    statement2
+fi
+```
+
+e.g., Checking if marks greater then 33 Pass otherwise Fail.
+```
+#!/bin/bash
+
+read -p "Enter Your Marks:" marks
+
+if [$marks -gt 33]
+then
+    echo "Pass"
+else
+    echo "Fail"
+fi
 ```
