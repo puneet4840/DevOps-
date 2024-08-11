@@ -44,4 +44,5 @@ This is Hello World Program that will print Hello World.
 
 Lets understand it.
 
-- Here #!/bin/bash, this is sha-bang
+- The first line of the shell script begin with "she-bang" (#!) followed by the full path where the shell interpreter is located. This shebang line tells the operating system which interpreter to use to parse the script.
+- Usually # sysmbol is used to treat a command as comment. But using shebang it is not interpreted as comment.
