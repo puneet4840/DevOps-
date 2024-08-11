@@ -138,13 +138,13 @@ $ABC
 
 Syntax: 
 ```
-variable_name = <data>
+variable_name=<data>
 ```
 
 e.g., 
 ```
-name = "Puneet"
-age = 24
+name="Puneet"
+age=24
 
 echo "My name is $name and age is $age."
 ```
@@ -155,15 +155,15 @@ We can access variables using **$** just before variable name.
 
 e.g., Accessing user defined variables.
 ```
-name = "Puneet"
-age = 24
+name="Puneet"
+age=24
 
 echo "My name is $name and age is $age."
 ```
 
 e.g., Accessing Shell Commands as variable
 ```
-host = $(hostname)
+host=$(hostname)
 
 echo "My hostname is $host."
 echo "Today's date is $(date)."
