@@ -8,6 +8,7 @@ Syntax:
 ```
 nano <file_name>
 ```
+<br>
 
 ### Comands to work with nano editor.
 
@@ -21,9 +22,10 @@ nano <file_name>
   ```
   Ctrl + X then press enter
   ```
-
+  <br>
+  
 - **Navigation in Nano**
 
-  <img src="https://github.com/user-attachments/assets/5bcf7b65-6cbe-4fe6-bd4a-b6fd10600c80" Wight="600" Height="300">
+  <img src="https://github.com/user-attachments/assets/5bcf7b65-6cbe-4fe6-bd4a-b6fd10600c80" Wight="500" Height="200">
 
   
