@@ -28,4 +28,42 @@ nano <file_name>
 
   <img src="https://github.com/user-attachments/assets/5bcf7b65-6cbe-4fe6-bd4a-b6fd10600c80" Wight="500" Height="200">
 
-  
+  <br>
+
+-**Search, Replace, Cut, Paste, Justify in Nano**
+
+Search a word in editor.
+```
+Ctrl + W
+```
+
+Replace a word with another word
+```
+Ctrl + \
+```
+
+Cut the current line and store it in a cut buffer.
+```
+Ctrl + K
+```
+
+Paste the content of cutbuffer at current cursor position.
+```
+Ctrl + U
+```
+
+Justify the current paragraph
+```
+Ctrl + J
+```
+
+Display the postion of Cursor.
+```
+Ctrl + C
+```
+
+Count the Word, Line and Chracter.
+```
+Alt + D
+```
+
