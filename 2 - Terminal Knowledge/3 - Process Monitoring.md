@@ -47,4 +47,4 @@ ps -Af
 ```
 Output
 
-<img src="https://github.com/user-attachments/assets/376e5acf-3321-4c30-bc55-df8b9b3d3aba" width="600" height="200" >
+<img src="https://github.com/user-attachments/assets/376e5acf-3321-4c30-bc55-df8b9b3d3aba" width="600" height="95" >
