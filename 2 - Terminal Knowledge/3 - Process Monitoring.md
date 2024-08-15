@@ -78,6 +78,7 @@ x: Display process that are not attached to your terminal. This includes backgro
 <br>
 
 - **Filter the process**
+- 
 We can use pipe symbol with ps to use ps output with other command input.
 
 It display all commands starting from page by page.
