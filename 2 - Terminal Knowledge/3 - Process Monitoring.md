@@ -1,5 +1,7 @@
 # Process Monitoring
 
+## ps command
+
 ### ps command
 
 ps (Process Status) command is used to display imformation about current running processes in the system. When we use only ps without any options, it will display the running processes in your current terminal.
