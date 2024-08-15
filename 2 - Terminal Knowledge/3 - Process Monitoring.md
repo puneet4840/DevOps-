@@ -25,7 +25,7 @@ ps
 ```
 Output
 
-<img src="https://github.com/user-attachments/assets/4366ab9f-a76f-4881-8bb4-f78ec7d20656" weight="400" height="200" >
+<img src="https://github.com/user-attachments/assets/4366ab9f-a76f-4881-8bb4-f78ec7d20656" width="400" height="200" >
 
 ```
 - PID: Process Id
@@ -34,9 +34,9 @@ Output
 - CMD: The command that was used to start the process.
 ```
 
--**Display all processes running in your system**
+- **Display all processes running in your system**
 ```
 ps -A
 ```
 
--**Display all processes **
+- **Display all processes **
