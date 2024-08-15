@@ -103,12 +103,6 @@ ps aux | grep nginx
 
 - **To see the process by username**
 ```
-
-<br>
-<br>
-<br>
-
-## top
 ps -u puneet
 ```
 
@@ -116,3 +110,9 @@ ps -u puneet
 ```
 ps axjf
 ```
+
+<br>
+<br>
+<br>
+
+## top
