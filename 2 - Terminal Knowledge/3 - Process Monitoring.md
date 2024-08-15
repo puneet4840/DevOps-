@@ -34,10 +34,14 @@ Output
 - CMD: The command that was used to start the process.
 ```
 
+<br>
+
 - **Display all processes running in your system**
 ```
 ps -A
 ```
+
+<br>
 
 - **Display all processes in full format**
   It display all process in long format.
@@ -48,3 +52,41 @@ ps -Af
 Output
 
 <img src="https://github.com/user-attachments/assets/376e5acf-3321-4c30-bc55-df8b9b3d3aba" width="700" height="150" >
+
+```
+- UID: User Id. It identifies which user is running the process.
+- PID: Process Id. A unique identifier for the process.
+- PPID: Parent Process Id. This shows which process started the current process.
+- C: CPU Usage. This shows the percentage of cpu time used by the process.
+- STIME: Start time of process. Indicates when the process was started.
+- TTY: Terminal Type. Indicates the terminal from which the process was started.
+- CMD: The command that was used to start the process.
+```
+
+<br>
+
+- **Display process for all user in user-oriented format including which are not associated with your terminal**
+```
+ps aux
+```
+```
+a: Display process for all users.
+u: Display process in user-oriented format.
+x: Display process that are not attached to your terminal. This includes background processes.
+```
+
+<br>
+
+- **Filter the process**
+We can use pipe symbol with ps to use ps output with other command input.
+
+It display all commands starting from page by page.
+```
+ps aux | more
+```
+<br>
+
+It display all commands run by user puneet.
+```
+ps aux | grep puneet
+```
