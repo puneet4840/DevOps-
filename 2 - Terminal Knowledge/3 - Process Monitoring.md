@@ -127,8 +127,6 @@ Output
 
 <img src="https://github.com/user-attachments/assets/3016f17c-72d5-49c0-bf99-1bab52b8faa5" width="700" height="230" >
 
-
-
 - **Interacting with top command**
 
 You can interact with the top command using various keyboard shortcuts:
