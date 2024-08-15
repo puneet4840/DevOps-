@@ -78,16 +78,33 @@ x: Display process that are not attached to your terminal. This includes backgro
 <br>
 
 - **Filter the process**
-- 
+
 We can use pipe symbol with ps to use ps output with other command input.
 
-It display all commands starting from page by page.
+It display all process starting from page by page.
 ```
 ps aux | more
 ```
 <br>
 
-It display all commands run by user puneet.
+It display all process run by user puneet.
 ```
 ps aux | grep puneet
+```
+
+It display process belong to nginx server.
+```
+ps aux | grep nginx
+```
+
+<br>
+
+- **To see the process by username**
+```
+ps -u puneet
+```
+
+- **List a process with tree structure**
+```
+ps axjf
 ```
