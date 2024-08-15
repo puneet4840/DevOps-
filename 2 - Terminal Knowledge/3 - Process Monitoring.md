@@ -1,6 +1,6 @@
 # Process Monitoring
 
-## ps command
+## 1 - ps. 2 - top. 3 - htop. 4 - atop
 
 ### ps command
 
@@ -103,6 +103,12 @@ ps aux | grep nginx
 
 - **To see the process by username**
 ```
+
+<br>
+<br>
+<br>
+
+## top
 ps -u puneet
 ```
 
