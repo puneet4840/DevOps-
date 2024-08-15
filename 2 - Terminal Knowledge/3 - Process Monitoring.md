@@ -25,7 +25,7 @@ ps
 ```
 Output
 
-<img src="https://github.com/user-attachments/assets/4366ab9f-a76f-4881-8bb4-f78ec7d20656" width="400" height="200" >
+<img src="https://github.com/user-attachments/assets/4366ab9f-a76f-4881-8bb4-f78ec7d20656" width="400" height="95" >
 
 ```
 - PID: Process Id
