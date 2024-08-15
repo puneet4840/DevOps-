@@ -116,3 +116,13 @@ ps axjf
 <br>
 
 ## top
+
+top command display the real-time view of process running in your system
+
+Syntax
+```
+top
+```
+Output
+
+<img src="https://github.com/user-attachments/assets/3016f17c-72d5-49c0-bf99-1bab52b8faa5" width="600" height="150" >
