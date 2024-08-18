@@ -41,4 +41,4 @@ traceroute to google.com (172.217.1.174), 30 hops max, 60 byte packets
 - 1,2,3, etc is the hop count(number of routers in the path).
 - IP Address (e.g., 10.0.0.1): The IP address of the router at each hop.
 - Time (e.g., 1.123 ms): The round-trip time it took for the packet to reach that router and return to your computer.
-- * * *: Indicates a timeout or a packet was dropped, meaning that hop didn’t respond within the expected time.
+- "***": Indicates a timeout or a packet was dropped, meaning that hop didn’t respond within the expected time.
