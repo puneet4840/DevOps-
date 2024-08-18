@@ -85,8 +85,15 @@ rtt min/avg/max/mdev = 17.236/17.535/17.835/0.245 ms
 
 **Common options**
 
-- ping -c 4 google.com: Specify the number of packets to send, it is 4.
-- ping -i 2 google.com: Set the interval time sending each packet(in seconds).
+- Specify the number of packets to send, it is 4.
+```
+ping -c 4 google.com
+```
+
+- Set the interval time sending each packet(in seconds).
+```
+ping -i 2 google.com:
+```
 
 <br>
 <br>
@@ -183,3 +190,92 @@ e.g., **To check connection from a particular IP.**
 ```
 netstat -an | grep <IP>
 ```
+
+<br>
+<br>
+
+## ufw
+
+ufw stands for Uncomplicated Firewall.
+
+ufw is a command-line utility which is used to manage the firewall on linux. 
+
+Syntax:
+```
+ufw [option] <command>
+```
+
+**What is Firewall?**
+
+Firewall is a network security system which controls the incoming and outgoing network traffic based on pre-defined security rules. It helps protect your system from unauthorized access of server.
+
+**Basic ufw commands**
+
+- **1 - Enable ufw**
+
+  Before using ufw, you need to enable it.
+  ```
+  sudo ufw enable
+  ```
+  This command turns on the firewall with default rules (typically, deny all incoming and allow all outgoing traffic).
+
+- **2 - Diables ufw**
+
+  If you need to turn off firewall, you need to disable it.
+  ```
+  sudo ufw disable
+  ```
+  This stops the firewall from filtering any traffic.
+  
+- **3 - Check ufw status**
+  
+  To see the current status of ufw and the rules that are set:
+  ```
+  sudo ufw status
+  ```
+
+- **4 - Allow Traffic**
+  ```
+  sudo ufw allow <port_number>
+  ```
+  e.g., Allow traffic on port 22.
+  ```
+  sudo ufw allow 22
+  ```
+
+  e.g., Allow traffic for specific protocol.
+  ```
+  sudo ufw allow 80/tcp
+  ```
+  OR
+
+  e.g. Allow traffic for specific protocol.
+  ```
+  sudo ufw allow http
+  ```
+
+- **5 - Deny Traffic**
+  ```
+  sudo ufw deny <port_number>
+  ```
+
+  e.g., To deny traffic on 22 port.
+  ```
+  sudo ufw deny 22
+  ```
+
+- **6 - Delete a rule**
+  ```
+  sudo ufw delete allow 22
+  ```
+  This removes the rule that allows traffic on port 22.
+
+- **7 - Allow traffic on specific IP**
+  ```
+  sudo ufw allow from 192.168.1.100
+  ```
+
+- **8 - Deny traffic on specific IP**
+  ```
+  sudo ufw deny from 192.168.1.100
+  ```
