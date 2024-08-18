@@ -128,10 +128,55 @@ HOST: my-machine                 Loss%   Snt   Last   Avg  Best  Wrst StDev
 - Best: The shortest round-trip time recorded.
 - Wrst: The longest round-trip time recorded.
 - StDev: The standard deviation of the round-trip times, indicating how much they vary.
-```
-
 
 <br>
 <br>
 
 ## netstat
+
+netstat stands for Network Statistics
+
+netstat is a command-line utility which provides detail information about network connection for TCP and UDP, routing-tables, interface satistics, etc. 
+
+Syntax:
+```
+netstat <option>
+```
+
+**Commonly used options**
+
+- **netstat -a**: Shows all active connections and listening ports.
+- **netstat -t**: Shows all TCP connections.
+- **netstat -u**: Shows all udp connections.
+- **netstat -l**: Shows only listening ports (ports that are open and waiting for connections).
+- **netstat -n**: Displays address and port numbers in numerical form.
+
+e.g.,
+Check how many connections on port 22.
+
+```
+netstat -putan | grep :22
+```
+
+e.g.,
+When you run netstat.
+
+```
+netstat
+```
+
+Output
+```
+Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name
+tcp        0      0 192.168.1.10:22         192.168.1.1:56392       ESTABLISHED 1257/sshd
+tcp        0      0 192.168.1.10:80         192.168.1.2:48236       TIME_WAIT   -
+```
+
+- Proto: The protocol used (e.g., TCP, UDP).
+- Recv-Q: The receive queue, showing the number of bytes waiting to be received.
+- Send-Q: The send queue, showing the number of bytes waiting to be sent.
+- Local Address: The IP address and port number of the local side of the connection.
+- Foreign Address: The IP address and port number of the remote side of the connection.
+- State: The state of the connection (e.g., ESTABLISHED, TIME_WAIT, LISTENING).
+- PID/Program name: The process ID and name of the program using the connection.
+
