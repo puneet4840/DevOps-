@@ -92,3 +92,45 @@ rtt min/avg/max/mdev = 17.236/17.535/17.835/0.245 ms
 <br>
 
 ## mtr
+
+mtr stands for My Traceroute.
+
+mtr command combines the functionality of **traceroute** and **ping** at one place. It provides real-time information about networking connectivity between your device and another device on the internet.
+
+Syntax:
+```
+mtr <ip addres OR domain name>
+```
+
+e.g.,
+
+To run mtr against google, you would use:
+```
+mtr www.google.com
+```
+
+Output:
+```
+Start: Wed Aug 11 08:21:32 2024
+HOST: my-machine                 Loss%   Snt   Last   Avg  Best  Wrst StDev
+  1. router.local                 0.0%    10    1.2   1.4   1.1   1.7   0.2
+  2. 10.0.0.1                     0.0%    10    3.4   3.3   3.1   3.6   0.1
+  3. 192.168.1.1                  0.0%    10    9.2   8.9   8.7   9.5   0.2
+  4. 72.14.234.20                 0.0%    10   14.3  14.1  13.9  14.7   0.3
+  5. google.com                   0.0%    10   22.5  22.4  22.0  23.0   0.3
+```
+
+- HOST: The hostname or IP address of each hop.
+- Loss%: The percentage of packets lost at each hop.
+- Snt: The number of packets sent to each hop.
+- Last: The round-trip time (in milliseconds) of the last packet sent.
+- Avg: The average round-trip time for packets sent to that hop.
+- Best: The shortest round-trip time recorded.
+- Wrst: The longest round-trip time recorded.
+- StDev: The standard deviation of the round-trip times, indicating how much they vary.
+```
+
+
+<br>
+<br>
+
