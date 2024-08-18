@@ -180,3 +180,9 @@ tcp        0      0 192.168.1.10:80         192.168.1.2:48236       TIME_WAIT   
 - State: The state of the connection (e.g., ESTABLISHED, TIME_WAIT, LISTENING).
 - PID/Program name: The process ID and name of the program using the connection.
 
+e.g., 
+To check connection from a particular IP.
+
+```
+netstat -an | grep <IP>
+```
