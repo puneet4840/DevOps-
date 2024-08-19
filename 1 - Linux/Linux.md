@@ -43,7 +43,7 @@ When we talk about different types of Linux, we are actually referring **Linux D
 
 ### File System Hierarchy in Linux
 
-<img src="https://github.com/user-attachments/assets/879fdd56-0690-4a4b-9e22-e81fb115ee41" width="500" height="130">
+<img src="https://github.com/user-attachments/assets/879fdd56-0690-4a4b-9e22-e81fb115ee41" width="600" height="330">
 
 ### Structure of Linux Commands:
 
@@ -59,7 +59,7 @@ e.g.,
 cat -n abc.txt   , here cat = command name, -n = option, abc.txt = argument. -n is the short option, we can give --number also.
 ```
 
-<img src="https://github.com/user-attachments/assets/9584c60f-2242-48b8-b6dc-643ecc13ecad" width="500" height="120">
+<img src="https://github.com/user-attachments/assets/9584c60f-2242-48b8-b6dc-643ecc13ecad" width="600" height="220">
 
 **NOTE**: We can write multiple options and arguments in a single command. Options are written using - in any command.
 
