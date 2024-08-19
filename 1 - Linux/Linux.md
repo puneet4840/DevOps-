@@ -43,7 +43,7 @@ When we talk about different types of Linux, we are actually referring **Linux D
 
 ### File System Hierarchy in Linux
 
-<img src="https://github.com/user-attachments/assets/879fdd56-0690-4a4b-9e22-e81fb115ee41" width="600" height="330">
+<img src="https://github.com/user-attachments/assets/879fdd56-0690-4a4b-9e22-e81fb115ee41" width="500" height="530">
 
 ### Structure of Linux Commands:
 
@@ -59,7 +59,7 @@ e.g.,
 cat -n abc.txt   , here cat = command name, -n = option, abc.txt = argument. -n is the short option, we can give --number also.
 ```
 
-<img src="https://github.com/user-attachments/assets/9584c60f-2242-48b8-b6dc-643ecc13ecad" width="600" height="220">
+<img src="https://github.com/user-attachments/assets/9584c60f-2242-48b8-b6dc-643ecc13ecad" width="500" height="200">
 
 **NOTE**: We can write multiple options and arguments in a single command. Options are written using - in any command.
 
@@ -86,7 +86,7 @@ e.g.,
 man cat
 ```
 
-<img src="https://github.com/user-attachments/assets/4c9a942f-63db-4d03-bb05-5bad257c6ba7" width="500" height="120">
+<img src="https://github.com/user-attachments/assets/4c9a942f-63db-4d03-bb05-5bad257c6ba7" width="600" height="320">
 
 In the above picture we can see the docs of cat command.
 
@@ -149,15 +149,24 @@ Commands:
 
 **Create Directory**
 
-1 - _**mkdir [directory_name]**_: This command is used to create directory or multiple directories.
+1 - This command is used to create directory or multiple directories.
+```
+mkdir [directory_name]
+```
 
-2 - _**mkdir -p [directory_name/directory_name]**_: This command create nested directory. It means we can create a directory inside a directory.
+2 -This command create nested directory. It means we can create a directory inside a directory.
+```
+mkdir -p [directory_name/directory_name]
+```
 
 <br>
 
 **Create File**
 
-Syntax: _**touch [file_name]**_ 
+Syntax:
+```
+touch [file_name]
+```
 
 This command is used to create file or change files timestamp of existing file. It means if we use touch command on an existing file, it change the time of file to when it was last accessed.
 
@@ -165,19 +174,28 @@ This command is used to create file or change files timestamp of existing file. 
 
 **Determine File Type**
 
-Syntax: _**file [file_name]**_
+Syntax: 
+```
+file [file_name]
+```
 
 This file command is used to check which type of file it is. for e.g., If we use file command with a txt file. It will show ASCII text. If we use file command with python file then it wil show python script output.
 
 **Delete a File**
 
-Syntax: _**rm [file_name]**_
+Syntax: 
+```
+rm [file_name]
+```
 
 This command removes the file from a directory.
 
 **Delete a Directory**
 
-Syntax: _**rm -r [dir_name]**_
+Syntax: 
+```
+rm -r [dir_name]
+```
 
 This command removes a directory.
 
