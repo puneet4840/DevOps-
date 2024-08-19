@@ -43,7 +43,7 @@ When we talk about different types of Linux, we are actually referring **Linux D
 
 ### File System Hierarchy in Linux
 
-![image](https://github.com/user-attachments/assets/879fdd56-0690-4a4b-9e22-e81fb115ee41)
+<img src="https://github.com/user-attachments/assets/879fdd56-0690-4a4b-9e22-e81fb115ee41" width="500" height="130">
 
 ### Structure of Linux Commands:
 
@@ -59,14 +59,16 @@ e.g.,
 cat -n abc.txt   , here cat = command name, -n = option, abc.txt = argument. -n is the short option, we can give --number also.
 ```
 
-![image](https://github.com/user-attachments/assets/9584c60f-2242-48b8-b6dc-643ecc13ecad)
+<img src="https://github.com/user-attachments/assets/9584c60f-2242-48b8-b6dc-643ecc13ecad" width="500" height="120">
 
 **NOTE**: We can write multiple options and arguments in a single command. Options are written using - in any command.
 
 e.g., 
 ```
 cat ncal 2024 -w -M
-  OR
+
+OR
+
 cat ncal 2024 -wM
 ```
 
@@ -79,10 +81,12 @@ cat ncal 2024 -wM
 
 Suppose we do not know what cat command does. So we can se its documentation using man command.
 
-e.g., **man cat**
+e.g., 
+```
+man cat
+```
 
-
-![image](https://github.com/user-attachments/assets/4c9a942f-63db-4d03-bb05-5bad257c6ba7)
+<img src="https://github.com/user-attachments/assets/4c9a942f-63db-4d03-bb05-5bad257c6ba7" width="500" height="120">
 
 In the above picture we can see the docs of cat command.
 
