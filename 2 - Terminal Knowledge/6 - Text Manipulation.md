@@ -25,20 +25,51 @@ grep 'life' meditation.txt
 grep -i 'life' meditation.txt
 ```
 
-- **Search all line numbers in which 'life' word present in meditation text file.**
+- **Search all line numbers in which _life_ word present in meditation text file.**
 ```
 grep -in 'life' meditation.txt
 ```
 
-- **Search a word 'life' in multiple files**
+- **Search a word _life_ in multiple files**
 ```
 grep -i 'life' meditation.txt group.txt
 ```
 
-- **Search a word 'life' in directories and sub-directories**
+- **Search a word _life_ in directories and sub-directories**
 
 It will search a word 'life' present in all files present in /home/puneet directory.
 ```
 grep -r 'life' /home/puneet
+```
+
+<br>
+<br>
+
+## sort command
+
+sort command is used to sort the content inside text file.
+
+Syntax: 
+```
+sort [option] <file_name>
+```
+
+e.g.,
+
+- **Sort the content inside file alphabetically**
+
+The default behavior of sort is to sort lines alphabetically.
+```
+sort fruits.txt
+```
+
+- **Sort the content inside file in reverse order**
+```
+sort -r fruits.txt
+```
+
+- **Sort the numerical content inside file numerically**
+```
+sort -n number.txt
 ```
 
