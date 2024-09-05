@@ -19,10 +19,10 @@ When a user access a website, that request goes to the web server. Web server re
 ### Installation of Nginx on Linux
 
 ```
-Step-1: Sudo apt install nginx
-Step-2: Sudo systemctl status nginx
+Step-1: sudo apt install nginx
+Step-2: sudo systemctl status nginx
 ```
 
 When installation is completed, there is directory location where nginx configuration is present. Location is **/etc/nginx**
 
-<img src="https://github.com/user-attachments/assets/56a5abfb-6631-43ba-bc0a-f82ce9c83f5a" width="250" height="100" >
+<img src="https://github.com/user-attachments/assets/56a5abfb-6631-43ba-bc0a-f82ce9c83f5a" width="500" height="250" >
