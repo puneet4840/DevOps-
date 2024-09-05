@@ -56,7 +56,8 @@ Now the worker process that receives the job(request) is responsible for handlin
 
 Once the worker process completes the job, it prepares the response to be sent back to the client. The worker then sends the rsponse to the master process.
 
-When the master process receives the response from the worker, it forward the response back to the client who made the request.```
+When the master process receives the response from the worker, it forward the response back to the client who made the request.
+```
 
 <br>
 
@@ -67,3 +68,5 @@ When nginx starts, the master process reads the configuration file **(nginx.conf
 These master and worker architecture is assigned in **nginx.conf** file.
 
 <br>
+
+### Understand _nginx.conf_ file.
