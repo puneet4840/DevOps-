@@ -4,6 +4,8 @@
 
 Nginx is a open-source web server which is used to serve http and https requests. 
 
+It is used as a Web Server, Reverse Proxy, Load balancer, Host Multiple Websites, etc.
+
 When a user access a website, that request goes to the web server. Web server retrieves requested content and sends response back to the user.
 
 <br>
@@ -14,3 +16,13 @@ When a user access a website, that request goes to the web server. Web server re
 
 <br>
 
+### Installation of Nginx on Linux
+
+```
+Step-1: Sudo apt install nginx
+Step-2: Sudo systemctl status nginx
+```
+
+When installation is completed, there is directory location where nginx configuration is present. Location is **/etc/nginx**
+
+<img src="https://github.com/user-attachments/assets/56a5abfb-6631-43ba-bc0a-f82ce9c83f5a" width="250" height="100" >
