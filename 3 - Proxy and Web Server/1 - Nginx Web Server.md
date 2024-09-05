@@ -45,10 +45,8 @@ Master process handles the incoming requests and assign requests to worker proce
 
 Let's understand how does Master-Worker and Cache work together.
 
-```
-When a client sends a request or hit the URL (request to view a web page), the master process receives the request and allocates or assign the task to one of the worker process. This means the master process will select one of the worker processes to handle the request.
-```
-```
+```When a client sends a request or hit the URL (request to view a web page), the master process receives the request and allocates or assign the task to one of the worker process. This means the master process will select one of the worker processes to handle the request.
+
 Once the master process assigns a task to worker, then master process does not wait for the worker to complete the task. The master process is designed to immediately move on to handle the next incoming request from another clent.
 
 Now the worker process that receives the job(request) is responsible for handling the request. Such as:
@@ -58,6 +56,4 @@ Now the worker process that receives the job(request) is responsible for handlin
 
 Once the worker process completes the job, it prepares the response to be sent back to the client. The worker then sends the rsponse to the master process.
 
-When the master process receives the response from the worker, it forward the response back to the client who made the request.
-```
-
+When the master process receives the response from the worker, it forward the response back to the client who made the request.```
