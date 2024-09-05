@@ -25,4 +25,4 @@ Step-2: sudo systemctl status nginx
 
 When installation is completed, there is directory location where nginx configuration is present. Location is **/etc/nginx**
 
-<img src="https://github.com/user-attachments/assets/56a5abfb-6631-43ba-bc0a-f82ce9c83f5a" width="500" height="250" >
+<img src="https://github.com/user-attachments/assets/56a5abfb-6631-43ba-bc0a-f82ce9c83f5a" width="700" height="180" >
