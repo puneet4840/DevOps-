@@ -144,3 +144,46 @@ http {
 
 ```
 
+<br>
+
+**Architecture of above config file**
+
+```
+nginx.conf
+├── user nginx;
+├── worker_processes auto;
+├── error_log /var/log/nginx/error.log;
+├── pid /run/nginx.pid;
+├── events {
+│   └── worker_connections 1024;
+├── http {
+│   ├── include /etc/nginx/mime.types;
+│   ├── default_type application/octet-stream;
+│   ├── log_format main '$remote_addr - $remote_user [$time_local] "$request" ...';
+│   ├── access_log /var/log/nginx/access.log main;
+│   ├── sendfile on;
+│   ├── tcp_nopush on;
+│   ├── tcp_nodelay on;
+│   ├── keepalive_timeout 65;
+│   ├── types_hash_max_size 2048;
+│   ├── server_names_hash_bucket_size 64;
+│   ├── include /etc/nginx/conf.d/*.conf;
+│   └── server {
+│       ├── listen 80;
+│       ├── server_name example.com www.example.com;
+│       ├── root /var/www/html;
+│       ├── index index.html index.htm;
+│       ├── location / {
+│       │   └── try_files $uri $uri/ =404;
+│       ├── location /images/ {
+│       │   └── alias /var/www/images/;
+│       ├── error_page 404 /404.html;
+│       ├── location = /404.html {
+│       │   └── root /usr/share/nginx/html;
+│       ├── location ~ \.php$ {
+│       │   ├── include /etc/nginx/fastcgi_params;
+│       │   ├── fastcgi_pass 127.0.0.1:9000;
+│       │   ├── fastcgi_index index.php;
+│       │   └── fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+
+```
