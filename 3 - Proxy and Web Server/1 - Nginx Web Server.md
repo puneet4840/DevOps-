@@ -190,3 +190,67 @@ nginx.conf
 **1 - Main block (Global Setting)**
 
 - ```user nginx;```: Specifies the user and group under which NGINX run.
+
+- ```worker process auto;```: Defines the number of worker processes, auto adjust this based on the CPU cores.
+
+- ```error log;```: Path to the error log file.
+
+- ```pid```: Specifies the location of PID file.
+
+
+**2 - Events Block**
+
+- ```worker_connections 1024;```: Defines the maximum number of simultaneous connections each worker can handle.
+
+**3 - Http Block**
+
+This is the main block where HTTP server configuration is specified.
+
+- ```include /etc/nginx/mime.types;```: Includes a list of file MIME types for NGINX to handle.
+
+- ```default_type application/octet-stream;```: Default MIME type if no specific type is found.
+
+- ```log_format```: Defines the format of access logs.
+
+- ```access_log```: Specifies the location of access logs.
+
+- ```sendfile on;```: Enables efficient fie serving by bypassing kernal space.
+
+- ```keepalive_timeout 65;```: Time the server will wait to close inactive connections.
+
+**4 - Server Block**
+
+This the is block where we define the configuration of individual server. It means we give the information about the website we want to host on nginx.
+
+- ```listen 80;```: Tells the server to listen on port 80 (HTTP).
+
+- ```server_name example.com www.example.com;```: Specifies the domain names this server block responds to. We have to mention the domain name of our website here.
+
+- ```root /var/www/html;```: Root directory for the server's content. We keep the html, css, js and other files which is going to be render.
+
+- ```index```: Defines the default file to serve (e.g., index.html).
+
+**5 - Location Block**
+
+This block is used to handle specific request URL or routes. 
+
+- ```/```: This matches all requests and tries to serve a file or directory. If none are found, a 404 is returned.
+
+- ```/images/```: This matches the /images/ path and serves static files from /var/www/images/.
+
+- ```/404.html```: Custom error page for 404 errors.
+
+
+<br>
+
+**include directive in**```nginx.conf```**file**
+
+```include``` directive allows you to refernece external configuration files within the main configuration file. It add the link to external file at the place where the include directive is used. This makes the configuration modular and easier to manage.
+
+How it Works
+
+Instead of having all configurations in one large file, you can break them into smaller files (e.g., for virtual hosts, MIME types, SSL certificates) and then include those files in the main configuration using ```include```. This improves maintainability.
+
+e.g., ```include /etc/nginx/conf.d/*.conf;```
+
+This will include all .conf files inside the /etc/nginx/conf.d/ directory. It is commonly used for separating server configurations and virtual hosts.
