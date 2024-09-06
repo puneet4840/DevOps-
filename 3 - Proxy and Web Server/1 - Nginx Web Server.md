@@ -261,9 +261,7 @@ This will include all .conf files inside the /etc/nginx/conf.d/ directory. It is
 
 Usually we write our website's server configuration directly in ```nginx.conf``` file. This is not best practice or not recommended by nginx.
 
-```
-What we can do is, We can create a server block inside conf.d directory which will automatically include to the main configuration **nginx.conf**.
-```
+```What we can do is, We can create a server block inside conf.d directory which will automatically include to the main configuration **nginx.conf**.```
 
 **Step-by-step guide to setup server block in** ```conf.d``` directory.
 
@@ -280,5 +278,21 @@ Step-2: Create a file named **schrack.com.conf**.
 
 Step-3: Open the file **schrack.com.conf**.
 
-Step-4: 
+Step-4: Add the following content inside the file.
+
+
+server {
+    listen 80;
+    server_name example1.com www.example1.com;
+
+    root /var/www/example1;
+    index index.html;
+
+    location / {
+        try_files $uri $uri/ =404;
+    }
+}
+
+
+Step-5: Verify the configuration using **sudo nginx -t** command.
 ```
