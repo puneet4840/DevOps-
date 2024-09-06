@@ -254,3 +254,31 @@ Instead of having all configurations in one large file, you can break them into 
 e.g., ```include /etc/nginx/conf.d/*.conf;```
 
 This will include all .conf files inside the /etc/nginx/conf.d/ directory. It is commonly used for separating server configurations and virtual hosts.
+
+<br>
+
+### Nginx recommendation for Server Block
+
+Usually we write our website's server configuration directly in ```nginx.conf``` file. This is not best practice or not recommended by nginx.
+
+```
+What we can do is, We can create a server block inside conf.d directory which will automatically include to the main configuration **nginx.conf**.
+```
+
+**Step-by-step guide to setup server block in** ```conf.d``` directory.
+
+We can create individual server block(Virtual Host) in ```/etc/nginx/conf.d/``` directory for each website. We can host multiple website using nginx for this we need to create multiple server block.
+
+Suppose we want to host a schrack web application using nginx. We can follow the below steps.
+
+- For '''schrack.com''':
+
+```
+Step-1: Navigate to **conf.d/** directory.
+
+Step-2: Create a file named **schrack.com.conf**.
+
+Step-3: Open the file **schrack.com.conf**.
+
+Step-4: 
+```
