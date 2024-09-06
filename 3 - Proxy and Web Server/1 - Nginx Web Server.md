@@ -69,9 +69,17 @@ These master and worker architecture is assigned in **nginx.conf** file.
 
 <br>
 
-### Understand _nginx.conf_ file.
+### Understand ```nginx.conf``` file.
 
 The ```nginx.conf``` file is the main is the main configuration file for the nginx server. It defines how nginx will handle HTTP/HTTPS requests and other server tasks. The configuration file is hierarchical.
+
+
+**Tree Architecture of** ```nginx.conf``` **file**
+
+```nginx.conf``` file is divided into multiple block (context). 
+
+<img src="https://github.com/user-attachments/assets/baba496e-79e7-475a-b554-3243b5110aba" width="700" height="400">
+
 
 **Example** ```nginx.conf``` **file**
 
