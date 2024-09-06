@@ -187,3 +187,6 @@ nginx.conf
 
 **Explaination of Key Sections**
 
+**1 - Main block (Global Setting)**
+
+- ```user nginx;```: Specifies the user and group under which NGINX run.
