@@ -78,7 +78,7 @@ The ```nginx.conf``` file is the main is the main configuration file for the ngi
 
 ```nginx.conf``` file is divided into multiple block (context). 
 
-<img src="https://github.com/user-attachments/assets/baba496e-79e7-475a-b554-3243b5110aba" width="700" height="400">
+<img src="https://github.com/user-attachments/assets/baba496e-79e7-475a-b554-3243b5110aba" width="700" height="300">
 
 
 **Example** ```nginx.conf``` **file**
