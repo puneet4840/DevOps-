@@ -180,10 +180,10 @@ nginx.conf
 │       ├── error_page 404 /404.html;
 │       ├── location = /404.html {
 │       │   └── root /usr/share/nginx/html;
-│       ├── location ~ \.php$ {
-│       │   ├── include /etc/nginx/fastcgi_params;
-│       │   ├── fastcgi_pass 127.0.0.1:9000;
-│       │   ├── fastcgi_index index.php;
-│       │   └── fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 
 ```
+
+<br>
+
+**Explaination of Key Sections**
+
