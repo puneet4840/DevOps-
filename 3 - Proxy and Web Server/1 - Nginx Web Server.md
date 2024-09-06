@@ -261,7 +261,9 @@ This will include all .conf files inside the /etc/nginx/conf.d/ directory. It is
 
 Usually we write our website's server configuration directly in ```nginx.conf``` file. This is not best practice or not recommended by nginx.
 
-```What we can do is, We can create a server block inside conf.d directory which will automatically include to the main configuration **nginx.conf**.```
+```What we can do is, We can create a server block inside conf.d directory which will automatically include to the main configuration file **nginx.conf** using the include directive.```
+
+``` include /etc/nginx/conf.d/*conf; ``` This command include the server block to the main configuration file.
 
 **Step-by-step guide to setup server block in** ```conf.d``` directory.
 
