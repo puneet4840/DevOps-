@@ -13,7 +13,7 @@ e.g.,
 
 This is becuase of proxy server. ```xyz.com``` does not know your country because you are accessing xyz.com from proxy server.
 
-<img="https://github.com/user-attachments/assets/73c72632-86f3-4bac-b6a0-25bcb57da5e5" width="600" height="400">
+<img src="https://github.com/user-attachments/assets/73c72632-86f3-4bac-b6a0-25bcb57da5e5" width="600" height="400">
 
 
 <br>
