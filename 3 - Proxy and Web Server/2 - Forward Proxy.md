@@ -10,3 +10,13 @@ e.g.,
 
 ```Suppose you want to access a website xyz.com of USA. You saw that access is denied to the user of India to that website. You search for proxy website for xyz.com``` 
 ```There are lists of many websites, You click anyone of them and xyz.com website is accessible to you.```
+
+This is becuase of proxy server. ```xyz.com``` does not know your country because you are accessing xyz.com from proxy server.
+
+<img="https://github.com/user-attachments/assets/73c72632-86f3-4bac-b6a0-25bcb57da5e5" width="600" height="400">
+
+
+<br>
+
+### What is Forward Proxy?
+
