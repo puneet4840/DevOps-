@@ -15,6 +15,8 @@ This is becuase of proxy server. ```xyz.com``` does not know your country becaus
 
 <img src="https://github.com/user-attachments/assets/73c72632-86f3-4bac-b6a0-25bcb57da5e5" width="600" height="400">
 
+<img src="https://github.com/user-attachments/assets/350d65cb-6abd-480a-abe5-6ac544eab628" widht="500" height="320">
+
 
 <br>
 
