@@ -20,3 +20,30 @@ This is becuase of proxy server. ```xyz.com``` does not know your country becaus
 
 ### What is Forward Proxy?
 
+A Forwar Proxy is a server which lies between Client and Server.
+
+When the client sends a request to server, the forward proxy handles it, sending the request to the server on the client's behalf.
+
+e.g.,
+
+```Suppose you want to access a website that is restricted in your region. Instead of accessing it directly, you use  forward proxy that is located in different region. The request goes from your device to forward proxy, which forwards the request to the website. The website sees the request coming from the proxy, not you, allowing you to access to content.```
+
+OR
+
+```A company may use a forward proxy to control employees' internet access. All web traffic goes through the proxy, and the company can filter out websites, track usage, or apply security policies.```
+
+**Benefits of Forward Proxy**
+
+- **Anonymity**: Hides the client's IP address from the target server.
+- **Bypass Restrictions**: Can bypass geo-restrictions or network blocks.
+- **Filtering**: Can restrict access to certain content or websites.
+
+<br>
+
+**Forward Proxy Workflow**
+
+- **Clinet -> Proxy**: The client sends a request to the forward proxy instead of directly contacting the target server.
+- **Proxy -> Server**: The proxy forwards the request to the destination server.
+- **Server -> Proxy**: The server responds to the proxy with the requested content.
+- **Proxy -> Client**: The proxy sends the content back to the client.
+
