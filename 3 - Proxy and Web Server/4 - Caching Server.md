@@ -28,3 +28,7 @@ e.g., **Example of Google News**
 
 - **Refreshing/Invalidating Cache**: Cached data often has a "Time to Live" (TTL) or expiration. Once the TTL expires, the cache is refreshed by fetching updated data from the source.
 
+<br>
+
+### Types of Cache
+
