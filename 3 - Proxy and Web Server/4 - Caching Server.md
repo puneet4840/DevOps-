@@ -32,3 +32,24 @@ e.g., **Example of Google News**
 
 ### Types of Cache
 
+- **Memory Cache**: Memory Cache is the type of cache which stores in the RAM of server or application. This data storage layer sits between application and database to deliver response with high speed.
+
+  e.g. **Redis**: A popular in-memory key-value store used to cache data in applications.
+
+- **Browser Cache**: Web browsers stores static resources like images, CSS and java script locally. So they don't have to be downloaded everytime a user visits a website.
+
+  e.g., When you visit a website, your browser stores images and scripts in the local cache. On the next visit, instead of downloading these files again, the browser serves them from the cache, speeding up the page load time.
+
+
+- **Content Delivery Network (CDN) cache**: If you access a webpage hosted on a CDN, the first request may be served from the origin server. Subsequent requests from other users in nearby regions will be served from the nearest CDN node, reducing latency.
+
+
+<br>
+
+### What is caching server?
+
+A caching server is a server that stores copies of data (web pages, files and other content) temporarily to serve it more quickly to the user. Instead of fetching data from original source it delivers data from its cache.
+
+**How a caching server works?**
+
+When a user requests data (like a webpage or file), the origin server provides it. The caching server then stores a copy of this data locally. For future requests, the caching server checks if the stored data is still valid. If valid, it serves the cached version, avoiding a trip to the origin server. Cached data has an expiration time (TTL), and once it expires, the cache is refreshed by fetching updated data from the origin server.
