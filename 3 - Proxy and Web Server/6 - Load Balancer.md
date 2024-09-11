@@ -38,3 +38,30 @@ e.g., **Real Life Example**
 
 ### How Load Balancer Works?
 
+- **Client Request**: Client sends a request to load balancer.
+  
+- **Alogrithm Selection**: The load balancer uses an algorithm to identify which backend server can handle the request.
+  
+- **Request Forwarding**: The load balancer forward the request to selectd backend server.
+  
+- **Response Handling**: The backend server processes the request and sends a response to load balancer.
+  
+- **Response Forwarding**: The load Balancer forward the response to the client.
+
+<br>
+
+### Load Balancing Algorithms
+
+We need a load balancing algorithm to decide which request goes to which backend server.
+
+There are two types of load balancing algorithm:
+
+**Static Algorithms**
+- Round Robin.
+- Weighted Round Robin.
+- Source IP Hash.
+
+
+**Dynamic Algorithm**
+- Least Connection Method.
+- Least Response-Time Method.
