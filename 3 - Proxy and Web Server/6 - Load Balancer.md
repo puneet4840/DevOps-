@@ -64,6 +64,43 @@ There are two types of load balancing algorithm:
 - Weighted Round Robin.
 - Source IP Hash.
 
+<br>
+
+1 - **Round Robin**
+
+In Round Robin algorithm, requests are distributed to servers in a circular fashion.
+
+```
+Round Robin algorithm main request ko circular fashion main behja jata hai. 
+```
+
+e.g.,
+``` If there are three servers, the first request goes to server 1, the second to server 2, and so on.```
+
+<br>
+
+2 - **Weighted Round Robin**
+
+In weighted round robin algorithm, servers are assigned weights and requests are distributed to servers according to the weight.
+
+```
+Isme har server ko ek weight assign kiya jata hai matlab jis server ki configuration jyada hogi usko jyada weight assign hoga aur jiski kam hogi usko kam weight assign hoga.
+
+To jis server ka jyada weight hai usko jyada requests behji jayenge aur jis server ka kam weight hai usko kam requests.
+
+Isko ese samjhiye ki jo server jyada heavy hai usko jyada requests.
+```
+
+e.g.,
+```There are 2 servers, Server 1 (high-capacity) gets 5 requests, while Server 2 (low-capacity) gets 2 requests.```
+
+<br>
+
+3 - **Source Ip Hash**
+
+
+
+
 
 **Dynamic Algorithm**
 
