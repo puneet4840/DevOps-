@@ -57,6 +57,7 @@ We need a load balancing algorithm to decide which request goes to which backend
 There are two types of load balancing algorithm:
 
 **Static Algorithms**
+
 ```Server on which request is send is already predetermined and fixed. Isme load konse server par bhejna hai ye pehle hi pta hota hai.```
 
 - Round Robin.
@@ -65,6 +66,7 @@ There are two types of load balancing algorithm:
 
 
 **Dynamic Algorithm**
+
 ```These algorithms make real-time decision on which backend server to send the request. Isme algorithm real time decision leta hai ki konse backend server par request bhejni hai```
 
 - Least Connection Method.
