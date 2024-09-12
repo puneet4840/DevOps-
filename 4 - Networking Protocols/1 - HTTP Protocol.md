@@ -14,9 +14,13 @@ Inhi rules ko protocol kaha jata hai.
 
 ### Basic Protocols:
 
-- **HTTP**
-- **HTTPS**
-- **FTP**
-- **SCP**
-- **DNS**
-- **DHCP**
+- HTTP
+- HTTPS
+- FTP
+- SCP
+- DNS
+- DHCP
+
+<br>
+
+### HTTP Protocol
