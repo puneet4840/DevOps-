@@ -11,3 +11,12 @@ ke pass jate hain aur agar koi data packet receiver ke paas nahi pahunch pata ha
 
 Inhi rules ko protocol kaha jata hai.
 ```
+
+### Basic Protocols:
+
+- **HTTP**
+- **HTTPS**
+- **FTP**
+- **SCP**
+- **DNS**
+- **DHCP**
