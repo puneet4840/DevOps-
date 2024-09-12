@@ -7,7 +7,7 @@ Protocol are the rules defined by the Internet Society which ensure how the data
 ```
 Protocol rules hote hain jo Internet Society ek organization hai usne banaye the jab internet ki shuruaat hui thi.
 Ye rules batate hain ki do devices ke beech main data kaise tranfer hota hain. In rules ki wajah se data packets completely receiver
-ke pass jate hain aur agar koi data packet receiver ke paas nahi pahunch pata hai to usko information sender ko dete hain.
+ke pass jate hain aur agar koi data packet receiver ke paas nahi pahunch pata hai to us data packet ki information sender ko dete hain.
 
 Inhi rules ko protocol kaha jata hai.
 ```
