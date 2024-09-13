@@ -24,3 +24,7 @@ Inhi rules ko protocol kaha jata hai.
 <br>
 
 ### HTTP Protocol
+
+HTTP (Hyper Text Transfer Protocol) is a set of rules which define how the data (web pages, images, videos) transmitted to the server and receive from the server over the internet.
+
+It works on a client-server model
