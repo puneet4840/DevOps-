@@ -27,4 +27,9 @@ Inhi rules ko protocol kaha jata hai.
 
 HTTP (Hyper Text Transfer Protocol) is a set of rules which define how the data (web pages, images, videos) transmitted to the server and receive from the server over the internet.
 
-It works on a client-server model
+It works on a client-server model where a client (your web browser) sends a HTTP request to the server and a server sends HTTP responce to the client (your web browser).
+
+HTTP uses TCP protocol to send and receive the data.
+
+It is a stateless protocol it means when a user sends HTTP request to server then server does not store any information about the user's machine by default.
+
