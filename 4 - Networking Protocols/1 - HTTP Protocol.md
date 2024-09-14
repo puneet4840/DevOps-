@@ -165,4 +165,4 @@ In an unencrypted http connection, data travels in a readable format, which pose
 
 **1 - Data Interception (Eavesdropping)**
 
-<img src="https://github.com/user-attachments/assets/7b6853ff-6ffc-4724-88e1-74bdd96e49f7" height="320" width="650">
+<img src="https://github.com/user-attachments/assets/7b6853ff-6ffc-4724-88e1-74bdd96e49f7" height="350" width="650">
