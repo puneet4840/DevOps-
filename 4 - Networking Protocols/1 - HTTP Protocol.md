@@ -33,6 +33,8 @@ HTTP uses TCP protocol to send and receive the data.
 
 It is a stateless protocol it means when a user sends HTTP request to server then server does not store any information about the user's machine by default.
 
+<br>
+
 **What is HTTP Request?**
 
 A HTTP request is send by the client to perform an action(GET, POST, PUT,DELETE) to the server.
@@ -57,4 +59,52 @@ e.g.,
 Host: www.example.com
 User-Agent: Mozilla/5.0
 Accept: text/html
+```
+
+3 - **Body**
+- The body contains the data to be sent to the server. This is send when client uses POST, PUT, Delete methods in their request. e.g., form data, JSON.
+
+e.g., Example of HTTP request.
+```
+GET /index.html HTTP/1.1
+Host: www.example.com
+User-Agent: Mozilla/5.0
+Accept: text/html
+```
+
+<br>
+
+**What is HTTP Response?**
+
+The HTTP response is the server's reply to the client's request. It contains the following components:
+
+1 - **Status Line**
+- HTTP Version: The version of HTTP used (e.g, HTTP/1.1).
+- Status Code: A three digit code representing the result of the request (e.g., 200, 404).
+- Status Message: A textual description of the status code (e.g., OK, Not Found).
+
+e.g., 
+```
+HTTP/1.1 200 OK
+```
+
+2 - **Header**
+- It is the meta data about the response, such as content-type, date and server information.
+
+e.g., 
+```
+Date: Mon, 13 Sep 2024 12:30:00 GMT
+Content-Type: text/html; charset=UTF-8
+Content-Length: 138
+```
+
+3 - **Body**
+- This is the actual content returned by the client to ther server (such as HTML page, image or json data).
+
+e.g., 
+```
+<html>
+  <head><title>Welcome</title></head>
+  <body><h1>Hello, World!</h1></body>
+</html>
 ```
