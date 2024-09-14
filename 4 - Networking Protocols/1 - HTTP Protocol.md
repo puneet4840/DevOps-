@@ -173,7 +173,7 @@ In an unencrypted http connection, data travels in a readable format, which pose
 
 **2 - MAN In The Middle Attack**
 
-<img src="https://github.com/user-attachments/assets/68265663-a340-45dc-997d-139b5d3bbe5c" width="700" height="430">
+<img src="https://github.com/user-attachments/assets/68265663-a340-45dc-997d-139b5d3bbe5c" width="700" height="470">
 
 <br>
 <br>
@@ -181,4 +181,4 @@ In an unencrypted http connection, data travels in a readable format, which pose
 
 **3 - Phishing Attcak**
 
-<img src="https://github.com/user-attachments/assets/e39b0a22-a41f-4689-be5c-2b5b63bad5a3" height="450" width="700">
+<img src="https://github.com/user-attachments/assets/e39b0a22-a41f-4689-be5c-2b5b63bad5a3" height="490" width="700">
