@@ -108,3 +108,42 @@ e.g.,
   <body><h1>Hello, World!</h1></body>
 </html>
 ```
+
+<br>
+
+**HTTP Methods**
+
+HTTP methods are used to indicate the action to be performed on the server. 
+
+HTTP methods used to tell the server what to do when a client make an request to the server. Common methods are:
+
+1 - **GET**
+- Request data from server.
+
+2 - **POST**
+- Send data to the server (usuallly used to submit form).
+
+3 - **DELETE**
+- Delete a resource on the server like to delete any data from database.
+
+4 - **PUT**
+- Replace or Update any resource on the server like to update any data in the database.
+
+5 - **HEAD**
+- Request the header from the server.
+
+<br>
+
+**HTTP Status Code**
+
+It is a three digit number which defines the outcome of the client's request from the server.
+
+1XX - Informational (e.g., 100: Continue).
+
+2XX - Success (e.g., 200: OK, 201: Created).
+
+3XX - Redirection (e.g., 301: Moved Permanently, 302: Found).
+
+4XX - Client Errors (e.g., 404: Not Found, 403: Forbidden).
+
+5XX - Server Errors (e.g., 500: Internal Server Error, 503: Service Unavailable).
