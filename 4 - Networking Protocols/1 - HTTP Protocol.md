@@ -1,4 +1,4 @@
-# Http Protocol
+# Http Protocol (Hypertext Transfer Protocol)
 
 ### What is a Protocol?
 
@@ -147,3 +147,22 @@ It is a three digit number which defines the outcome of the client's request fro
 4XX - Client Errors (e.g., 404: Not Found, 403: Forbidden).
 
 5XX - Server Errors (e.g., 500: Internal Server Error, 503: Service Unavailable).
+
+<br>
+<br>
+
+# HTTPS (Hypertext Transfer Protocol Secure)
+
+HTTPS is the secure version of HTTP. HTTPS added a layer of security by using **SSL (Secure Socket Layer)** to encrypt the data between client and server.
+
+<br>
+
+**What if there is not encryption between client and server in a HTTP communication**
+
+When there is no encryption between client and server in a HTTP communication, data is transferred in plain text. This means that any information exchanged including any sensitive data like password, personal details can be easily read or modified by hacker.
+
+In an unencrypted http connection, data travels in a readable format, which poses several various risks:
+
+**1 - Data Interception (Eavesdropping)**
+
+<img src="https://github.com/user-attachments/assets/7b6853ff-6ffc-4724-88e1-74bdd96e49f7" height="600" width="400">
