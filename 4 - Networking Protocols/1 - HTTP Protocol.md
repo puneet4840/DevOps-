@@ -182,3 +182,33 @@ In an unencrypted http connection, data travels in a readable format, which pose
 **3 - Phishing Attcak**
 
 <img src="https://github.com/user-attachments/assets/e39b0a22-a41f-4689-be5c-2b5b63bad5a3" height="490" width="700">
+
+
+<br>
+<br>
+<br>
+
+**What is SSL?**
+
+SSL is a security protocol which encrypts and authenticate the data between Client and Server.
+
+<br>
+<br>
+
+**How does SSL works?**
+
+- **1 - Initiating the Connection: Client requests secure communication**
+
+  ```When you visit a website using HTTPS, your browser (the client) initiates a request to establish a secure connection to the web server. This is called the SSL/TLS handshake.```
+
+  Example:
+   ```You type https://www.example.com in your browser and hit enter.```
+
+- **2 - Server sends SSL Certificate**
+
+  ```The server responds by sending its SSL certificate to the client. This certificate contains the server’s public key and other important information, such as the domain name, issuing authority (Certificate Authority), and expiration date of the certificate.```
+
+  Example:
+  ```- The server for www.example.com responds with an SSL certificate, which proves its identity to the client.```
+  ```- The SSL certificate is like an ID card for the server, signed by a trusted organization (called a Certificate Authority, like Let’s Encrypt or DigiCert).```
+  
