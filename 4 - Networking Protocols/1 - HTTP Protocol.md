@@ -190,9 +190,8 @@ In an unencrypted http connection, data travels in a readable format, which pose
 
 **What is SSL?**
 
-SSL is a security protocol which encrypts and authenticate the data between Client and Server.
+SSL is a security protocol which encrypts and authenticate the data between Client and Server. SSL is now succeeded by TLS (Transport Layer Security)
 
-<br>
 <br>
 
 **How does SSL works?**
@@ -202,6 +201,7 @@ SSL is a security protocol which encrypts and authenticate the data between Clie
   ```When you visit a website using HTTPS, your browser (the client) initiates a request to establish a secure connection to the web server. This is called the SSL/TLS handshake.```
 
   Example:
+  
    ```You type https://www.example.com in your browser and hit enter.```
 
 - **2 - Server sends SSL Certificate**
@@ -209,6 +209,28 @@ SSL is a security protocol which encrypts and authenticate the data between Clie
   ```The server responds by sending its SSL certificate to the client. This certificate contains the server’s public key and other important information, such as the domain name, issuing authority (Certificate Authority), and expiration date of the certificate.```
 
   Example:
-  ```- The server for www.example.com responds with an SSL certificate, which proves its identity to the client.```
-  ```- The SSL certificate is like an ID card for the server, signed by a trusted organization (called a Certificate Authority, like Let’s Encrypt or DigiCert).```
   
+  ```- The server for www.example.com responds with an SSL certificate, which proves its identity to the client.```
+  
+  ```- The SSL certificate is like an ID card for the server, signed by a trusted organization (called a Certificate Authority, like Let’s Encrypt or DigiCert).```
+
+- **3 - Client verifies the SSL certificate**
+
+  ```- The client (your browser) needs to ensure that the SSL certificate provided by the server is trustworthy. It does this by verifying the certificate against a list of trusted Certificate Authorities (CAs) stored in the browser. If the certificate is valid and from a trusted CA, the browser proceeds with the secure connection.```
+
+  - Certificate Verification: The browser checks if:
+      - The certificate is valid (not expired).
+      - The certificate was issued by a trusted Certificate Authority.
+      - The certificate belongs to the website domain you're trying to visit.
+
+  If the certificate checks out, the browser accepts the connection. If the certificate is invalid or expired, the browser will warn you that the connection is not secure (with messages like "Your connection is not private").
+
+- **4 - Creating a shared secret key(symmetric encryption)**
+
+  ```- Once the certificate is verified, the client and server must agree on a shared secret key that will be used to encrypt the data sent between them. This key is created using the public key sent in the server’s SSL certificate.```
+
+  ```- Now both the client and the server have the same session key, which they will use to encrypt and decrypt the data during their communication.```
+
+- **5 - Secure Data Transmission**
+  
+  ```Now that both the client and server have agreed on a shared session key, they use this key to encrypt the actual data being transmitted between them. This ensures that any data sent, such as login credentials, personal information, or payment details, is securely encrypted and protected from eavesdropping.```
