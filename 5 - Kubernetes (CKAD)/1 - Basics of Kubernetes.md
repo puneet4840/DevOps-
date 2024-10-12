@@ -9,9 +9,13 @@ Kubernetes is the container management tool which is used to manage conatiner de
 
 **Before Kubernetes**
 
-In the early days of software development, applications were typically developed as **Monolithic Applications**. This means that all the components of application (e.g., UI, Business logic, Database access) were bundeled together into a single codebase and deployed as one unit.
+Before kubernetes applications were built based on **Monotlithic architecture** that means applications have single codebase for entire application and hosted on physical servers or virtual machines. During that time scaling was slow, updates cause downtime and resources were often wasted. 
 
-**Challenges of Monolithic Architecture**
-- Scaling: Monolithic applications could only be scaled by adding more servers (vertical scaling). This was inefficient because the entire application needed to be scaled even if only one part required more resources.
-- Updates: Deploying updates required redeploying the entire application, often leading to downtime and slower release cycles.
-- Lack of Flexibility: Any small change or bug fix would affect the entire system.
+**After Kubernetes**
+
+With the rise of **Containerization**(like Docker) and **Kubernetes** the applications started building based on **Microservice Architecture** that means applications are broken into microservices where each part (e.g., user service, payment service) codebase is seperate and developed, deployed and scaled seperately. 
+
+<br>
+<br>
+
+### Why do we need Kubernetes?
