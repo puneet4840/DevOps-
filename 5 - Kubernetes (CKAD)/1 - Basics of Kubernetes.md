@@ -56,3 +56,10 @@ Here we are discussing some problems with that docker in details.
     - Api Gateway.
 
 So these are the problems which docker faces. To deal with these problems we use the kubernetes tool.
+
+<br>
+<br>
+
+### Kubernetes Architecture
+
+<img src="https://drive.google.com/file/d/1DjsEmGrDtIY1Ct-cc8N4gRRo15lUZdZf" width="400" height="400">
