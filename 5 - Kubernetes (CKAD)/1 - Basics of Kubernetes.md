@@ -62,5 +62,5 @@ So these are the problems which docker faces. To deal with these problems we use
 
 ### Kubernetes Architecture
 
-<img width="600" height="400" src="https://github.com/user-attachments/assets/ee1dc3f3-5afe-449f-bc3f-5dd7215d360b">
+<img width="600" height="370" src="https://github.com/user-attachments/assets/ee1dc3f3-5afe-449f-bc3f-5dd7215d360b">
 
