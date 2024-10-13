@@ -34,6 +34,6 @@ Here we are discussing some problems with that docker in details.
 
 - **1 - Single Host Problem**:-
 
-  Single host problem यह है की एक ही operating system पर docker tool चल रहा है और उस docker पर suppose हम 100 containers run कर देते हैं| So starting के 1, 2 या 3rd containers system के mostly resources use कर लेंगे तो बाकी के बचे containers को resources use करने को मिलेंगे ही नहीं और वह containers धीर-धीरे die हो जायेंगे और उन containers के अंदर की application down हो जाएँगी.
+  ```Single host problem यह है की एक ही operating system पर docker tool चल रहा है और उस docker पर suppose हम 100 containers run कर देते हैं| So starting के 1, 2 या 3rd containers system के mostly resources use कर लेंगे तो बाकी के बचे containers को resources use करने को मिलेंगे ही नहीं और वह containers धीर-धीरे die हो जायेंगे और उन containers के अंदर की application down हो जाएँगी.```
 
-  तो इस problem को kubernetes multiple hosts के through solve करता है. Kubernetes multiple nodes create करके उनपे containers को run करता है जिससे किसी एक node पर containers का load बढ़ रहा हो तो Kubernetes कुछ containers को वहां से हटा कर दूसरे node पर create कर देता है.  
+  ```तो इस problem को kubernetes multiple hosts के through solve करता है. Kubernetes multiple nodes create करके उनपे containers को run करता है जिससे किसी एक node पर containers का load बढ़ रहा हो तो Kubernetes कुछ containers को वहां से हटा कर दूसरे node पर create कर देता है.```
