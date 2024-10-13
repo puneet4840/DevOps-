@@ -21,3 +21,9 @@ With the rise of **Containerization**(like Docker) and **Kubernetes** the applic
 <br>
 
 ### Why do we need Kubernetes?
+
+We know that docker creates the container, the problem is docker can create containers but it cannot manage the containers completely for development and production environments. So that we use kubernetes.
+
+```Docker containers को create करने का एक essentail tool है लेकिन kubernetes उन containers को manage करने का tool है.```
+
+```Docker के through हम containers को manage नहीं कर पाते हैं इसलिए Kubernetes का यूज़ किया जाता है```
