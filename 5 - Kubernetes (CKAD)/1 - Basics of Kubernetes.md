@@ -37,3 +37,9 @@ Here we are discussing some problems with that docker in details.
   ```Single host problem यह है की एक ही operating system पर docker tool चल रहा है और उस docker पर suppose हम 100 containers run कर देते हैं| So starting के 1, 2 या 3rd containers system के mostly resources use कर लेंगे तो बाकी के बचे containers को resources use करने को मिलेंगे ही नहीं और वह containers धीर-धीरे die हो जायेंगे और उन containers के अंदर की application down हो जाएँगी.```
 
   ```तो इस problem को kubernetes multiple hosts के through solve करता है. Kubernetes multiple nodes create करके उनपे containers को run करता है जिससे किसी एक node पर containers का load बढ़ रहा हो तो Kubernetes कुछ containers को वहां से हटा कर दूसरे node पर create कर देता है.```
+
+- **2 - Auto-Healing Problem**:-
+
+  ```Suppose docker के through हमने कुछ containers को run किया. अगर कोई container किसी भी reason से down हो जाता है या kill हो जाता है तो उस container के अंदर की application accessible नहीं होगी. Suppose docker पर 100 containers running हैं और लेकिन इनमे से कुछ containers kill हो गए और containers kill होने के बाद खुद से run नहीं हो रहे हैं. तो Docker user बार बार खुद से इतने सारे containers को तो start करेगा नहीं ये एक overhead हो जायगे.```
+
+  ```तो इसका मतलब है की docker मैं auto - healing feature नहीं होता है. तो died container का खदु से start ना होना एक बोहोत बड़ी problem है. एक ये भी problem है जिसकी वजह से हम kubernetes का use करते हैं. ```
