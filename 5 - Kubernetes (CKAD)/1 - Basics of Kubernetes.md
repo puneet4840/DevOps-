@@ -43,3 +43,16 @@ Here we are discussing some problems with that docker in details.
   ```Suppose docker के through हमने कुछ containers को run किया. अगर कोई container किसी भी reason से down हो जाता है या kill हो जाता है तो उस container के अंदर की application accessible नहीं होगी. Suppose docker पर 100 containers running हैं और लेकिन इनमे से कुछ containers kill हो गए और containers kill होने के बाद खुद से run नहीं हो रहे हैं. तो Docker user बार बार खुद से इतने सारे containers को तो start करेगा नहीं ये एक overhead हो जायगे.```
 
   ```तो इसका मतलब है की docker मैं auto - healing feature नहीं होता है. तो died container का खदु से start ना होना एक बोहोत बड़ी problem है. एक ये भी problem है जिसकी वजह से हम kubernetes का use करते हैं. ```
+
+- **3 - Auto-Scaling Problem**:-
+
+  ```Docker मैं Auto-Scaling feature नहीं होता है. Suppose एक application 10,000 users को server कर रही है और उसी application पर 1,00,000 users आ जाये तो ऐसे मैं container auto scale नहीं हो पायेगा.```
+
+- **4 - Docker does not support Enterprise level standards**
+    - Load Balancing.
+    - Firewall.
+    - Auto-Scale.
+    - Auto-Healing.
+    - Api Gateway.
+
+So these are the problems which docker faces. To deal with these problems we use the kubernetes tool.
