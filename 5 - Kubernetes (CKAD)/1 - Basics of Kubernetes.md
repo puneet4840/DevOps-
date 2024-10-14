@@ -22,6 +22,8 @@ With the rise of **Containerization**(like Docker) and **Kubernetes** the applic
 
 ### Why do we need Kubernetes?
 
+To host our application on containers so we use kubernetes.
+
 We know that docker creates the container, the problem is docker can create containers but it cannot manage the containers completely for development and production environments. So that we use kubernetes.
 
 ```Docker containers को create करने का एक essentail tool है लेकिन kubernetes उन containers को manage करने का tool है.```
@@ -64,12 +66,28 @@ So these are the problems which docker faces. To deal with these problems we use
 
 A kubernetes architecture consists of two components **Master Node** (Control Plane) and **Worker Node**. ```Master node और worker nodes के combination को ही kubernetes cluster बोलते हैं.```
 
-- **Master Node (Control Plane)**
+<br>
+
+**1 - Master Node (Control Plane)**
 
 A master node is a virtual machine that controls and manage the worker nodes in a cluster. It is responsible for scheduling the tasks and monitoring the state of the cluster.
 
-```Master Node mainly worker nodes को manage करने के लिए होता है. ```
+```Master Node mainly worker nodes को manage करने के लिए होता है.```
+
+**Componentes in Master Node**:
+
+Master node consists of multiple components-
+
+- **API server**
+
+<br>
+<br>
 
 <img width="600" height="370" src="https://github.com/user-attachments/assets/ee1dc3f3-5afe-449f-bc3f-5dd7215d360b">
+
+<br>
+<br>
+
+<img width="600" height="370" src="[https://github.com/user-attachments/assets/ee1dc3f3-5afe-449f-bc3f-5dd7215d360b](https://drive.google.com/file/d/1DjsEmGrDtIY1Ct-cc8N4gRRo15lUZdZf/view?usp=drive_link)">
 
 This above image shows the kubernetes architecture.
