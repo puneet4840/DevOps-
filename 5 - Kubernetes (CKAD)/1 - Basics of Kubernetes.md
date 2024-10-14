@@ -88,6 +88,6 @@ Master node consists of multiple components-
 <br>
 <br>
 
-<img width="600" height="370" src="[https://github.com/user-attachments/assets/ee1dc3f3-5afe-449f-bc3f-5dd7215d360b](https://drive.google.com/file/d/1DjsEmGrDtIY1Ct-cc8N4gRRo15lUZdZf/view?usp=drive_link)">
+![Alt text](https://drive.google.com/file/d/1DjsEmGrDtIY1Ct-cc8N4gRRo15lUZdZf/view?usp=drive_link)
 
 This above image shows the kubernetes architecture.
