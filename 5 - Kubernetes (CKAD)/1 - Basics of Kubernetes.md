@@ -84,6 +84,7 @@ Master node consists of multiple components-
 <br>
 
 <img width="600" height="370" src="https://github.com/user-attachments/assets/ee1dc3f3-5afe-449f-bc3f-5dd7215d360b">
+<img src="https://drive.google.com/uc?export=view&id=1DjsEmGrDtIY1Ct-cc8N4gRRo15lUZdZf" alt="kuberetes architecture.png" width="600" height="370">
 
 <br>
 <br>
