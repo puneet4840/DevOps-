@@ -130,7 +130,18 @@ Master node consists of multiple components - API Server, etcd, Scheduler, Contr
             - Node Affinity: Are there any rules saying the pod must run on a certain type of node (e.g., node in a specific region)?
             - Taints and Tolerations: Does the pod tolerate certain node conditions (e.g., only allowing special workloads)?
          
-        After considering these factor, the scheduler picks the most suitable node.  
+        After considering these factor, the scheduler picks the most suitable node.
+
+    - API server update the pod definition in etcs:
+        - Once the scheduler decides a node, it tells the api server, which updates the pod information in the etcd database.
+        - Now the pod is assigned to specific node, and the "Pending" status changes to "Scheduled".
+
+    - Kubelet takes over:
+        - The kubelet, a small agent running on each worker node, is responsible for actually starting the pod.
+        - The kubelet on the chosen node sees that a new pod is assigned to it. It pulls the necessary container images and start the pod.
+     
+    - Pod is running:
+        - Once the kubelet successfully starts the pod, the pod's status is updated to "Running", meaning the pod is ready and functioning on the node.
 
 
 <img src="https://drive.google.com/uc?export=view&id=1Rd6rNU_hoMvp6npP3j6rp9JfN3Ek22lo" width="570" height="450">
