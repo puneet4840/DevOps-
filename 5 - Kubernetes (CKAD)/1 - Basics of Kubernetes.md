@@ -102,6 +102,35 @@ Master node consists of multiple components - API Server, etcd, Scheduler, Contr
 
     - API server updates: Api server update the desired state of cluster in the etcd storage.
 
+<br>
+
+- **Scheduler**
+
+  Scheduler is the component in the kubernetes cluster which is used to schedule or assign the pods on the suitable worker node.
+
+  Api server gets the pod creation request, then api server transer the request to scheduler for scheduling the pod. The process of scheduling the pod is called scheduling.
+
+  How does Scheduler works:-
+
+    - User Sends a Request to Deploy a Pod:
+        - A user sends a request to api server to create a new pod. For example, they might use ```kubectl apply -f pod.yaml``` to ask for a new pod.
+ 
+    - API Server Stores the Request:
+        - The api server takes this request and store the details of the pods in ```etcd```, a database that holds the current state of the cluster.
+        - At this point the pod is in "pending" state because kubernetes hasn't decided where it will run yet.
+
+    - Scheduler gets involved:
+        - The scheduler is responsible to picking the best node to run this new pod.
+        - The scheduler constantly monitors for any new pending pods and when it detects one it begins the process of scheduling.
+
+    - Scheduler selects a node:
+        - The scheduler looks at the available nodes in the cluster and checks a few things before deciding where to place the pod:
+            - Node Resource: Does the node have enough CPU and Memory for the new pod?
+            - Pod Constraints: Does the pod require any specific node (for example, a node with GPU or specific storage)?
+            - Node Affinity: Are there any rules saying the pod must run on a certain type of node (e.g., node in a specific region)?
+            - Taints and Tolerations: Does the pod tolerate certain node conditions (e.g., only allowing special workloads)?
+         
+        After considering these factor, the scheduler picks the most suitable node.  
 
 
 <img src="https://drive.google.com/uc?export=view&id=1Rd6rNU_hoMvp6npP3j6rp9JfN3Ek22lo" width="570" height="450">
