@@ -76,9 +76,25 @@ A master node is a virtual machine that controls and manage the worker nodes in 
 
 **Componentes in Master Node**:
 
-Master node consists of multiple components-
+Master node consists of multiple components - API Server, etcd, Scheduler, Controller Manager and Cloud Controller Manager.
 
 - **API server**
+
+  API Server is the main component which manages the entire cluster. It receives all the request from user through kubectl and tells other components what to do.
+
+  When you interact with kubernetes cluster using the kubectl cli, you are actually communicating with the api server component.
+
+  ```API server का काम kubernetes cluster के साथ user का interaction करना होता है. User kubectl commands के through API server को request send करता है. फिर API server user के command के according work करता है जो भी काम हम cluster मैं करना चाहते हैं वह सब api server के through होते हैं.```
+
+How does API Server works:-
+
+- Clients send requests: Client sends request to api server through kubectl asking to do things like create a pod (kubectl create pod), delete a deployment (kubectl delete deployement), or check the status of a service.
+
+- API server validates: The api server checks if the request is valid or client has permisssion to do it.
+
+- API server processes: If the request is valid, api server process it by talking to other components like scheduler, controller manager and kubelet.
+
+- API server updates: Api server update the desired state of cluster in the etcd storage.
 
 <br>
 <br>
