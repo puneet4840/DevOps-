@@ -108,7 +108,7 @@ Master node consists of multiple components - API Server, etcd, Scheduler, Contr
 
   Scheduler is the component in the kubernetes cluster which is used to schedule or assign the pods on the suitable worker node.
 
-  Api server gets the pod creation request, then api server transer the request to scheduler for scheduling the pod. The process of scheduling the pod is called scheduling.
+  Api server gets the pod creation request, then api server transer the request to scheduler for scheduling the pod. Scheduler iterates throgh all the worker nodes and evaluate each node's suitablity for the pod. Then scheduler assigns a score to each node. The node with the highest score is selected as the target node for the pod placement. The process of scheduling the pod is called scheduling.
 
   How does Scheduler works:-
 
@@ -143,6 +143,45 @@ Master node consists of multiple components - API Server, etcd, Scheduler, Contr
     - Pod is running:
         - Once the kubelet successfully starts the pod, the pod's status is updated to "Running", meaning the pod is ready and functioning on the node.
 
+<br>
+
+- **Controller Manager**
+
+Controller Manager is the componenets in the control plane which is used for maintaining the desired state of the clsuter by running the multiple controllers.
+
+```Kubernete मैं एक actual state होती है और एक desired state होती है. Actual state का मतलब है जिस condition मैं cluster अब running है. Desired state का मतलब जिस condition मैं हम cluster को run करना चाहते हैं. ```
+
+It is the collection of different kubernetes controllers that run permanently in a loop. Its main taks is to watch for change in the desired state of the objects and make sure the actual state change towards a new desired state.
+
+e.g.,  
+
+Suppose you want to create a deployment, you specify the desired state in the manifest YAML file. For example, 2 replicas, one volume, mount, etc. The in-built deployment controller ensures that the deployment is in the desired state all the time. If a user updates the deployement with 5 replicas, the deployement contoller regonizes it and ensure the desired stare is 5 replicas.
+
+<br>
+
+- **etcd**
+
+  etcs is basically the key-value storage. It stores the entire kubernetes cluster information in the form of objects as a key-value pair.
+
+  When you use kubectl to get kubernetes obejcts details, you are getting it from the etcd. API server is the only component in the control plane which directlry interacts with the etcd storage.
+
+  Key function of etcd:
+  - Configuration Storage: Etcd stores configuration data for Kubernetes components, including:
+      - API server configuration
+      - Controller manager configuration
+      - Scheduler configuration
+      - Cluster-wide settings (e.g., network configuration, authentication settings)
+
+  - State Storage: Etcd stores the current state of the cluster, including:
+      - Pod information (e.g., status, IP address, node assignment)
+      - Service information (e.g., endpoints, selectors)
+      - Deployment information (e.g., desired replicas, current replicas)
+      - Other resource information (e.g., secrets, configmaps)
+
+<br>
+<br>
+
+**2 - Worker Node**
 
 <img src="https://drive.google.com/uc?export=view&id=1Rd6rNU_hoMvp6npP3j6rp9JfN3Ek22lo" width="570" height="450">
 
