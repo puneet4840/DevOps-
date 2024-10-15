@@ -72,6 +72,14 @@ A kubernetes architecture consists of two components **Master Node** (Control Pl
 
 A master node is a virtual machine that controls and manage the worker nodes in a cluster. It is responsible for scheduling the tasks and monitoring the state of the cluster.
 
+<br>
+<br>
+
+<img src="https://drive.google.com/uc?export=view&id=1DjsEmGrDtIY1Ct-cc8N4gRRo15lUZdZf" alt="kuberetes architecture.png" width="570" height="340">
+
+<br>
+<br>
+
 ```Master Node mainly worker nodes को manage करने के लिए होता है.```
 
 **Componentes in Master Node**:
@@ -86,23 +94,17 @@ Master node consists of multiple components - API Server, etcd, Scheduler, Contr
 
   ```API server का काम kubernetes cluster के साथ user का interaction करना होता है. User kubectl commands के through API server को request send करता है. फिर API server user के command के according work करता है जो भी काम हम cluster मैं करना चाहते हैं वह सब api server के through होते हैं.```
 
-How does API Server works:-
+  How does API Server works:-
 
-- Clients send requests: Client sends request to api server through kubectl asking to do things like create a pod (kubectl create pod), delete a deployment (kubectl delete deployement), or check the status of a service.
+    - Clients send requests: Client sends request to api server through kubectl asking to do things like create a pod (kubectl create pod), delete a deployment (kubectl delete deployement), or check the status of a service.
 
-- API server validates: The api server checks if the request is valid or client has permisssion to do it.
+    - API server validates: The api server checks if the request is valid or client has permisssion to do it.
 
-- API server processes: If the request is valid, api server process it by talking to other components like scheduler, controller manager and kubelet.
+    - API server processes: If the request is valid, api server process it by talking to other components like scheduler, controller manager and kubelet.
 
-- API server updates: Api server update the desired state of cluster in the etcd storage.
+    - API server updates: Api server update the desired state of cluster in the etcd storage.
 
-<br>
-<br>
 
-<img src="https://drive.google.com/uc?export=view&id=1DjsEmGrDtIY1Ct-cc8N4gRRo15lUZdZf" alt="kuberetes architecture.png" width="570" height="340">
-
-<br>
-<br>
 
 <img src="https://drive.google.com/uc?export=view&id=1Rd6rNU_hoMvp6npP3j6rp9JfN3Ek22lo" width="570" height="450">
 
