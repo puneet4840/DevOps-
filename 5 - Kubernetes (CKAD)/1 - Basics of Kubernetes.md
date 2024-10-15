@@ -147,15 +147,15 @@ Master node consists of multiple components - API Server, etcd, Scheduler, Contr
 
 - **Controller Manager**
 
-Controller Manager is the componenets in the control plane which is used for maintaining the desired state of the clsuter by running the multiple controllers.
+  Controller Manager is the componenets in the control plane which is used for maintaining the desired state of the clsuter by running the multiple controllers.
 
-```Kubernete मैं एक actual state होती है और एक desired state होती है. Actual state का मतलब है जिस condition मैं cluster अब running है. Desired state का मतलब जिस condition मैं हम cluster को run करना चाहते हैं. ```
+  ```Kubernete मैं एक actual state होती है और एक desired state होती है. Actual state का मतलब है जिस condition मैं cluster अब running है. Desired state का मतलब जिस condition मैं हम cluster को run करना चाहते हैं. ```
 
-It is the collection of different kubernetes controllers that run permanently in a loop. Its main taks is to watch for change in the desired state of the objects and make sure the actual state change towards a new desired state.
+  It is the collection of different kubernetes controllers that run permanently in a loop. Its main taks is to watch for change in the desired state of the objects and make sure the actual state change towards a new desired state.
 
-e.g.,  
+  e.g.,  
 
-Suppose you want to create a deployment, you specify the desired state in the manifest YAML file. For example, 2 replicas, one volume, mount, etc. The in-built deployment controller ensures that the deployment is in the desired state all the time. If a user updates the deployement with 5 replicas, the deployement contoller regonizes it and ensure the desired stare is 5 replicas.
+  Suppose you want to create a deployment, you specify the desired state in the manifest YAML file. For example, 2 replicas, one volume, mount, etc. The in-built deployment controller ensures that the deployment is in the desired state all the time. If a user updates the deployement with 5 replicas, the deployement contoller regonizes it and ensure the desired stare is 5 replicas.
 
 <br>
 
