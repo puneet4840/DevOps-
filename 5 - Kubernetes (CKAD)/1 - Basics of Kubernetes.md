@@ -190,6 +190,10 @@ Master node consists of multiple components - API Server, etcd, Scheduler, Contr
 
   Actually we use the kubernetes cluster from the cloud provider such as AKS, EKS. So, these kubernetes clusters are provided by cloud provider. ```तो होता क्या है की अगर हमको cloud की किसी service जैसे load balancer या persistent volume जैसे resource की जरुरत हो अपने kubernetes cluster मैं तो हम इन services को cloud से लेके अपने kubernetes मैं use करेंगे. तो इन service और kubernetes cluster को connect करने के लिए हम cloud और clouster के बीच मैं connectivity चाइये तो वो cloud controller manager के through होती है.```
 
+  e.g.,
+
+  ```Suppose हम azure kubernetes service का use कर रहे हैं. AKS पर cluster बना हुआ है. हम चाहते हैं की traffic manage करने के लिए हम azure से load balancer का use करे. तो यहाँ CCM  azure api से interact करेगा की cluster needs a load balancer तो kubernetes cluster को azure api से interect करना azure cloud पर cluster के लिए resources बनाने के लिए यही काम ccm का होता है.```
+
   Functions of CCM:-
 
     - Node Management: Ensures that Kubernetes nodes (the VMs or instances in the cloud) are correctly registered with the Kubernetes cluster.
