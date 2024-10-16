@@ -108,6 +108,8 @@ Master node consists of multiple components - API Server, etcd, Scheduler, Contr
 
   Scheduler is the component in the kubernetes cluster which is used to schedule or assign the pods on the suitable worker node.
 
+  ```Scheduler pod को एक suitable node पर assign करने के लिए काम आता है.```
+
   Api server gets the pod creation request, then api server transer the request to scheduler for scheduling the pod. Scheduler iterates throgh all the worker nodes and evaluate each node's suitablity for the pod. Then scheduler assigns a score to each node. The node with the highest score is selected as the target node for the pod placement. The process of scheduling the pod is called scheduling.
 
   How does Scheduler works:-
@@ -149,6 +151,8 @@ Master node consists of multiple components - API Server, etcd, Scheduler, Contr
 
   Controller Manager is the componenets in the control plane which is used for maintaining the desired state of the clsuter by running the multiple controllers.
 
+  ```Controller manager का काम clsuter को desired state मैं maintain करने के लिए होता है की cluster hamesha जिस state मैं हम चाहते हैं उस state मैं रहे.```
+
   ```Kubernete मैं एक actual state होती है और एक desired state होती है. Actual state का मतलब है जिस condition मैं cluster अब running है. Desired state का मतलब जिस condition मैं हम cluster को run करना चाहते हैं. ```
 
   It is the collection of different kubernetes controllers that run permanently in a loop. Its main taks is to watch for change in the desired state of the objects and make sure the actual state change towards a new desired state.
@@ -177,6 +181,38 @@ Master node consists of multiple components - API Server, etcd, Scheduler, Contr
       - Service information (e.g., endpoints, selectors)
       - Deployment information (e.g., desired replicas, current replicas)
       - Other resource information (e.g., secrets, configmaps)
+
+<br>
+
+- **Cloud Controller Manager (CCM)**
+
+  Cloud Controller Manager is the component of kubernetes control plane which is used to connecting Kubernetes Cluster with Cloud provider. It ensure that kubernetes cluster can work seamlessly with cloud provider resources such as load balancer, storage volumes and virtual machines. Cloud controller manager acts as a bridge between cloud platofrm api and the kubernetes clsuter.
+
+  Actually we use the kubernetes cluster from the cloud provider such as AKS, EKS. So, these kubernetes clusters are provided by cloud provider. ```तो होता क्या है की अगर हमको cloud की किसी service जैसे load balancer या persistent volume जैसे resource की जरुरत हो अपने kubernetes cluster मैं तो हम इन services को cloud से लेके अपने kubernetes मैं use करेंगे. तो इन service और kubernetes cluster को connect करने के लिए हम cloud और clouster के बीच मैं connectivity चाइये तो वो cloud controller manager के through होती है.```
+
+  Functions of CCM:-
+
+    - Node Management: Ensures that Kubernetes nodes (the VMs or instances in the cloud) are correctly registered with the Kubernetes cluster.
+ 
+    - Route Management: Configures networking routes in the cloud to ensure that traffic can flow between nodes and services.
+ 
+    - Load Balancer Management: Manages cloud-based load balancers to expose Kubernetes services outside the cluster.
+ 
+    - Volume Management: Handles the attachment and detachment of cloud storage volumes (like EBS in AWS or Managed Disks in Azure) to Kubernetes pods.
+ <br>
+  Components of CCM:-
+
+    - Node Contoller:  Monitors nodes in the cloud and checks if they are running properly.
+        e.g., If a node (VM) is deleted from the cloud provider, the Node Controller will detect it and remove the node from the Kubernetes cluster as well.
+
+    - Route Contoller: Configures network routes so pods across different nodes can communicate.
+
+    - Service Controller: Manages cloud load balancers.
+        e.g., When you create a Kubernetes service of type LoadBalancer, the Service Controller interacts with the cloud provider to provision a cloud-based load balancer (e.g., an ELB in AWS) and ensures it forwards traffic to the appropriate pods.
+
+    - Persistent Volume Controller: Handles persistent storage volumes.
+        e.g., When a pod requests storage (via Persistent Volume Claims), the Persistent Volume Controller creates, attaches, and mounts the required storage in the cloud (like an AWS EBS or Azure Disk).
+
 
 <br>
 <br>
