@@ -199,7 +199,8 @@ Master node consists of multiple components - API Server, etcd, Scheduler, Contr
     - Load Balancer Management: Manages cloud-based load balancers to expose Kubernetes services outside the cluster.
  
     - Volume Management: Handles the attachment and detachment of cloud storage volumes (like EBS in AWS or Managed Disks in Azure) to Kubernetes pods.
- <br>
+
+
   Components of CCM:-
 
     - Node Contoller:  Monitors nodes in the cloud and checks if they are running properly.
