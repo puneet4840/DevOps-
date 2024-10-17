@@ -271,3 +271,38 @@ A worker node is responsible for:
     ```Container Runtime simply docker image को किसी भी container registry से pull करता है उसका container create करता है और उसको worker node पर run कर देता है.```
 
     When a pod is scheduled to run on a node, the container runtime pulls the container image (for example, from Docker Hub), creates the container, and runs it on the node.
+
+<br>
+<br>
+
+**How the Worker Node Fits into the Kubernetes Workflow**
+
+Let’s take a closer look at the process from when a user deploys an application to when it runs on a worker node.
+
+- **User Sends a Request**:
+  
+    You (the user) define an application (e.g., a web app) that you want to run on the Kubernetes cluster. You create a YAML file describing the desired state of the app, including things like the number of replicas (copies), the container image to use, and the resources (CPU, memory) required.
+
+- **API Server Receives the Request**:
+
+    The API Server in the control plane receives this request and stores it in etcd, which is a key-value store that holds the desired state of the entire cluster.
+
+- **Scheduler Decides Where to Run the Pods**:
+
+    The Scheduler looks at the available worker nodes and decides which node(s) to assign the pod to, based on available resources (CPU, memory) and other constraints (e.g., affinity rules).
+
+- **Kubelet on the Worker Node Takes Action**:
+
+    Once the scheduler assigns a pod to a specific worker node, the Kubelet on that worker node receives the instruction from the API Server. The Kubelet ensures that the container specified in the pod definition is created and running.
+
+- **Container Runtime Runs the Container**:
+
+    The Container Runtime (e.g., Docker) on the worker node pulls the container image from a container registry (like Docker Hub or a private registry). It then creates and starts the container on the worker node.
+
+- **Kube-Proxy Handles Networking**:
+
+    The Kube-Proxy sets up the necessary networking rules so that the pod can communicate with other pods and services in the cluster. For example, if the pod needs to serve a web application, the Kube-Proxy ensures that external traffic can reach the pod.
+
+- **Pod Runs on the Worker Node**:
+
+    Now, the pod (which is essentially a wrapper for one or more containers) is up and running on the worker node. The pod will stay on this node unless it crashes or gets terminated (or the node itself has issues). If something goes wrong, Kubernetes will automatically try to restart the pod or reschedule it on another node.
