@@ -66,6 +66,8 @@ So these are the problems which docker faces. To deal with these problems we use
 
 A kubernetes architecture consists of two components **Master Node** (Control Plane) and **Worker Node**. ```Master node और worker nodes के combination को ही kubernetes cluster बोलते हैं.```
 
+**Node**: A node is a physical machine or virtual machine that contains multiple componenets.
+
 <br>
 <br>
 
