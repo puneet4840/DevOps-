@@ -224,6 +224,8 @@ Master node consists of multiple components - API Server, etcd, Scheduler, Contr
 
 **2 - Worker Node**
 
+A worker node is a virtual machine that runs your containerized applications. It is responsible for running the container inside the pod.
+
 <img src="https://drive.google.com/uc?export=view&id=1Rd6rNU_hoMvp6npP3j6rp9JfN3Ek22lo" width="570" height="450">
 
 This above image shows the kubernetes architecture.
