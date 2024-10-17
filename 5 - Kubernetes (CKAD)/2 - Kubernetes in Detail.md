@@ -1,6 +1,7 @@
 ### How does Kubernetes works - step by step.
 
 - Step 1: **User Sends a Request to the Cluster**
+
   Imagine you want to deploy a web application. You write a configuration file (usually a YAML file) that defines:
     - What container image your application will use.
     - How many instances (pods) you want running.
