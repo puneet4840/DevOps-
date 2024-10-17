@@ -1,14 +1,10 @@
 ### How does Kubernetes works - step by step.
 
 - Step 1: **User Sends a Request to the Cluster**
-
-  Imagine you want to deploy a web application. You write a **configuration file** (usually a YAML file) that defines:
-        - What container image your application will use.
-        - How many instances (pods) you want running.
-        - Any other settings like storage, networking, etc.
-
-    You then submit this configuration to the **Kubernetes API Server** thorough kubectl cli, which is the entry point of the Kubernetes Control Plane.
-
+  Imagine you want to deploy a web application. You write a configuration file (usually a YAML file) that defines:
+    - What container image your application will use.
+    - How many instances (pods) you want running.
+    - Any other settings like storage, networking, etc.
 
 - Step 2: **API Server in the Control Plane**
 
