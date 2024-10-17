@@ -222,10 +222,52 @@ Master node consists of multiple components - API Server, etcd, Scheduler, Contr
 <br>
 <br>
 
-**2 - Worker Node**
-
-A worker node is a virtual machine that runs your containerized applications. It is responsible for running the container inside the pod.
-
 <img src="https://drive.google.com/uc?export=view&id=1Rd6rNU_hoMvp6npP3j6rp9JfN3Ek22lo" width="570" height="450">
 
 This above image shows the kubernetes architecture.
+
+<br>
+<br>
+
+**2 - Worker Node**
+
+A worker node is a virtual machine or physical machine that runs your containerized applications. It is responsible for running the container inside the pod.
+
+```वर्कर नोड का काम आपके एप्लीकेशन को कंटेनर के अंदर रन करने का होता है```
+
+What does a worker node do?
+
+A worker node is responsible for:
+  - Running the actual application(pod) defined by the user.
+  - Ensuring pods are running healthy and up-to-date.
+  - Communicating with contorl plane to receive tasks and updates.
+
+**Components of a worker node**:
+
+- **Pod**: A pod is a smallest deployable unit. ```OR``` A pod is a group of one or more containers with shared storage and network resources. ```OR``` A pod is your running application.
+  
+<br>
+
+- **Kubelet**: Kubelet is the component of worker node that is responsible for managing the pods and communicating with control plane. Ensures the node runs the right pods and reports back to the control plane.
+
+    ```Kubelet simple pod को manage करने के लिए होता है. जब control plane से api server kubelet को command देता है तब kubelet pod को create, update, delete जैसे operations करने के लिए होता है.```
+
+    The Kubelet receives instructions from the API Server (in the control plane) and ensures that the pods are running according to the desired state (as defined by the user).
+
+<br>
+
+- **Kube-Proxy**: Kube-proxy is the component in the worker node with responsible for managing the networking in the cantainer inside the pod. It manages networking to make sure your pods can communicate with each other and the outside world.
+
+    ```Kube-proxy pod के अंदर containers की networking को manage करता है.```
+
+    When you expose pods using a service, kube-proxy creates network rules to send traffic to the backend pods.
+
+    e.g., ```Suppose एक pod के 2 replicas बने हुए हैं उसमे load balancer feature enable है, तो यहाँ kube-proxy 50% trafix replica 1 को और 50% traffic replica 2 को भेजने के लिए responsible होगा.```
+
+<br>
+
+- **Container Runtime**: It the component of worker node which is responsible for running container on the worker node. Populer container runtiem includes (Docker, containerd, CRI-O).
+
+    ```Container Runtime simply docker image को किसी भी container registry से pull करता है उसका container create करता है और उसको worker node पर run कर देता है.```
+
+    When a pod is scheduled to run on a node, the container runtime pulls the container image (for example, from Docker Hub), creates the container, and runs it on the node.
