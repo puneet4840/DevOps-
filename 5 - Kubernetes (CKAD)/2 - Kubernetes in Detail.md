@@ -54,4 +54,14 @@ Here, we are going to setup Multi node Kubernetes cluster on our local machine u
 
 **What is Kind?**
 
-Kind stand for **Kubernetes in Docker** is a tool for running local kubernetes cluster using docker containers in your local machine. This tool is used to experience and test kubernetes in your local environment.
+Kind stand for **Kubernetes in Docker** is a tool for running local kubernetes cluster using docker containers in your local machine. This tool is used to experience and test kubernetes in your local environment. It runs in your docker container. It spin up a docker container and each docker container is treated as a node. Then you can use those nodes as your control plane and worker node.
+
+**Prerequisite before using Kind**
+  - Docker should be installed.
+  - Kubectl should be installed: https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+  - kind should be installed: https://kind.sigs.k8s.io/docs/user/quick-start/
+
+**Documentation for using kind**
+
+  - https://kind.sigs.k8s.io/docs/user/quick-start/
+
