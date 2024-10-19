@@ -45,3 +45,13 @@
 
   So, when a user tries to access your web application (e.g., from a web browser), Kubernetes routes the request to the correct pods via the service, ensuring the application is reachable.
     
+<br>
+<br>
+
+### Setting up Multi-Node Kubernetes Cluster (Kind Cluster) in our Local Machine.
+
+Here, we are going to setup Multi node Kubernetes cluster on our local machine using Kind. We are going to do practical using this Kind cluster.
+
+**What is Kind?**
+
+Kind stand for **Kubernetes in Docker** is a tool for running local kubernetes cluster using docker containers in your local machine. This tool is used to experience and test kubernetes in your local environment.
