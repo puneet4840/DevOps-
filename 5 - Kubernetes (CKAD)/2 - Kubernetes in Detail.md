@@ -69,24 +69,35 @@ Kind stand for **Kubernetes in Docker** is a tool for running local kubernetes c
 
 <br>
 
-**Create Kubernetes Cluser**
+### Create Kubernetes Cluster
 
 To create kubernetes cluster we have to create Master node and Worker node. Kind tool first creates the Master Node which run as a seperate container then it creates the worker node which run as a seperate container. 
 
-1 - Create Master node with latest kubernetes version
+**Create Kubernetes cluster with latest k8s version**
 
-  ```kind create cluster --name <cluster_name>``` : This command directly create the master node with latest kubernetes version.
+To create kubernetes cluster with latest using kind, we need to run the below commands:
 
-  ```
-  kind create cluster --name my-cluster
-  ```
+  - ```kind create cluster --name <cluster_name>```
 
-2 - Create Master node with any selected kubernetes version
+      e.g.,
 
-  ```kind create cluster --image <version_name> --name <cluster_name>``` : This command will create a k8s cluster with your specified version. 
+      ```
+        kind create cluster --name my-cluster
+      ```
 
-  ```
-  kind create cluster --image kindest/node:v1.29.8@sha256:d46b7aa29567e93b27f7531d258c372e829d7224b25e3fc6ffdefed12476d3aa --name my-cluster
-  ```
+  This above command will create a cluster with latest kubernetes version. It will only create control plane.
 
-  <version_name>:- You can take the version name from the given link https://github.com/kubernetes-sigs/kind/releases
+
+**Create Kubernetes cluster with any other selected version**
+
+To create any other selected kubernetes version, we can use below commands:
+
+  - ```kind create cluster --image <image_name> --name <cluster_name>```
+
+      e.g.,
+
+      ```
+        kind create cluster --image kindest/node:v1.29.8@sha256:d46b7aa29567e93b27f7531d258c372e829d7224b25e3fc6ffdefed12476d3aa --name my-cluster
+      ```
+
+  To get images, go to this website: https://github.com/kubernetes-sigs/kind/releases
