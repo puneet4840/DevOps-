@@ -48,6 +48,8 @@
 <br>
 <br>
 
+<hr>
+
 ### Setting up Multi-Node Kubernetes Cluster (Kind Cluster) in our Local Machine.
 
 Here, we are going to setup Multi node Kubernetes cluster on our local machine using Kind. We are going to do practical using this Kind cluster.
