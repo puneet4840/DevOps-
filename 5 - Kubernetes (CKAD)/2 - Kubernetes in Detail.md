@@ -92,7 +92,7 @@ To create multi-node cluster, we have to create a yaml file.
 
 **Step-2:- Create a cluster using that yaml file (cluster_config.yaml) with 1.29 version**
 
-    ```kind create cluster --image kindest/node:v1.29.8@sha256:d46b7aa29567e93b27f7531d258c372e829d7224b25e3fc6ffdefed12476d3aa --name my-cluster --config cluster_config.yaml```
+ ```kind create cluster --image kindest/node:v1.29.8@sha256:d46b7aa29567e93b27f7531d258c372e829d7224b25e3fc6ffdefed12476d3aa --name my-cluster --config cluster_config.yaml```
 
 
 Note: To create a cluster with latest verson, you can remove the --image from the above command.
