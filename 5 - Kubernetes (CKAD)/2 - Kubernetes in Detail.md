@@ -73,31 +73,26 @@ Kind stand for **Kubernetes in Docker** is a tool for running local kubernetes c
 
 To create kubernetes cluster we have to create Master node and Worker node. Kind tool first creates the Master Node which run as a seperate container then it creates the worker node which run as a seperate container. 
 
-**Create Kubernetes cluster with latest k8s version**
+**Create a Multi-Node kubernetes cluster**
 
-To create kubernetes cluster with latest using kind, we need to run the below commands:
+Multi-node kubernetes cluster means one master node (control-plane) and multiple worker nodes.
 
-  - ```kind create cluster --name <cluster_name>```
+To create multi-node cluster, we have to create a yaml file.
 
-      e.g.,
+- Create a Yaml file (cluster_config.yaml): Suppose we are creating cluste with one master node and two worker node
 
-      ```
-        kind create cluster --name my-cluster
-      ```
+  ```
+    kind: Cluster
+  apiVersion: kind.x-k8s.io/v1alpha4
+  nodes:
+    - role: control-plane
+    - role: worker
+    - role: worker
+  ```
 
-  This above command will create a cluster with latest kubernetes version. It will only create control plane.
+- Create a cluster using that yaml file (cluster_config.yaml) with 1.29 version
+
+    ```kind create cluster --image kindest/node:v1.29.8@sha256:d46b7aa29567e93b27f7531d258c372e829d7224b25e3fc6ffdefed12476d3aa --name my-cluster --config cluster_config.yaml```
 
 
-**Create Kubernetes cluster with any other selected version**
-
-To create any other selected kubernetes version, we can use below commands:
-
-  - ```kind create cluster --image <image_name> --name <cluster_name>```
-
-      e.g.,
-
-      ```
-        kind create cluster --image kindest/node:v1.29.8@sha256:d46b7aa29567e93b27f7531d258c372e829d7224b25e3fc6ffdefed12476d3aa --name my-cluster
-      ```
-
-  To get images, go to this website: https://github.com/kubernetes-sigs/kind/releases
+Note: To create a cluster with latest verson, you can remove the --image from the above command.
