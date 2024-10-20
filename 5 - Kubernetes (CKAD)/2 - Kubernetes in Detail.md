@@ -79,10 +79,10 @@ Multi-node kubernetes cluster means one master node (control-plane) and multiple
 
 To create multi-node cluster, we have to create a yaml file.
 
-- Create a Yaml file (cluster_config.yaml): Suppose we are creating cluste with one master node and two worker node
+**Step-1:- Create a Yaml file (cluster_config.yaml)**: Suppose we are creating cluste with one master node and two worker node
 
   ```
-    kind: Cluster
+  kind: Cluster
   apiVersion: kind.x-k8s.io/v1alpha4
   nodes:
     - role: control-plane
@@ -90,7 +90,7 @@ To create multi-node cluster, we have to create a yaml file.
     - role: worker
   ```
 
-- Create a cluster using that yaml file (cluster_config.yaml) with 1.29 version
+**Step-2:- Create a cluster using that yaml file (cluster_config.yaml) with 1.29 version**
 
     ```kind create cluster --image kindest/node:v1.29.8@sha256:d46b7aa29567e93b27f7531d258c372e829d7224b25e3fc6ffdefed12476d3aa --name my-cluster --config cluster_config.yaml```
 
