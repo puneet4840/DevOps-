@@ -96,3 +96,5 @@ To create multi-node cluster, we have to create a yaml file.
 
 
 Note: To create a cluster with latest verson, you can remove the --image from the above command.
+
+**Kubernetes Commands Cheat Sheet**: https://kubernetes.io/docs/reference/kubectl/quick-reference/
