@@ -67,8 +67,6 @@ Kind stand for **Kubernetes in Docker** is a tool for running local kubernetes c
 
   - https://kind.sigs.k8s.io/docs/user/quick-start/
 
-<br>
-
 ### Create Kubernetes Cluster
 
 To create kubernetes cluster we have to create Master node and Worker node. Kind tool first creates the Master Node which run as a seperate container then it creates the worker node which run as a seperate container. 
@@ -98,3 +96,37 @@ To create multi-node cluster, we have to create a yaml file.
 Note: To create a cluster with latest verson, you can remove the --image from the above command.
 
 **Kubernetes Commands Cheat Sheet**: https://kubernetes.io/docs/reference/kubectl/quick-reference/
+
+<hr>
+
+### Pod in Kubernetes.
+
+A pod is the smallest and most basic unit of deployment.
+
+**What is a Pod?**
+
+- Think of a pod as a small package or container for your application.
+
+- Inside this pod there can be one or more **containers**, which are lightweight environment for running applications. Most of time each pod contains just single container, but is special case it may contain multiple containers that work very closely together.
+
+- Pods are designed to be disposable; they can be created, destroyed, and replaced quickly, which helps keep your applications flexible and resilient.
+
+**Purpose of Pod**
+
+- Pods are like wrappers for your application’s container(s), providing them with resources such as storage, networking, and instructions on how to run.
+- Each pod is assigned an IP address, allowing it to communicate within the Kubernetes cluster.
+
+**How pod works?**
+
+- Pods are created and managed by controllers (like Deployments) in Kubernetes. These controllers handle pod replication and scaling, as well as replacement if something goes wrong.
+- Each pod runs on a worker node (a virtual or physical machine in the Kubernetes cluster).
+- Kubernetes schedules pods onto nodes based on available resources, so pods can run on different nodes within the same cluster.
+
+**Example: How a Pod Fits in Kubernetes Workflow**
+
+- Imagine you have a simple web application you want to run on Kubernetes.
+- First, you define your pod in a YAML file with details about the container image, port, and resources.
+- You then apply this YAML file to Kubernetes, and a controller will create the pod for your application.
+- Kubernetes schedules the pod to run on a node, assigning it an IP address, and provides network and storage access as configured.
+- If traffic increases, you can configure Kubernetes to replicate your pod, adding more instances to handle the load.
+
