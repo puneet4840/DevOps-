@@ -210,3 +210,17 @@ configurations:         # This is a dictionary
   language: "English"
 
 ```
+
+<br>
+
+**Basic Structure of Kubernetes YAML file**
+
+Kubernetes YAML file has 4 main sections:-
+
+- **apiVersion**: It specifies the version of kubernetes api.
+
+- **kind**: It tells why type of resource we are creating like Pod, Deployment, service.
+
+- **metadata**: It gives our resource a name and labels to identify it.
+
+- **spec**: It defines the desired state of our resource like what specifications our resource should have.
