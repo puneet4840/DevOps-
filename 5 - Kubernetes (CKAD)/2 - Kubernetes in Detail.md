@@ -125,3 +125,23 @@ A pod is the smallest and most basic unit of deployment.
 - Kubernetes schedules the pod to run on a node, assigning it an IP address, and provides network and storage access as configured.
 - If traffic increases, you can configure Kubernetes to replicate your pod, adding more instances to handle the load.
 
+<br>
+
+**Ways to create a pod in kubernetes**
+
+There are two ways to create a pod in kubernetes:-
+
+- Imperative: In imperative way we simply write the kubectl command to create a pod such as "Kubectl create pod nginx-server --image nginx:latest". This is the way we create a pod using imperative way.
+  
+- Declarative: In declarative way we create yaml file where we define the pod's specification then we apply the yaml file to create a pod such as "kubectl apply -f pod-config.yaml". This is the way we create a pod using or create any resource in kubernetes using declarative way.
+
+
+We create pod or any resource in kubernetes using the yaml file. This is the best practise. So we need to know about how to create resource using yaml file. 
+
+In the next section we are going to learn it.
+
+<br>
+<hr>
+
+### YAML in Kubernetes.
+
