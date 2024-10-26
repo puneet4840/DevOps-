@@ -91,6 +91,7 @@ Note: To create a cluster with latest verson, you can remove the --image from th
 
 **Kubernetes Commands Cheat Sheet**: https://kubernetes.io/docs/reference/kubectl/quick-reference/
 
+<br>
 <hr>
 
 ### Pod in Kubernetes.
