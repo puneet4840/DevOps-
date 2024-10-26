@@ -160,12 +160,12 @@ In kubernetes, YAML is used to describe what we want to create run in the cluste
 - It uses indentation to define the scope of data type.
 
 - YAML supports data-types:
-    - **Strings**: Text values.
+    - **Strings**: Text values. It can be represented by double cotes or withour double cotes.
 
       e.g.,
       ```
         name: "Puneet"
-        company: "Nagarro"
+        company: Nagarro
       ```
       
     - **Numbers**: Plane numeric values.
@@ -195,3 +195,21 @@ In kubernetes, YAML is used to describe what we want to create run in the cluste
           "Maths"
           "Science"
       ```
+
+**e.g., Complete example of above yaml syntax**
+
+```
+name: "Puneet"
+company: Nagarro
+age: 25
+price: 100
+subjects:
+  - "English"
+  - "Maths"
+  - "Science"
+
+subjects:
+  "English"
+  "Maths"
+  "Science"
+```
