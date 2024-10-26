@@ -145,3 +145,53 @@ In the next section we are going to learn it.
 
 ### YAML in Kubernetes.
 
+YAML stand for **Yet Another Markup Language**. 
+
+It is a data format that is easy to read and write. It uses indentation to structure data. It is a case-sensitive language.
+
+Yaml files have '''.yaml''' or '''.yml''' extensions.
+
+In kubernetes, YAML is used to describe what we want to create run in the cluster.
+
+**Basic YAML Syntax**
+
+- YAML uses key-value pair: Each entry is the combination of a key and a value.
+
+- It uses indentation to define the scope of data type.
+
+- YAML supports data-types:
+    - **Strings**: Text values.
+
+      e.g.,
+      ```
+        name: "Puneet"
+        company: "Nagarro"
+      ```
+      
+    - **Numbers**: Plane numeric values.
+
+      e.g.,
+      ```
+        age: 25
+        price: 100
+      ```
+      
+    - **Lists**: Represented with '''-''' for each item.
+ 
+      e.g.,
+      ```
+        subjects:
+          - "English"
+          - "Maths"
+          - "Science"
+      ```
+ 
+    - **Dictionaries**: Represented by indentation.
+ 
+      e.g.,
+      ```
+        subjects:
+          "English"
+          "Maths"
+          "Science"
+      ```
