@@ -196,20 +196,17 @@ In kubernetes, YAML is used to describe what we want to create run in the cluste
           "Science"
       ```
 
-**e.g., Complete example of above yaml syntax**
+**e.g.,** Complete example of above yaml syntax
 
 ```
-name: "Puneet"
-company: Nagarro
-age: 25
-price: 100
-subjects:
-  - "English"
-  - "Maths"
-  - "Science"
+name: "MyApp"           # This is a string value
+version: 1.0            # This is a numeric value
+features:               # This is a list
+  - authentication
+  - notifications
+  - payments
+configurations:         # This is a dictionary
+  theme: "dark"
+  language: "English"
 
-subjects:
-  "English"
-  "Maths"
-  "Science"
 ```
