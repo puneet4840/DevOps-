@@ -57,9 +57,10 @@ spec:
 
     The **kind** field tells Kubernetes what type of resource we are creating. In this case, Deployment means Kubernetes will treat this as a Deployment object. Other options could be Pod, Service, etc., but Deployment is used to manage multiple identical Pods.
 
-- ```metadata:```
-  
-       ```name: nginx-deployment```
+- ```
+    metadata:
+      name: nginx-deployment  
+  ```
 
     The metadata section contains identifying information about the resource. Here, we specify a name nginx-deployment. This name is how Kubernetes identifies this Deployment among all other resources. Names help us manage and refer to resources easily.
 
