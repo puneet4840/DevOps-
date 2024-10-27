@@ -6,4 +6,4 @@ Deployment is the process in kubernetes which is responsible for controlling the
 
 Deployment is the process that is used to manage your pods. Because deployment file has the specification related to the pod.
 
-```डिप्लॉयमेंट एक्चुअली कुबेरनेटेस क्लस्टर को ऑटो- हीलिंग , ऑटो स्केलिंग जैसे फीचर्स प्रोवाइड करता है क्युकी एक डिप्लॉयमेंट यमल फाइल मैं पोड के बारे मैं ऑटो हीलिंग ऑटो स्केलिंग कोनसी कंटेनर इमेज उसे करनी हैकोनसे पोर्ट पर कंटेनर रन करना है ये साड़ी इन्फ़ोर्मतिओ डिप्लॉयमेंट यल फाइल मैं लिखी होती है 
+```Deployment actually kubernetes cluster को Auto - Healing, Auto - Scaling जैसे features provide करता है क्युकी एक deployment YAML file मैं Pod के बारे मैं Auto - Healing, Auto - Scaling, कोनसी container image use करनी है, कोनसे port पर container run करना है. ये सारी information deployment YAML file मैं लिखी होती है.```
