@@ -64,17 +64,18 @@ spec:
 
     The metadata section contains identifying information about the resource. Here, we specify a name nginx-deployment. This name is how Kubernetes identifies this Deployment among all other resources. Names help us manage and refer to resources easily.
 
-- ```spec:```
-  
-       ```replicas: 3```
+- ```
+    spec:
+      replicas: 3 
+  ```
 
     The spec section defines the details of the Deployment. Here, we set replicas: 3, which means we want three identical Pods running at any time. Kubernetes will make sure there are three Pods by creating new ones if they crash or are deleted. These Pods are instances of the application managed by the Deployment.
 
-- ```selector:```
-  
-    ```matchLabels:```
-  
-      ```app: nginx```
+- ```
+    selector:
+      matchLabels:
+        app: nginx 
+  ```
 
     The selector field is a set of rules that help the Deployment find and manage its Pods. In this case, the selector app: nginx looks for Pods that are labeled with app: nginx so it knows which ones to control. This selector and the Pod template labels (in the template section) must match for the Deployment to manage the Pods correctly.
 
