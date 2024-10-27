@@ -213,6 +213,17 @@ configurations:         # This is a dictionary
 
 <br>
 
+**Why YAML in Kubernetes?**
+
+Kubernetes uses YAML files to define the desired state of your infrastructure and applications. When you apply a YAMl configuration, Kubernetes interprets it to create, update and delete resources like Pods, Deployments and Services.
+
+  - Common Kubernetes Resources:
+      - Pod: Smallest unit in deployment.
+      - Deployment: Manages replicas of a pod for availability.
+      - Service: Exposes pod to the network so they can be accessed.
+
+<br>
+
 **Basic Structure of Kubernetes YAML file**
 
 Kubernetes YAML file has 4 main sections:-
@@ -224,3 +235,35 @@ Kubernetes YAML file has 4 main sections:-
 - **metadata**: It gives our resource a name and labels to identify it.
 
 - **spec**: It defines the desired state of our resource like what specifications our resource should have.
+
+
+**Step-by-step writing a kubernetes YAMl file**
+
+A simple pod YAML. This pod running as a nginx container.
+
+```
+apiVersion: v1                    # API version
+kind: Pod                          # We're creating a Pod
+metadata:
+  name: my-first-pod               # Name of the Pod
+  labels:
+    app: myapp                     # Label for organizational purposes
+spec:
+  containers:
+    - name: my-container           # Name of the container
+      image: nginx:latest          # Docker image to use
+      ports:
+        - containerPort: 80        # Port to expose within the container
+
+```
+
+we can create any key-value pair inside the labels.
+
+Once you create a YAML file, you can apply it to your kubernetes cluster.
+
+- Save the file, e.g., ```pod.yaml```.
+- Run the below command to apply it.
+    - ```kubectl apply -f pod.yaml```.
+
+- Verify it's running using below command.
+    - ```kubectl get pods```.
