@@ -114,6 +114,16 @@ spec:
 
   The ports section opens up specific ports on the container. The line containerPort: 80 means that inside the container, Nginx will listen for requests on port 80, which is the standard HTTP port for web servers.
 
+**How Kubernetes uses this above YAML file**
+
+- **Create and Configure a Deployment**:  When this YAML file is applied in Kubernetes (```using kubectl apply -f deployment.yaml```), Kubernetes will create a Deployment named ```nginx-deployment```.
+
+- **Spawn and Manage Pods**: The Deployment will create **3 Pods**, each with the label ```app: nginx```, and keep them running as defined by the ```replicas: 3``` field.
+
+- **Handle Pod Failures**: If any Pod crashes, Kubernetes will automatically create a new one to maintain 3 replicas.
+
+- **Selectors and Labels**: The selector helps the Deployment keep track of only the Pods with the label app: nginx. If the Pods created do not match this label, Kubernetes won’t manage them as part of this Deployment. Let the Deployment know which Pods to manage.
+
 <br>
 
 ### Difference between Container, Pod and Deployment.
@@ -124,6 +134,7 @@ spec:
 
 - **Deployment**: ```Kubernetes ने pod तो बना लिया अब pod को Auto-Heal, Auto-Scale कैसे किया जाये. तो यहाँ deployment process का use किया जाता है. एक deployment.yaml file बनाई जाती है, जिसमे pods की specification और Auto-Scaling के बारे मैं लिखा होता है. तो deployment यहाँ replica set के साथ मिलकर auto - scaling करता है. ```
 
+<br>
 <br>
 
 ### What is Replica-Set?
