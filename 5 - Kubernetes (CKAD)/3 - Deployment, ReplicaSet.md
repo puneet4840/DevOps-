@@ -150,3 +150,84 @@ A **ReplicaSet** in Kubernetes ensures a specified number of Pods (instances of 
 - **Maintains Pod Count**: If you specify that three Pods should be running, the ReplicaSet will create new ones if any go down.
 
 - **Part of Deployment**: Usually, you don’t manage a ReplicaSet directly. When you create a Deployment, it automatically creates and manages the ReplicaSet for you.
+
+
+**How does it works?**
+
+In Kubernetes, the **Deployment** and the **ReplicaSet** work closely together to manage and maintain the desired number of running Pods, ensuring availability and consistency. When you create a Deployment, Kubernetes automatically creates and manages a ReplicaSet to make sure that the desired number of Pods are running at all times.
+
+- **Creating a deployment**
+
+  When you create a **Deployment** using a YAML file (such as ```deployment.yaml```), you define several things:
+
+  - Number of replicas (how many Pods you want running).
+  - Pod template (how each Pod should be set up, including container image and other configurations).
+
+  For example, consider the following YAML file:
+
+  ```
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: my-deployment
+    spec:
+      replicas: 3
+      selector:
+        matchLabels:
+          app: my-app
+      template:
+        metadata:
+          labels:
+            app: my-app
+        spec:
+          containers:
+          - name: my-container
+            image: my-image
+
+  ```
+
+  In this file:
+  - We’re asking Kubernetes to create a Deployment named my-deployment.
+  - We want 3 replicas of the Pods to be running.
+  - We provide a template that describes how each Pod should be created (e.g., with the my-image container).
+
+- **Controller Manager comes in the picture**
+
+  Kubernetes has a background process called the **Controller Manager**. This Controller Manager is like a supervisor: it continuously monitors the cluster’s state and tries to make the current state match the desired state.
+
+  When you create a Deployment, the Controller Manager jumps into action:
+  - Reads the Deployment configuration (like the number of replicas and Pod template).
+  - Creates a ReplicaSet to fulfill the Deployment’s instructions.
+
+- **The role of ReplicaSet**
+
+  The ReplicaSet is an object created by the Deployment, and its sole purpose is to ensure that a specific number of identical Pods are always running.
+
+  In this case:
+  - The ReplicaSet is set to manage **3 replicas**, meaning it will make sure that 3 Pods are running at all times based on the Deployment’s instructions.
+
+  The ReplicaSet:
+  - Creates new Pods if the number of running Pods falls below the desired count (e.g., if a Pod crashes or is deleted).
+  - Removes excess Pods if there are more than the desired number of Pods running.
+
+  The ReplicaSet relies on labels to identify and manage the Pods it controls. In our example, the label ```app: my-app``` is applied to all Pods created by the ReplicaSet, allowing it to recognize and manage only those Pods.
+
+<br>
+
+**How ReplicaSet works in practise**
+
+- **Deployment file is created**:
+  - You run ```kubectl apply -f deployment.yaml```.
+  - The Controller Manager sees this new Deployment and creates a ReplicaSet.
+
+- **ReplicaSet creates Pods**:
+  - The ReplicaSet checks and finds that there are no existing Pods with the label app: my-app.
+  - It creates 3 new Pods with this label to match the replicas: 3 specified in the Deployment.
+
+- **ReplicaSet maintains Pods**:
+  - If one of the Pods crashes, the ReplicaSet notices that only 2 Pods are running.
+  - It creates a new Pod to get back to 3 replicas, maintaining the Deployment’s desired state.
+ 
+- **Deployment updates**:
+  - If you update the Deployment (e.g., change the container image), the Deployment will create a new ReplicaSet to handle the new Pods with the updated configuration.
+  - It will gradually shift traffic to the new Pods while terminating the old Pods managed by the old ReplicaSet.
