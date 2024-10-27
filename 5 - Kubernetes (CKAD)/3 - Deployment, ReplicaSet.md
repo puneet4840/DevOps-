@@ -16,6 +16,11 @@ A **Deployment** in Kubernetes is a way to define the desired state of an applic
 
 **Note**: The standard rule is we only create the deployment then pod is created after the deployment automatically. We don't need to create a pod itself using yaml file. We only create deployment.
 
+**How does deployment works?**
+
+Generally we do not create pod directly rather we create the deployment, that deployment contains pod's specification in deployment.yaml file.
+To create deployment we need deployment.yaml file. When we create deployment then ReplicaSet is created by the deployment automatically, than that ReplicaSet create the pods and maintain the state.
+
 <br>
 
 **e.g.,** Sample deployment.yaml file nginx application.
