@@ -257,7 +257,7 @@ spec:
 
 ```
 
-we can create any key-value pair inside the labels.
+We can create any customized key-value pair inside the labels of our choice.
 
 Once you create a YAML file, you can apply it to your kubernetes cluster.
 
