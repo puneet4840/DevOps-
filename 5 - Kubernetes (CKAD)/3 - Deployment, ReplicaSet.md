@@ -79,6 +79,41 @@ spec:
 
     The selector field is a set of rules that help the Deployment find and manage its Pods. In this case, the selector app: nginx looks for Pods that are labeled with app: nginx so it knows which ones to control. This selector and the Pod template labels (in the template section) must match for the Deployment to manage the Pods correctly.
 
+- ```
+     template:
+      metadata:
+        labels:
+          app: nginx 
+  ```
+
+    The template section describes the configuration of each Pod that will be created by the Deployment. It contains both metadata for identifying the Pods and a spec section that defines the Pod’s contents (containers, images, ports, etc.).
+
+    The metadata in the template has labels which act like tags for each Pod. This label app: nginx must match the selector defined above (matchLabels: app: nginx) so the Deployment knows to manage Pods with this label.
+
+- ```
+    spec:
+      containers:
+  ```
+
+    The spec field under the Pod template defines how each Pod will be set up. In Kubernetes, a Pod can contain one or more containers. Containers are the smallest deployable units in Kubernetes, and each container runs an application.
+
+**Container Definition**
+
+  ```- name: nginx```
+
+  The name field here names the container nginx. Naming a container is helpful for tracking, especially if there are multiple containers in a Pod.
+
+  ``` image: nginx:latest```
+
+  The image field specifies the Docker image that the container should use. Here, nginx:latest is the version of the Nginx image. An image is a lightweight, standalone, and executable software package that includes everything needed to run a piece of software.
+
+  ```
+      ports:
+        - containerPort: 80  
+  ```
+
+  The ports section opens up specific ports on the container. The line containerPort: 80 means that inside the container, Nginx will listen for requests on port 80, which is the standard HTTP port for web servers.
+
 <br>
 
 ### Difference between Container, Pod and Deployment.
