@@ -236,3 +236,63 @@ In Kubernetes, the **Deployment** and the **ReplicaSet** work closely together t
 - **Deployment updates**:
   - If you update the Deployment (e.g., change the container image), the Deployment will create a new ReplicaSet to handle the new Pods with the updated configuration.
   - It will gradually shift traffic to the new Pods while terminating the old Pods managed by the old ReplicaSet.
+
+<br>
+<br>
+
+### Lab 
+
+**Creating a deployment for an Nginx application**-
+
+We are going to deploy nginx application on kubernetes cluster.
+
+**Step-1: - Write the Deployment YAML File**:-
+
+Create a file called ```deployment.yaml``` with the following contents:
+
+```
+apiVersion: apps/v1              # Specifies the API version
+kind: Deployment                 # Specifies that this is a Deployment resource
+metadata:
+  name: nginx-deployment          # The name of the Deployment
+spec:
+  replicas: 3                     # Specifies the number of Pods to run
+  selector:
+    matchLabels:
+      app: nginx                  # Label used to identify the Pods managed by this Deployment
+  template:
+    metadata:
+      labels:
+        app: nginx                # Labels applied to Pods created by this Deployment
+    spec:
+      containers:
+      - name: nginx               # The name of the container
+        image: nginx:1.14.2       # Specifies the Docker image for the Nginx application
+        ports:
+        - containerPort: 80       # Container port that Nginx listens on
+
+```
+
+**Step-2: Apply the YAML file to create the deployment**:-
+
+```kubectl apply -f deployment.yaml```
+
+This command will create a deployment. With the deployment 3 pods will be created with nginx application. Kubernetes will automatically manage the replicas, ensuring that 3 Pods of the Nginx application are always running.
+
+**Step-3: Verify the deployment**:-
+
+```kubectl get deployment```
+
+This command will show the deployment you created for nginx application using above yaml file.
+
+**Step-4: Verify the pods**:-
+
+```kubectl get pods```
+
+This command will show the total 3 pods are running.
+
+**Step-5: Checks status of pod**:-
+
+```kubectl describe pod <pod_name>```
+
+This command will show the each and every details of pod.
