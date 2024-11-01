@@ -44,4 +44,83 @@ Kubernetes has three types of services but mst common are top three services:-
 
   Imagine you have an application with multiple components (like a frontend and a backend) running in different pods. The frontend needs to talk to the backend to get data. Without a stable IP address, it would be hard for the frontend to reliably find the backend pod if it restarts or moves to a different node. A ClusterIP Service provides a fixed IP and DNS name for the backend so that the frontend can always reach it, even if the backend moves or scales up/down.
 
-  
+  **How does a Cluster Ip works?**
+
+    - Pod Creation: First, you create a pod running your application (e.g., a backend application).
+      
+    - Service Creation: You create a ClusterIP Service for the pod. Kubernetes assigns it an internal IP address (called the Cluster IP), and this IP doesn’t change, even if the pod itself changes.
+      
+    - DNS Name Assignment: Kubernetes also assigns a DNS name to this service. Now, other pods can access your application by using this DNS name or the IP address.
+      
+    - Internal Routing: When another pod in the cluster tries to access the application using the ClusterIP, Kubernetes will route the request to the right pod(s).
+
+  **Example of ClusterIp Service**
+
+  Let’s say you have a simple application with two parts:
+
+    - Frontend: Shows a web page to users.
+    - Backend: Provides data to the frontend.
+
+  Here’s how you’d set up a ClusterIP Service to let the frontend talk to the backend:
+
+    - Step 1: Create the Backend Pod.
+      First, you define and create a backend pod.
+
+      ```
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: backend
+          labels:
+            app: backend
+        spec:
+          containers:
+          - name: backend
+            image: my-backend-image:latest
+            ports:
+            - containerPort: 8080
+
+      ```
+
+      In this case, the backend pod is running on port 8080.
+
+    - Step 2: Create a ClusterIP Service for the Backend.
+
+      Next, you create a ClusterIP Service to give this backend pod a stable IP and DNS name.
+
+      ```
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: backend-service
+        spec:
+          selector:
+            app: backend  # This service will route traffic to pods with this label
+          ports:
+            - protocol: TCP
+            port: 80        # Port on the service
+            targetPort: 8080 # Port on the backend container
+          type: ClusterIP
+
+      ```
+
+      Here’s what’s happening in this YAML file:
+
+      - ```selector```: The service will route traffic to any pod with the label app: backend.
+      - ```port```: The service is exposed on port 80 (clients will use this port).
+      - ```targetPort```: Inside the pod, the backend container is actually running on port 8080.
+
+      When you create this service, Kubernetes will:
+
+      1 - Assign it a ClusterIP (an internal-only IP).
+
+      2 - Give it a DNS name based on the service name (backend-service).
+
+      3 - Route any requests to backend-service on port 80 to the backend pod on port 8080.
+
+    - Step 3: Access the Backend Service from the Frontend Pod
+
+      Now, let’s assume you have a frontend pod that needs to get data from the backend. The frontend can reach the backend using the DNS name backend-service (or the ClusterIP).
+
+      In the frontend application code, you would make a request to http://backend-service:80 to connect to the backend service.
+
