@@ -18,4 +18,18 @@ Imagine you have miltiple pods running the same part of your application like on
 
 - **Inside and Outside Communication**: Service controls whether a part of your app can be accessed only by other parts within the cluster or users on the internet.
 
+<br>
 
+### What happen when we do not use Service?
+
+```Suppose we made a deployment with 3 replicas. तो ऐसे मैं 3 pods बन जायेंगे और उनके पास Pod Ip Address होंगे| हमारे पास एक testing team है जो उन application को test करना चाहती है| उसके लिए हमने 3 testers को pods के Ip Address दे दिए| अगर कोई Pod fail हो जाता है तो Replica Set की auto-scaling feature की वजह से वह pod फिर से create कर देगा और उस Pod पर एक नया Ip address आ जायेगा| अगर tester पुराने Ip address से pod को access करेगा तो वह pod access नहीं हो पायेगा kyuki उस pod को नया ip address मिल गया है| ऐसे मैं हमको जो नया Ip address जो create हुआ है उसको tester को देना होगा फिर वह pod access हो पायेगा|```
+
+```तो pod के fail होने पर Ip address change होते रहेंगे| तो ये problem kubernetes service को use करके solve करता है| होता ये है की service create करने पर pod को हम service की ip address से access करते हैं और service pod को उसके selector के through network maintain करता है अगर pod delete भी हो गया तो उस pod का selector same रहेगा और service उस नए pod पर network maintain करता रहेगा| Service एक Ip provide करता है उस Ip से हम pod के अंदर application को access कर पाते हैं```
+
+### Types of Serives:
+
+Kubernetes has three types of services but mst common are top three services:-
+
+- **ClusterIP (Default)**
+
+  ClusterIP is the default service created when we create the Kubernetes cluster
