@@ -38,7 +38,7 @@ Kubernetes has three types of services but mst common are top three services:-
 
   A ClusterIp service is a type of service in kubernetes that gives an application (running inside the pod) a stable internal ip address. This ip is only accessible within the cluster. This means that other application or pods in the cluster can access it, but it hidden from the outside world.
 
-  <img src="https://drive.google.com/uc?export=view&id=1BS91cKgU8ehENzEpLQmpEdXoibEmDNIl" width="500" height="460">
+  <img src="https://drive.google.com/uc?export=view&id=1BS91cKgU8ehENzEpLQmpEdXoibEmDNIl" width="700" height="430">
 
   **Why do we need ClusterIP?**
 
