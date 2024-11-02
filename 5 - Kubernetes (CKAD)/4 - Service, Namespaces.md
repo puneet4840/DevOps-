@@ -259,3 +259,24 @@ Kubernetes has three types of services but mst common are top three services:-
       - Routing to Pod: Kubernetes receives the request on port 30008 and forwards it to the nginx pod running on port 8080 (using the ClusterIP service internally).
       - Response Handling: The pod processes the request and sends the response back through the same route.
       
+<br>
+
+- **Load Balancer**
+
+  A Load Balancer service in the kubernetes helps exposes your application to the internet, means allowing people outside your kubernetes cluster to access it. Think you have given your app a public address so anyone can reach it.
+
+  It also spreads the incoming traffic across multiple copies (replicas) of your application.
+
+  ```Load Balancer service, kubernetes cluster के अंदर created application को internet पर expose करती है, जिससे एक public Ip के through लोग application को access कर सकें और Load Balancer, application के replica (pods) पर incoming traffic load को distribute भी करती है.```
+
+  **Why use a Load Balancer Service?**
+
+  When you deploy an application in kubernetes, you often create multiple replicas to handle traffic. But by default, these replicas are not directly accessible from outside the cluster. So we use the Load Balancer service. Below are the following reasons:
+
+  - **Public IP**: A Load Balancer service gives your app a public ip address to make it accessible from anywhere on the internet.
+  - **Distributes Traffic**: A Load Balancer distributes traffic across multiple replicas so the app runs smoothly and scales with demand.
+
+
+  **How does a Load Balancer service works?**
+    - You set up the LoadBalancer service in your Kubernetes cluster using yaml and link it to your deployment.
+    - 
