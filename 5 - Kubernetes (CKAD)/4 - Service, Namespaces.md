@@ -278,5 +278,49 @@ Kubernetes has three types of services but mst common are top three services:-
 
 
   **How does a Load Balancer service works?**
-    - You set up the LoadBalancer service in your Kubernetes cluster using yaml and link it to your deployment.
-    - 
+
+    - **Application Deployment in Kubernetes**:
+        - First, we deploy our application in Kubernetes, often as a Deployment with several replicas.
+        - These replicas are separate copies of the application, running in different pods to make sure our application can handle more traffic and recover quickly if one pod fails.
+
+    - **Creating the LoadBalancer Service in Cluster**:
+        - Next, we create a LoadBalancer service in Kubernetes and associate it with the application.
+          
+        - This LoadBalancer service is configured to expose our application to the outside world by creating a public IP address.
+          
+        - In the LoadBalancer service configuration, we specify:
+            - The **targetPort**, which is the port inside the application pods where the app listens for requests (like port 80 for an NGINX server).
+            - The **service port** (often the same as the targetPort), which is the port that people will access from outside.
+            - A selector to match and connect to our application’s pods.
+
+    - **Kubernetes Requests an External Load Balancer**
+        - After we create the LoadBalancer service, Kubernetes talks to the cloud provider where the cluster is hosted (like AWS, Azure, or Google Cloud).
+     
+        - Kubernetes tells the cloud provider to set up an **external load balancer** that will give our application a **public IP** address.
+     
+
+    - **Cloud Provider Creates the Load Balancer and Assigns an IP**
+        - The cloud provider then creates an external load balancer (outside the Kubernetes cluster).
+     
+        - This load balancer is assigned a public IP address, which is the address people will use to access the application.
+     
+        - The cloud provider then connects this load balancer to our Kubernetes cluster.
+     
+    - **LoadBalancer Service Connects to Application Pods**
+        - Kubernetes sets up the LoadBalancer service with the public IP address provided by the cloud provider.
+     
+        - The LoadBalancer service knows which pods to connect to by looking at the selector labels we defined (e.g., app: my-app). This selector helps the LoadBalancer find and connect to all the replicas of our application.
+     
+        - Internally, the LoadBalancer service spreads out the incoming requests across all available replicas (pods) of the application.
+     
+    - **Traffic Flow: Request to Application**
+        - When someone visits the public IP address of the LoadBalancer (e.g., http://<public-ip>):
+            - The request reaches the cloud provider’s external load balancer.
+            - The external load balancer forwards the request to the LoadBalancer service inside the Kubernetes cluster.
+            - The LoadBalancer service then distributes the request to one of the available application pods based on its selector.
+            - The pod responds, sending the response back along the same route to the user.
+
+    - **Handling Increased Load or Scaling**
+        - If we increase the number of replicas, the LoadBalancer service will automatically start sending traffic to the new replicas.
+          
+        - Likewise, if one pod fails, the LoadBalancer service will reroute traffic to the remaining healthy pods, ensuring the application stays accessible.
