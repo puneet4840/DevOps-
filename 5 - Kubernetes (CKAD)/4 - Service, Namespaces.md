@@ -324,3 +324,103 @@ Kubernetes has three types of services but mst common are top three services:-
         - If we increase the number of replicas, the LoadBalancer service will automatically start sending traffic to the new replicas.
           
         - Likewise, if one pod fails, the LoadBalancer service will reroute traffic to the remaining healthy pods, ensuring the application stays accessible.
+
+<br>
+
+  **Example (LAB): Deploying a Simple Nginx Web Application Using LoadBalancer**
+
+  - **Create a Deployment for Your App using** ```nginx-deployment.yaml```:
+
+    ```
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: nginx-deployment
+      spec:
+        replicas: 3                            # Creates 3 replicas
+        selector:
+          matchLabels:
+            app: nginx-app
+        template:
+          metadata:
+            labels:
+              app: nginx-app                   # Label for identifying replicas
+          spec:
+            containers:
+            - name: nginx
+              image: nginx:latest              # Uses the latest NGINX image
+              ports:
+              - containerPort: 80              # NGINX listens on port 80 inside each pod
+    ```
+
+    Explanation of the Deployment YAML:
+
+      - replicas: 3 means three copies of the NGINX server will run in the cluster.
+      - selector & labels allow the service to know which pods to connect to (we’ll use this in the next step).
+      - containerPort: 80 is the port where NGINX listens for incoming traffic.
+
+    To apply this file, run:
+
+      ```kubectl apply -f nginx-deployment.yaml```
+
+    This command creates the deployment with three NGINX pods.
+
+  - **Create a LoadBalancer Service**
+
+    Now, let’s create a LoadBalancer service that will give our NGINX app a public IP and distribute traffic across the replicas.
+
+    Service File (nginx-loadbalancer-service.yaml):
+    ```
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: nginx-loadbalancer
+      spec:
+        type: LoadBalancer                     # Exposes the service to the internet
+        selector:
+          app: nginx-app                       # Connects to pods with this label
+        ports:
+        - protocol: TCP
+          port: 80                             # External port for the service
+          targetPort: 80  
+    ```
+
+    Explanation of the Service YAML:
+
+      - type: LoadBalancer tells Kubernetes to set up an external IP for this service.
+      - selector: app: nginx-app connects the service to our NGINX pods using the label.
+      - port: 80 is the port on the LoadBalancer’s IP that users will access.
+      - targetPort: 80 directs the traffic to port 80 inside each NGINX pod.
+
+    To create this service, run:
+
+      ```kubectl apply -f nginx-loadbalancer-service.yaml```
+
+  - **Check the External IP Address**
+
+    Once the LoadBalancer service is created, Kubernetes will work with the cloud provider to set up a public IP address. You can check if the IP address is ready by running:
+
+      ```kubectl get svc nginx-loadbalancer```
+
+    You’ll see output similar to this:
+
+      ```
+        NAME                 TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)        AGE
+        nginx-loadbalancer   LoadBalancer   10.96.95.215     52.23.145.198    80:31005/TCP   2m
+
+      ```
+
+    The EXTERNAL-IP (in this case, 52.23.145.198) is your app’s public IP.
+
+
+  - **Access the App Using the External IP**
+
+    You can access the NGINX web server using the external IP:
+
+      ```http://52.23.145.198```
+
+    Or, using curl in your terminal:
+
+      ```curl http://52.23.145.198```
+
+    
