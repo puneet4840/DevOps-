@@ -124,3 +124,128 @@ Kubernetes has three types of services but mst common are top three services:-
 
       In the frontend application code, you would make a request to http://backend-service:80 to connect to the backend service.
 
+<br>
+
+- **NodePort**
+
+  A NodePort Service allows you to access an application running inside the Kubernetes cluster using Ip Address of any worker node and a fixed port (called the NodePort). This port remains same across all the worker nodes, making it easy to access the app from outside the cluster.
+
+  ```NodePort service के through हम application को worker node की Ip address और उसके एक port जिसको हम NodePort कहते हैं, उसपर access करते हैं.```
+
+  NodePort service is good for testing and simple external access, but not for large-scale production. If you want to test your app locally and want to see it from your browser so you can use NodePort service.
+
+  **What problem does NodePort solves?**
+
+  Imagine you have an app running in Kubernetes, like a small website. By default, Kubernetes applications are only accessible inside the cluster. But sometimes, we want to make these apps available outside the cluster. A NodePort is a solution for this because it allows access from outside by opening a port called NodePort on each worker node.
+
+  **How does NodePort works?**
+
+    - When you create a NodePort service, kubernetes assigns a port from a specific range (30000 - 32767) to your service.
+    - This port, called **NodePort** is opened on every node in the cluster, allowing traffic from outside the cluster to reach the service.
+    - Traffic that comes to a node's IP address on this NodePort is forwarded to the pods in the cluster.
+
+  **Example: Deploying a Simple Web Application Using NodePort**
+
+  Let's go through a simple example to understand how to set up a NodePort service and access an application.
+
+    - **Create a deployment with 3 replicas:**
+
+        Create the deployment YAML file named nginx-deployment.yaml:
+
+        ```
+          apiVersion: apps/v1
+          kind: Deployment
+          metadata:
+            name: my-nginx-deployment
+          spec:
+            replicas: 3                       # Number of replicas
+            selector:
+              matchLabels:
+                app: my-nginx-app
+            template:  
+              metadata:
+                labels:
+                  app: my-nginx-app           # Label to identify pods
+              spec:
+                containers:
+                - name: nginx
+                  image: nginx:latest          # Using the latest NGINX image
+                  ports:
+                  - containerPort: 80          # Port where NGINX listens inside the pod
+
+        ```
+
+        In this configuration:
+          - replicas: 3 tells Kubernetes to keep 3 replicas (3 pods) running.
+          - app: my-nginx-app is a label that we’ll use to link this Deployment to a Service.
+
+    - **Deploy the Deployment**:
+      
+        Run the following command in your terminal to create the Deployment:
+      
+        ```kubectl apply -f nginx-deployment.yaml```
+
+    - **Verify the Deployment**:
+
+        Use this command to check if the pods are running:
+
+        ```kubectl get deployments```
+        ```kubectl get pods```
+
+    - **Create the NodePort Service**
+
+      Now, let’s expose the Deployment with a NodePort Service. This will open a specific port on each node in your cluster, allowing access to the NGINX web server from outside.
+
+      Create a ```nginx-service.yaml``` YAML File for the NodePort Service
+      
+        ```
+          apiVersion: v1
+          kind: Service
+          metadata:
+            name: my-nginx-service
+          spec:
+            type: NodePort                       # NodePort to expose it outside the cluster
+            selector:
+              app: my-nginx-app                  # Selects the pods with this label
+            ports:
+            - protocol: TCP
+              port: 80                         # Internal service port
+              targetPort: 80                   # Port where the pod’s container listens
+              nodePort: 30008                  # External port (must be between 30000 and 32767)
+
+        ```
+
+        Explanation:
+
+        - ```type: NodePort``` tells Kubernetes to create a NodePort Service.
+        - ```port: 80``` is the internal port for the Service.
+        - ```targetPort: 80``` is the port on the pod’s container (where NGINX is listening).
+        - ```nodePort: 30008``` is the external port that Kubernetes will open on each node to access the app from outside.
+
+    - **Deploy the Service**:
+
+      Run the following command to create the NodePort Service:
+
+      ```kubectl apply -f nginx-service.yaml```
+
+    - **Verify the Service**:
+
+      ```kubectl get services```
+
+      You should see ```my-nginx-service``` with Type as ```NodePort```, and it should list the nodePort as ```30008```.
+
+    - **Access the Application**:
+
+      Now, we can access the NGINX web server from outside the cluster.
+
+      - Get the Node’s IP Address:
+
+        ```kubectl get nodes -o wide```
+
+        Let’s say the IP address of one of your nodes is ```10.0.0.5```.
+
+        You can access the NGINX web server by navigating to the following URL in a browser or using curl:
+
+        ```curl http://10.0.0.5:30008```
+
+        This will display the default NGINX welcome page if everything is set up correctly.
