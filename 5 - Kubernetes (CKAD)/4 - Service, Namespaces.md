@@ -144,7 +144,7 @@ Kubernetes has three types of services but mst common are top three services:-
     - This port, called **NodePort** is opened on every node in the cluster, allowing traffic from outside the cluster to reach the service.
     - Traffic that comes to a node's IP address on this NodePort is forwarded to the pods in the cluster.
 
-  **Example: Deploying a Simple Web Application Using NodePort**
+  **Example (LAB): Deploying a Simple Web Application Using NodePort**
 
   Let's go through a simple example to understand how to set up a NodePort service and access an application.
 
