@@ -171,7 +171,7 @@ Kubernetes has three types of services but mst common are top three services:-
                 - name: nginx
                   image: nginx:latest          # Using the latest NGINX image
                   ports:
-                  - containerPort: 80          # Port where NGINX listens inside the pod
+                  - containerPort: 8080        # Port where NGINX listens inside the pod
 
         ```
 
@@ -210,7 +210,7 @@ Kubernetes has three types of services but mst common are top three services:-
             ports:
             - protocol: TCP
               port: 80                         # Internal service port
-              targetPort: 80                   # Port where the pod’s container listens
+              targetPort: 8080                 # Port where the pod’s container listens
               nodePort: 30008                  # External port (must be between 30000 and 32767)
 
         ```
@@ -219,7 +219,7 @@ Kubernetes has three types of services but mst common are top three services:-
 
         - ```type: NodePort``` tells Kubernetes to create a NodePort Service.
         - ```port: 80``` is the internal port for the Service.
-        - ```targetPort: 80``` is the port on the pod’s container (where NGINX is listening).
+        - ```targetPort: 8080``` is the port on the pod’s container (where NGINX is listening).
         - ```nodePort: 30008``` is the external port that Kubernetes will open on each node to access the app from outside.
 
     - **Deploy the Service**:
@@ -249,3 +249,13 @@ Kubernetes has three types of services but mst common are top three services:-
         ```curl http://10.0.0.5:30008```
 
         This will display the default NGINX welcome page if everything is set up correctly.
+
+
+    - **How Kubernetes manage NodePort traffic**
+
+      When you send a request to ```http://10.0.0.5:30008```, here’s how Kubernetes handles it:
+
+      - Node Port Mapping: The NodePort Service listens on port 30008 of every node in the cluster.
+      - Routing to Pod: Kubernetes receives the request on port 30008 and forwards it to the nginx pod running on port 8080 (using the ClusterIP service internally).
+      - Response Handling: The pod processes the request and sends the response back through the same route.
+      
