@@ -275,6 +275,9 @@ Kubernetes has three types of services but mst common are top three services:-
 
   - **Public IP**: A Load Balancer service gives your app a public ip address to make it accessible from anywhere on the internet.
   - **Distributes Traffic**: A Load Balancer distributes traffic across multiple replicas so the app runs smoothly and scales with demand.
+  - **Service Discovery**: It is a process that Load Balancer automatically detect pods using its labels and selector to distribute traffic on newly created pod.
+ 
+      ```Suppose एक pod fail हुआ और auto - healing की वजह से वह फिर से create हुआ , Auto - healing के बाद उस pod को एक नया Ip Address मिल जाता है, तो Load Balancer उस fail हुए pod को कैसे पेहचंगे और traffic route करेगा क्युकी उस pod को तो नया Ip assign हो गया है| तो यहाँ Service Discovery concept आता है| होता यह है की Load Balancer pods पर traffic route उसके ip address से न करके बल्कि उसके labels एंड selector से करता है| Labels और Selector हर pod पर same रहते हैं| यही Service Discovery का concept है|  
 
 
   **How does a Load Balancer service works?**
