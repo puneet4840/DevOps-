@@ -426,4 +426,87 @@ Kubernetes has three types of services but mst common are top three services:-
 
       ```curl http://52.23.145.198```
 
-    
+
+<br>
+<br>
+
+# Namespace in Kubernetes
+
+Namespace is a concept in Kubernetes which is used to divide the cluster resources into groups.
+
+```Namespace, एक Azure resource group की तरह है. जैसे हम azure मैं resources को अलग-अलग groups मैं divide कर देता है वैसे ही namespace के through हम kubernetes मैं resources को अलग अलग groups मैं divide कर देते हैं.```
+
+In Kubernetes, namespaces help you separate and organize different environments (like development, testing, and production) or different teams’ work inside one Kubernetes cluster.
+
+
+**Why use Namespace?**
+
+- **Keep Things Organized**: Just like different folders on your computer for different projects, namespaces let you organize resources like pods, services, and other components.
+- **Manage Resources**: Kubernetes lets you set resource limits per namespace, so you can control how much memory or CPU a project or team can use.
+- **Control Access**: You can set permissions per namespace, meaning you can control who can see or modify resources within a namespace.
+
+**How namespace works in kubernetes?**
+
+Each resource (like a Pod or Service) that you create in Kubernetes exists in a namespace. If you don’t specify a namespace, Kubernetes puts it in the **default** namespace.
+
+  - **Default Namespaces in Kubernetes**:
+      - Kubernetes clusters come with a few predefined namespaces:
+          - **default**: This is the main, general-purpose namespace where resources go if no other namespace is specified.
+          - **kube-system**: Used by Kubernetes itself to hold components that make the cluster work (like controllers and network management).
+          - **kube-public**: This is rarely used, but it’s accessible by everyone in the cluster. It’s meant for resources that need to be public.
+
+**Creating a Namespace**
+
+To create a namespace we can create in two ways:
+
+1 - **Using kubectl commands**:
+
+  ```kubectl create namespace my-namespace```
+
+2 - **Using Yaml files**:
+
+  ```
+    apiVersion: v1
+    kind: Namespace
+    metadata:
+      name: my-namespace
+  ```
+
+  Save this as my-namespace.yaml, then run:
+
+  ```kubectl apply -f my-namespace.yaml```
+
+  This creates a new namespace called my-namespace where you can now create resources.
+
+
+**Working Within a Namespace**
+
+When creating resources in Kubernetes (like deployment or services), you can specify which namespace they belong to. There are two main ways to do this:
+
+  - **Using the -n flag**:
+
+    ```kubectl create -f deployment.yaml -n my-namespace```
+
+  - **Setting the namespace in the YAML file**:
+
+    ```
+      apiVersion: v1
+      kind: Deployment
+      metadata:
+        name: my-pod
+        namespace: my-namespace
+    ```
+
+**Listing and Accessing Resources in a Namespace**
+
+  - To see all namespaces in the cluster:
+
+    ```kubectl get namespaces```
+
+  - To list resources within a specific namespace, use the -n flag:
+
+    ```kubectl get pods -n my-namespace```
+
+  - To see all resources across all namespaces:
+
+    ```kubectl get all -A```
