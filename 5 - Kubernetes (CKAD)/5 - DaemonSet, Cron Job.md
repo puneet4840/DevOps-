@@ -140,3 +140,148 @@ Use a DaemonSet to run a logging agent on every node. This logging agent will:
   - Log Collection: It gathers logs from system services and all containers running on the node.
   - Log Processing: Fluentd can filter or modify the logs as needed (e.g., remove sensitive data, format logs).
   - Log Shipping: Fluentd sends the processed logs to the central logging service, such as Elasticsearch.
+
+
+<br>
+<br>
+
+# Cronjob in Kubernetes
+
+A **Cron job** is a way to run the specific tasks automatically at specific times, dates, or intervals, much like the traditional cron jobs in Linux.
+
+**Why Use a CronJob?**
+
+- Perform routine maintenance tasks, like cleaning up logs or temporary files.
+- Backup your database regularly.
+- Run reports at the end of every day.
+- Send emails or notifications on a schedule.
+
+**How Does a CronJob Work?**
+
+A CronJob manages the execution of Jobs in Kubernetes. A Job is a one-time task that runs to completion. A CronJob schedules and runs these jobs at specified times.
+
+**Key Concepts**
+
+- **Schedule**: Defines when the job should run. It uses cron syntax (e.g., */5 * * * * for every 5 minutes).
+- **Job Template**: Specifies what the job will do when it runs.
+- **Concurrency Policy**: Controls how jobs run if the previous job is still running.
+- **Starting Deadline**: How long Kubernetes should wait before aborting a job that couldn’t start on time.
+- **History Limits**: How many successful or failed job instances Kubernetes should keep.
+
+**Cron Syntax**
+
+```
+* * * * *
+| | | | |
+| | | | +---- Day of the week (0 - 7) (Sunday is 0 or 7)
+| | | +------ Month (1 - 12)
+| | +-------- Day of the month (1 - 31)
+| +---------- Hour (0 - 23)
++------------ Minute (0 - 59)
+
+```
+
+Examples:
+
+- ```*/5 * * * *``` – Every 5 minutes.
+- ```0 0 * * *``` – Every day at midnight.
+- ```0 9 * * 1``` – Every Monday at 9 AM.
+
+<br>
+
+### Example(LAB): Database Backup
+
+Let’s create a CronJob that backs up a database every night at midnight. Automates daily backups of a PostgreSQL database. Backup files on the host machine’s /mnt/backups directory.
+
+```
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: db-backup
+spec:
+  schedule: "0 0 * * *"  # Every day at midnight
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: backup
+            image: postgres:13
+            env:
+            - name: PGHOST
+              value: your-db-host
+            - name: PGUSER
+              value: your-db-user
+            - name: PGPASSWORD
+              value: your-db-password
+            - name: PGDATABASE
+              value: your-database
+            command:
+            - /bin/sh
+            - -c
+            - pg_dumpall -h $PGHOST -U $PGUSER > /backups/db-$(date +\%Y-\%m-\%d).sql
+          restartPolicy: OnFailure
+          volumes:
+          - name: backup-volume
+            hostPath:
+              path: /mnt/backups
+          volumeMounts:
+          - name: backup-volume
+            mountPath: /backups
+
+```
+
+Explanation:
+- schedule: Runs at midnight daily.
+- PostgreSQL container: Runs the ```pg_dumpall``` command to back up the database.
+- Volumes: Saves the backup to ```/mnt/backups``` on the host machine.
+
+**Applying the CronJob**
+
+- Save the above YAML as ```cronjob.yaml```.
+
+- Apply it using:
+
+  ```kubectl apply -f cronjob.yaml```
+
+- Check the status of the CronJob:
+
+  ```kubectl get cronjob```
+
+- View logs of a completed job:
+
+  ```kubectl get jobs```
+
+- Then, view the logs of a specific job (replace JOB_NAME with the actual job name):
+
+  ```kubectl logs job/JOB_NAME```
+
+
+**What Happens During Execution?**
+
+- **Midnight Trigger**:
+
+  - At midnight each day, Kubernetes triggers this CronJob.
+
+- **Job Creation**:
+
+  - A Job is created based on the defined template.
+
+- **Pod Execution**:
+
+  - A Pod is launched running the ```postgres:13``` container.
+  - The ```pg_dumpall``` command runs, connecting to the specified database using the provided environment variables.
+ 
+- **Backup Storage**:
+
+  - The backup is saved to ```/backups/db-YYYY-MM-DD.sql``` within the container.
+  - This directory is mapped to ```/mnt/backups``` on the host, ensuring the backup persists outside the container.
+ 
+- **Restart on Failure:**
+
+  - If the job fails, Kubernetes will retry it based on the ```OnFailure``` policy.
+ 
+
+**Example Output**
+
+If today is ```November 3, 2024```, the backup file will be named ```db-2024-11-03.sql``` and stored in ```/mnt/backups``` on the host machine.
