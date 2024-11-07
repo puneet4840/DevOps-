@@ -153,26 +153,6 @@ Now, the pod my-database-pod is allowed to be scheduled on the node with the tai
 
     Create a YAML file named gpu-pod.yaml:
 
-     ```
-      apiVersion: v1
-      kind: Pod
-      metadata:
-        name: gpu-app
-      spec:
-        containers:
-        - name: gpu-container
-          image: nvidia/cuda:11.0-base   # Sample GPU-based image
-          resources:
-            limits:
-              nvidia.com/gpu: 1          # Request 1 GPU
-          command: ["nvidia-smi"]        # Run nvidia-smi to check GPU details
-        tolerations:
-        - key: "gpu"
-          operator: "Equal"
-          value: "true"
-          effect: "NoSchedule"
-     ```
-
     Explanation:
 
       - ```tolerations``` section: This pod has a toleration that matches the ```gpu=true:NoSchedule``` taint on node3, allowing it to be scheduled there.
