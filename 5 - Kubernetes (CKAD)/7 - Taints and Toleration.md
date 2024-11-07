@@ -152,3 +152,88 @@ Now, the pod my-database-pod is allowed to be scheduled on the node with the tai
     Now, let’s create a GPU-based application pod that can tolerate the taint on node3.
 
     Create a YAML file named gpu-pod.yaml:
+
+      ```
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: gpu-app
+        spec:
+          containers:
+          - name: gpu-container
+            image: nvidia/cuda:11.0-base   # Sample GPU-based image
+            resources:
+              limits:
+                nvidia.com/gpu: 1          # Request 1 GPU
+            command: ["nvidia-smi"]        # Run nvidia-smi to check GPU details
+          tolerations:
+          - key: "gpu"
+            operator: "Equal"
+            value: "true"
+            effect: "NoSchedule"
+
+      ```
+    Explaination:
+    - ```tolerations``` section: This pod has a toleration that matches the gpu=true:NoSchedule taint on node3, allowing it to be scheduled there.
+    - ```resources.limits``` section: Specifies the pod requires a GPU (```nvidia.com/gpu: 1```).
+    - ```nvidia/cuda:11.0-base image```: A sample GPU-based image that can run GPU workloads (```requires NVIDIA runtime```).
+
+- **Deploy the GPU-Based Pod**
+
+    Apply the YAML file to create the GPU-based pod:
+
+    ```kubectl apply -f gpu-pod.yaml```
+
+    Kubernetes will schedule this pod on **node3** since it has the right toleration and requests a GPU.
+
+- **Verify the Pod is Running on Node3**
+
+  Check where your gpu-app pod is scheduled:
+
+  ```kubectl get pods -o wide```
+
+  Expected output:
+
+  ```
+    NAME        READY   STATUS    NODE
+    gpu-app     1/1     Running   node3
+  ```
+
+  The **gpu-app** pod should be running on **node3** because it has a matching toleration and requires a GPU.
+
+- **Try to Deploy a Non-GPU Pod Without Toleration**
+
+  Let’s try deploying a non-GPU application and see if it gets scheduled on node3.
+
+  Create a YAML file named ```web-pod.yaml```:
+
+    	```
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: web-app
+        spec:
+          containers:
+          - name: web-container
+            image: nginx  # Non-GPU-based container image
+      ```
+
+    Apply this pod:
+
+    ```kubectl apply -f web-pod.yaml```
+
+    Since web-app doesn’t have the right toleration, Kubernetes will not schedule it on node3. Instead, it will be scheduled on one of the other nodes.
+
+    To confirm, check where the **web-app** pod is running:
+
+    ```kubectl get pod -o wide```
+
+    Expected output:
+
+    ```
+      NAME        READY   STATUS    NODE
+      gpu-app     1/1     Running   node3
+      web-app     1/1     Running   node1  (or node2)
+    ```
+
+    
