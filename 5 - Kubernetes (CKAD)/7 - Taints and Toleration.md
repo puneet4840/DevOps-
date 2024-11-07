@@ -13,9 +13,9 @@ If you want to restrict who can enter a room, you can put a “No Entry” sign 
 
 For example:
 
-- You have a room (node) in the house reserved only for studying (database work).
-- You put up a “No Entry – Study Only” sign (a taint) on that room.
-- Now, only people (pods) who have permission to study (work as a database) can go into that room.
+  - You have a room (node) in the house reserved only for studying (database work).
+  - You put up a “No Entry – Study Only” sign (a taint) on that room.
+  - Now, only people (pods) who have permission to study (work as a database) can go into that room.
 
 ```
 OR
@@ -31,11 +31,11 @@ It is like a key-valur pair on the node.
 
 A taint has three components:
 
-- **Key**: Identifies the type of taint (e.g., key=dedicated).
+  - **Key**: Identifies the type of taint (e.g., key=dedicated).
   
-- **Value**: Adds more context to the key (e.g., dedicated=database).
+  - **Value**: Adds more context to the key (e.g., dedicated=database).
   
-- **Effect**: Specifies the action to take when a pod doesn't tolerate the taint:
+  - **Effect**: Specifies the action to take when a pod doesn't tolerate the taint:
   
     - **NoSchedule**: Pods without a matching toleration won’t be scheduled on this node.
     - **PreferNoSchedule**: Kubernetes tries to avoid scheduling pods here, but it’s not a strict rule.
@@ -84,9 +84,9 @@ spec:
 ```
 
 Here:
-- key: ```"dedicated"``` matches the taint’s key.
-- value: ```"database"``` matches the taint’s value.
-- effect: ```"NoSchedule"``` matches the taint’s effect.
+  - key: ```"dedicated"``` matches the taint’s key.
+  - value: ```"database"``` matches the taint’s value.
+  - effect: ```"NoSchedule"``` matches the taint’s effect.
 
 Now, the pod my-database-pod is allowed to be scheduled on the node with the taint ```dedicated=database:NoSchedule```.
 
@@ -94,17 +94,18 @@ Now, the pod my-database-pod is allowed to be scheduled on the node with the tai
 
 ###  How Taints and Tolerations Work Together
 
-- **Taints** prevent pods from being scheduled on certain nodes.
-- **Tolerations** allow specific pods to bypass the taints.
+  - **Taints** prevent pods from being scheduled on certain nodes.
+  - **Tolerations** allow specific pods to bypass the taints.
 
 If a node has a taint and a pod doesn’t have a corresponding toleration, Kubernetes won’t schedule the pod on that node. However, if the pod has a toleration that matches the node's taint, Kubernetes allows it to be scheduled there.
 
 ### When to Use Taints and Tolerations
 
-- **Dedicated Nodes**: Use taints to reserve nodes for specific types of work, like databases or high-priority applications.
-- **Separating Workloads**: Use them to prevent regular apps from running on nodes reserved for testing or other purposes.
+  - **Dedicated Nodes**: Use taints to reserve nodes for specific types of work, like databases or high-priority applications.
+  - **Separating Workloads**: Use them to prevent regular apps from running on nodes reserved for testing or other purposes.
 
 
+<br>
 <br>
 
 ### Example (LAB)- Taints and Tolerations
@@ -112,8 +113,66 @@ If a node has a taint and a pod doesn’t have a corresponding toleration, Kuber
 Imagine you have a Kubernetes cluster with three nodes, but only one of them has a GPU. You want only GPU applications to run on this node, keeping non-GPU workloads on the other nodes.
 
 Our steps will involve:
-- **Adding a taint** to the GPU node to mark it for GPU-only workloads.
-- **Creating a GPU-based pod with a toleration** to allow it to be scheduled on the GPU node.
-- **Deploying a non-GPU application** to verify that it doesn’t run on the GPU node.
+  - **Adding a taint** to the GPU node to mark it for GPU-only workloads.
+  - **Creating a GPU-based pod with a toleration** to allow it to be scheduled on the GPU node.
+  - **Deploying a non-GPU application** to verify that it doesn’t run on the GPU node.
 
-- **1. Check Your Nodes**
+<br>
+
+**Step-1. Check Your Nodes**
+
+  First, check the nodes in your cluster to identify the one with a GPU:
+
+  ```kubectl get nodes -o wide```
+
+  Assume the output is something like this:
+
+  ```
+    NAME       STATUS   ROLES    AGE   VERSION
+    node1      Ready    <none>   20d   v1.25.0
+    node2      Ready    <none>   20d   v1.25.0
+    node3      Ready    <none>   20d   v1.25.0  # This node has the GPU
+  ```
+  Here, node3 has the GPU, so we’ll reserve it for GPU workloads.
+
+**Step-2. Add a Taint to the GPU Node**
+
+  Now, let’s add a taint to node3 so only GPU workloads can be scheduled there.
+
+  ```kubectl taint nodes node3 gpu=true:NoSchedule```
+
+  Explanation:
+    - gpu=true: This taint marks the node for GPU workloads.
+    - NoSchedule: This effect prevents non-GPU workloads from being scheduled on this node.
+
+**Step-3. Create a GPU-Based Pod with a Toleration**
+
+  Now, let’s create a GPU-based application pod that can tolerate the taint on node3.
+
+  Create a YAML file named gpu-pod.yaml:
+
+  ```
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: gpu-app
+    spec:
+      containers:
+      - name: gpu-container
+        image: nvidia/cuda:11.0-base   # Sample GPU-based image
+        resources:
+          limits:
+            nvidia.com/gpu: 1          # Request 1 GPU
+        command: ["nvidia-smi"]        # Run nvidia-smi to check GPU details
+      tolerations:
+      - key: "gpu"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
+  ```
+
+  Explanation:
+
+    - ```tolerations``` section: This pod has a toleration that matches the ```gpu=true:NoSchedule``` taint on node3, allowing it to be scheduled there.
+    - ```resources.limits``` section: Specifies the pod requires a GPU (nvidia.com/gpu: 1).
+    - ```nvidia/cuda:11.0-base image```: A sample GPU-based image that can run GPU workloads (requires NVIDIA runtime).
