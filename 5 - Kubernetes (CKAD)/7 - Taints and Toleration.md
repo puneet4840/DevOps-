@@ -97,7 +97,7 @@ Now, the pod my-database-pod is allowed to be scheduled on the node with the tai
   - **Taints** prevent pods from being scheduled on certain nodes.
   - **Tolerations** allow specific pods to bypass the taints.
 
-If a node has a taint and a pod doesn’t have a corresponding toleration, Kubernetes won’t schedule the pod on that node. However, if the pod has a toleration that matches the node's taint, Kubernetes allows it to be scheduled there.
+  If a node has a taint and a pod doesn’t have a corresponding toleration, Kubernetes won’t schedule the pod on that node. However, if the pod has a toleration that matches the node's taint, Kubernetes allows it to be scheduled there.
 
 ### When to Use Taints and Tolerations
 
@@ -110,14 +110,16 @@ If a node has a taint and a pod doesn’t have a corresponding toleration, Kuber
 
 ### Example (LAB)- Taints and Tolerations
 
-Imagine you have a Kubernetes cluster with three nodes, but only one of them has a GPU. You want only GPU applications to run on this node, keeping non-GPU workloads on the other nodes.
+  Imagine you have a Kubernetes cluster with three nodes, but only one of them has a GPU. You want only GPU applications to run on this node, keeping non-GPU workloads on the other nodes.
 
-Our steps will involve:
-  - **Adding a taint** to the GPU node to mark it for GPU-only workloads.
-  - **Creating a GPU-based pod with a toleration** to allow it to be scheduled on the GPU node.
-  - **Deploying a non-GPU application** to verify that it doesn’t run on the GPU node.
+  Our steps will involve:
+    - **Adding a taint** to the GPU node to mark it for GPU-only workloads.
+    - **Creating a GPU-based pod with a toleration** to allow it to be scheduled on the GPU node.
+    - **Deploying a non-GPU application** to verify that it doesn’t run on the GPU node.
 
 <br>
+
+**Setp-by-Step**
 
 - **Check Your Nodes**
 
@@ -145,34 +147,34 @@ Our steps will involve:
     - gpu=true: This taint marks the node for GPU workloads.
     - NoSchedule: This effect prevents non-GPU workloads from being scheduled on this node.
 
-**Step-3. Create a GPU-Based Pod with a Toleration**
+- **Create a GPU-Based Pod with a Toleration**
 
-  Now, let’s create a GPU-based application pod that can tolerate the taint on node3.
+    Now, let’s create a GPU-based application pod that can tolerate the taint on node3.
 
-  Create a YAML file named gpu-pod.yaml:
+    Create a YAML file named gpu-pod.yaml:
 
-  ```
-    apiVersion: v1
-    kind: Pod
-    metadata:
-      name: gpu-app
-    spec:
-      containers:
-      - name: gpu-container
-        image: nvidia/cuda:11.0-base   # Sample GPU-based image
-        resources:
-          limits:
-            nvidia.com/gpu: 1          # Request 1 GPU
-        command: ["nvidia-smi"]        # Run nvidia-smi to check GPU details
-      tolerations:
-      - key: "gpu"
-        operator: "Equal"
-        value: "true"
-        effect: "NoSchedule"
-  ```
+     ```
+      apiVersion: v1
+      kind: Pod
+      metadata:
+        name: gpu-app
+      spec:
+        containers:
+        - name: gpu-container
+          image: nvidia/cuda:11.0-base   # Sample GPU-based image
+          resources:
+            limits:
+              nvidia.com/gpu: 1          # Request 1 GPU
+          command: ["nvidia-smi"]        # Run nvidia-smi to check GPU details
+        tolerations:
+        - key: "gpu"
+          operator: "Equal"
+          value: "true"
+          effect: "NoSchedule"
+     ```
 
-  Explanation:
+    Explanation:
 
-    - ```tolerations``` section: This pod has a toleration that matches the ```gpu=true:NoSchedule``` taint on node3, allowing it to be scheduled there.
-    - ```resources.limits``` section: Specifies the pod requires a GPU (nvidia.com/gpu: 1).
-    - ```nvidia/cuda:11.0-base image```: A sample GPU-based image that can run GPU workloads (requires NVIDIA runtime).
+      - ```tolerations``` section: This pod has a toleration that matches the ```gpu=true:NoSchedule``` taint on node3, allowing it to be scheduled there.
+      - ```resources.limits``` section: Specifies the pod requires a GPU (nvidia.com/gpu: 1).
+      - ```nvidia/cuda:11.0-base image```: A sample GPU-based image that can run GPU workloads (requires NVIDIA runtime).
