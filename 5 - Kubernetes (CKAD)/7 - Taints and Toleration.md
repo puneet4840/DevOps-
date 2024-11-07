@@ -90,3 +90,30 @@ Here:
 
 Now, the pod my-database-pod is allowed to be scheduled on the node with the taint ```dedicated=database:NoSchedule```.
 
+<br>
+
+###  How Taints and Tolerations Work Together
+
+- **Taints** prevent pods from being scheduled on certain nodes.
+- **Tolerations** allow specific pods to bypass the taints.
+
+If a node has a taint and a pod doesn’t have a corresponding toleration, Kubernetes won’t schedule the pod on that node. However, if the pod has a toleration that matches the node's taint, Kubernetes allows it to be scheduled there.
+
+### When to Use Taints and Tolerations
+
+- **Dedicated Nodes**: Use taints to reserve nodes for specific types of work, like databases or high-priority applications.
+- **Separating Workloads**: Use them to prevent regular apps from running on nodes reserved for testing or other purposes.
+
+
+<br>
+
+### Example (LAB)- Taints and Tolerations
+
+Imagine you have a Kubernetes cluster with three nodes, but only one of them has a GPU. You want only GPU applications to run on this node, keeping non-GPU workloads on the other nodes.
+
+Our steps will involve:
+- **Adding a taint** to the GPU node to mark it for GPU-only workloads.
+- **Creating a GPU-based pod with a toleration** to allow it to be scheduled on the GPU node.
+- **Deploying a non-GPU application** to verify that it doesn’t run on the GPU node.
+
+- **1. Check Your Nodes**
