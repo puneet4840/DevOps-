@@ -119,7 +119,7 @@ Our steps will involve:
 
 <br>
 
-**Step-1. Check Your Nodes**
+- **Check Your Nodes**
 
   First, check the nodes in your cluster to identify the one with a GPU:
 
@@ -135,7 +135,7 @@ Our steps will involve:
   ```
   Here, node3 has the GPU, so we’ll reserve it for GPU workloads.
 
-**Step-2. Add a Taint to the GPU Node**
+- **Add a Taint to the GPU Node**
 
   Now, let’s add a taint to node3 so only GPU workloads can be scheduled there.
 
