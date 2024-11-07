@@ -152,9 +152,3 @@ Now, the pod my-database-pod is allowed to be scheduled on the node with the tai
     Now, let’s create a GPU-based application pod that can tolerate the taint on node3.
 
     Create a YAML file named gpu-pod.yaml:
-
-    Explanation:
-
-      - ```tolerations``` section: This pod has a toleration that matches the ```gpu=true:NoSchedule``` taint on node3, allowing it to be scheduled there.
-      - ```resources.limits``` section: Specifies the pod requires a GPU (nvidia.com/gpu: 1).
-      - ```nvidia/cuda:11.0-base image```: A sample GPU-based image that can run GPU workloads (requires NVIDIA runtime).
