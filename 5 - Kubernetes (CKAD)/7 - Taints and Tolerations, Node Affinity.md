@@ -296,4 +296,6 @@ Here’s how you’d set up the node affinity:
 
       In this YAML example:
 
-    - requiredDuringSchedulingIgnoredDuringExecution: This is a hard rule. The pod will only be scheduled on nodes that meet the criteria. If there are no matching nodes, the pod will remain unscheduled until one becomes available.
+    - ```requiredDuringSchedulingIgnoredDuringExecution``` means the pod must be scheduled on a node that matches this requirement. If no node with ```disktype=ssd``` is available, the pod will not be scheduled.
+   
+    - ```matchExpressions``` defines the conditions, where the key is ```disktype```, the operator is ```In```, and the values array contains ssd. This combination specifies that the pod should only be scheduled on nodes with the label ```disktype=ssd```.
