@@ -237,3 +237,64 @@ Now, the pod my-database-pod is allowed to be scheduled on the node with the tai
     ```
 
     
+<br>
+<br>
+<br>
+
+# Node Affinity in Kubernetes
+
+Node Affinity is the feature of kubernetes which is used to schedule pods on nodes.
+
+Node affinity is a way to tell kubernetes scheduler that these pods need to run on those particular nodes based on labels assigned to those nodes.
+
+```Suppose kubernetes cluster मैं 2 worker nodes हैं| एक node पर HDD memory है और दूसरे node पर SSD memory है| तो हम कुछ pods को SSD memory वाले pods पर run करना चाहते है| तो उन pods को SSD memory वाले pods पर रन करने के लिए Node Affinity feature के through हम scheduler को बताते है की इन pods को इन nodes पर run करना है|```
+
+Node affinity is a way to define where you want or require your pods to run based on labels assigned to nodes. It’s like saying, “I prefer my workload to run on a node with a certain characteristic,” or “I require it to be on a specific type of node.” Node affinity uses labels on nodes and helps ensure that pods are scheduled on nodes with specific properties, like SSD storage or GPUs, or in particular zones for regulatory or geographic reasons.
+
+### Node Affinity Explained
+
+Node affinity allows you to add rules to a pod that guide the scheduler on where (on which nodes) the pod should run. Node affinity is based on labels that are attached to nodes.
+
+For example, if you want a pod to run on nodes with a label like disktype=ssd, you would use node affinity to make this happen. Node affinity works with **preferences** or **requirements**:
+  - **Preferred**: Pods can run on other nodes if the preferred node is unavailable.
+  - **Required**: Pods will only run if the required node is available.
+
+
+### How Node Affinity Works: Example
+
+Suppose you have a Kubernetes cluster with two nodes, and each node has different resources. One node has a label ```disktype=ssd```, indicating it has SSD storage. The other node has a label ```disktype=hdd```, indicating it has an HDD.
+
+Now, let’s say you have a workload (a pod) that needs fast storage. You could use node affinity to make sure the pod runs on the node with ```disktype=ssd```.
+
+Here’s how you’d set up the node affinity:
+
+  - **Label the Node**: First, make sure the node has the correct label. For example:
+
+      ```kubectl label nodes <node-name> disktype=ssd```
+
+  - **Specify Node Affinity in the Pod Configuration**: In the pod configuration YAML file, you would specify the node affinity like this:
+
+      ```
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: ssd-storage-pod
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                - matchExpressions:
+                  - key: disktype
+                    operator: In
+                    values:
+                    - ssd
+          containers:
+          - name: my-container
+            image: my-container-image
+    ```
+
+      In this YAML example:
+        - ```requiredDuringSchedulingIgnoredDuringExecution``` means the pod must be scheduled on a node that matches this requirement. If no node with ```disktype=ssd``` is available, the pod will not be scheduled.
+
+        - ```matchExpressions``` defines the conditions, where the key is ```disktype```, the operator is ```In```, and the values array contains ssd. This combination specifies that the pod should only be scheduled on nodes with the label ```disktype=ssd```.
