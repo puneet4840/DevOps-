@@ -296,4 +296,4 @@ Here’s how you’d set up the node affinity:
 
       In this YAML example:
 
-        - requiredDuringSchedulingIgnoredDuringExecution: This is a hard rule. The pod will only be scheduled on nodes that meet the criteria. If there are no matching nodes, the pod will remain unscheduled until one becomes available.
+    - requiredDuringSchedulingIgnoredDuringExecution: This is a hard rule. The pod will only be scheduled on nodes that meet the criteria. If there are no matching nodes, the pod will remain unscheduled until one becomes available.
