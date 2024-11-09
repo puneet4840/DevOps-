@@ -292,7 +292,7 @@ Here’s how you’d set up the node affinity:
           containers:
           - name: my-container
             image: my-container-image
-    ```
+      ```
 
       In this YAML example:
     
