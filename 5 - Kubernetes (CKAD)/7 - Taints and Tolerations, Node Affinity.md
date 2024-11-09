@@ -316,3 +316,32 @@ In Kubernetes, there are two main types of node affinity:
   - **Flexibility**: You can set rules to make sure workloads end up on the right nodes without affecting other workloads in the cluster.
 
 
+<br>
+<br>
+
+### Difference between Node Affinity and Taints and Tolerations (Which is better?)
+
+**Recap on Node Affinity**
+
+Node affinity is a way to define where you want or require your pods to run based on labels assigned to nodes. It’s like saying, “I prefer my workload to run on a node with a certain characteristic,” or “I require it to be on a specific type of node.” Node affinity uses labels on nodes and helps ensure that pods are scheduled on nodes with specific properties, like SSD storage or GPUs, or in particular zones for regulatory or geographic reasons.
+
+For example, if you want a pod to run on nodes with a label like disktype=ssd, you would use node affinity to make this happen. Node affinity works with preferences or requirements:
+
+  - **Preferred**: Pods can run on other nodes if the preferred node is unavailable.
+  - **Required**: Pods will only run if the required node is available.
+
+<br>
+
+**What are Taints and Tolerations?**
+
+Taints and tolerations, on the other hand, serve a different purpose. They are used to **restrict where pods are scheduled** by "tainting" nodes, which is like marking them as undesirable for most workloads. Taints are placed on nodes to signal that **only certain pods can tolerate them**. If a node has a taint, only pods with a matching toleration will be allowed to run on that node. This feature is often used to isolate special-purpose nodes or protect critical nodes from being overloaded.
+
+  - **Taints** are key-value pairs with an effect like ```NoSchedule```, ```PreferNoSchedule```, or ```NoExecute```:
+
+    - **NoSchedule**: No pod can be scheduled on this node unless it has a matching toleration.
+    - **PreferNoSchedule**: Tries to avoid scheduling pods on this node unless no other option is available.
+    - **NoExecute**: Not only prevents new pods without tolerations from being scheduled but also evicts existing pods that lack a matching toleration.
+   
+  Taints and tolerations are often used to keep general-purpose workloads off specialized nodes (like GPU nodes or nodes with limited resources). For example, you might taint a node with key=special-purpose, effect=NoSchedule, to indicate that only certain workloads can run on it.
+
+  
