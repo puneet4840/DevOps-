@@ -295,5 +295,5 @@ Here’s how you’d set up the node affinity:
       ```
 
       In this YAML example:
-    
-        - ```requiredDuringSchedulingIgnoredDuringExecution``` means the pod must be scheduled on a node that matches this requirement. If no node with disktype=ssd is available, the pod will not be scheduled.
+
+        - requiredDuringSchedulingIgnoredDuringExecution: This is a hard rule. The pod will only be scheduled on nodes that meet the criteria. If there are no matching nodes, the pod will remain unscheduled until one becomes available.
