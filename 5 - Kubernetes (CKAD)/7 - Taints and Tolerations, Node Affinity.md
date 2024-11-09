@@ -299,3 +299,20 @@ Here’s how you’d set up the node affinity:
     - ```requiredDuringSchedulingIgnoredDuringExecution``` means the pod must be scheduled on a node that matches this requirement. If no node with ```disktype=ssd``` is available, the pod will not be scheduled.
    
     - ```matchExpressions``` defines the conditions, where the key is ```disktype```, the operator is ```In```, and the values array contains ssd. This combination specifies that the pod should only be scheduled on nodes with the label ```disktype=ssd```.
+
+### Types of Node Affinity
+
+In Kubernetes, there are two main types of node affinity:
+
+  - ```requiredDuringSchedulingIgnoredDuringExecution```: This is a hard rule. The pod will only be scheduled on nodes that meet the criteria. If there are no matching nodes, the pod will remain unscheduled until one becomes available.
+
+  - ```preferredDuringSchedulingIgnoredDuringExecution```: This is a soft rule. The pod prefers to be scheduled on nodes that meet the criteria, but if there aren’t any, it will be scheduled on another node. This is useful when you’d like the pod to run on specific nodes if possible, but it’s not essential.
+
+### Why Use Node Affinity?
+
+  Node affinity provides more flexibility and control over workload distribution compared to the older nodeSelector feature, which allowed pods to specify nodes by label but only with hard rules. Node affinity’s combination of required and preferred rules gives you options to define strict requirements or softer preferences.
+  
+  - **Optimization**: Helps ensure the pod runs on nodes with the right resources (like SSDs for databases).
+  - **Flexibility**: You can set rules to make sure workloads end up on the right nodes without affecting other workloads in the cluster.
+
+
