@@ -150,3 +150,98 @@ If you don’t set requests and limits, Kubernetes will:
   - Schedule the Pod based on available resources, but there’s no guarantee the container will have a certain minimum.
 
   - Allow the container to use resources as needed, potentially taking up a lot of resources and affecting other applications.
+
+<br>
+<br>
+
+### Example (LAB): Running a Web Application in Kubernetes
+
+Suppose you are deploying a small web application in a Kubernetes cluster. The application has predictable memory usage, and you want to ensure that each pod:
+  - Has enough memory to run smoothly.
+  - Does not exceed a certain amount of memory, which could impact other applications running in the cluster.
+
+- **Step-1: Define the Deployment YAML File**
+
+  Create a YAML file named ```webapp-deployment.yaml```. This file will define your web application and include the memory requests and limits.
+
+  webapp-deployment.yaml:
+
+  ```
+    apiVersion: apps/v1
+    kind: Deployment
+      metadata:
+        name: webapp
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          app: webapp
+      template:
+        metadata:
+          labels:
+            app: webapp
+        spec:
+          containers:
+          - name: webapp-container
+            image: nginx   # We'll use NGINX as a sample web application
+            resources:
+              requests:
+                memory: "512Mi"   # Request 512 MiB of memory
+              limits:
+                memory: "1Gi"     # Limit memory usage to 1 GiB
+            ports:
+            - containerPort: 80
+  ```
+
+  In this YAML file:
+
+    - We’re deploying a web application using the NGINX container image.
+    - We set 2 replicas to create two identical pods running the application.
+    - We define memory requests and limits for the container.
+
+  **Memory Requests and Limits Explanation**
+
+    - Request: 512Mi — This is the minimum amount of memory Kubernetes guarantees for each pod. It will try to ensure each pod gets at least 512 MiB (approximately 536 MB).
+ 
+    - Limit: 1Gi — This is the maximum memory each pod can use. If a pod tries to use more than 1 GiB (approximately 1024 MB), it may be terminated or restarted.
+ 
+- **Step 2: Apply the YAML File to Your Cluster**
+
+  - Save the ```webapp-deployment.yaml``` file.
+  - Run the following command to apply the deployment configuration to your cluster:
+
+      ```kubectl apply -f webapp-deployment.yaml```
+    
+    This command creates the deployment in the Kubernetes cluster.
+
+
+- **Step 3: Verify the Deployment**
+
+  To confirm that your deployment is running, you can check the pods created by Kubernetes:
+
+    ```kubectl get pods```
+
+  You should see two pods running since we set the replicas to 2.
+
+
+- **Step 4: Monitor Memory Usage**
+
+  To see memory usage in real-time, you can use the following commands:
+
+    - Get Pod Details:
+  
+      ```kubectl describe pod <pod-name>```
+
+    - View Resource Usage (if you have metrics-server installed):
+ 
+      ```kubectl top pod```
+
+      This command will show you the current memory usage for each pod. You’ll notice that each pod is using some portion of its 512 MiB request and should not exceed the 1 GiB limit.
+
+- **Step 5: Simulate High Memory Usage (Optional)**
+
+  If you want to test what happens when a pod tries to exceed its memory limit, you could:
+
+    - Run a memory-intensive process inside the container, which might cause it to exceed the 1 GiB limit.
+ 
+    - Watch how Kubernetes reacts—typically, it will terminate and restart the container if it exceeds the set limit.
