@@ -98,9 +98,9 @@ Suppose you have data proccessing application that someties requires a lot of me
 
 **Setting Up VPA**
 
-  VPA requires a bit of setup and a custom YAML file. Here’s an example:
+VPA requires a bit of setup and a custom YAML file. Here’s an example:
 
-  ```
+```
   apiVersion: autoscaling.k8s.io/v1
   kind: VerticalPodAutoscaler
     metadata:
@@ -112,8 +112,8 @@ Suppose you have data proccessing application that someties requires a lot of me
       name: my-deployment
     updatePolicy:
       updateMode: "Auto"  # Options: Auto, Off, Initial
-  ```
+```
 
-  Explaination:
-    - ```updateMode: "Auto"```: Auto mode will automatically adjust resources for the pods.
-    
+Explaination:
+- ```updateMode: "Auto"```: Auto mode will automatically adjust resources for the pods.
+      
