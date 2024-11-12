@@ -117,3 +117,22 @@ VPA requires a bit of setup and a custom YAML file. Here’s an example:
 Explaination:
 - ```updateMode: "Auto"```: Auto mode will automatically adjust resources for the pods.
       
+<br>
+
+### Cluster Autoscaling
+
+To scale the kubernetes cluster nodes, we use **Cluster Autoscaling**.
+
+Cluster Autoscaling adjusts the number of nodes in your cluster. When there’s a high demand, it adds more nodes; when demand decreases, it reduces nodes. It works at the infrastructure level, adding or removing nodes (VMs or physical servers) as required. 
+
+When you use the cluod Kubernetes cluster like **AKS**, **AWS** and **GCP**. You can use the scale the node on this cluster because cloud helps you proviosn the as many vms you want.
+
+**Why Cluster Autoscaling is Important**
+
+Imagine HPA is set up to scale pods between 2 and 20. If the nodes don’t have enough resources for 20 pods, the new pods won’t be created. Cluster Autoscaler solves this by adding more nodes when needed and removing them when they’re no longer needed.
+
+**How Cluster Autoscaling Works**
+
+  - Cluster Autoscaler watches for **unschedulable pods**—pods that can’t be placed because there aren’t enough resources on existing nodes.
+  - If such pods are found, Cluster Autoscaler adds more nodes to the cluster.
+  - When there are nodes with very low usage for a long time, Cluster Autoscaler removes those nodes to save resources.
