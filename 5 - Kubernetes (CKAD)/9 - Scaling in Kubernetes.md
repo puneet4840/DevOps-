@@ -83,3 +83,37 @@ We can setup HPA by using command or declarative way (using yaml).
 ### Vertical Pod Autoscaling (VPA)
 
 Vertical Pod Autoscaling (VPA) adjusts the resources(CPU and Memory) allocated to each pod. It does not increase or decrease the number of pods. 
+
+This is useful when each pod’s workload varies over time, needing more or less CPU and memory.
+
+**Example Scenario**
+
+Suppose you have data proccessing application that someties requires a lot of memory to process a large file, but at other times it only needs a little. So VPA can increase the moemory for this pod when needed and decrease it afterwards.
+
+**How VPA Works**
+
+  - VPA monitors each pod’s resource usage (CPU and memory).
+  - If a pod’s resource usage exceeds its allocated limits, VPA increases the pod’s limits.
+  - If a pod is consistently underutilizing its allocated resources, VPA reduces the limits to save resources.
+
+**Setting Up VPA**
+
+  VPA requires a bit of setup and a custom YAML file. Here’s an example:
+
+  ```
+  apiVersion: autoscaling.k8s.io/v1
+  kind: VerticalPodAutoscaler
+    metadata:
+      name: my-vpa
+  spec:
+    targetRef:
+      apiVersion: "apps/v1"
+      kind: Deployment
+      name: my-deployment
+    updatePolicy:
+      updateMode: "Auto"  # Options: Auto, Off, Initial
+  ```
+
+  Explaination:
+    - ```updateMode: "Auto"```: Auto mode will automatically adjust resources for the pods.
+    
