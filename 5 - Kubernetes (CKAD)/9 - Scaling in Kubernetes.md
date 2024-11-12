@@ -165,6 +165,10 @@ Imagine HPA is set up to scale pods between 2 and 20. If the nodes don’t have 
 
 In this example, We have a Node.js web application deployed on Kuberenetes cluster on a node with 1 replica.
 
+**Prerequisite**
+
+  - Metric-server should be installed on cluster.
+
 - **Step 1: Create a Kubernetes Deployment**
 
   We’ll create a Kubernetes Deployment for the Node.js application.
@@ -273,3 +277,177 @@ In this example, We have a Node.js web application deployed on Kuberenetes clust
     ```kubectl get hpa```
 
     You should see the HPA configuration with the minimum and maximum replica limits and the CPU target.
+
+<br>
+<br>
+
+### Example (LAB): Autoscaling a Data Processing Application with Kubernetes VPA
+
+  **Example Scenario**
+
+  In this scenario, we have a data-processing application that occasionally requires more memory and CPU. Instead of setting fixed requests and limits, we want Kubernetes to dynamically adjust these based on real-time usage patterns, ensuring that we don’t under- or over-provision resources.
+
+  **Prerequisites**:
+
+  - Metrics Server needs to be installed on your cluster, as it provides the resource usage data that VPA uses.
+
+- **Step 1: Install the Vertical Pod Autoscaler (VPA) on the Cluster**
+
+    Vertical Pod Autoscaler is not installed by default, so you need to install it as an add-on.
+
+    - Download the VPA YAML Configuration:
+
+      ```wget https://github.com/kubernetes/autoscaler/releases/download/v0.12.0/vpa-v0.12.0.yaml```
+
+    - Apply the VPA Configuration:
+ 
+      ```kubectl apply -f vpa-v0.12.0.yaml```
+
+    - Verify VPA Components:
+
+      Ensure the VPA components (recommender, updater, and admission-controller) are up and running.
+
+      ```kubectl get pods -n kube-system | grep vpa```
+
+- **Step 2: Create a Sample Deployment (Data Processor)**
+
+  We’ll create a sample deployment that simulates a data-processing workload. It will use a Python script that randomly consumes CPU and memory to mimic varying workload demands.
+
+  - Create the Application Code (data_processor.py):
+
+    ```
+      # data_processor.py
+      import time
+      import random
+
+      def process_data():
+        print("Processing data...")
+        # Random CPU and memory load simulation
+        load = [i ** 2 for i in range(10**5)]
+        time.sleep(random.uniform(0.1, 0.5))
+
+      while True:
+        process_data()
+    ```
+
+    Suppose this above python application is dockerized and docker images is stored at docker hub.
+
+- **Step 3: Create a Kubernetes Deployment:**
+
+  Now, let’s create a Kubernetes Deployment for our data-processing application.
+
+  ```
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: data-processor
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: data-processor
+      template:
+        metadata:
+          labels:
+            app: data-processor
+        spec:
+          containers:
+          - name: data-processor
+            image: yourusername/vpa-data-processor:v1  # Replace with your image
+            resources:
+              requests:
+                cpu: "50m"
+                memory: "128Mi"
+              limits:
+                cpu: "500m"
+                memory: "512Mi"
+  ```
+
+  - Apply the deployment:
+
+    ```kubectl apply -f deployment.yaml```
+
+- **Step 4: Set Up the VPA for the Deployment**
+
+  Now that we have the deployment set up, let’s configure VPA to monitor and adjust its resource requests automatically.
+
+  - Create a VPA Configuration:
+
+    Create a YAML file for VPA.
+
+    ```
+      apiVersion: autoscaling.k8s.io/v1
+      kind: VerticalPodAutoscaler
+        metadata:
+          name: vpa-data-processor
+      spec:
+        targetRef:
+          apiVersion: "apps/v1"
+          kind:       Deployment
+          name:       data-processor
+        updatePolicy:
+          updateMode: "Auto"  # Automatically adjust requests
+    ```
+
+    This configuration tells VPA to:
+
+    - Monitor the resource usage of the data-processor deployment.
+    - Automatically adjust the CPU and memory requests as needed.
+
+  - Apply the VPA Configuration:
+
+    ```kubectl apply -f vpa.yaml```
+
+  - Verify VPA Setup:
+
+    ```kubectl get vpa```
+
+  You should see vpa-data-processor listed, and after some time, it will show recommendations for CPU and memory requests.
+
+- **Step 5: Generate Load and Monitor VPA Behavior**
+
+  To see VPA in action, we’ll generate some load on the application.
+
+  - Check the Initial Pod Resource Usage:
+
+    ```kubectl top pods```
+
+    This command will display the current CPU and memory usage of the pods.
+
+  - Observe VPA Recommendations:
+
+    ```kubectl describe vpa vpa-data-processor```
+
+    This will show the recommended CPU and memory requests that VPA calculates based on the pod’s usage over time.
+
+  - Watch for Changes:
+
+    If updateMode is set to Auto, VPA will automatically adjust the requests based on observed usage. As load varies, VPA may increase or decrease the requests for CPU and memory.
+
+
+- **Step 6: Scale Up and See VPA Adjustments**
+
+  Let’s simulate a scenario where we increase the workload to observe VPA in action.
+
+  - Increase the Number of Replicas:
+
+    Scale up the deployment to increase the number of running pods:
+
+    ```kubectl scale deployment data-processor --replicas=5```
+
+  - Generate Heavy Load:
+
+    With more replicas, the overall resource usage will increase. VPA will monitor each pod and adjust its CPU and memory requests accordingly.
+
+  - Observe the VPA Recommendations and Pod Adjustments:
+ 
+    Run the following commands to watch VPA and the pod’s resource requests over time:
+
+    ```kubectl get vpa -w```
+
+    ```kubectl describe vpa vpa-data-processor```
+
+    Over time, VPA should adjust each pod’s requests to match its usage. This prevents pods from overusing resources, which can affect other applications on the same cluster.
+
+This setup helps applications run efficiently by allocating just the right amount of resources, reducing costs, and improving performance by automatically adjusting resource requests based on actual usage.
+
