@@ -159,3 +159,117 @@ Imagine HPA is set up to scale pods between 2 and 20. If the nodes don’t have 
 
 <br>
 
+### Example (LAB): AutoScaling a nodejs web application with Kubernetes HPA
+
+**Example Scenario**
+
+In this example, We have a Node.js web application deployed on Kuberenetes cluster on a node with 1 replica.
+
+- **Step 1: Create a Kubernetes Deployment**
+
+  We’ll create a Kubernetes Deployment for the Node.js application.
+
+  - Create a Deployment YAML File (```deployment.yaml```):
+
+    ```
+      apiVersion: apps/v1
+      kind: Deployment
+        metadata:
+          name: hpa-demo
+      spec:
+        replicas: 1
+        selector:
+          matchLabels:
+            app: hpa-demo
+        template:
+          metadata:
+            labels:
+              app: hpa-demo
+          spec:
+            containers:
+            - name: hpa-demo
+              image: yourusername/hpa-demo:v1  # Replace with your image name
+              resources:
+                requests:
+                  cpu: "100m"     # Minimum CPU needed
+                limits:
+                c  pu: "500m"     # Maximum CPU allowed
+              ports:
+              - containerPort: 8080
+    ```
+
+  - Step:2 - Apply the Deployment:
+  
+    ```kubectl apply -f deployment.yaml```
+
+  - Step:3 - Verify the Deployment:
+
+    ```kubectl get pods```
+
+- **Step 2: Expose the Deployment with a Service**
+
+  To access the application, expose it using a Kubernetes Service.
+
+  - Create a Service YAML File (service.yaml):
+
+    ```
+      apiVersion: v1
+      kind: Service
+        metadata:
+          name: hpa-demo-service
+      spec:
+        selector:
+          app: hpa-demo
+        ports:
+        - protocol: TCP
+          port: 80
+          targetPort: 8080
+        type: LoadBalancer
+    ```
+
+  - Apply the Service:
+
+    ```kubectl apply -f service.yaml```
+
+  - Get the Service IP:
+ 
+    ```kubectl get svc hpa-demo-service```
+
+    You’ll see an external IP for your service
+
+- **Step 3: Configure HPA for the Deployment**
+
+  Now that the deployment and service are set up, let’s configure HPA to automatically scale the pods based on CPU usage.
+
+  - Create an HPA YAML File (hpa.yaml):
+
+    ```
+      apiVersion: autoscaling/v2
+      kind: HorizontalPodAutoscaler
+        metadata:
+          name: hpa-demo
+      spec:
+        scaleTargetRef:
+          apiVersion: apps/v1
+          kind: Deployment
+          name: hpa-demo
+        minReplicas: 1
+        maxReplicas: 10
+        metrics:
+        - type: Resource
+          resource:
+            name: cpu
+            target:
+              type: Utilization
+              averageUtilization: 50   # Target CPU usage at 50%
+    ```
+
+  - Apply the HPA Configuration:
+
+    ```kubectl apply -f hpa.yaml```
+
+  - Verify the HPA:
+
+    ```kubectl get hpa```
+
+    You should see the HPA configuration with the minimum and maximum replica limits and the CPU target.
