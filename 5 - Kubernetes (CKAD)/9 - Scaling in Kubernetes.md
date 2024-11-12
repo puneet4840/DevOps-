@@ -451,3 +451,141 @@ In this example, We have a Node.js web application deployed on Kuberenetes clust
 
 This setup helps applications run efficiently by allocating just the right amount of resources, reducing costs, and improving performance by automatically adjusting resource requests based on actual usage.
 
+<br>
+<br>
+
+### Exmaple(LAB): Cluster Auto-Scaler: Web Application with Variable Traffic
+
+**Example Scenario**
+
+Imagine you're managing a web application with varying traffic patterns. During peak hours, you need more compute power (nodes), but during off-peak hours, some of these resources go unused. We’ll use the Cluster Autoscaler to dynamically scale the number of nodes in the cluster, adding more when needed and removing excess nodes during low usage.
+
+**Prerequisites**
+
+- **Kubernetes Cluster**: Access to a Kubernetes cluster (preferably in a cloud environment like AWS EKS, Google GKE, or Azure AKS), since Cluster Autoscaler primarily works with cloud providers.
+- **Kubectl**: Kubernetes command-line tool.
+- **Cluster Autoscaler Installed**: Some cloud providers have built-in support for Cluster Autoscaler.
+
+- **Step 1: Enable Node Autoscaling for Your Cloud Provider**
+
+  Before deploying the Cluster Autoscaler, configure your node pool to allow autoscaling in your cloud provider’s control panel. Here’s a basic overview for popular cloud providers:
+
+  - Azure AKS:
+    - In the Azure portal, go to Kubernetes services > select your AKS cluster.
+    - Under Node pools, set the Minimum and Maximum node count.
+   
+  Note: The minimum and maximum settings tell the Cluster Autoscaler how far it can scale up or down.
+
+- **Step 2: Deploy the Cluster Autoscaler**
+
+  Once autoscaling is enabled on your node pool, you can deploy the Cluster Autoscaler in your Kubernetes cluster.
+
+  - Download the Cluster Autoscaler YAML:
+
+    Get the appropriate version of Cluster Autoscaler. Replace <kubernetes_version> with your actual Kubernetes version (e.g., 1.29.0):
+
+    ```wget https://raw.githubusercontent.com/kubernetes/autoscaler/cluster-autoscaler-<kubernetes_version>/cluster-autoscaler/deploy/cluster-autoscaler-autodiscover.yaml```
+
+  - Edit the Cluster Autoscaler Deployment:
+
+    Open the downloaded YAML file and edit the following sections:
+
+    - Set the required cloud provider. For example:
+
+      ```
+        command:
+          - ./cluster-autoscaler
+          - --cloud-provider=aws # or gke, azure
+          - --namespace=kube-system
+          - --nodes=<MIN_NODES>:<MAX_NODES>:<NODE_GROUP_NAME>
+      ```
+
+      - Replace <MIN_NODES>, <MAX_NODES>, and <NODE_GROUP_NAME> with your settings:
+        - <MIN_NODES>: Minimum number of nodes.
+        - <MAX_NODES>: Maximum number of nodes.
+        - <NODE_GROUP_NAME>: Name of your node group in the cloud provider.
+
+      - Add --balance-similar-node-groups=true and --skip-nodes-with-local-storage=false for smoother scaling:
+
+        ```- --balance-similar-node-groups=true```
+        
+        ```- --skip-nodes-with-local-storage=false```
+
+      - Apply the YAML File:
+
+        Once the file is edited, apply it to your cluster.
+
+        ```kubectl apply -f cluster-autoscaler-autodiscover.yaml```
+
+      - Verify Cluster Autoscaler Deployment:
+
+        Check that the Cluster Autoscaler pod is running in the kube-system namespace:
+
+        ```kubectl get pods -n kube-system | grep cluster-autoscaler```
+
+- **Step 3: Deploy a Test Application with High Resource Demand**
+
+  To test the Cluster Autoscaler, let’s create a deployment that requests more resources than the current node capacity. This will prompt Cluster Autoscaler to add nodes to the cluster.
+
+  - Create a Test Deployment:
+
+    This deployment creates multiple pods with high CPU and memory requests.
+
+    ```
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: high-demand-app
+      spec:
+        replicas: 10
+        selector:
+          matchLabels:
+            app: high-demand-app
+        template:
+          metadata:
+            labels:
+              app: high-demand-app
+          spec:
+            containers:
+            - name: stress-app
+              image: vish/stress
+              resources:
+                requests:
+                  cpu: "500m"
+                  memory: "500Mi"
+              args:
+                - "-cpus"
+                - "2"
+    ```
+
+  - Apply the Deployment:
+
+    ```kubectl apply -f high-demand-deployment.yaml```
+
+    This deployment requests more resources than a single node can handle. If the current nodes are full, Cluster Autoscaler will automatically add more nodes.
+
+- **Step 4: Monitor Cluster Autoscaler Activity**
+
+  - Check Pod Status:
+
+    ```kubectl get pods -o wide```
+
+    You’ll notice that some pods may be in Pending status if there aren’t enough nodes available initially.
+
+  - Watch Cluster Autoscaler Logs:
+
+    Check the logs of the Cluster Autoscaler pod to see its scaling activity.
+
+    ```kubectl -n kube-system logs -f deployment/cluster-autoscaler```
+
+    In the logs, you’ll see messages indicating that Cluster Autoscaler is adding nodes to accommodate the pending pods.
+
+
+  - Verify Node Scaling:
+
+    ```kubectl get nodes```
+
+    You should see new nodes added to the cluster. The Pending pods should now be scheduled on the newly created nodes.
+
+
+  This setup demonstrates how Cluster Autoscaler dynamically manages node resources, saving costs by scaling down during low demand and ensuring high availability by scaling up when demand increases. This approach is crucial for production environments with variable traffic, as it helps optimize resource usage and maintain performance.
