@@ -136,3 +136,26 @@ Imagine HPA is set up to scale pods between 2 and 20. If the nodes don’t have 
   - Cluster Autoscaler watches for **unschedulable pods**—pods that can’t be placed because there aren’t enough resources on existing nodes.
   - If such pods are found, Cluster Autoscaler adds more nodes to the cluster.
   - When there are nodes with very low usage for a long time, Cluster Autoscaler removes those nodes to save resources.
+
+
+<br>
+
+### Putting It All Together: An Example Flow
+
+- **Initial State**: You deploy an application with an HPA, VPA, and Cluster Autoscaler configured. Initially, there are 2 pods running on 2 nodes.
+
+- **Traffic Spike**: Suddenly, there’s a traffic spike.
+  - **HPA** detects high CPU usage and scales up to 10 pods.
+  - Since the cluster doesn’t have enough nodes, **Cluster Autoscaler** adds 2 more nodes to accommodate the new pods.
+
+- **Resource Adjustment**: Some of the new pods start using a lot of memory.
+  - **VPA** detects this and increases the memory limit for those pods to handle the load better.
+    
+- **Traffic Drop**: After some time, traffic drops.
+  - **HPA** scales the pods back down to 2.
+  - **Cluster Autoscaler** removes the 2 extra nodes that are no longer needed.
+
+- **Low Resource Usage**: If the remaining pods are using less CPU and memory, **VPA** might scale their resource allocation down to save even more on resources.
+
+<br>
+
