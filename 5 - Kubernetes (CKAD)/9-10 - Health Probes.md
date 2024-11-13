@@ -200,4 +200,140 @@ The readiness probe helps Kubernetes route traffic only to containers that are f
 The readiness probe in Kubernetes is a key component for traffic management. By checking if a container is ready to serve requests, Kubernetes ensures only fully functional containers handle user traffic. Configured with parameters like initialDelaySeconds, periodSeconds, timeoutSeconds, failureThreshold, and successThreshold, readiness probes can prevent users from experiencing errors due to unready applications, improve rolling update smoothness, and support efficient resource use in a Kubernetes cluster.
 
 <br>
+<br>
+
+### Example (LAB): Liveness probe example
+
+Here’s a step-by-step lab example to demonstrate how to use a liveness probe in Kubernetes. In this lab, we’ll create a simple pod with a container running an application that fails after a certain amount of time. We'll configure a liveness probe to detect this failure and automatically restart the container.
+
+**Lab Prerequisites**
+
+- Kubernetes Cluster
+- kubectl
+
+**Lab Steps**
+
+**Step 1: Create a Docker Image with a Failing Application**
+
+For this lab, let’s create a Docker image for a simple application that simulates failure by exiting after a specific time. This can be done using a simple shell script that sleeps for a set period and then exits.
+
+- **Create a New Directory**:
+
+  ```mkdir liveness-lab```
+
+  ```cd liveness-lab```
+
+- **Create the Shell Script (app.sh)**:
+
+  ```
+    echo '#!/bin/bash
+    echo "Starting application..."
+    sleep 15
+    echo "Simulating failure..."
+    exit 1' > app.sh
+    chmod +x app.sh
+  ```
+
+  This script will:
+
+  - Print "Starting application..."
+  - Sleep for 15 seconds
+  - Print "Simulating failure..." and exit with code 1 (simulating a crash).
+
+- **Create a Dockerfile**:
+
+  ```
+    FROM alpine:latest
+    COPY app.sh /app.sh
+    CMD ["/app.sh"]
+  ```
+
+- **Build the Docker Image**:
+
+  ```docker build -t liveness-example .```
+
+- **Push the Docker Image to a Registry**:
+
+  Suppose the image has been pushed with name to dockerhub ```puneet/failing-image:latest```.
+
+
+**Step 2: Create a Kubernetes Manifest for the Pod with a Liveness Probe**
+
+Now that the image is ready, let’s create a Kubernetes manifest that defines a pod running this container, with a liveness probe to check if the container is still "alive."
+
+- **Create a YAML File (liveness-pod.yaml)**:
+
+  ```
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: liveness-pod
+    spec:
+      containers:
+      - name: failing-container
+        image: <your_dockerhub_username>/liveness-example
+        livenessProbe:
+          exec:
+            command: ["sh", "-c", "ps aux | grep app.sh | grep -v grep"]
+          initialDelaySeconds: 5
+          periodSeconds: 10
+  ```
+
+  In this configuration:
+  
+  - livenessProbe: We’re using an exec liveness probe to check if the app.sh script is still running. The command ps aux | grep app.sh | grep -v grep checks for the process; if it’s not found, the probe fails.
+ 
+  - initialDelaySeconds: We set this to 5 seconds, which means Kubernetes will start the probe 5 seconds after the container starts.
+ 
+  - periodSeconds: The probe runs every 10 seconds.
+
+
+**Step 3: Deploy the Pod in Kubernetes**
+
+- **Apply the Pod Manifest**:
+
+  ```kubectl apply -f liveness-pod.yaml```
+
+- **Verify the Pod**: Run the following command to see the pod’s status-
+
+  ```kubectl get pods```
+
+You should see the liveness-pod in a Running state initially.
+
+**Step 4: Observe the Liveness Probe in Action**
+
+- **Describe the Pod**: Use kubectl describe to check the details of the liveness probe:
+
+  ```kubectl describe pod liveness-pod```
+
+  This will show the liveness probe settings under the Events section.
+
+- **Watch for Restart Events**: Since our application script intentionally exits after 15 seconds, the liveness probe will detect this and restart the container. Run the following command to watch the restarts in real-time:
+
+  ```kubectl get pod liveness-pod -w```
+
+You’ll see the RESTARTS column increase as Kubernetes detects the failure and restarts the container after each failure.
+
+**Step 5: Verify Logs to See Probe Actions**
+
+- **Check Container Logs**: View the logs to see how the application behaves, and you’ll notice the script restarting every time it fails:
+
+  ```kubectl logs liveness-pod -c failing-container```
+
+  This should output:
+
+  ```
+    Starting application...
+    Simulating failure...
+  ```
+
+  Every restart cycle will repeat this message, showing that the container has been restarted.
+
+
+**Explanation of How the Liveness Probe Works in this Example**
+
+- The container runs a script that simulates a failure by exiting after 15 seconds.
+- The liveness probe runs an exec command (ps aux | grep app.sh | grep -v grep) every 10 seconds to check if the app.sh script is running.
+- When the script exits (and thus fails), the liveness probe fails because the ps aux command won’t find app.sh.
+- After three consecutive failed probes (based on default failureThreshold), Kubernetes restarts the container, giving it a fresh start.
 
