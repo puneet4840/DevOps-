@@ -236,4 +236,5 @@ This configuration creates files inside /etc/secrets, with each key in the Secre
 Feature  | ConfigMap  |  Secret 
 ------------- | -------------  |  -------------
 Purpose  | Store non-sensitive configuration data   |  	Store sensitive data like passwords, tokens
-Content Cell  | Content Cell   |
+
+
