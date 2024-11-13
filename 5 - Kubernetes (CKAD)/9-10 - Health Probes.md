@@ -105,6 +105,8 @@ Imagine you have a web server container running in a pod, and the web server is 
 
 - **Probe Reset**: After restarting, the failure count is reset. If the container fails again after this, the same process repeats.
 
+The liveness probe is a vital part of Kubernetes health checks, used to detect if a container is "alive" and functioning correctly. By regularly probing with HTTP requests, TCP connections, or commands, Kubernetes can restart any container that fails its liveness probe. This keeps applications stable and helps them recover automatically from failures, maintaining uptime and reliability in your Kubernetes environment.
+
 <br>
 
 ### Readiness Probe
@@ -187,8 +189,15 @@ Imagine you have a container running a web application that requires a connectio
 
 - **Initialization**:  The container starts, and Kubernetes waits for the ```initialDelaySeconds``` (e.g., 5 seconds) before starting the first readiness check.
 
-- **Checking Readiness**: Kubernetes sends an HTTP GET request to the container’s ``/ready``` endpoint every 10 seconds (```periodSeconds: 10```).
+- **Checking Readiness**: Kubernetes sends an HTTP GET request to the container’s ```/ready``` endpoint every 10 seconds (```periodSeconds: 10```).
 
 - **Unready State**:  If the web application hasn’t connected to the database yet, it might return an error status (like 500 Internal Server Error) at ```/ready```, failing the readiness probe. After three consecutive failures (as per ```failureThreshold: 3```), Kubernetes marks the container as "not ready," and traffic is not routed to it.
 
 - **Ready State**: Once the application successfully connects to the database and begins returning 200 OK status at ```/ready```, it passes the readiness check. With one successful probe (as per ```successThreshold: 1```), Kubernetes marks the container as "ready" and starts routing traffic to it.
+
+The readiness probe helps Kubernetes route traffic only to containers that are fully prepared to serve it.
+
+The readiness probe in Kubernetes is a key component for traffic management. By checking if a container is ready to serve requests, Kubernetes ensures only fully functional containers handle user traffic. Configured with parameters like initialDelaySeconds, periodSeconds, timeoutSeconds, failureThreshold, and successThreshold, readiness probes can prevent users from experiencing errors due to unready applications, improve rolling update smoothness, and support efficient resource use in a Kubernetes cluster.
+
+<br>
+
