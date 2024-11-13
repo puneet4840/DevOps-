@@ -14,3 +14,5 @@ In a Kubernetes cluster, applications are packaged as containers, and these cont
 - **Freezes** (where the application gets stuck and becomes unresponsive).
 - **Slowdowns** (where the application responds very slowly).
 
+  To keep applications reliable, Kubernetes needs a way to monitor whether each container is healthy and working as expected. Health probes are Kubernetes’ solution for this. They check each container periodically and take corrective actions if something goes wrong.
+
