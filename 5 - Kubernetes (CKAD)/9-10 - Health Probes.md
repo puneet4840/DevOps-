@@ -18,7 +18,7 @@ In a Kubernetes cluster, applications are packaged as containers, and these cont
 
 To keep applications reliable, Kubernetes needs a way to monitor whether each container is healthy and working as expected. Health probes are Kubernetes’ solution for this. They check each container periodically and take corrective actions if something goes wrong.
 
-<img src="https://drive.google.com/uc?export=view&id=14HhOV6uYyAkFazhO4kftG36-cB6czLk5" width="400" height="300">
+<img src="https://drive.google.com/uc?export=view&id=14HhOV6uYyAkFazhO4kftG36-cB6czLk5" width="600" height="300">
 
 ### Types of Health Probes in Kubernetes
 
