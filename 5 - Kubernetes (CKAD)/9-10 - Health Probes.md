@@ -68,17 +68,17 @@ The liveness probe can be configured to perform three different types of checks:
           failureThreshold: 3      # After 3 consecutive failures, the container is restarted
   ```
 
-  Liveness Probe Configuration Parameters:
+Liveness Probe Configuration Parameters:
 
-    Each liveness probe has several configuration options that control how Kubernetes performs the health check:
+Each liveness probe has several configuration options that control how Kubernetes performs the health check:
 
-    - ```initialDelaySeconds```: This is the delay before Kubernetes performs the first liveness check after the container starts. For example, setting initialDelaySeconds: 5 means the first probe will run 5 seconds after the container starts, giving it time to initialize before being checked.
+- ```initialDelaySeconds```: This is the delay before Kubernetes performs the first liveness check after the container starts. For example, setting initialDelaySeconds: 5 means the first probe will run 5 seconds after the container starts, giving it time to initialize before being checked.
 
-    - ```periodSeconds```: This is the interval between consecutive liveness checks. In our example, it’s set to 10 seconds, meaning Kubernetes will check the container’s health every 10 seconds.
+- ```periodSeconds```: This is the interval between consecutive liveness checks. In our example, it’s set to 10 seconds, meaning Kubernetes will check the container’s health every 10 seconds.
 
-    - ```timeoutSeconds```: This is the maximum amount of time Kubernetes waits for a response before marking the probe as failed. If set to 2 seconds, Kubernetes will wait 2 seconds for a response from the health endpoint. If it doesn’t get one, it will count this as a failure.
+- ```timeoutSeconds```: This is the maximum amount of time Kubernetes waits for a response before marking the probe as failed. If set to 2 seconds, Kubernetes will wait 2 seconds for a response from the health endpoint. If it doesn’t get one, it will count this as a failure.
 
-    - ```failureThreshold```: This is the number of consecutive probe failures required before Kubernetes considers the container unhealthy and restarts it. In this example, it’s set to 3, so if the probe fails three times in a row, Kubernetes restarts the container.
+- ```failureThreshold```: This is the number of consecutive probe failures required before Kubernetes considers the container unhealthy and restarts it. In this example, it’s set to 3, so if the probe fails three times in a row, Kubernetes restarts the container.
 
 **What Happens When a Container Fails the Liveness Probe**
 
