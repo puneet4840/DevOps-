@@ -2,7 +2,7 @@
 
 Health Probes are the mechanism that is used to monitor the health status of container inside the pod.
 
-So you’ve built an amazing app and deployed it to Kubernetes — congrats! But how do you make sure your app stays up and running as intended? That’s where liveness and readiness probes come in.
+So you’ve built an amazing app and deployed it to Kubernetes — congrats! But how do you make sure your app stays up and running as intended? That’s where liveness and readiness probes come in. It is used inside the pods yaml or deployment yaml.
 
 ```Health probes pods के अंदर run हो रहे containers की health को monitor करते हैं.```
 
@@ -30,7 +30,165 @@ Kubernetes provides three types of health probes:
 
 Each probe type has a different purpose. Here’s a breakdown of each:
 
-**Liveness Probe**
+### Liveness Probe
 
-Liveness Probe check if your container is up and running. If a container fails then liveness probe also fails.
+Liveness Probe check if your container is up and running. If a container fails then liveness probe also fails. Then kubernetes restart the pod again.
+This helps ensure that applications are more resilient, automatically recovering from failures and maintaining high availability.
 
+**How Liveness Probes Work**
+
+The liveness probe can be configured to perform three different types of checks:
+
+- **HTTP Request (httpGet)**: Kubernetes sends an HTTP GET request to a specified url in the container. If it receives a success status code (e.g., 200 OK), the container is considered "alive". If it receives an error code (like 500) or no response, it considers the container "dead" or unresponsive.
+
+- **TCP Socket (tcpSocket)**: Kubernetes tries to establish a TCP connection to a specified port on the container. If it successfully connects, the container is "alive." If it can’t connect, it considers the container unhealthy.
+
+- **Command Execution (exec)**: Kubernetes runs a specific command inside the container. If the command completes successfully (returns exit code 0), the container is healthy. If the command fails (returns a non-zero exit code), the container is unhealthy.
+
+**Example Configuration of a Liveness Probe**
+
+  Here’s a simple example of a liveness probe configured in a Kubernetes YAML file:
+
+  ```
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: example-pod
+    spec:
+      containers:
+      - name: example-container
+        image: example-image
+        livenessProbe:
+          httpGet:
+            path: /healthz    # Kubernetes checks this endpoint for health status
+            port: 8080
+          initialDelaySeconds: 5   # Waits 5 seconds after the container starts before the first check
+          periodSeconds: 10        # Checks every 10 seconds
+          timeoutSeconds: 2        # Waits 2 seconds for a response before considering it a failure
+          failureThreshold: 3      # After 3 consecutive failures, the container is restarted
+  ```
+
+  Liveness Probe Configuration Parameters:
+
+    Each liveness probe has several configuration options that control how Kubernetes performs the health check:
+
+    - ```initialDelaySeconds```: This is the delay before Kubernetes performs the first liveness check after the container starts. For example, setting initialDelaySeconds: 5 means the first probe will run 5 seconds after the container starts, giving it time to initialize before being checked.
+
+    - ```periodSeconds```: This is the interval between consecutive liveness checks. In our example, it’s set to 10 seconds, meaning Kubernetes will check the container’s health every 10 seconds.
+
+    - ```timeoutSeconds```: This is the maximum amount of time Kubernetes waits for a response before marking the probe as failed. If set to 2 seconds, Kubernetes will wait 2 seconds for a response from the health endpoint. If it doesn’t get one, it will count this as a failure.
+
+    - ```failureThreshold```: This is the number of consecutive probe failures required before Kubernetes considers the container unhealthy and restarts it. In this example, it’s set to 3, so if the probe fails three times in a row, Kubernetes restarts the container.
+
+**What Happens When a Container Fails the Liveness Probe**
+
+- **Consecutive Failures**: Each time a liveness probe check fails, Kubernetes counts it as a failure. If a probe fails three times consecutively (as per ```failureThreshold: 3```), Kubernetes will restart the container. If it passes even once during this time, the failure count resets to zero.
+
+- **Container Restart**: When the ```failureThreshold``` is reached, Kubernetes stops the existing container and starts a new instance of it. This is done by terminating the container process and launching a new one with the same configuration.
+
+- **Pod Behavior**: This liveness restart is internal to the container, so it doesn’t affect the pod itself. The pod remains in a "Running" state, even if the container within it is restarted multiple times. Kubernetes only restarts the container, not the entire pod.
+
+
+**Example of Liveness Probe in Action**
+
+Imagine you have a web server container running in a pod, and the web server is configured to respond to http://localhost:8080/healthz to indicate its health status. Here’s how a liveness probe might work:
+
+- **Initialization**: The container starts, and Kubernetes waits for the specified ```initialDelaySeconds``` (say, 5 seconds) before beginning the probe.
+
+- **Health Check Begins**: Kubernetes sends an HTTP GET request to ```http://localhost:8080/healthz``` every 10 seconds (as per ```periodSeconds: 10```).
+
+- **Response Evaluation**:
+  - **Healthy Response**: If the container responds with an HTTP 200 OK status within 2 seconds (```timeoutSeconds: 2```), it is considered healthy, and the probe passes.
+  - **Unhealthy Response or Timeout**:  If the container fails to respond, responds with an error (like 500), or takes longer than 2 seconds, it fails the probe.
+
+- **Failure Threshold**:  If the probe fails three times in a row (```failureThreshold: 3```), Kubernetes assumes the container is not functioning correctly and automatically restarts it. This action clears any potential issues and gives the application a fresh start.
+
+- **Probe Reset**: After restarting, the failure count is reset. If the container fails again after this, the same process repeats.
+
+<br>
+
+### Readiness Probe
+
+The **readiness probe** in Kubernetes is a health check that determines if a container is **ready to serve traffic**. Unlike the liveness probe, which checks if the container is "alive" and working, the readiness probe checks if the container is prepared to handle incoming requests. If a container fails the readiness probe, Kubernetes will stop routing traffic to it until it passes the probe again. This is crucial for ensuring that only fully operational containers are available to handle requests.
+
+**Purpose of the Readiness Probe**
+
+The readiness probe is useful in scenarios where:
+
+- The application requires some time to start up and get ready after the container is running.
+- The application might need to connect to external services (like a database) before it can handle requests.
+- Temporary issues, like high resource usage or network problems, could make the application unable to handle traffic.
+
+By temporarily marking the container as "not ready" during these conditions, Kubernetes can ensure users don’t experience errors, and other healthy containers can continue to handle requests.
+
+**How the Readiness Probe Works**
+
+The readiness probe can use three different methods to check if a container is ready to serve traffic:
+
+- **HTTP Request (httpGet)**: Kubernetes sends an HTTP GET request to a specific endpoint inside the container (e.g., http://localhost:8080/ready). If the container returns a successful status code (like 200 OK), it is considered "ready." If it returns an error code or no response, it is considered "not ready."
+
+- **TCP Socket (tcpSocket)**:  Kubernetes attempts to open a TCP connection to a specified port on the container. If the connection is successful, the container is considered "ready." If the connection fails, the container is "not ready."
+
+- **Command Execution (exec)**: Kubernetes runs a specified command inside the container. If the command completes successfully (exit code 0), the container is ready. If it fails (non-zero exit code), the container is "not ready."
+
+**Example Configuration of a Readiness Probe**
+
+Here’s a simple example of a readiness probe in a Kubernetes YAML file:
+
+```
+  apiVersion: v1
+  kind: Pod
+  metadata:
+    name: example-pod
+  spec:
+    containers:
+    - name: example-container
+      image: example-image
+      readinessProbe:
+        httpGet:
+          path: /ready        # Kubernetes checks this endpoint for readiness
+          port: 8080
+        initialDelaySeconds: 5 # Waits 5 seconds before starting readiness checks
+        periodSeconds: 10      # Checks every 10 seconds
+        timeoutSeconds: 2      # Waits 2 seconds for a response before marking it as "not ready"
+        failureThreshold: 3    # If it fails 3 times, it marks the container as "not ready"
+        successThreshold: 1    # Requires only 1 success to mark it "ready" again
+```
+
+Readiness Probe Configuration Parameters
+
+Readiness probes have a few configurable settings that control how Kubernetes performs the checks:
+
+- **initialDelaySeconds**: This sets the delay before Kubernetes runs the first readiness check after the container starts. For example, if ```initialDelaySeconds``` is set to 5, Kubernetes will wait 5 seconds after the container starts before checking readiness.
+
+- **periodSeconds**: This defines how often Kubernetes checks the readiness of the container. In this example, it’s set to 10 seconds, meaning Kubernetes will check every 10 seconds.
+
+- **timeoutSeconds**: This is the maximum amount of time Kubernetes waits for a response before considering the probe a failure. If set to 2 seconds, Kubernetes will wait for 2 seconds for a response from the readiness endpoint. If no response is received, the probe is marked as failed.
+
+- **failureThreshold**: This sets the number of consecutive failed checks required before marking the container as "not ready." Here, if the probe fails 3 times in a row, Kubernetes will assume the container is not ready and stop sending traffic to it.
+
+- **successThreshold**: This is the number of consecutive successful checks required before marking the container as "ready" again. By default, it’s set to 1, so a single successful check will mark the container as ready.
+
+**What Happens When a Container Fails the Readiness Probe**
+
+When a container fails the readiness probe:
+
+- **Traffic is Stopped**: If the probe fails, Kubernetes temporarily removes the container from the pool of endpoints that can receive traffic. This means the container stops receiving external requests.
+
+- **Container Remains Running**: The readiness probe failure doesn’t restart or terminate the container. The container keeps running, and Kubernetes keeps checking it periodically.
+
+- **Automatic Recovery**: Once the container starts passing the readiness probe again (after passing the specified ```successThreshold```), it is marked as ready, and Kubernetes begins routing traffic to it again.
+
+- **Pod Status Impact**: A pod remains in a "Running" state even if one or more of its containers are not ready. However, Kubernetes will not send any traffic to a container that fails the readiness check.
+
+**Example Scenario with Readiness Probe**
+
+Imagine you have a container running a web application that requires a connection to an external database before it can serve requests. Here’s how the readiness probe works in this scenario:
+
+- **Initialization**:  The container starts, and Kubernetes waits for the ```initialDelaySeconds``` (e.g., 5 seconds) before starting the first readiness check.
+
+- **Checking Readiness**: Kubernetes sends an HTTP GET request to the container’s ``/ready``` endpoint every 10 seconds (```periodSeconds: 10```).
+
+- **Unready State**:  If the web application hasn’t connected to the database yet, it might return an error status (like 500 Internal Server Error) at ```/ready```, failing the readiness probe. After three consecutive failures (as per ```failureThreshold: 3```), Kubernetes marks the container as "not ready," and traffic is not routed to it.
+
+- **Ready State**: Once the application successfully connects to the database and begins returning 200 OK status at ```/ready```, it passes the readiness check. With one successful probe (as per ```successThreshold: 1```), Kubernetes marks the container as "ready" and starts routing traffic to it.
