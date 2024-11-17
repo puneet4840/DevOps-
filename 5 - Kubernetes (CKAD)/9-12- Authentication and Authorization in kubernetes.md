@@ -284,3 +284,164 @@ If Alice’s request passes all checks, the API server executes it:
 
 By following this series of checks, Kubernetes ensures that only authorized users and applications have access to the cluster and can perform only the actions they’re permitted to. This layered approach secures the Kubernetes environment, controlling access at every step.
 
+<br>
+<br>
+
+## Service Accounts in Kubernetes
+
+Service Accounts in Kubernetes are special accounts that allow applications running inside the cluster to interact with the Kubernetes API. Just like how users like Alice and Bob authenticate to the Kubernetes API server using tokens or certificates, applications (often running as containers within pods) can use Service Accounts to authenticate and authorize their requests.
+
+Let’s break this down step-by-step with an example to understand how Service Accounts work and why they’re needed.
+
+**Scenario: Understanding Service Accounts with a Web Application**
+
+Let’s imagine a web application running as a pod in a Kubernetes cluster. This web application needs to get information about the environment it’s running in—specifically, it wants to list other pods in its namespace.
+
+We’ll set up a Service Account that the application can use to securely communicate with the Kubernetes API server.
+
+**1 - What is a Service Account?**
+
+In Kubernetes, a Service Account is like a user account but specifically for applications running within the pods. Each Service Account:
+- Has its own unique token that serves as its identity.
+- Can be given permissions (via Roles and RoleBindings) to access specific resources and perform certain actions.
+
+Kubernetes automatically creates a default Service Account for every namespace, and each pod is assigned this Service Account unless another is specified.
+
+**2 - Setting Up a Custom Service Account for Our Application**
+
+Let’s say our application, running in the dev namespace, needs permission to list pods within that namespace. Here’s how we set this up:
+
+- **Create a Service Account**
+
+  We create a new Service Account specifically for our web application. We’ll name it app-service-account:
+
+  ```
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: app-service-account
+      namespace: dev
+  ```
+
+  Explaination:
+  - apiVersion and kind: Define that this is a Service Account
+  - metadata.name: Names this Service Account app-service-account.
+  - metadata.namespace: Specifies that this Service Account is created in the dev namespace.
+ 
+  Once applied, Kubernetes will create this Service Account in the dev namespace.
+
+- **Create a Role with Necessary Permissions**
+
+  Next, we create a Role that grants permissions to list pods in the dev namespace. This Role defines what the Service Account is allowed to do:
+
+  ```
+    kind: Role
+    apiVersion: rbac.authorization.k8s.io/v1
+    metadata:
+      namespace: dev
+      name: pod-reader
+    rules:
+    - apiGroups: [""]
+      resources: ["pods"]
+      verbs: ["get", "list"]
+  ```
+
+  Explaination:
+  - kind and apiVersion: Define that this is a Role.
+  - metadata.namespace: Restricts this Role to the dev namespace.
+  - metadata.name: Names this Role pod-reader.
+  - rules:
+    - apiGroups: Specifies the API group (in this case, "" means the core API group).
+    - resources: Specifies pods as the resource.
+    - verbs: Specifies get and list as the actions allowed on pods.
+   
+  With this Role, any user or Service Account granted this role will be able to get and list pods in the dev namespace.
+
+- **Bind the Role to the Service Account**
+
+  Now, we create a RoleBinding to link the pod-reader Role to our app-service-account Service Account:
+
+  ```
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: RoleBinding
+    metadata:
+      name: app-pod-reader-binding
+      namespace: dev
+    subjects:
+    - kind: ServiceAccount
+      name: app-service-account
+      namespace: dev
+    roleRef:
+      kind: Role
+      name: pod-reader
+      apiGroup: rbac.authorization.k8s.io
+  ```
+
+  Explaination:
+  - apiVersion and kind: Define that this is a RoleBinding.
+  - metadata.namespace: Restricts this RoleBinding to the dev namespace.
+  - subjects:
+    - kind: Specifies that the subject is a Service Account.
+    - name: Points to app-service-account, the Service Account we created.
+  - roleRef:
+    - kind: Points to the Role kind.
+    - name: Points to the pod-reader Role.
+
+  This RoleBinding ensures that app-service-account has the permissions defined in the pod-reader Role, which allows it to list pods in the dev namespace.
+
+**3 - Running the Application Pod with the Service Account**
+
+When we deploy our application as a pod, we’ll specify app-service-account as the Service Account that the pod should use. Here’s an example pod definition for the web application:
+
+```
+# Pod definition using the app-service-account
+apiVersion: v1
+kind: Pod
+metadata:
+  name: web-app
+  namespace: dev
+spec:
+  serviceAccountName: app-service-account
+  containers:
+  - name: web-app-container
+    image: web-app-image:latest
+```
+
+Explaination:
+- spec.serviceAccountName: Specifies that the pod should use app-service-account for authentication with the Kubernetes API server.
+- containers: Contains the configuration for the application (in this case, an example container called web-app-container).
+
+When this pod starts, Kubernetes automatically mounts the Service Account token into the pod. This token is placed in a specific directory within the container (/var/run/secrets/kubernetes.io/serviceaccount) and is readable by the application.
+
+**4 - How the Application Uses the Service Account Token to Make Requests**
+
+Once the application is running with app-service-account, it can interact with the Kubernetes API using the token.
+
+Let’s say our application wants to list all the pods in the dev namespace. Here’s how it happens step-by-step:
+
+- **Reading the Token**:
+
+  - The application code reads the token file mounted at ```/var/run/secrets/kubernetes.io/serviceaccount/token```.
+  - This token acts as the application’s "password" to the Kubernetes API, proving its identity as app-service-account.
+ 
+- **Making the API Request**:
+
+  - The application makes an HTTP request to the API server’s URL to list pods. The request includes the token in the headers for authentication:
+
+    ```
+      #HTTP
+      GET /api/v1/namespaces/dev/pods
+      Authorization: Bearer <service-account-token>
+    ```
+
+- **Authentication and Authorization by the API Server**:
+
+  - **Authentication**: The API server verifies the token to confirm the requester’s identity. The API server sees that this is the app-service-account Service Account in the dev namespace.
+ 
+  - **Authorization**: The API server checks if app-service-account has permission to list pods in the dev namespace. It finds the RoleBinding app-pod-reader-binding, which grants app-service-account the pod-reader Role, which allows listing pods.
+
+- **Response**:
+
+  - Since the request passes authentication and authorization, the API server returns the list of pods in the dev namespace to the application.
+
+By using Service Accounts in this way, Kubernetes provides a secure way for applications to interact with the cluster’s API, controlling exactly what each application can do. This is crucial for protecting cluster resources and isolating applications' access to only the resources they need.
