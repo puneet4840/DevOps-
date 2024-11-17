@@ -26,7 +26,7 @@ Let’s go through each step that happens when a user sends a request to the API
   - The target namespace: ```dev```.
   - The user’s authentication credentials (like a certificate, token, or access code).
 
-- **Step 2: Authentication – Verifying Identity**
+- **Step 2: Authentication – How Kubernetes Verifies the Identity of a Requester**
 
   The first thing the API server does is check who is making the request. It does this using **Authentication**.
 
@@ -34,10 +34,23 @@ Let’s go through each step that happens when a user sends a request to the API
 
     The API server checks the incoming request to identify the type of authentication used, which could be:
 
-    - **Client Certificate** (from a kubeconfig file).
-    - **Bearer Token** (e.g., a JWT token issued by an identity provider like Azure AD).
-    - **Static Token File** (tokens configured in a file for quick setup).
-    - **Webhook Token Authentication** (external service verifying tokens).
+    - **Client Certificates** (for admins and some users):
+
+      - Admins or Kubernetes users often use client certificates, which are small digital files proving their identity.
+     
+      - The administrator generates these certificates and provides them to each user who needs access. These certificates are usually embedded in the kubeconfig file, which kubectl uses to send requests to the cluster.
+
+    - **Tokens** (commonly used in cloud-managed clusters like AKS, EKS, and GKE):
+
+      - Cloud services like Azure AKS often use tokens for authentication. A token is like a temporary password or access code.
+     
+      - For example, in AKS (Azure Kubernetes Service), you can use az aks get-credentials to get your kubeconfig updated with tokens that allow access to the cluster. These tokens are usually issued by identity providers, such as Azure Active Directory (AD), and are often valid for a limited time.
+     
+    - **Service Accounts for Applications Inside the Cluster**
+
+      - Applications running in Kubernetes use Service Accounts to authenticate. When a Service Account is created, Kubernetes generates a token specifically for that account.
+     
+      - When a pod runs, Kubernetes automatically places this token in a specific file location inside the pod (e.g., ```/var/run/secrets/kubernetes.io/serviceaccount/token```). The application can use this token to make requests to the API server, similar to how a user would authenticate.
 
   - **Verify the Credentials**:
 
