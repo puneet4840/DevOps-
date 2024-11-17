@@ -15,8 +15,13 @@ The API server is a RESTful service that exposes the Kubernetes API, meaning it 
 
 Let’s go through each step that happens when a user sends a request to the API server, using ```kubectl``` as an example.
 
-**Step 1: User Sends a Request**
+- **Step 1: User Sends a Request**
 
   Suppose you run a command like:
 
   ```kubectl get pods --namespace dev```
+
+  This command sends an HTTP request to the Kubernetes API server. The request includes:
+  - The action: ```get pods```.
+  - The target namespace: ```dev```.
+  - The user’s authentication credentials (like a certificate, token, or access code).
