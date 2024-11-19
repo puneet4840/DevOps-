@@ -462,3 +462,154 @@ In this lab, we’ll:
               port: 5432
         EOF
     ```
+
+    Explanation:
+    - podSelector: Targets the ```database``` pod.
+    - policyTypes: Applies only to Ingress (incoming traffic).
+    - ingress: Only allows traffic from the backend namespace on TCP port 5432.
+
+    This network policy restricts access to the database, ensuring only the backend pod can access it on the database port.
+
+<br>
+
+- **Step 5: Block All Unwanted Traffic**
+
+  Finally, let’s apply a default-deny policy to each namespace. This denies any traffic not explicitly allowed by other policies.
+
+  - Deny All Ingress Traffic in Frontend Namespace:
+
+    ```
+      cat <<EOF | kubectl apply -f -
+      apiVersion: networking.k8s.io/v1
+      kind: NetworkPolicy
+      metadata:
+        name: deny-all-ingress
+        namespace: frontend
+      spec:
+        podSelector: {}
+        policyTypes:
+        - Ingress
+      EOF
+    ```
+
+    This policy in the ```frontend``` namespace blocks all incoming traffic to any pods, unless other policies explicitly allow it.
+
+- **Deny All Ingress Traffic in Backend Namespace**:
+
+  ```
+    cat <<EOF | kubectl apply -f -
+    apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      name: deny-all-ingress
+      namespace: backend
+    spec:
+      podSelector: {}
+      policyTypes:
+      - Ingress
+    EOF
+  ```
+
+  This policy in the backend namespace blocks all traffic except what’s specifically allowed by other policies, like the frontend-to-backend communication.
+
+- **Deny All Ingress Traffic in Database Namespace**:
+
+  ```
+    cat <<EOF | kubectl apply -f -
+    apiVersion: networking.k8s.io/v1
+    kind: NetworkPolicy
+    metadata:
+      name: deny-all-ingress
+      namespace: database
+    spec:
+      podSelector: {}
+      policyTypes:
+      - Ingress
+    EOF
+  ```
+
+  This policy in the ```database``` namespace ensures that all traffic to the database is blocked except for the allowed backend-to-database communication.
+
+<br>
+<br>
+
+- **Step 6: Testing the Network Policies**
+
+  After setting up all these policies, you can test the configuration by attempting to connect to each pod. Here’s how:
+
+  - **Connect from Frontend to Backend**:
+
+    From the frontend pod, run a command to check if it can connect to the backend pod on port 8080.
+
+  - **Connect from Backend to Database**:
+
+    From the backend pod, run a command to check if it can connect to the database pod on port 5432.
+
+  - **Check Blocked Connections**:
+
+    - Try connecting to the database from the frontend pod. This should fail due to the network policy restrictions.
+    - Similarly, try to connect to the backend pod from another pod outside the frontend namespace. This should also fail.
+
+By setting up these policies, you have created a secure, controlled environment where each component can only communicate with the necessary services.
+
+<br>
+<br>
+
+### Enabling Network Policies
+
+Kubernetes Network Policies work with network plugins that support them. Some popular plugins include Calico, Cilium, and Weave Net. In a managed Kubernetes service (like AKS, GKE, or EKS), you can enable network policies as an addon or configuration option. These are called CNI.
+
+In Kubernetes, Container Network Interface (CNI) is a framework for configuring networking in Linux containers. CNI defines a standard way for network plugins to manage network resources, allowing Kubernetes to connect containers, manage their IP addresses, and handle communication between them. Essentially, CNI makes it possible for pods in a Kubernetes cluster to communicate with each other and with other external resources.
+
+**Why Do We Need CNI?**
+
+When you run a Kubernetes cluster:
+
+- Each pod (a group of one or more containers) needs a unique IP address.
+- Pods need to communicate with each other across different nodes (the machines in your cluster).
+- Kubernetes doesn’t manage the actual networking itself. Instead, it relies on network plugins that follow the CNI standard to provide network connectivity for the pods.
+
+CNI plugins take care of setting up networking for pods by:
+
+- Allocating IP addresses to pods.
+- Managing communication between pods within the same or across different nodes.
+- Enabling access to external networks when needed
+
+**CNI Overview and How It Works in Kubernetes**
+
+CNI was originally developed by the Cloud Native Computing Foundation (CNCF) as a set of specifications and libraries for configuring network interfaces in Linux containers.
+
+Here’s how it works in Kubernetes:
+
+- **CNI Plugin Deployment**: When you set up a Kubernetes cluster, you install a CNI plugin (like Calico, Flannel, or Weave Net) to provide networking.
+
+- **Pod Creation and IP Assignment**:
+  - When a pod is created, Kubernetes sends a request to the CNI plugin.
+  - The CNI plugin allocates an IP address to the pod and configures routing to enable communication with other pods.
+
+- **Traffic Routing**:
+  - The CNI plugin ensures that traffic from one pod can reach another pod within the same cluster, even if they’re on different nodes.
+
+- **Cleanup on Pod Deletion**:
+  - When a pod is deleted, the CNI plugin deallocates the IP address and cleans up any network interfaces associated with it.
+ 
+**Components of CNI**
+
+A CNI plugin performs two main tasks:
+- **ADD**: Sets up a network for a new container (when a pod is created).
+- **DEL**: Cleans up the network configuration when a container is removed (when a pod is deleted).
+
+In Kubernetes, the Kubelet (a component running on each node that manages the containers) calls these functions on the CNI plugin whenever a pod is started or stopped.
+
+**Popular CNI Plugins**
+
+Several CNI plugins are widely used in Kubernetes, each with unique features:
+
+- **Calico**: Provides network security policies and routing for pod traffic. It’s commonly used in production environments due to its flexibility.
+
+- **Flannel**: A simple CNI plugin that sets up an overlay network for pod communication. It’s easy to set up and often used in test environments.
+
+- **Weave Net**: Sets up a mesh network that automatically discovers other nodes in the cluster.
+
+- **Cilium**: Uses eBPF for faster network operations and supports advanced security features.
+
