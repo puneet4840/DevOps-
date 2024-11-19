@@ -440,25 +440,25 @@ In this lab, we’ll:
   - Define and Apply Network Policy in Database Namespace:
 
     ```
-
-    ```cat <<EOF | kubectl apply -f -
-apiVersion: networking.k8s.io/v1
-kind: NetworkPolicy
-metadata:
-  name: allow-backend-to-database
-  namespace: database
-spec:
-  podSelector:
-    matchLabels:
-      app: database
-  policyTypes:
-  - Ingress
-  ingress:
-  - from:
-    - namespaceSelector:
-        matchLabels:
-          name: backend
-    ports:
-    - protocol: TCP
-      port: 5432
-EOF
+        cat <<EOF | kubectl apply -f -
+        apiVersion: networking.k8s.io/v1
+        kind: NetworkPolicy
+        metadata:
+          name: allow-backend-to-database
+          namespace: database
+        spec:    
+          podSelector:
+            matchLabels:
+              app: database
+          policyTypes:
+          - Ingress
+          ingress:
+          - from:
+            - namespaceSelector:
+                matchLabels:
+                  name: backend
+            ports:
+            - protocol: TCP
+              port: 5432
+        EOF
+    ```
