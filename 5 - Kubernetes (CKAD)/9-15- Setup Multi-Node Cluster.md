@@ -33,4 +33,30 @@ This guide explains how to create a multi-node Kubernetes cluster using 3 Azure 
 
 ### What are We Building?
 
+We’re creating a Kubernetes cluster from scratch using virtual machines where:
 
+- Control Plane (Master) manages the cluster.
+- Worker Nodes run the applications (pods).
+
+For example:
+- Master (Control Plane): Think of this as the manager
+- Worker Nodes: Think of these as the workers who actually do the work.
+
+### What Do You Need?
+
+- **Three Azure Virtual Machines (VMs)**:
+  - One for the Master (Control Plane).
+  - Two for Worker Nodes.
+  - Each VM runs Ubuntu 20.04.
+
+- **Install Kubernetes tools on the VMs**:
+  - ```kubeadm```: For setting up the cluster.
+  - ```kubelet```: Runs the pods on nodes.
+  - ```kubectl```: A command-line tool to manage Kubernetes.
+
+- **Networking**:
+  - Open the required ports in Azure for the VMs to communicate.
+
+### Pre-requisites
+
+<img src="https://drive.google.com/uc?export=view&id=1mbf0fgd0LD5Mbji-zSHbtqzq1giP2r54" width="400" heigth="600">
