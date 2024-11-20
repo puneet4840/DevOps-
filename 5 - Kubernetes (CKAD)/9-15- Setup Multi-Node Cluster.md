@@ -57,6 +57,6 @@ For example:
 - **Networking**:
   - Open the required ports in Azure for the VMs to communicate.
 
-### Pre-requisites
+### Steps to follow
 
-<img src="https://drive.google.com/uc?export=view&id=1mbf0fgd0LD5Mbji-zSHbtqzq1giP2r54" width="400" heigth="600">
+<img src="https://drive.google.com/uc?export=view&id=1mbf0fgd0LD5Mbji-zSHbtqzq1giP2r54" width="450" heigth="650">
