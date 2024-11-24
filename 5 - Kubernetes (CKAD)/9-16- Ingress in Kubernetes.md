@@ -243,6 +243,12 @@ Setting up an Ingress Controller involves deploying it within your cluster, conf
 
   This command displays the external IP address assigned to the LoadBalancer service. This IP address will serve as the entry point for external traffic directed to the Ingress Controller.
 
+- **Update DNS**:
+  - Map the domain ```myapp.example.com``` to the Load Balancer IP in your DNS provider settings.
+
+- **Test Access**:
+  - Open ```http://myapp.example.com/app1``` and ```http://myapp.example.com/app2``` in a browser.
+
 <br>
 
 ### What is path based routing OR host based routing
@@ -407,3 +413,202 @@ Now let’s walk through what happens when a user sends a request to your applic
   - The Service sends the response back to the Ingress Controller.
   - The Ingress Controller then sends the response to the Load Balancer, which in turn forwards it to the user’s browser.
   - The user sees the response, which could be a web page or any other content served by your application.
+
+<br>
+
+### More about ingress
+
+In my greenlit project there is an ingress implementation which yaml's looks like below. In the bwloe yaml you can see there no host mentioned. Let's understand it.
+
+```
+apiVersion: v1
+kind: Namespace
+metadata:
+  creationTimestamp: null
+  name: shipping-service
+spec: {}
+status: {}
+---
+apiVersion: v1
+data:
+  .dockerconfigjson: ewoJImF1dGhzIjogewoJCSJodHRwczovL2luZGV4LmRvY2tlci5pby92MS8iOiB7CgkJCSJhdXRoIjogImNIVnVaV1YwTVRwd2EzWXhNVFJBVWpreE1ERTVPVGs9IgoJCX0sCgkJInJlZ2lzdHJ5ZGV2YXVlYXN0MDAxLmF6dXJlY3IuaW8iOiB7CgkJCSJhdXRoIjogIk9EVmtOV1V6TlRrdE5XVTBPQzAwWmpBMUxXSmlPREl0WmpCbU1ERTFOekV5TnpCa09tUmhZamhSZm5kc2NtVldjVTAxVjNnNVpTNW5WeTE0WlRaRmIwSXhVRWR0WVhOWGQyeGlVVFk9IgoJCX0KCX0KfQ==
+kind: Secret
+metadata:
+  creationTimestamp: null
+  name: registry-secret-new
+  namespace: shipping-service
+type: kubernetes.io/dockerconfigjson
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+ namespace: shipping-service
+ name: shipping-service
+ labels: 
+  owner: Aquib
+spec:
+ replicas: 1
+ selector:
+  matchLabels:
+   app : shipping-service
+ template:
+  metadata:
+   labels:
+    app : shipping-service
+  spec:
+   containers:
+   - name: shipping-service
+     image: registrydevaueast001.azurecr.io/shippingservice:#(dockertag)#
+     imagePullPolicy: Always
+     ports:
+     - containerPort: 80
+     resources:
+      # limits:
+      #  memory: 500Mi
+      #  cpu: 30m
+      requests:
+        memory: 500Mi
+        cpu: 30m
+    #  Update the Key vault credentials here
+     env:
+      - name: KVClientId
+        value: "ff7e2427-18ef-4373-a0ea-f9d60536e3c1"
+      - name: KVClientSecret
+        value: "ra-bu-~1pp.LStD_5foY3N76oXm6s5gZyA"
+      - name: KVEndpoint
+        value: "https://shipping-vault-dev-001.vault.azure.net/"
+      - name: ASPNETCORE_ENVIRONMENT
+        value: "Dev001"  
+   imagePullSecrets:
+      - name: registry-secret-new
+---
+apiVersion: v1
+kind: Service
+metadata:
+ namespace: shipping-service
+ name: shipping-service-svc
+ labels:
+  kind : service
+spec:
+ type: ClusterIP
+ selector:
+    app : shipping-service
+ ports:
+ - protocol: TCP
+   port: 80
+   targetPort: 80
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  namespace: shipping-service
+  name: shippng-service-hpa
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: shipping-service
+  minReplicas: 1
+  maxReplicas: 4
+  metrics:
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        averageUtilization: 80
+        type: Utilization
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        averageUtilization: 80
+        type: Utilization
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: shipping-service-ingress
+  namespace: shipping-service
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  - http:
+      paths:
+      - path: /shipping(/|$)(.*)
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: shipping-service-svc
+            port:
+              number: 80
+```
+
+In this YAML configuration, the Ingress resource does not specify a ```host``` field, which makes it a catch-all configuration. This means that the Ingress rule will respond to requests sent to any hostname, as long as the request path matches the ```path``` specified. This is typically used in scenarios where the application doesn’t require a specific hostname or is designed to respond to requests on any hostname, as is often the case in development environments or internal services that don’t need external DNS entries.
+
+**Explanation of Key Parts**:
+
+Let’s break down the critical elements in this Ingress configuration to understand how it functions without a specified host.
+
+- **Path-Based Routing Without Host**
+
+  ```
+    rules:
+    - http:
+        paths:
+        - path: /shipping(/|$)(.*)
+          pathType: ImplementationSpecific
+          backend:
+            service:
+              name: shipping-service-svc
+              port:
+                number: 80
+  ```
+
+  Explaination:
+
+  - **path**: ```/shipping(/|$)(.*):``` This path uses a regular expression-like syntax to match any URL path that starts with ```/shipping``` or has ```/shipping/``` as a prefix. For example, requests to ```/shipping```, ```/shipping/order```, and ```/shipping/status``` would match this rule. The use of (.*) at the end allows it to match any characters that follow /shipping.
+ 
+  - **pathType**: ```ImplementationSpecific```: This allows the Ingress Controller (in this case, the NGINX Ingress Controller as specified by ```ingressClassName: nginx```) to determine how to handle path matching. NGINX typically interprets this in a flexible way, allowing regex or prefix-based matching as defined by the ```path```.
+ 
+  - **Backend Service**: Requests that match the path rule are forwarded to the shipping-service-svc service on port 80, which routes traffic to the shipping-service Pods.
+
+- **No Host Specification**:
+
+  - Since the host field is omitted, this Ingress will catch all requests that match the path rule regardless of the hostname. In practice, this means it can respond to requests made to any domain or IP pointing to the Ingress Controller.
+ 
+  - This is useful when you want to simplify routing rules or when the application doesn’t need to differentiate requests based on the hostname.
+
+- **How It Works in Your Scenario with Azure AKS**:
+
+  Assuming that you have:
+  - An AKS cluster with the NGINX Ingress Controller installed.
+  - A public IP assigned to the Ingress Controller via an Azure Load Balancer.
+
+  Here’s how this Ingress will work when a user makes a request:
+
+  - **Request to Load Balancer IP**: When a user accesses the Load Balancer’s IP (e.g., ```http://<LoadBalancer-IP>/shipping/orders```), the request is directed to the Ingress Controller within AKS.
+ 
+  - **Ingress Controller Checks Path Rules**: The Ingress Controller checks if any Ingress resource has a path rule that matches ```/shipping/orders```. Since this configuration has a path rule of ```/shipping(/|$)(.*)```, this request matches and is accepted.
+ 
+  - **Routing to Service**: The Ingress Controller then forwards the request to ```shipping-service-svc``` on port 80.
+ 
+  - **Service to Pods**: The ```shipping-service-svc``` service load-balances the request to one of the available ```shipping-service Pods```, which processes the request and returns the response.
+ 
+  - **Response**: The response travels back through the Service, Ingress Controller, and Load Balancer to the user.
+ 
+- **When to Use This Configuration**
+
+  This kind of hostless Ingress configuration is commonly used when:
+  - The service should respond to requests on any hostname.
+  - The service is internal or accessed only through IP, rather than a specific domain.
+  - You’re setting up a simple routing rule in a development or testing environment.
+ 
+  In production, it’s often a best practice to specify a host to improve security, control, and organization (e.g., to separate different applications by domain). However, omitting the host can simplify things for internal or non-production services.
+
+<br>
+<br>
+<hr>
+
+## Example (Lab):
