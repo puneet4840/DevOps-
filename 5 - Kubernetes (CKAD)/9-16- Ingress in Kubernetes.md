@@ -265,30 +265,145 @@ In Kubernetes, path-based routing and host-based routing in an Ingress resource 
   In the following example, we’ll set up host-based routing for two different applications: app1 and app2, accessible under app1.example.com and app2.example.com, respectively.
 
   ```
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: example-host-based-ingress
-spec:
-  rules:
-  - host: app1.example.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: app1-service
-            port:
-              number: 80
-  - host: app2.example.com
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: app2-service
-            port:
-              number: 80
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      name: example-host-based-ingress
+    spec:
+      rules:
+      - host: app1.example.com
+        http:
+          paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: app1-service
+                port:
+                  number: 80
+      - host: app2.example.com
+        http:
+          paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: app2-service
+                port:
+                  number: 80
   ```
+
+  Explanation of the YAML:
+  - host: app1.example.com and host: app2.example.com: These are the hostnames used for host-based routing. Requests with Host: app1.example.com will be directed to app1-service, while requests with Host: app2.example.com will be directed to app2-service.
+ 
+  - path: /: This is the URL path. Since we specified /, it matches any URL path on the domain (e.g., /, /page1, /api).
+ 
+  - backend.service.name and backend.service.port.number: These specify the Kubernetes services that should receive the traffic based on the hostname.
+ 
+
+  With this setup:
+  - Requests to http://app1.example.com will be routed to app1-service.
+  - Requests to http://app2.example.com will be routed to app2-service.
+
+  Note: For this to work, DNS records should point app1.example.com and app2.example.com to the Ingress Controller’s IP address, usually provided by a cloud LoadBalancer.
+
+
+- **Path-Based Routing**
+
+  Path-based routing in an Ingress resource directs traffic based on the URL path. This allows different URL paths on the same domain to route to different services.
+
+  When to Use Path-Based Routing:
+  - You have multiple applications or APIs that you want to expose under a single domain.
+  - You want to organize a large application by routing different sections (e.g., /app1, /app2, /api) to different services.
+
+  Example: Path-Based Routing:
+
+  In the following example, we’ll set up path-based routing for two different applications on the same domain, example.com. The applications will be accessible at /app1 and /app2.
+
+  ```
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      name: example-path-based-ingress
+    spec:
+      rules:
+      - host: example.com
+        http:
+          paths:
+          - path: /app1
+            pathType: Prefix
+            backend:
+              service:
+                name: app1-service
+                port:
+                  number: 80
+          - path: /app2
+            pathType: Prefix
+            backend:
+              service:
+                name: app2-service
+                port:
+                  number: 80
+  ```
+
+  Explanation of the YAML:
+  - host: example.com: All requests to example.com are handled by this Ingress rule.
+  - path: /app1: Routes traffic with the URL path /app1 to app1-service.
+  - path: /app2: Routes traffic with the URL path /app2 to app2-service.
+  - pathType: Prefix: Indicates that any URL starting with /app1 (e.g., /app1, /app1/section) will match this rule.
+
+  With this setup:
+  - Requests to http://example.com/app1 will be routed to app1-service.
+  - Requests to http://example.com/app2 will be routed to app2-service.
+
+  Note: Path-based routing works well for organizing services under a single domain. Each path should ideally correspond to a specific service in the cluster.
+
+  - **Path Types in Path-Based Routing**
+
+    In Kubernetes, each path rule in an Ingress resource has a pathType field, which specifies how the path should be matched. There are three main path types:
+
+    - Prefix: Matches if the URL path starts with the specified path. For example, if you specify path: /app1 with pathType: Prefix, requests to /app1, /app1/subpath, etc., will match.
+   
+    - Exact: Matches only if the URL path exactly matches the specified path. So if you use path: /app1 with pathType: Exact, only requests to /app1 will match, while /app1/anything-else will not.
+   
+    - ImplementationSpecific: Allows the Ingress Controller to decide how to match paths. This behavior can vary between Ingress Controllers and is usually not recommended unless you have a specific controller requirement.
+
+  For most use cases, Prefix is the preferred pathType, as it provides more flexibility.
+
+<br>
+
+### Ingress Workflow (When a user send a request to load balancer).
+
+Now let’s walk through what happens when a user sends a request to your application using the Load Balancer IP.
+
+- **Step 1: User Makes a Request to the Load Balancer IP**
+
+  - A user opens a browser and types in the Load Balancer IP address (e.g., ```http://<LoadBalancer-IP>/```).
+  - This request goes over the internet and reaches the Azure Load Balancer, which is the public entry point to your cluster.
+
+- **Step 2: Azure Load Balancer Forwards Traffic to the Ingress Controller**
+
+  - The Load Balancer is configured to forward traffic on ports 80 (HTTP) and 443 (HTTPS) to the Ingress Controller.
+  - The Ingress Controller is running inside your AKS cluster as a Kubernetes Pod, listening for incoming traffic from the Load Balancer.
+
+- **Step 3: Ingress Controller Checks Ingress Rules**
+
+  - The Ingress Controller receives the user’s request from the Load Balancer.
+  - It checks the request against the Ingress resource rules that you defined for your web application.
+  - For example, if you set up the Ingress resource to match requests to the path ```/``` and route them to a Service named ```webapp-service```, the Ingress Controller recognizes this rule and decides to forward the request to ```webapp-service```.
+
+- **Step 4: Ingress Controller Forwards the Request to the Service**
+
+  - Based on the matched rule, the Ingress Controller forwards the request to ```webapp-service```.
+  - In Kubernetes, Services act as a load balancer within the cluster, distributing traffic to the application Pods (replicas of your web app) running behind the service.
+
+- **Step 5: Service Directs Traffic to Application Pods**
+
+  - The ```webapp-service``` sends the request to one of the Pods running your web application.
+  - These Pods handle the request, generate a response, and send it back to the Service.
+
+- **Step 6: Response Travels Back to the User**
+
+  - The Service sends the response back to the Ingress Controller.
+  - The Ingress Controller then sends the response to the Load Balancer, which in turn forwards it to the user’s browser.
+  - The user sees the response, which could be a web page or any other content served by your application.
