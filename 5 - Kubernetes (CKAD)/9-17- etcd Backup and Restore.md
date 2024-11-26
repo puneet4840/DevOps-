@@ -256,3 +256,33 @@ After restoring the snapshot, we need to restart etcd (if it was stopped) and th
 
 etcd backup and restore is critical because etcd holds the entire state of your Kubernetes cluster. A regular backup routine, secure storage practices, and a tested restore process are necessary for Kubernetes cluster health and reliability. By following these steps, you can ensure that even in the case of a disaster, your cluster can be restored to a stable, working state.
 
+
+<br>
+<br>
+<hr>
+
+## Note
+
+These all above steps only works with self-managed kubernetes cluster like if you have created kubernetes cluster using kubeadm. In this cluster you have access to all components of contol-plane.
+
+If you have Azure managed kubernets cluster which is **AKS**. Then these steps are not application on aks. Fot backup and restore azure have their own steps.
+
+**For AKS**
+
+In an Azure Kubernetes Service (AKS) cluster, etcd is managed by Azure itself as part of the Kubernetes control plane, which is hosted and maintained by Azure. This means that the Kubernetes API server and etcd are not directly accessible in the AKS-managed control plane, unlike in a self-hosted Kubernetes cluster. Consequently, you cannot directly back up or restore etcd in AKS the same way you would with a self-hosted Kubernetes environment.
+
+Instead, Azure provides a managed approach for backing up and restoring your cluster configuration and state. 
+
+**Third-party tools for backup and restore aks**
+
+Yes, there are several third-party tools available that can help manage backups, disaster recovery, and restoration for workloads and configurations in an Azure Kubernetes Service (AKS) environment. These tools generally work by taking backups of Kubernetes resources, application data, and persistent volumes. Here are some popular ones used in the Kubernetes ecosystem for AKS:
+
+- **Velero**
+
+  Velero is an open-source tool developed by VMware that provides backup, restoration, and disaster recovery for Kubernetes clusters. It works by backing up Kubernetes resources and persistent volumes, allowing you to restore or migrate workloads to another cluster, even in a different cloud environment.
+
+- **CloudCasa**
+
+  CloudCasa is a Kubernetes backup and recovery solution from Catalogic Software. It’s a SaaS-based service focused on making backups and restores easy to manage in a Kubernetes environment, with support for AKS.
+
+and etc.
