@@ -8,7 +8,7 @@ A Helm chart is a directory containing:
 
 - ```Chart.yaml```: Metadata about the chart (name, version, description).
   
-- ```values.yaml```: Default configuration values used by the templates. These values.yaml file container the values which are picked from values.yaml file and placed into the Yaml files (Deployment.yaml, service.yaml, etc).
+- ```values.yaml```: Default configuration values used by the templates. This values.yaml file contains the dynamic values which picked from values.yaml file and placed into the Yaml files (Deployment.yaml, service.yaml, etc).
   
 - ```templates/```: A directory with Kubernetes manifest files (e.g., Deployment, Service) written as templates.
 
