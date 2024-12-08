@@ -130,4 +130,235 @@ Each microservice might also have different configurations for environments (dev
 
   Helm tracks changes and applies only the updates, avoiding manual errors.
 
-  
+<br>
+
+## Why Do We Use Helm Charts?
+
+- **Simplifies Deployment**
+
+  Instead of managing multiple YAML files manually, Helm organizes them into one reusable package. It also allows you to deploy applications with a single command.
+
+- **Reusability**
+
+  Helm charts can be reused across environments like development, staging, and production by simply changing configuration values.
+
+- **Consistency Across Teams**
+
+  In an organization, using Helm ensures everyone uses the same configuration for deployments, avoiding issues caused by manual errors.
+
+- **Automation and CI/CD**
+
+  Helm integrates well with CI/CD tools like Azure DevOps or Jenkins to automate application deployments and updates.
+
+<br>
+
+## Understand Helm Through an Example
+
+Let’s go step by step with a practical example of deploying NGINX using Helm.
+
+**Step 1: Install Helm**
+
+- Install Helm on your system:
+
+  ```
+  curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+  ```
+
+- Verify the installation:
+
+  ```
+  helm version
+  ```
+
+**Step 2: Create a Helm Chart**
+
+- Create a new Helm chart for your NGINX application:
+
+  ```
+  helm create nginx
+  ```
+
+  This creates a directory structure like this:
+
+  ```
+  nginx/
+  ├── Chart.yaml       # Metadata about the chart
+  ├── values.yaml      # Default configuration values
+  ├── templates/       # Folder containing Kubernetes YAML templates
+  │   ├── deployment.yaml
+  │   ├── service.yaml
+  │   └── ingress.yaml
+  ```
+
+**Step 3: Understand Helm Files**
+
+- ```Chart.yaml```
+
+  This file contains basic information about the Helm chart.
+
+  ```
+  apiVersion: v2
+  name: nginx
+  description: A Helm chart for Kubernetes
+  version: 0.1.0
+  ```
+
+  Explaination:
+
+  - ```name```: Name of the chart.
+  - ```version```: Version of the chart.
+ 
+- ```values.yaml```
+
+  Contains default configurations for your chart. You can override these during deployment.
+
+  ```
+  replicaCount: 2
+  image:
+    repository: nginx
+    tag: "1.23.0"
+  service:
+    type: ClusterIP
+    port: 80
+  ```
+
+  Example: If you want to use 3 replicas instead of 2, you can update replicaCount in this file.
+
+- ```templates/```
+
+  Contains the Kubernetes YAML templates with dynamic placeholders.
+
+  Example ```templates/deployment.yaml```:
+
+  ```
+  apiVersion: apps/v1
+  kind: Deployment
+  metadata:
+    name: {{ .Release.Name }}-nginx
+  spec:
+    replicas: {{ .Values.replicaCount }}
+    selector:
+      matchLabels:
+        app: {{ .Release.Name }}-nginx
+    template:
+      metadata:
+        labels:
+          app: {{ .Release.Name }}-nginx
+      spec:
+        containers:
+        - name: nginx
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+          - containerPort: 80
+  ```
+
+  **Dynamic Placeholders**:
+  - ```{{ .Values.replicaCount }}```: Pulls the value of replicaCount from values.yaml.
+  - ```{{ .Values.image.repository }}```: Inserts the image name from values.yaml.
+
+**Step 4: Deploy the Chart**
+
+- Deploy the chart in Kubernetes:
+
+  ```
+  helm install my-nginx ./nginx
+  ```
+
+  ```my-nginx```: The name of the deployment (release name).
+  ```./nginx```: Path to your Helm chart.
+
+- Verify the resources:
+
+  ```
+  kubectl get pods
+  kubectl get svc
+  ```
+
+**Step 5: Customize the Deployment**
+
+If you need to override the default values, create a custom ```my-values.yaml``` file:
+
+```
+replicaCount: 3
+service:
+  type: LoadBalancer
+  port: 8080
+```
+
+Deploy using the custom values:
+
+```
+helm install my-nginx ./nginx -f my-values.yaml
+```
+
+<br>
+
+### What is {{ .Release.Name }}?
+
+```{{ .Release.Name }}``` is a Helm built-in template variable that refers to the name of the Helm release.
+
+- A release in Helm is an instance of a chart deployed to your Kubernetes cluster.
+- The ```{{ .Release.Name }}``` placeholder ensures that every resource created by Helm is unique to that release.
+
+For example:
+
+If you deploy the same Helm chart multiple times with different release names (my-app-dev, my-app-prod), the {{ .Release.Name }} value will change accordingly in the generated Kubernetes YAML.
+
+**How Does It Work?**
+
+When you run a Helm command like this:
+
+```
+helm install my-nginx ./nginx
+```
+
+- ```my-nginx``` is the release name.
+- Helm substitutes ```{{ .Release.Name }}``` with my-nginx in all templates.
+
+
+**Practical Example**
+
+Template: ```deployment.yaml```
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-nginx
+  labels:
+    app: {{ .Release.Name }}-nginx
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-nginx
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.23.0
+```
+
+Scenario: Deploy to Different Environments
+
+- Deploy to Development:
+
+  ```
+  helm install dev-nginx ./nginx
+  ```
+
+Kubernetes Deployment Name: ```dev-nginx-nginx```
+
+- Deploy to Production:
+
+  ```
+  helm install prod-nginx ./nginx
+  ```
+
+  Kubernetes Deployment Name: ```prod-nginx-nginx```
+
+Each release has unique resource names (dev-nginx-nginx, prod-nginx-nginx) to avoid conflicts.
+
