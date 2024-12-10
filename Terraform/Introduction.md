@@ -94,3 +94,8 @@ IaC tool like **Terraform** take your written instructions (code) and:
 3 - AWS CloudFormation.
 
 ### Note: We are going to use Terraform as IaC tool.
+
+<br>
+<br>
+
+# What is Terraform?
