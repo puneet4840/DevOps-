@@ -88,7 +88,9 @@ IaC tool like **Terraform** take your written instructions (code) and:
 ## Tools for IaC
 
 1 - Terraform.
+
 2 - Azure Resource Manager.
+
 3 - AWS CloudFormation.
 
 ### Note: We are going to use Terraform as IaC tool.
