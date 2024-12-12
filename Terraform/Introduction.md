@@ -4,7 +4,7 @@
 
 Infrastructure in context of cloud is the services like (Server, Networks, Databases) which is the collection of Hardware and Software and works together to serve the users.
 
-```Infrastructure, Hardware और Software से मिलकर बनी services होती हैं जैसे Server, Network, Database.```
+```Hardware और Software से मिलकर बनी services होती हैं जैसे Server, Network, Database, इसी को ही Infrastructure कहते हैं ```
 
 ## What is Infrastructure as Code (IaC)?
 
