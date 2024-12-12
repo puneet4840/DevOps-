@@ -99,3 +99,77 @@ IaC tool like **Terraform** take your written instructions (code) and:
 <br>
 
 # What is Terraform?
+
+Terraform is an open-source **Infrastructure as Code (IaC)** tool that helps you automate the **creation**, **updation** and **management** of infrastructure (servers, databases, networks) using simple text files. Instead of manually clicking around cloud platform like Azure, AWS, GCP and etc, you write instruction (code) in a text files and terraform does the work for you.
+
+Terraform is an Infrastructure as Code (IaC) tool that allows users to manage and provision infrastructure through code instead of manual processes
+
+## Why use Terraform?
+
+```जब हमारे पास Cloud के IaC tool थे जैसे की Azure के लिए Azure Resource Manager Teamplate, AWS के लिए Cloud Formation. जब हम इन tools का use करके cloud पर resources create करने के लिए use कर रहे थे तो हमको Terraform को जरुरत क्यों हुई.```
+
+```क्युकी हमको Terraform की जरुरत इसलिए हुई क्युकी Terraform सभी Cloud providers के साथ compatible है. हम terrafrom से Azure, AWS, Google Cloud सभी पर resources create कर सकते हैं```
+
+- **Speed**: It's much faster to write code using terraform than to manually click through web interfaces.
+- **Accuracy**: Less chance of mistakes when using code to provision infrastructure.
+- **Consistency**: You can easily recreate your infrastructure.
+- **Multi-Cloud Support**: Works with AWS, Azure, Google Cloud, Kubernetes, and more.
+- **State Management**: Keeps track of your infrastructure using a state file.
+
+## Key Features of Terraform
+
+- **Infrastructure as Code (IaC)**:
+
+  You describe your infrastructure (like servers, networks, databases) in simple text files. Terraform reads these files and sets up everything automatically.
+
+- **Cloud Independence**:
+
+  Terraform works with many cloud providers like AWS, Azure, and Google Cloud. You can manage resources from different providers in the same code.
+
+- **State Management**:
+
+  Terraform keeps track of what’s already created using a "state file." This helps it understand what needs to be added, changed, or deleted.
+
+- **Repeatable and Predictable**:
+
+  You can reuse your configuration files to create the same infrastructure multiple times without mistakes.
+
+## How Does Terraform Work?
+
+Terraform uses three main ideas: **Providers**, **Resources**, and **State**.
+
+- **Providers**
+
+  - Providers are like plugins that let Terraform communicate with cloud services or other systems (e.g., AWS, Azure, or GitHub).
+  - Example: If you want to create a virtual machine in AWS, Terraform needs the aws provider.
+
+  Example:
+
+  ```
+  provider "aws" {
+    region = "us-west-2"  # Region where your resources will be created
+  }
+  ```
+
+- **Resources**
+
+  Resources are the actual things Terraform creates, like servers, storage buckets, or databases.
+
+  Code Example (Creating an AWS EC2 instance):
+
+  ```
+  resource "aws_instance" "example" {
+    ami           = "ami-0c55b159cbfafe1f0"  # Machine image ID
+    instance_type = "t2.micro"              # Server type (small instance)
+  }
+  ```
+
+  Explaination:
+  - Here, ```aws_instance``` is the type of resource, and "example" is its name.
+
+- **State**
+
+  - When Terraform creates resources, it keeps track of them in a state file (```terraform.tfstate```).
+  - Example: If you’ve already created a server and run Terraform again, it knows not to create a duplicate.
+
+  
