@@ -173,3 +173,46 @@ Terraform uses three main ideas: **Providers**, **Resources**, and **State**.
   - Example: If you’ve already created a server and run Terraform again, it knows not to create a duplicate.
 
   
+## Terraform Workflow
+
+Terraform's workflow revolves around a series of commands designed to manage the entire lifecycle of infrastructure.
+
+The Terraform workflow involves these primary steps:
+
+- **Write Configuration Files**: Describe the desired infrastructure using ```.tf``` files.
+
+- **Initialize**: Set up the environment with ```terraform init```.
+
+- **Plan**: Preview changes using ```terraform plan```.
+
+- **Apply**: Apply changes to create or update resources using ```terraform apply```.
+
+- **Manage State**: Manage infrastructure updates and changes with the state file.
+
+- **Destroy**: Tear down infrastructure when it's no longer needed with ```terraform destroy```.
+
+
+## Commands in Terraform
+
+```terraform init``` – Initialization
+
+- **What It Does**:
+  - Prepares the working directory for Terraform.
+  - Downloads necessary provider plugins (e.g., AWS, Azure).
+  - Configures backend settings (e.g., for remote state storage).
+
+- **When to Use**:
+  - The first time you run Terraform in a new directory.
+  - Anytime you modify the provider configurations or backend settings.
+
+- **Example Output**:
+
+  ```
+  Initializing the backend...
+  Initializing provider plugins...
+  - Finding hashicorp/aws versions matching ">= 2.0.0"...
+  - Installing hashicorp/aws v4.0.0...
+  Terraform has been successfully initialized!
+  ```
+
+  
