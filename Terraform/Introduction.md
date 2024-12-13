@@ -191,6 +191,7 @@ The Terraform workflow involves these primary steps:
 
 - **Destroy**: Tear down infrastructure when it's no longer needed with ```terraform destroy```.
 
+<br>
 
 ## Commands in Terraform
 
@@ -215,4 +216,142 @@ The Terraform workflow involves these primary steps:
     Terraform has been successfully initialized!
     ```
 
-  
+- ```terraform plan``` – Execution Plan
+
+  - **What It Does**:
+    - Creates a preview of what Terraform will do.
+    - Shows the resources to be created, modified, or destroyed.
+    - Helps prevent unexpected changes by letting you review the plan.
+
+  - **When to Use**:
+    - Before running ```terraform apply```, to ensure you understand the changes.
+
+  - **Example Command**:
+
+    ```
+    terrafrom plan
+    ```
+
+  - **Example Output**:
+
+    ```
+    Terraform will perform the following actions:
+
+    + aws_instance.web_server
+        ami:                  "ami-0c55b159cbfafe1f0"
+        instance_type:        "t2.micro"
+
+    Plan: 1 to add, 0 to change, 0 to destroy.
+    ```
+
+- ```terraform apply``` – Apply Changes
+
+  - **What It Does**:
+    - Executes the changes described in the plan.
+    - Creates, updates, or destroys resources to match the configuration.
+
+  - **When to Use**:
+    - After reviewing and confirming the execution plan.
+   
+  - **Example Command**:
+
+    ```
+    terraform apply
+    ```
+    - Terraform will prompt for confirmation before applying changes. Use the ```-auto-approve``` flag to skip this prompt.
+
+  - **Example Output**:
+
+    ```
+    aws_instance.web_server: Creating...
+    aws_instance.web_server: Creation complete after 10s [id=i-0abcdef1234567890]
+
+    Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
+    ```
+
+- ```terraform destroy``` – Destroy Infrastructure
+
+  - **What It Does**:
+    - Deletes all resources defined in the configuration.
+    - Useful for cleaning up after testing or decommissioning infrastructure.
+
+  - **When to Use**:
+    - When you no longer need the infrastructure.
+    - To reset and start fresh with a new configuration.
+   
+  - **Example Command**:
+
+    ```
+    terraform destroy
+    ```
+
+  - **Example Output**:
+
+    ```
+    aws_instance.web_server: Destroying... [id=i-0abcdef1234567890]
+    aws_instance.web_server: Destruction complete after 5s
+
+    Destroy complete! Resources: 1 destroyed.
+    ```
+
+- ```terraform validate``` – Validate Configuration
+
+  - **What It Does**:
+    - Checks the configuration files for syntax or logical errors.
+   
+  - **When to Use**:
+    - After writing or editing configuration files, before planning or applying.
+
+  - **Example Command**:
+
+    ```
+    terraform validate
+    ```
+
+  - **Example Output**:
+
+    ```
+    Success! The configuration is valid.
+    ```
+
+- ```terraform show``` – Display Current State
+
+  - **What It Does**:
+    - Displays the current state of infrastructure as described in the state file.
+
+  - **When to Use**:
+    - To inspect the current configuration and values of resources.
+   
+  - **Example Command**:
+
+    ```
+    terraform show
+    ```
+
+- ```terraform output``` – View Outputs
+
+  - **What It Does**:
+    - Displays the output values defined in your configuration.
+   
+  - **When to Use**:
+    - To retrieve important information (e.g., IP addresses or resource IDs).
+   
+  - **Example Command**:
+
+    ```
+    terraform output
+    ```
+
+  - **Example Configuration**:
+
+    ```
+    output "web_server_ip" {
+      value = aws_instance.web_server.public_ip
+    }
+    ```
+
+  - **Example Output**:
+
+    ```
+    web_server_ip = "54.123.45.67"
+    ```
