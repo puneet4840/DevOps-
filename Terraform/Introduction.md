@@ -194,25 +194,25 @@ The Terraform workflow involves these primary steps:
 
 ## Commands in Terraform
 
-```terraform init``` – Initialization
+- ```terraform init``` – Initialization
 
-- **What It Does**:
-  - Prepares the working directory for Terraform.
-  - Downloads necessary provider plugins (e.g., AWS, Azure).
-  - Configures backend settings (e.g., for remote state storage).
+  - **What It Does**:
+    - Prepares the working directory for Terraform.
+    - Downloads necessary provider plugins (e.g., AWS, Azure).
+    - Configures backend settings (e.g., for remote state storage).
 
-- **When to Use**:
-  - The first time you run Terraform in a new directory.
-  - Anytime you modify the provider configurations or backend settings.
+  - **When to Use**:
+    - The first time you run Terraform in a new directory.
+    - Anytime you modify the provider configurations or backend settings.
 
-- **Example Output**:
+  - **Example Output**:
 
-  ```
-  Initializing the backend...
-  Initializing provider plugins...
-  - Finding hashicorp/aws versions matching ">= 2.0.0"...
-  - Installing hashicorp/aws v4.0.0...
-  Terraform has been successfully initialized!
-  ```
+    ```
+    Initializing the backend...
+    Initializing provider plugins...
+    - Finding hashicorp/aws versions matching ">= 2.0.0"...
+    - Installing hashicorp/aws v4.0.0...
+    Terraform has been successfully initialized!
+    ```
 
   
