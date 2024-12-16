@@ -118,6 +118,14 @@ A Service Principal is a non-interactive account that Terraform can use to authe
     - In your Terraform configuration file, update the Azure provider block with the values from the Azure Portal:
 
     ```
+    terraform {
+    required_providers {
+      azurerm = {
+        source = "hashicorp/azurerm"
+        version = "4.14.0"
+        }
+      }
+    }
     provider "azurerm" {
       features = {}
 
