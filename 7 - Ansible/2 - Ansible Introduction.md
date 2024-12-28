@@ -201,4 +201,18 @@ Ansible is composed of several key components that work together to configure a 
         dest: /etc/nginx/nginx.conf
     ```
 
-    
+<br>
+
+## How does Ansible Works?
+
+- **Write a Playbook**: You create a YAML file (the playbook) that describes the tasks you want to automate. This includes specifying which hosts to target, which modules to use, and what parameters to pass to those modules.
+
+- **Define the Inventory**: You create an inventory file that lists your managed nodes.
+
+- **Run the Playbook**: You execute the playbook from the control node using the ansible-playbook command.
+
+- **Ansible Connects**: Ansible connects to the managed nodes (using SSH or WinRM) based on your inventory.
+
+- **Modules Execute**: Ansible transfers the necessary modules to the managed nodes, executes them, and collects the results.
+
+- **Report Results**: Ansible reports the results of the execution back to the control node, telling you if the tasks were successful or if there were any errors.
