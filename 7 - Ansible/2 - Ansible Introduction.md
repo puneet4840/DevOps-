@@ -13,3 +13,31 @@ Configuration Management is simply managing the configuration of servers to desr
 In short, Ansible lets you:
 - Automate repetitive tasks (e.g., installing software on multiple servers).
 
+<br>
+
+## The Key Features of Ansible
+
+- **Agentless**:
+
+  Unlike many other tools, Ansible doesn’t require you to install any special software (called an agent) on the machines it manages. It uses SSH (for Linux/Unix) or WinRM (for Windows) to communicate with systems. This makes it easy to set up and maintain.
+
+  Agentless means no need of installing an agent on remote server. It works by logging onto those server.
+
+- **Human-Readable Language (YAML)**
+
+  Ansible uses **YAML** to define configurations and workflows. YAML is simple and easy to understand, even for people who aren’t developers. You describe the desired state of your systems in plain text files called playbooks.
+
+- **Idempotency**
+
+  Ansible ensures that tasks are only applied if necessary. For example, if you tell Ansible to install a program, it will check if the program is already installed. If it is, Ansible won’t install it again. This prevents redundant actions and ensures your systems stay in the desired state.
+
+  If the program is already installed on the server then Ansible will not install it again.
+
+- **Push-Based Architecture**
+
+  Ansible works by "pushing" configurations and commands from a central control node (your workstation or a server) to remote servers.
+
+- **Modular and Extensible**
+
+  Ansible comes with a large library of **modules**—pre-built scripts that perform specific tasks, like managing files, users, or services. You can also write your own modules if needed.
+
