@@ -2,6 +2,8 @@
 
 Ansible is the open-source IT Automation tool which is used for **Infrastructure Provisioning**, **Application Deployment** and **Configuration Management**. It helps system administrators and DevOps teams manage and automate tasks like configuring servers, deploying applications, and orchestrating workflows.
 
+It is written in Python.
+
 Ansible is primarily used for **Configuration Management**. System engineers and DevOps Professionals use the Ansible for Configure the servers.
 
 Configuration Management is simply managing the configuration of servers to desried state using tools.
@@ -41,3 +43,20 @@ In short, Ansible lets you:
 
   Ansible comes with a large library of **modules**—pre-built scripts that perform specific tasks, like managing files, users, or services. You can also write your own modules if needed.
 
+<br>
+
+## Components in Ansible
+
+Ansible is composed of several key components that work together to configure a server.
+
+- ### Control Node
+
+  **What It Is**: The control node is the machine where Ansible is installed and from which you execute commands or playbooks.
+
+  **Purpose**: It acts as the central point of control, sending instructions to the managed nodes (remote systems) over SSH (for Linux) or WinRM (for Windows).
+
+  **Key Requirements**:
+  - Python installed on control Node (Ansible itself is written in Python).
+  - SSH access to managed nodes (no additional software is needed on managed nodes). Control node should be able to access the managed nodes using SSH aur WinRM.
+
+  **Example**: Your workstation or a dedicated server can serve as the control node.
