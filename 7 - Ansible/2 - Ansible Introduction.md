@@ -60,3 +60,145 @@ Ansible is composed of several key components that work together to configure a 
   - SSH access to managed nodes (no additional software is needed on managed nodes). Control node should be able to access the managed nodes using SSH aur WinRM.
 
   **Example**: Your workstation or a dedicated server can serve as the control node.
+
+- ### Managed Nodes
+
+  **What They Are**: These are the systems (servers, network devices, containers, cloud instances, etc.) that you want to configure or manage using Ansible.
+
+  **Purpose**: These nodes receive instructions from the control node and execute tasks locally. Control node sends the instructions to managed nodes.
+
+  **Key Features**:
+  - No need to install an agent—Ansible connects to managed nodes via SSH or WinRM.
+  - Can be Linux, Windows, or any other supported platform.
+
+  **Example**: Web servers, database servers, load balancers, and even cloud instances like AWS EC2 or Azure VMs.
+
+- ### Inventory
+
+  **What It Is**: An inventory is simply a list of the computers (servers, network devices, etc.) that you want to manage. Inventory file contains the access details of managed nodes. It can be a static file or dynamically generated.
+
+  **Purpose**: The inventory tells Ansible where the servers are and how to connect to them.
+
+  **Types of Inventory**:
+  - Static Inventory: A simple text file listing all hosts and their groups.
+
+    Example (inventory.ini):
+    ```
+    [webservers]
+    web1.example.com
+    web2.example.com
+
+    [databases]
+    db1.example.com
+    db2.example.com
+    ```
+
+  - Dynamic Inventory: A script or plugin that queries systems (e.g., cloud APIs) to generate the inventory dynamically.
+    - Example: Pulling inventory from AWS or Azure.
+
+  **Groups**: Hosts can be grouped to apply configurations selectively. For instance, you can group servers by roles like webservers or databases.
+
+- ### Playbooks
+
+  **What They Are**: Playbooks are YAML files where you define a series of tasks for Ansible to perform on managed nodes. Simple YAML files where we write what to configure on managed nodes.
+
+  **Purpose**: They describe the desired state of your systems in a human-readable, reusable format.
+
+  **Structure**:
+  - Plays: A play is a set of tasks applied to a group of hosts.
+  - Tasks: Tasks define individual actions, such as installing software or copying files.
+
+  **Example**:
+
+  ```
+  - name: Configure web servers
+    hosts: webservers
+    tasks:
+      - name: Install Nginx
+        apt:
+          name: nginx
+          state: present
+
+      - name: Start Nginx
+        service:
+          name: nginx
+          state: started
+  ```
+
+- ### Modules
+
+  **What They Are**: Modules are small, reusable units of code that perform specific actions, like managing files, installing packages, or configuring network devices. Modules are also called plugins.
+
+  **Purpose**: They are the building blocks of Ansible tasks, providing the functionality needed to automate various operations.
+
+  **Key Points**:
+  - Ansible comes with hundreds of built-in modules (e.g., ```apt```, ```yum```, ```copy```, ```user```).
+  - Custom modules can be created to handle specialized tasks.
+
+  **Example**:
+  - Installing software with the ```apt``` module:
+
+    ```
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+    ```
+
+  - Managing services with the ```service``` module:
+
+    ```
+    - name: Start Nginx
+      service:
+        name: nginx
+        state: started
+    ```
+
+- ### Tasks
+
+  **What They Are**: Tasks are individual actions defined in playbooks.
+
+  **Purpose**: Each task corresponds to a specific action you want to perform, such as installing software, copying files, or starting a service.
+
+  **Key Features**:
+  - Tasks use modules to perform actions.
+  - Tasks are idempotent, meaning they only make changes if necessary.
+
+  **Example**:
+
+  ```
+  tasks:
+    - name: Install Git
+      apt:
+        name: git
+        state: present
+    - name: Copy configuration file
+      copy:
+        src: /local/config.cfg
+        dest: /etc/config.cfg
+  ```
+
+- ### Variables
+
+  **What They Are**: Variables allow you to customize playbooks and make them dynamic.
+
+  **Purpose**: Reuse the same playbooks with different configurations.
+
+  **Example**:
+  - Defining a variable:
+
+    ```
+    vars:
+      webserver_port: 8080
+    ```
+
+  - Using the variable:
+
+    ```
+    - name: Configure Nginx
+      template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/nginx.conf
+    ```
+
+    
