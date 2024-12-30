@@ -135,3 +135,49 @@ To understand how Ansible connects to managed nodes using **password-less authen
       - ```-b 2048```: Sets the key size to 2048 bits.
 
     - You’ll be prompted to specify a file to save the key pair. Press ```Enter``` to use the default location (```~/.ssh/id_rsa```).
+    - You’ll also be prompted to set a passphrase. You can skip this for fully automated processes, but using a passphrase is more secure.
+
+- ### Step 2: Copy the Public Key to Managed Nodes
+
+  The public key needs to be placed on all the managed nodes so the control node can authenticate without a password.
+  
+  - Use the ssh-copy-id command:
+
+    ```
+    ssh-copy-id user@managed-node-ip
+    ```
+
+    - Replace ```user``` with the username on the managed node.
+    - Replace ```managed-node-ip``` with the IP address or hostname of the managed node.
+
+  - Enter the password of the managed node when prompted.
+  - Repeat this process for all managed nodes.
+ 
+  Alternatively, manually append the public key to the managed node:
+
+  - Copy the public key from the control node:
+
+    ```
+    cat ~/.ssh/id_rsa.pub
+    ```
+
+  - On the managed node, add the public key to the ```~/.ssh/authorized_keys``` file:
+
+    ```
+    echo "public_key_contents" >> ~/.ssh/authorized_keys
+    ```
+
+    Replace ```public_key_contents``` with the actual public key.
+
+- ### Step 3: Test the Connection
+
+  Verify that the control node can connect to the managed node without a password:
+
+  ```
+  ssh user@managed-node-ip
+  ```
+
+  You should be logged in without being prompted for a password.
+
+
+Password-less authentication is a foundational step in setting up Ansible for efficient, secure, and scalable IT automation. By using SSH keys, Ansible ensures smooth communication between the control node and managed nodes, enabling seamless execution of tasks. This approach not only simplifies processes but also enhances the overall security of the system.
