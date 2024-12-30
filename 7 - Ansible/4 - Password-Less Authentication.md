@@ -112,4 +112,26 @@ To understand how Ansible connects to managed nodes using **password-less authen
 - **The Private Key is Never Shared**: Only the public key is shared, so no one can impersonate the control node without the private key.
 - **The Challenge is Random**: Even if someone intercepts the communication, the challenge changes every time, so they cannot reuse old data.
 - **Encryption Protects Data**: All communication is encrypted, ensuring that sensitive data stays secure.
+- The public key is used for encryption (securing the challenge).
+- The private key is used for decryption (proving identity).
 
+<br>
+<br>
+
+## Steps to Set Up Password-less Authentication in Ansible
+
+- ### Step 1: Generate an SSH Key Pair on the Control Node
+
+  - Open a terminal on the control node.
+  - Generate the SSH key pair:
+
+    ```
+    ssh-keygen -t rsa -b 2048
+    ```
+
+    - Options:
+
+      - ```-t rsa```: Specifies the RSA algorithm.
+      - ```-b 2048```: Sets the key size to 2048 bits.
+
+    - You’ll be prompted to specify a file to save the key pair. Press ```Enter``` to use the default location (```~/.ssh/id_rsa```).
