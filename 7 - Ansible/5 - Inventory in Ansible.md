@@ -194,7 +194,7 @@ In Ansible, the inventory file is the foundational component for defining which 
 
 <br>
 
-## Example (LAB): Create an Azure VM and Connect to it using ansible.
+## Example (LAB): Create an Azure VM and Connect to Control Node using ansible.
 
 - **Step:1 - Get the username and Public IP of VM**.
 
