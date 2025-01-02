@@ -89,6 +89,12 @@ ansible_ssh_private_key_file=/path/to/key.pem
 
 <br>
 
+## Inventry File Location
+
+Ansible inventry file is located at ```/etc/ansible/hosts```. The name of inventory file is ```hosts```.
+
+<br>
+
 ## How Inventory Works with Ansible
 
 - **Defining the Inventory**:
