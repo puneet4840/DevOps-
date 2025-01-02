@@ -28,6 +28,7 @@ An inventory consists of:
   - Groups can represent environments (e.g., ```production```, ```staging```), roles (e.g., ```webservers```, ```dbservers```), or any other logical grouping.
 
     Exmaple:
+    
     ```
     [webservers]
     web1.example.com
@@ -38,5 +39,10 @@ An inventory consists of:
     ```
 
 - **Variables**:
-  - You can define variables specific to hosts or groups within the inventory.
-  - These variables can be used to customize the behavior of playbooks.
+  - Variable in playbooks are very similar to using variables in any programming language. It helps you to use and assign a value to a variable and use that anywhere in the playbook.
+
+    Example:
+
+    ```
+    ansible_user=admin ansible_port=2222
+    ```
