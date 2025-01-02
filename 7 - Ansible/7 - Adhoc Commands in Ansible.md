@@ -33,10 +33,41 @@ Explaination:
 
 - ### Ping Managed Nodes
 
-  The ```ping``` module checks connectivity between the control node and the managed nodes.
+  - The ```ping``` module checks connectivity between the control node and the managed nodes.
+ 
+  - Example:
 
-- Example:
-  
+    ```
+    ansible all -m ping
+    ```
+
+    Explaination:
+    - ```all```: Targets all hosts in the inventory.
+    - ```-m ping```: Uses the ping module to check connectivity.
+
+  - Output:
+
+    ```
+    puneet@172.191.83.193 | SUCCESS => {
+        "ansible_facts": {
+            "discovered_interpreter_python": "/usr/bin/python3"
+        },
+        "changed": false,
+        "ping": "pong"
+    }
+    ```
+
+- ## Execute Commands
+
+  The ```command``` module runs shell commands on the target nodes.
+
   ```
-  
+  ansible webservers -m command -a "uptime"
   ```
+
+  Explaination:
+  - Targets the ```webservers``` group.
+  - Executes the ```uptime``` command to check how long the system has been running.
+  - ```-a```: argument passing to the command module.
+
+  
