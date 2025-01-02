@@ -140,10 +140,12 @@ In Ansible, the inventory file is the foundational component for defining which 
 
     Syntax:
 
-    ```user_id@IP_address```
+    ```user_id@IP_Address```
 
     ```
     ubuntu@172.168.10.20
     ```
 
-    
+    Explanation:
+    - ubuntu: This is the user of server.
+    - IP_Address: This is the Public IP Address of the server.
