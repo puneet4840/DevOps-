@@ -117,3 +117,33 @@ Ansible inventry file is located at ```/etc/ansible/hosts```. The name of invent
 - **Execution**:
 
   - Ansible connects to the hosts via SSH (or other specified methods) and performs the defined tasks.
+
+<br>
+
+## Adding Hosts to Inventory File
+
+In Ansible, the inventory file is the foundational component for defining which machines you will manage. Adding hosts to this file involves specifying their names, IP addresses, and optionally grouping them or providing variables for configuration.
+
+- ### Understand the Inventory File Format
+
+  Ansible supports multiple formats for inventory files:
+  - **INI Format** (default and simplest format).
+  - **YAML Format** (preferred for advanced use cases).
+
+  By default, the inventory file is located at ```/etc/ansible/hosts```. You can also create and specify custom inventory files.
+
+- ### Adding Hosts in INI Format
+
+  The INI format organizes hosts, groups, and variables using a simple structure.
+
+  - **Example 1: Adding Individual Hosts**
+
+    Syntax:
+
+    ```user_id@IP_address```
+
+    ```
+    ubuntu@172.168.10.20
+    ```
+
+    
