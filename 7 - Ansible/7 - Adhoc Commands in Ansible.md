@@ -1,3 +1,4 @@
+
 # Ad-hoc Commands in Ansible
 
 Ansible ad-hoc commands are simple, one-liner commands used to perform quick tasks on managed nodes without the need to create a playbook.
@@ -69,5 +70,28 @@ Explaination:
   - Targets the ```webservers``` group.
   - Executes the ```uptime``` command to check how long the system has been running.
   - ```-a```: argument passing to the command module.
+
+  Output:
+
+  ```
+  puneet@172.191.83.193 | CHANGED | rc=0 >>
+   19:14:24 up  1:42,  1 user,  load average: 0.07, 0.02, 0.00
+  ```
+
+- ## Install a Package
+
+  The ```yum``` module installs software on nodes using YUM (for Red Hat-based systems). The ```apt``` module installs the software on ubuntu nodes.
+
+  ```
+  ansible all -m apt -a "name=nginx state=present" -b
+  ```
+
+  This command wiil install nginx web server on managed node.
+
+  Explaination:
+  - ```-m apt```: This specifies the module to use. In this case, it's the apt module, which is used for managing packages on Debian/Ubuntu systems.
+  - ```name=nginx```: This tells the apt module that the package to manage is nginx (the web server).
+  - ```state=present```: This tells the apt module to ensure that the nginx package is present (i.e., installed). If it's not installed, it will be installed. If it's already installed, Ansible will do nothing (due to idempotency).
+  - ```-b``` or ```--become```: This is the become option. It tells Ansible to use privilege escalation to execute the command as a different user, usually root. Since installing packages requires root privileges, this option is essential. By default, Ansible will try to use sudo for privilege escalation.
 
   
