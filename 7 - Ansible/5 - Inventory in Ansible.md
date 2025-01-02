@@ -199,6 +199,7 @@ In Ansible, the inventory file is the foundational component for defining which 
 - **Step:1 - Get the username and Public IP of VM**.
 
   username: puneet
+  
   Public IP: 172.191.83.193
 
 - **Step:2 - Establish Password-Less Authentication Between your Control Node and Azure VM (managed node)**
