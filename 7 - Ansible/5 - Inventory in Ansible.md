@@ -46,3 +46,40 @@ An inventory consists of:
     ```
     ansible_user=admin ansible_port=2222
     ```
+<br>
+
+## Types of Inventory
+
+There are two types of inventory in ansible:
+
+### 1 - Static Inventory
+
+A Static Inventory is a text file (usually named ```hosts``` or ```inventory```) that list the host you want to manage. It is called static because the list of hosts is directly defined in the file and doesn't change dynamically unless you manually edit it.
+
+Example of static inventory file:
+
+```
+# Individual hosts
+192.168.1.1
+192.168.1.2
+
+# Groups of hosts
+[webservers]
+web1.example.com
+web2.example.com
+
+[databases]
+db1.example.com ansible_user=dbadmin ansible_port=3306
+
+# Nested groups
+[all_servers:children]
+webservers
+databases
+
+# Group-level variables
+[databases:vars]
+ansible_ssh_private_key_file=/path/to/key.pem
+```
+
+### 2 - Dynamic Inventory
+
