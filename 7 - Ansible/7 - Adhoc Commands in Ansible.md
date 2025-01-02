@@ -94,4 +94,24 @@ Explaination:
   - ```state=present```: This tells the apt module to ensure that the nginx package is present (i.e., installed). If it's not installed, it will be installed. If it's already installed, Ansible will do nothing (due to idempotency).
   - ```-b``` or ```--become```: This is the become option. It tells Ansible to use privilege escalation to execute the command as a different user, usually root. Since installing packages requires root privileges, this option is essential. By default, Ansible will try to use sudo for privilege escalation.
 
+- ## Copy a File
+
+  The ```copy``` module transfers files from the control node to managed nodes.
+
+  ```
+  ansible all -m copy -a "src=/home/puneet/file1.txt dest=/home"
+  ```
+
+  Explaination:
+  - ```src```: This is the file location on control node.
+  - ```dest```: This is the location where the file will be copied on managed node.
+
+- ## Gather System Facts
+
+  The ```setup``` module collects detailed information about the managed nodes. Fetches facts like IP address, operating system details, and hardware information.
+
+  ```
+  ansible all -m setup
+  ```
+
   
