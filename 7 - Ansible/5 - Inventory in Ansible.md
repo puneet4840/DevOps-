@@ -83,3 +83,31 @@ ansible_ssh_private_key_file=/path/to/key.pem
 
 ### 2 - Dynamic Inventory
 
+- Automatically generates the list of hosts and groups at runtime.
+- Uses scripts, APIs, or plugins to fetch host information from sources like AWS, Azure, GCP, VMware, or Kubernetes.
+- Ideal for cloud environments or large-scale, dynamic infrastructures.
+
+<br>
+
+## How Inventory Works with Ansible
+
+- **Defining the Inventory**:
+
+  - Ansible reads the inventory to identify which hosts to connect to and their configurations.
+  - Specify the inventory file when running Ansible commands:
+
+    ```
+    ansible-playbook -i inventory playbook.yml
+    ```
+
+- **Host Targeting**:
+
+  - Playbooks or commands use the ```hosts``` keyword to specify which hosts or groups to target.
+
+- **Inventory Parsing**:
+
+  - Ansible parses the inventory, resolves group memberships, and applies any variables defined.
+
+- **Execution**:
+
+  - Ansible connects to the hosts via SSH (or other specified methods) and performs the defined tasks.
