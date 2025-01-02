@@ -228,7 +228,7 @@ In Ansible, the inventory file is the foundational component for defining which 
   puneet@172.191.83.193
   ```
 
-- **Step:5 - Connect to managed node by using below command**:
+- **Step:5 - Connect to managed node by using below adhoc command**:
 
   ```
   ansible -i hosts -m ping "all"
