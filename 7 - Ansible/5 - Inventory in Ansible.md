@@ -149,3 +149,45 @@ In Ansible, the inventory file is the foundational component for defining which 
     Explanation:
     - ubuntu: This is the user of server.
     - IP_Address: This is the Public IP Address of the server.
+
+  - **Example 2: Grouping Hosts**
+
+    Syntax:
+
+    ```
+    [server_category_name]
+    server_detail
+    ```
+
+    ```
+    [app]
+    ubuntu@172.168.10.20
+
+    [db]
+    ubuntu@172.168.10.30
+    ```
+<br>
+
+## Create or Modify an Inventory File
+
+- **Default Inventory File**: Modify ```/etc/ansible/hosts``` (requires root privileges):
+
+  ```
+  sudo vi /etc/ansible/hosts
+  ```
+
+  Add hosts or groups using the formats described above.
+
+- **Custom Inventory File**: Create a new file at ```/etc/ansible/```, for example, ```my_inventory.ini```:
+
+  ```
+  sudo vi my_inventory.ini
+  ```
+
+  Add your hosts and groups.
+
+  Specify the custom inventory file when running Ansible commands:
+
+  ```
+  ansible all -i my_inventory.ini -m ping
+  ```
