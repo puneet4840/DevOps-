@@ -23,3 +23,49 @@ Hobbies:
 ```
 
 Serialization is the process of turning this information into a string of text that can be saved to a file, sent over the network, or stored in a database. Later, you can "deserialize" this text back into the original object with all its information intact.
+
+<br>
+
+## YAML Syntax
+
+### String
+
+```
+name: Puneet Kumar
+
+name: "Puneet Kumar"
+
+name: 'Puneet Kumar'
+```
+
+### Number
+
+```
+number: 10
+```
+
+### Boolean
+
+```
+is_admin: True
+
+is_active: FALSE
+```
+
+### List
+
+```
+fruits:
+  - Apple
+  - Banana
+  - Orange
+```
+
+### Dictionary
+
+```
+person:
+  name: John
+  age: 23
+  city: New York
+```
