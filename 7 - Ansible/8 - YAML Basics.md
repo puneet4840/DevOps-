@@ -32,9 +32,13 @@ Serialization is the process of turning this information into a string of text t
 
 ```
 name: Puneet Kumar
+```
 
+```
 name: "Puneet Kumar"
+```
 
+```
 name: 'Puneet Kumar'
 ```
 
@@ -48,7 +52,9 @@ number: 10
 
 ```
 is_admin: True
+```
 
+```
 is_active: FALSE
 ```
 
