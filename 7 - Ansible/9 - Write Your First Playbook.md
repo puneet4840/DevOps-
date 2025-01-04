@@ -27,3 +27,11 @@ Any play you write in your playbook, just give a hyphen (-) and write a play. It
 Suppose your task is to create a DB server and a Web Server on a ubuntu virtual machine (managed node). So you have to create two plays in your ansible playbook.
 
 One play for DB Server and Other Play for web server.
+
+- ### Basic Structure a Play consists:
+
+  - **Hosts**: A host inside a play defines on which node you want to execute the play's task.
+
+  - **Remote**: A remote inside a play means from which user you want to executes tasks such as ubuntu user, root user. Because a vm or node always has a user using that user we login to the machine.
+
+  - **Tasks**: A task is the exact instructions you want to run on managed node such as installing a db server, run a db server.
