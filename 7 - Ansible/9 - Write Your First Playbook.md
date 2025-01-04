@@ -52,3 +52,25 @@ One play for DB Server and Other Play for web server.
     - Task 2
 ```
 
+<br>
+
+## Example (LAB): Install Nginx Web Server on Ubuntu VM and Deploy an application
+
+It is assuming that you have setup ansible on control node and Established a password-less connection between control node and managed node (ubuntu VM).
+
+- ### Step:1 - Create an Inventory File on control node
+
+  - There is a file named ```hosts``` inside ```/etc/ansible/``` path.
+  - Edit the ```hosts``` file and enter your vm details in it using the below example.
+
+    ```
+    puneet@172.191.83.193
+    ```
+
+- ### Step:2 - Create a playbook yaml file on control node
+
+  - Create a directory for ansible playbooks and create playbook yaml file named ```deploy_nginx.yaml```.
+
+- ### Step:3 - Write the plays in playbook yaml file
+
+  - Write the below play in pl
