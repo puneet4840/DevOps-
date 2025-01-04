@@ -139,4 +139,38 @@ It is assuming that you have setup ansible on control node and Established a pas
 - ### Step:6 - Access the Application
 
   - Copy the VM's Public Ip from portal and paste in your browser.
-  - Huray!!!
+  - Hurray!!!
+
+<br>
+<br>
+
+### Explanation of Above Ansibl Playbook
+
+- **File Header**:
+
+  ```
+  ---
+  - name: Install Nginx and Deploy HTML on Ubuntu
+  ```
+  - The ```---``` indicates the beginning of a YAML document.
+  - ```name```: Provides a descriptive name for the play, helping to identify its purpose. In this case, it installs and configures Nginx.
+
+- **Target Hosts**:
+
+  ```
+  hosts: all
+  ```
+  - ```hosts```: Specifies the target machines (managed nodes) on which the playbook will execute.
+  - ```all```: Refers to a all machines defined in the inventory file (hosts).
+
+- **Privilege Escalation**:
+
+  ```
+  become: yes
+  ```
+  - ```become```: Enables privilege escalation (e.g., using ```sudo```) to execute tasks requiring administrative rights.
+  - ```yes```: Indicates that the tasks should run with elevated privileges.
+ 
+- **Tasks**:
+
+  
