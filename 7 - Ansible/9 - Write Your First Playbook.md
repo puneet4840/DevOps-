@@ -73,4 +73,61 @@ It is assuming that you have setup ansible on control node and Established a pas
 
 - ### Step:3 - Write the plays in playbook yaml file
 
-  - Write the below play in pl
+  - Write the below play in playbook file using below content.
+
+  ```
+  ---
+  - hosts: webservers
+    become: true
+    tasks:
+      - name: Update apt cache
+        apt:
+          update_cache: yes
+
+      - name: Install nginx
+        apt:
+          name: nginx
+          state: present
+
+      - name: Ensure nginx is running and enabled
+        service:
+          name: nginx
+          state: started
+          enabled: yes
+
+      - name: Create web directory
+        file:
+          path: /var/www/html/mywebsite
+          state: directory
+          mode: 0755
+
+      - name: Copy index.html file
+        copy:
+          src: index.html
+          dest: /var/www/html/mywebsite/index.html
+  ```
+
+- ### Step:4 - Create the HTML file (index.html)
+
+  - Create a ```index.html``` file inside the same directory as your playbook with the following content
+
+    ```
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>Welcome to my website!</title>
+    </head>
+    <body>
+        <h1>Hello from Ansible!</h1>
+        <p>This is a simple web page deployed with Ansible.</p>
+    </body>
+    </html>
+    ```
+
+- ### Step:5 - Run the playbook
+
+  - Run the playbook using below command
+
+    ```
+    ansible-playbook deploy_nginx.yaml
+    ```
