@@ -75,3 +75,17 @@ person:
   age: 23
   city: New York
 ```
+
+### Nested Structure
+
+```
+person:
+  name: John Doe
+  address:
+    street: 123 Main St
+    city: Anytown
+    state: CA
+  hobbies:
+    - Reading
+    - Hiking
+```
