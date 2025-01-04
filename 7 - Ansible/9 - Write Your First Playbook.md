@@ -173,4 +173,97 @@ It is assuming that you have setup ansible on control node and Established a pas
  
 - **Tasks**:
 
-  
+  The tasks section defines the series of steps to be executed. Each task is described using:
+  - ```name```: A human-readable description.
+  - A specific Ansible module (e.g., ````apt```, ```service```, ```copy```).
+
+<br>
+
+### Tasks in Detail
+
+- **Task 1: Update the APT Cache**:
+
+  ```
+    - name: Update APT package manager
+      apt:
+        update_cache: yes
+  ```
+  - Purpose: Ensures the package database on the target machine is updated, avoiding issues with outdated repositories.
+  - Module: apt (used for managing Debian-based package systems like Ubuntu).
+  - Key Parameter: update_cache: yes updates the list of available packages.
+
+- **Task 2: Install Nginx**:
+
+  ```
+  - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+  ```
+  - Purpose: Installs the Nginx package.
+  - Module: ```apt```.
+  - Key Parameters:
+    - ```name: nginx```: Specifies the package to install.
+    - ```state: present```: Ensures the package is installed (if not already installed).
+
+- **Task 3: Ensure Nginx is Running**:
+
+  ```
+   - name: Ensure Nginx is running
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+  ```
+  - Purpose: Ensures Nginx is running and starts automatically on boot.
+  - Module: ```service``` (manages system services).
+  - Key Parameters:
+    - ```name: nginx```: Specifies the service to manage.
+    - ```state: started```: Ensures the service is running.
+    - ```enabled: yes```: Ensures the service starts automatically on system boot.
+
+- **Task 4: Copy the index.html file from control node to managed node**
+
+  ```
+  - name: Deploy custom HTML file
+      copy:
+        src: /home/puneet/ansible/index.html
+        dest: /var/www/html/index.html
+        owner: www-data
+        group: www-data
+        mode: '0644'
+  ```
+  - Purpose: Copy index.html file to the Nginx web server's default document root.
+  - Module: ```copy``` (copies files or content to a destination).
+  - Key Parameters:
+    - ```src```: The source path for the index.html file in control node.
+    - ```dest```: The destination path for the file (```/var/www/html/index.html```), which is the default web directory for Nginx.
+    - ```owner```: Sets the file's ownership to www-data, the user under which Nginx runs.
+    - ```group```: Sets the file's group ownership to www-data.
+    - ```mode```: Sets file permissions to 0644 (read and write for the owner, read-only for others).
+
+- **Task 5: Restart Nginx**:
+
+  ```
+   - name: Restart Nginx to apply changes
+      service:
+        name: nginx
+        state: restarted
+  ```
+
+  - Purpose: Restarts the Nginx service to ensure it reflects the changes made (e.g., new HTML content).
+  - Module: ```service```.
+  - Key Parameter:
+    - ```state: restarted```: Ensures the service is stopped and started again.
+
+### How It All Comes Together
+
+- The control node executes the playbook using Ansible.
+- Ansible connects to the managed nodes defined in the inventory file.
+- Tasks are executed sequentially:
+  - Update APT cache.
+  - Install Nginx.
+  - Start and enable the Nginx service.
+  - Deploy a custom HTML file to the web server.
+  - Restart Nginx to apply the changes.
+- The result: A fully configured Nginx web server serving the custom HTML page.
