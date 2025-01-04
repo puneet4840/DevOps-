@@ -35,3 +35,20 @@ One play for DB Server and Other Play for web server.
   - **Remote**: A remote inside a play means from which user you want to executes tasks such as ubuntu user, root user. Because a vm or node always has a user using that user we login to the machine.
 
   - **Tasks**: A task is the exact instructions you want to run on managed node such as installing a db server, run a db server.
+    - **Modules**: Modules are the plugins OR reusable units of code that executes the task e.g. (yum, apt, shell, command, etc).
+
+
+## Complete Playbook structure
+
+```
+---
+- name: Play Name (What the play does)
+  hosts: Target Hosts (e.g., webservers, vm name)
+  become: yes (Use sudo privileges)
+  vars: (Optional Variables)
+    variable_name: value
+  tasks:
+    - Task 1
+    - Task 2
+```
+
