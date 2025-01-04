@@ -77,34 +77,38 @@ It is assuming that you have setup ansible on control node and Established a pas
 
   ```
   ---
-  - hosts: webservers
-    become: true
+  - name: Install Nginx and Deploy HTML on Ubuntu
+    hosts: webservers
+    become: yes  # Run tasks with sudo privileges
+
     tasks:
-      - name: Update apt cache
+      - name: Update APT package manager
         apt:
           update_cache: yes
 
-      - name: Install nginx
+      - name: Install Nginx
         apt:
           name: nginx
           state: present
 
-      - name: Ensure nginx is running and enabled
+      - name: Ensure Nginx is running
         service:
           name: nginx
           state: started
           enabled: yes
 
-      - name: Create web directory
-        file:
-          path: /var/www/html/mywebsite
-          state: directory
-          mode: 0755
-
-      - name: Copy index.html file
+      - name: Copy index.html file from control node to managed node
         copy:
-          src: index.html
-          dest: /var/www/html/mywebsite/index.html
+          src: /home/puneet/ansible/index.html
+          dest: /var/www/html/index.html
+          owner: www-data
+          group: www-data
+          mode: '0644'
+
+      - name: Restart Nginx to apply changes
+        service:
+          name: nginx
+          state: restarted
   ```
 
 - ### Step:4 - Create the HTML file (index.html)
@@ -131,3 +135,8 @@ It is assuming that you have setup ansible on control node and Established a pas
     ```
     ansible-playbook deploy_nginx.yaml
     ```
+
+- ### Step:6 - Access the Application
+
+  - Copy the VM's Public Ip from portal and paste in your browser.
+  - Huray!!!
