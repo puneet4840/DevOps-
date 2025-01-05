@@ -100,3 +100,57 @@ ansible-playbook copy_file.yml
 
 ### Example 3: Copy Inline Content
 
+Playbook: ```copy_content.yml```
+
+```
+---
+- name: Copy inline content to a file
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Write a custom message to a file
+      copy:
+        content: |
+          # This is a configuration file
+          setting1 = value1
+          setting2 = value2
+        dest: /etc/myapp/config.ini
+        owner: root
+        group: root
+        mode: '0600'
+```
+
+Explaination:
+- Inline Content (content):
+  - Instead of using a file from the control node, inline content is directly written into ```/etc/myapp/config.ini``` on the managed node.
+
+<br>
+
+### Example 4: Copy a Directory Recursively
+
+Playbook: ```copy_directory.yml```
+
+```
+---
+- name: Copy a directory to the managed node
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Copy the web assets
+      copy:
+        src: /home/user/web-assets/
+        dest: /var/www/html/
+        owner: www-data
+        group: www-data
+        mode: '0755'
+```
+
+<br>
+
+### Important Notes
+
+- Idempotence: The copy module is idempotent, meaning it will only copy files if they are missing or different from the source.
+- Directory Behavior: When copying directories, the destination directory must include a trailing slash (/) to avoid creating a nested structure.
+- File Overwriting: The module will overwrite files if the content differs unless force: no is specified.
