@@ -154,3 +154,31 @@ Playbook: ```copy_directory.yml```
 - Idempotence: The copy module is idempotent, meaning it will only copy files if they are missing or different from the source.
 - Directory Behavior: When copying directories, the destination directory must include a trailing slash (/) to avoid creating a nested structure.
 - File Overwriting: The module will overwrite files if the content differs unless force: no is specified.
+
+<br>
+<br>
+
+## Backup File using Ansible
+
+To take backup of copied file.
+
+Simple put ```backup: true``` inside the playbook.
+
+```
+---
+- name: Copy a directory to the managed node
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Copy the web assets
+      copy:
+        src: /home/user/web-assets/
+        dest: /var/www/html/
+        owner: www-data
+        group: www-data
+        mode: '0755'
+        backup: true
+```
+
+Whenever you run the playbook, ansible will first create a backup file on the same path then make your given changes in the file.
