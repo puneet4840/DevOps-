@@ -181,4 +181,4 @@ Simple put ```backup: true``` inside the playbook.
         backup: true
 ```
 
-Whenever you run the playbook, ansible will first create a backup file on the same path then make your given changes in the file.
+Whenever you run the playbook, ansible will first create a backup file on the same path then copy your file.
