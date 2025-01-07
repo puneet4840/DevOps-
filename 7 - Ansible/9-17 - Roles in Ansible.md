@@ -39,6 +39,7 @@ Roles solve these problems by split the tasks into folders with specific purpose
 - Files: Any static files (e.g., a default web page).
 - Handlers: Special tasks that only run when triggered (e.g., restarting Nginx).
 
+AND:
 - **Readability**: It is easy to understand the roles. You can easily read the components.
 - **Organization**: Roles provide a structured way to organize tasks, variables, templates, and other resources.
 - **Reusability**: You can reuse roles across multiple playbooks and projects.
