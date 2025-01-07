@@ -39,9 +39,19 @@ Roles solve these problems by split the tasks into folders with specific purpose
 - Files: Any static files (e.g., a default web page).
 - Handlers: Special tasks that only run when triggered (e.g., restarting Nginx).
 
-AND:
-- **Readability**: It is easy to understand the roles. You can easily read the components.
-- **Organization**: Roles provide a structured way to organize tasks, variables, templates, and other resources.
-- **Reusability**: You can reuse roles across multiple playbooks and projects.
-- **Scalability**: Roles simplify managing configurations for large infrastructures.
-- **Collaboration**: Roles make it easier for teams to work together by separating responsibilities into logical components.
+Here’s why roles are important:
+
+- **Organization**: As your infrastructure grows, writing everything in one file becomes messy. Roles organize tasks, variables, and files neatly.
+  
+- **Reusability**: Roles can be reused across projects. For example, if you create a role to install and configure Nginx, you can use it in multiple projects.
+  
+- **Team Collaboration**: In a team, roles let everyone focus on specific parts of the project. For example, one team member handles the database role, while another handles the web server role.
+
+- **Scalability**: Roles make it easier to manage large infrastructures by breaking them into manageable pieces.
+
+- **Readability**: Roles are easy to understand and readable than complex playbooks.
+
+<br>
+
+## Structure of an Ansible Role
+
