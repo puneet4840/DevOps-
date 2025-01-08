@@ -130,7 +130,7 @@ roles/
   - ```main.yml``` defines these variables.
 
 - **defaults**:
-  - Contains YAML files (often ```main.yml```) that define default variables for the role. These defaults can be overridden by user-defined variables when the role is included in a playbook. This allows for flexible configuration while providing sensible defaults.
+  - Contains YAML files (often ```main.yml```) that define default variables for the role. These defaults can be overridden by user-defined variables when the role is included in a playbook. This allows for flexible configuration while providing sensible defaults. If you are not providing anu values in the vars then default value for that variable will be picked from defaults.
 
 - **meta**: Contains YAML files (often main.yml) that define role metadata, such as dependencies on other roles, author information, and license details. This metadata provides important information about the role and how to use it effectively.
 
