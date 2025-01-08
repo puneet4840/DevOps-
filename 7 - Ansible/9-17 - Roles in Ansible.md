@@ -170,3 +170,11 @@ Ansible Galaxy is the primary way to distribute and consume Ansible roles. Roles
 - **CLI Integration**:
 
   - The ```ansible-galaxy``` command-line tool allows you to interact with Galaxy directly to download, install, and manage roles and collections.
+
+### How Is It Related to Roles?
+
+Ansible Galaxy and roles are closely connected because roles are the building blocks of reusable Ansible content. Galaxy is primarily a hub for sharing and obtaining these roles.
+
+- Developers use ```ansible-galaxy``` init to create a new role with the standard directory structure.
+- Once developed, they can share it on Ansible Galaxy.
+- You can download roles from Galaxy and use them in your playbooks without writing everything from scratch.
