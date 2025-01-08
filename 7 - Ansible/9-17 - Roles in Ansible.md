@@ -77,11 +77,9 @@ roles/
 
 ### Components of Roles:
 
-- **<role_name>**: This is the name of role directory you create using ansible galaxy command.
+- **<role_name>**: This is the root directory for your role. It contains all the subdirectories and files that define the role's functionality.
 
-- **tasks**:
-  - This is the directory which caontains yaml file where you write the playbook tasks to be executed on managed nodes. Tasks are executed in the order they are written.
-  - ```main.yml```: This is the file where you write your paybook tasks.
+- **tasks**: Contains YAML files (often main.yml) that define the core tasks your role will execute on the target machines. These tasks might involve installing software, configuring services, deploying applications, or managing files.
  
   Example:
 
@@ -99,9 +97,39 @@ roles/
         enabled: true
   ```
 
-- **handlers**:
-  - This is the directory which contains the yaml file where you write the handlers. These handlers are those tasks which are triggered by any other task. Special tasks triggered by changes (e.g., restart a service)
-  - ```main.yml```: This is the file where you write handlers. Contains tasks triggered by ```notify``` actions from other tasks.
+- **handlers**: Contains YAML files (often main.yml) that define handlers, which are special tasks that are only triggered when certain conditions are met. This helps to automate reactions to changes on the target systems.
 
-- **files**:
-  - 
+  Example:
+  ```
+  - name: Restart Apache on package change
+    service:
+      name: apache2
+      state: restarted
+    when: ansible_os_family == "Debian"  # Run only on Debian-based systems
+  ```
+
+- **files**: Contains static files that you want to copy to the target machines during role execution. These might be configuration files, scripts, or any other files needed for your tasks.
+
+- **templates**: Contains Jinja2 templates, which are dynamic templates that can be used to generate configuration files based on variables. This allows for more flexible and reusable configurations.
+
+  Example:
+  ```
+  # Configuration for the Nginx web server
+  server {
+      listen 80;
+      server_name {{ web_server_hostname }};
+
+      location / {
+          root /var/www/html;
+          index index.html index.htm;
+      }
+  }
+  ```
+
+- **vars**: Contains YAML files (often main.yml) that define role-specific variables, which can be used within tasks, handlers, and templates. These variables provide customization options for the role's behavior. Contains variables with higher precedence than ```defaults/```.
+  - ```main.yml``` defines these variables.
+
+- **defaults**:
+  - Contains YAML files (often ```main.yml```) that define default variables for the role. These defaults can be overridden by user-defined variables when the role is included in a playbook. This allows for flexible configuration while providing sensible defaults.
+
+- **meta**: Contains YAML files (often main.yml) that define role metadata, such as dependencies on other roles, author information, and license details. This metadata provides important information about the role and how to use it effectively.
