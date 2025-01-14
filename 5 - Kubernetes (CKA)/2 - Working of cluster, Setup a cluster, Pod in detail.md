@@ -1,4 +1,4 @@
-### How does Kubernetes works - step by step.
+## How does Kubernetes works - step by step.
 
 - Step-1: **User Sends a Request to the Cluster**
 
