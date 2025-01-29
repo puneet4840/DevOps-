@@ -57,4 +57,16 @@ resource "azurerm_resource_group" "example" {
 }
 ```
 
-This above resource block will create a resource group in your azure protal.
+Explanation:
+
+- ```resource``` Block:
+  - The ```resource``` keyword defines a new Azure resource to be created.
+  - ```"azurerm_resource_group"``` is the resource type, which tells Terraform to create an Azure Resource Group.
+  - ```"example"``` is the logical name of the resource within Terraform (it helps in referencing this resource in other parts of the code).
+ 
+- ```name``` Argument
+  - ```"example-resources"``` is the name of the Resource Group that will be created in Azure.
+  - It must be unique within the Azure subscription.
+ 
+- ```location``` Argument
+  - ```"West Europe"``` specifies the Azure region where the Resource Group will be created.
