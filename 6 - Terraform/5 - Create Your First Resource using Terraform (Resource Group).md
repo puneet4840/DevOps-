@@ -46,7 +46,13 @@ The AzureRM Provider supports authenticating using via the Azure CLI, a Managed 
 
 <br>
 
-**Step - 4: Define a resource block**
+**Step - 4: Authenticate terraform with Azure**
+
+You must authenticate terraform with azure before creating resources. Refer this document to authenticate terraform with azure "https://github.com/puneet4840/DevOps-/blob/main/6%20-%20Terraform/2%20-%20Terraform%20Authentication%20with%20Azure.md"
+
+<br>
+
+**Step - 5: Define a resource block**
 
 We want to create a resource group in azure. So, we will create a resource block.
 
@@ -70,3 +76,31 @@ Explanation:
  
 - ```location``` Argument
   - ```"West Europe"``` specifies the Azure region where the Resource Group will be created.
+
+<br>
+
+**Step - 6: Terraform Plan**
+
+Run this command to preview changes before applying.
+
+```
+terraform plan
+```
+
+<br>
+
+**Step - 7: Terraform Validate**
+
+Run this command to validate syntax of your terraform main.tf file.
+
+```
+terraform valudate
+```
+
+**Step - 8: Terraform Apply**
+
+Run this command to create the resource group in azure portal.
+
+```
+terraform apply
+```
