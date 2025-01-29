@@ -161,6 +161,8 @@ A Service Principal is a non-interactive account that Terraform can use to authe
       $env:ARM_TENANT_ID="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
       ```
 
+      Here terraform will automatically use exported variables from shell.
+
 - **Verify Terraform Access**
 
   - Open your Terraform project directory and run:
