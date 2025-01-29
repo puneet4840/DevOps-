@@ -43,3 +43,18 @@ provider "azurerm" {
 ```
 
 The AzureRM Provider supports authenticating using via the Azure CLI, a Managed Identity and a service principal. Actually we use this block to manage the azure provider.
+
+<br>
+
+**Step - 4: Define a resource block**
+
+We want to create a resource group in azure. So, we will create a resource block.
+
+```
+resource "azurerm_resource_group" "example" {
+  name     = "example-resources"
+  location = "West Europe"
+}
+```
+
+This above resource block will create a resource group in your azure protal.
