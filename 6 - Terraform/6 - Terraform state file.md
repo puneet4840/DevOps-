@@ -83,3 +83,6 @@ The state file is super important because:
 
   Terraform uses the state file to know which resources to delete.
 
+<br>
+
+### Where is the Terraform State File is stores?
