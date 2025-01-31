@@ -25,5 +25,5 @@ Terraform stores its state in a file called ```terraform.tfstate```. This file i
 
 Terraform creates that state file with the name ```terraform.tfstate``` at the same location where your other tf file are located.
 
-```Suppose हमने terraform से azure cloud पर एक resource group बनाया| अब हमको पता है की cloud पर एक resource group बना हुआ है जिसको हम azure portal पर चेक कर सकते हैं लेकिन terraform को कैसे पता होगा की resource group बना हुआ है तो यह पर terraform state file का concept आता है| Terraform state file मैं जाके check कर लेगा की एक resource group create है और जब हम terraform init command run करते हैं तो automatically एक state file बन जाती है|```
+```Suppose हमने terraform से azure cloud पर एक resource group बनाया| अब हमको पता है की cloud पर एक resource group बना हुआ है जिसको हम azure portal पर चेक कर सकते हैं लेकिन terraform को कैसे पता होगा की resource group बना हुआ है तो यह पर terraform state file का concept आता है| Terraform state file मैं जाके check कर लेगा की एक resource group create है क्युकी वहां पर उस resource की configuration save होगी और जब हम terraform init command run करते हैं तो automatically एक state file बन जाती है|```
 
