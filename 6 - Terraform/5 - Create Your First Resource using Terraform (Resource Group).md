@@ -4,7 +4,7 @@ To create resources using Terrafrom, you need to write terraform script. We will
 
 ### Steps to create resources
 
-We will learn how to create resources using terraform using a single main.tf file.
+We will learn how to create resource group using terraform using a single main.tf file.
 
 **Step - 1: Create a main.tf file in VS Code:**
 
