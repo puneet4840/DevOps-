@@ -40,6 +40,10 @@ The state file is super important because:
 - **It Tracks Changes**:
   - If someone manually changes your infrastructure (e.g., resizes a server), Terraform can compare the actual state (what’s created on cloud) with the desired state (what you defined in your code) and fix any differences.
  
+- **Dependency Management**:
+  - Terraform uses the state file to understand dependencies between resources.
+  - For example, if Resource A depends on Resource B, Terraform ensures that Resource B is created before Resource A.
+ 
 - **Prevents Resource Duplication**:
   - If Terraform didn’t have a state file, every time you run ```terraform apply```, it would recreate the same resources again and again. The state file helps Terraform understand:
     - What is already created.
