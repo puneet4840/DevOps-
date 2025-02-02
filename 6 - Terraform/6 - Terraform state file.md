@@ -95,6 +95,8 @@ Terraform state can be stored in two main ways:
 - Local State (Default).
 - Remote State (For Teams & Collaboration).
 
+<br>
+
 ### Local State (Default Storage):
 
 By default, when you run terraform apply, Terraform stores the state file on your local machine in your project directory.
@@ -118,6 +120,8 @@ This means Terraform remembers that it created an VM on azure with particular co
 **When to Use Local State?**
 - Good for small projects and personal use.
 - When working alone on a test environment.
+
+<br>
 
 ### Remote State (For Teams & Collaboration)
 
