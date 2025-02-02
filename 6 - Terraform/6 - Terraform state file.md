@@ -85,4 +85,183 @@ The state file is super important because:
 
 <br>
 
-### Where is the Terraform State File is stores?
+## Where is the Terraform State File is stores?
+
+Terraform state is stored in a file called ```terraform.tfstate```. This file contains a record of all the infrastructure that Terraform manages. Depending on your setup, Terraform can store the state locally on your computer or remotely in a cloud storage system.
+
+**Types of Terraform State Storage**:
+
+Terraform state can be stored in two main ways:
+- Local State (Default).
+- Remote State (For Teams & Collaboration).
+
+### Local State (Default Storage):
+
+By default, when you run terraform apply, Terraform stores the state file on your local machine in your project directory.
+
+Where is the Local State File Stored?
+- The state file is created in the same folder where you run Terraform.
+- It is named ```terraform.tfstate```.
+
+
+**Example of Local State Storage**:
+
+Let's say you create an Azure VM using Terraform. Now, you run ```terraform apply```. So, terraform will create Virtual Machine on azure and Saves the details in terraform.tfstate.
+
+This means Terraform remembers that it created an VM on azure with particular configuration.
+
+**Problems with Local State Storage**:
+
+- **Not good for teams**: If multiple people are working, they won’t have access to the same state file.
+- **Risk of losing state**: If your laptop crashes or the file is deleted by any chance, Terraform forgets what it built. Then If you will run ```terraform apply``` command without having state file then terraform will create entire written infra on cloud.
+
+**When to Use Local State?**
+- Good for small projects and personal use.
+- When working alone on a test environment.
+
+### Remote State (For Teams & Collaboration)
+
+```इसका मतलब है की state file को किसी remote storage (like azure storage) मैं store करना जिससे terraform उस state file को remotely acces कर ले|```
+
+Terraform tracks infrastructure using a state file (```terraform.tfstate```). By default, Terraform stores this file locally on your computer. However, in team environments, a local state file causes problems:
+
+- **Collaboration issues** – If state file is stored on you local machine and If you are working with team on terraform and other team members wants to make changes to infra then other team members cannot see the state.
+- **Risk of data loss** – If your computer crashes, the state file is lost.
+- **State corruption** – If two people run Terraform at the same time, the state file can become corrupt.
+
+**Solution**: Remote State Storage. 
+- Terraform allows storing state in a remote backend such as Azure Storage, AWS S3, or Terraform Cloud.
+
+<br
+  >
+**What is Remote Backend?**
+
+Storing ```terraform.tfstate``` in a cloud service like Azure Storage.
+
+A remote backend is a shared location where Terraform stores its state file.
+
+<br>
+
+**Why Use Azure Remote State Storage?**
+- **Collaboration**:
+  - Problem with Local State: If you’re working in a team, everyone needs access to the same state file. Storing it locally makes this difficult because only one person can access it at a time.
+ 
+  - Solution with Remote Backend: The state file is stored in a shared location (e.g., Azure Storage or Terraform Cloud), so everyone on the team can access it. This ensures that everyone is working with the latest infrastructure information.
+ 
+- **State Locking**:
+  - Problem with Local State: If two people run terraform apply at the same time, they might overwrite each other’s changes, leading to conflicts or corrupted infrastructure.
+ 
+  - Solution with Remote Backend: Remote backends like Terraform Cloud, S3 (with DynamoDB), and others support state locking. This prevents multiple people from running Terraform simultaneously. If someone is already applying changes, others will have to wait until the lock is released.
+ 
+- **Safety and Durability**:
+  - Problem with Local State: If your local machine crashes, or the state file is accidentally deleted, you lose the state. Without the state file, Terraform won’t know how to manage your infrastructure.
+ 
+  - Solution with Remote Backend: The state file is stored securely in a remote location, reducing the risk of loss or corruption. Many backends (like S3) also support versioning, so you can recover previous versions of the state file if something goes wrong.
+ 
+- **Centralized Management**:
+  - Problem with Local State: Managing state files for multiple projects or environments (e.g., dev, staging, prod) can become messy if they’re stored locally.
+ 
+  - Solution with Remote Backend: You can store state files for all your projects and environments in one place (e.g., an S3 bucket or Terraform Cloud). This makes it easier to manage and organize your infrastructure.
+ 
+- **Security**:
+  - Problem with Local State: Local state files might not be encrypted or protected, making them vulnerable to unauthorized access.
+ 
+  - Solution with Remote Backend: Remote backends often provide built-in security features like encryption (at rest and in transit), access controls, and IAM roles to ensure that only authorized users can access the state file.
+
+<br>
+
+**How Does Remote Backend Work?**
+
+- **When You Run terraform init**:
+  - Terraform checks the backend settings in ```main.tf```.
+  - Terraform authenticates with Azure.
+  - If a local state file (terraform.tfstate) exists, Terraform uploads it to Azure Storage.
+ 
+- **When You Run terraform plan or terraform apply**
+  - Terraform downloads the state file from Azure Storage.
+  - Terraform compares the actual infrastructure with the desired state in ```main.tf```.
+  - Terraform applies changes to match the desired state.
+  - Terraform updates the remote state file in Azure Storage.
+ 
+- **State Locking (Prevents Conflicts)**
+  If two people run Terraform at the same time, there is a risk of corrupting the state file.
+
+  Azure Storage supports state locking using Azure Blob Storage leases:
+  - If a user is running Terraform, the state file is locked.
+  - Other users cannot modify the state until the first Terraform process is finished.
+ 
+<br>
+<br>
+
+## How to Store Terraform State File in Azure Storage (Step by Step)
+
+**Step 1: Create an Azure Storage Account for Remote State**
+
+First, create an Azure Storage Account where Terraform will store its state file.
+
+Run the following Azure CLI commands:
+
+```
+# Set variables
+RESOURCE_GROUP_NAME="terraform-backend-rg"
+STORAGE_ACCOUNT_NAME="terraformstate12345"
+CONTAINER_NAME="tfstate"
+
+# 1. Create a Resource Group
+az group create --name $RESOURCE_GROUP_NAME --location eastus
+
+# 2. Create a Storage Account
+az storage account create --name $STORAGE_ACCOUNT_NAME --resource-group $RESOURCE_GROUP_NAME --location eastus --sku Standard_LRS
+
+# 3. Create a Storage Container inside the Storage Account
+az storage container create --name $CONTAINER_NAME --account-name $STORAGE_ACCOUNT_NAME
+```
+
+**Step 2: Configure Terraform Backend to Use Azure Storage**:
+
+In your Terraform configuration (```main.tf```), configure the backend to use Azure Storage:
+
+```
+terraform {
+  backend "azurerm" {
+    resource_group_name   = "terraform-backend-rg"
+    storage_account_name  = "terraformstate12345"
+    container_name        = "tfstate"
+    key                   = "prod.terraform.tfstate"
+  }
+}
+```
+
+Explanation:
+- resource_group_name: The Azure resource group where the storage account is created.
+- storage_account_name: The Azure Storage Account where Terraform will store the state file.
+- container_name: The Azure Storage Container inside the Storage Account.
+- key: The name of the Terraform state file (e.g., prod.terraform.tfstate).
+
+**Step 3: Initialize Terraform with Remote Backend**:
+
+Now, initialize Terraform so that it connects to the Azure remote backend:
+
+```
+terraform init
+```
+
+What Happens Internally?
+- Terraform reads the backend configuration from ```main.tf```.
+- Terraform connects to Azure Storage.
+- Terraform uploads the local state file to Azure.
+- Terraform confirms that Azure will be used as the backend from now on.
+
+**Step 4: Apply Terraform Configuration**:
+
+After initializing the backend, apply Terraform:
+
+```
+terraform apply
+```
+
+Terraform will now:
+- Fetch the state file from Azure Storage.
+- Deploy infrastructure according to the Terraform configuration.
+- Update the state file and store it back in Azure Storage.
+
