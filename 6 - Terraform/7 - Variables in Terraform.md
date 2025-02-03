@@ -245,7 +245,7 @@ Terraform will hide the secret in the output to keep it safe.
 
 Let’s create a complete example for deploying an Azure resource group and virtual machine using variables.
 
-```variables.tf```:
+```variables.tf```: Define the variables in seperate file.
 
 ```
 variable "resource_group_name" {
@@ -280,7 +280,7 @@ variable "admin_password" {
 
 <br>
 
-```main.tf```:
+```main.tf```: Assign the defined variable.
 
 ```
 provider "azurerm" {
@@ -353,7 +353,7 @@ resource "azurerm_virtual_machine" "vm" {
 
 <br>
 
-```terraform.tfvars```:
+```terraform.tfvars```: Provide the variable values.
 
 ```
 resource_group_name = "my-rg"
