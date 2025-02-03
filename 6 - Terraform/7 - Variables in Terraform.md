@@ -14,6 +14,8 @@ Instead of writing the same information again and again, we use variables to mak
 
 Terraform variables allow you to make your infrastructure code reusable, flexible, and configurable. Instead of hardcoding values like resource names, regions, and instance sizes, you can define variables and assign values dynamically.
 
+<br>
+
 **Example Without Variables (Hardcoded Values)**
 
 Imagine we want to create an Azure Resource Group (which is like a folder that contains all our cloud resources).
@@ -26,6 +28,8 @@ resource "azurerm_resource_group" "example" {
 ```
 
 Here, ```"MyResourceGroup"``` and ```"East US"``` are fixed values. If we want to change them, we have to edit the code manually.
+
+<br>
 
 **Example With Variables**
 
