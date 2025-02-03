@@ -74,6 +74,7 @@ Terraform supports different types of variables.
 | Object | A structured collection of values  | { name = "app", size = "Standard_B2s" } |
 | Tuple  | A sequence of different data types | ["dev", 3, true]                        |
 
+<br>
 
 ### Types of Variables in Terraform
 
@@ -123,3 +124,250 @@ Terraform supports three types of variables:
   After running ```terraform apply```, you will see:
 
   ```vm_public_ip = "52.168.23.45"```
+
+<br>
+<br>
+
+## Variables usage
+
+### Defining Variables in Terraform.
+
+Variables are defined in Terraform using the ```variable``` block in a seperate ```variable.tf``` file. This block specifies the variable's name, type, description, default value, and other attributes.
+
+Create a ```variable.tf``` file and define the variables.
+
+```
+variable "variable_name" {
+  type        = data_type
+  default     = default_value
+  description = "A description of the variable"
+}
+```
+
+**Example**:
+
+```
+variable "resource_group_name" {
+  type        = string
+  default     = "my-rg"
+  description = "The name of the Azure resource group"
+}
+```
+
+Explanation:
+- ```variable```: This is the keyword which tells that this is a variable block.
+- ```resource_group_name```: This is the name of the variable which we will use in main.tf file.
+- ```type```: This is the type of variable like string, num, etc.
+- ```default```: This is the default value we provide to variable. This value will be used if we especially do not define a value for variable.
+- ```description```: It is the description for the variable.
+
+### How to Use Variables?
+
+Once you define a variable, you can use it in your Terraform code by referencing it with ```var.variable_name```. 
+
+**Example**: ```main.tf``` file
+
+```
+resource "azurerm_resource_group" "rg" {
+  name     = var.resource_group_name
+  location = "East US"
+}
+```
+
+Explanation:
+- ```var.resource_group_name``` refers to the value of the ```resource_group_name``` variable.
+- If no value is provided, Terraform will use the default value (my-rg).
+
+<br>
+<br>
+
+### Assigning Values to Variables
+
+After using variables in ```main.tf``` file. You have to provide values to the defines variables.
+
+There are several ways to provide values to variables:
+
+- **Default Values**:
+
+  If you define a default value in the variable block, Terraform will use it unless you override it.
+ 
+- **Command-Line Input**
+
+  You can pass values directly when running Terraform commands:
+
+  ```
+  terraform apply -var="resource_group_name=my-new-rg"
+  ```
+
+- **Variable Files (.tfvars)**
+
+  You can create a seperate ```terraform.tfvars``` file and create key-value pairs of variables to store values.
+
+  ```
+  resource_group_name = "my-rg"
+  location           = "East US"
+  ```
+
+### Run terraform plan
+
+Now run ```terraform plan``` command to see the preview of your terraform script. You will see the defined varibale in the output.
+
+<br>
+<br>
+
+## Handling Sensitive Variables (For Passwords, Secrets)
+
+Some values, like passwords, should not be shown on the screen. Terraform lets us mark variables as **sensitive**:
+
+```
+variable "client_secret" {
+  type      = string
+  sensitive = true
+}
+```
+
+Then, we can use it:
+
+```
+provider "azurerm" {
+  features {}
+  
+  client_secret = var.client_secret
+}
+```
+
+Terraform will hide the secret in the output to keep it safe.
+
+<br>
+<br>
+
+## Example (Lab): Complete setup of variable in terraform.
+
+Let’s create a complete example for deploying an Azure resource group and virtual machine using variables.
+
+```variables.tf```:
+
+```
+variable "resource_group_name" {
+  type        = string
+  default     = "my-rg"
+  description = "The name of the Azure resource group"
+}
+
+variable "location" {
+  type        = string
+  default     = "East US"
+  description = "The Azure region to deploy resources"
+}
+
+variable "vm_size" {
+  type        = string
+  default     = "Standard_B1s"
+  description = "The size of the virtual machine"
+}
+
+variable "admin_username" {
+  type        = string
+  description = "Admin username for the VM"
+}
+
+variable "admin_password" {
+  type        = string
+  sensitive   = true
+  description = "Admin password for the VM"
+}
+```
+
+<br>
+
+```main.tf```:
+
+```
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "rg" {
+  name     = var.resource_group_name
+  location = var.location
+}
+
+resource "azurerm_virtual_network" "vnet" {
+  name                = "my-vnet"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+resource "azurerm_subnet" "subnet" {
+  name                 = "my-subnet"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = ["10.0.1.0/24"]
+}
+
+resource "azurerm_network_interface" "nic" {
+  name                = "my-nic"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = azurerm_subnet.subnet.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
+resource "azurerm_virtual_machine" "vm" {
+  name                  = "my-vm"
+  location              = azurerm_resource_group.rg.location
+  resource_group_name   = azurerm_resource_group.rg.name
+  network_interface_ids = [azurerm_network_interface.nic.id]
+  vm_size               = var.vm_size
+
+  storage_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "16.04-LTS"
+    version   = "latest"
+  }
+
+  storage_os_disk {
+    name              = "my-osdisk"
+    caching           = "ReadWrite"
+    create_option     = "FromImage"
+    managed_disk_type = "Standard_LRS"
+  }
+
+  os_profile {
+    computer_name  = "myvm"
+    admin_username = var.admin_username
+    admin_password = var.admin_password
+  }
+
+  os_profile_linux_config {
+    disable_password_authentication = false
+  }
+}
+```
+
+<br>
+
+```terraform.tfvars```:
+
+```
+resource_group_name = "my-rg"
+location           = "East US"
+vm_size            = "Standard_B1s"
+admin_username     = "adminuser"
+admin_password     = "P@ssw0rd123!"
+```
+
+**Steps to Run This Code**:
+- Save the files (variables.tf, main.tf, terraform.tfvars).
+- Run ```terraform init``` to initialize Terraform.
+- Run ```terraform plan``` to preview the terraform output.
+- Run ```terraform apply``` to create the resources in Azure.
+- Terraform will use the values from ```terraform.tfvars``` to deploy the infrastructure.
+
+
