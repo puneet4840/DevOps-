@@ -93,7 +93,7 @@ Terraform supports three types of variables:
   ```
     
 - **Output Variables**:
-  - Output variables are used to display important values after Terraform finishes execution.
+  - Output variables are used to display important values after Terraform finishes execution. ```यह variable सिर्फ तब use होता है जब हमको कोई information as an output चाइये होती है|```
   - These are useful for getting resource details like public IPs or storage account names.
  
   Example: Displaying the Public IP of a VM:-
