@@ -64,8 +64,15 @@ Variables provide the following benefits:
 
 Terraform supports different types of variables.
 
-“| Type | Description | Example | | --- | --- | --- | | **string** | A single line of text | `"eastus"` | | **number** | A numeric value | `3` | | **bool** | Boolean (`true` or `false`) | `true` | | **list** | A list of values | `["eastus", "westus"]` | | **map** | A key-value pair | `{ env = "dev", location = "eastus" }` | | **object** | A structured collection of values | `{ name = "app", size = "Standard_B2s" }` | | **tuple** | A sequence of different data types | `["dev", 3, true]` |”
-
+| Type   | Description                        | Example                                 |
+|--------|------------------------------------|-----------------------------------------|
+| String | A single line of text              | "eastus"                                |
+| Number | A numeric value                    |    3                                    |
+| Bool   | Boolean (True or False)            |   true                                  |
+| List   | A list of values                   | ["eastus", "westus"]                    |
+| Map    | A key-value pair                   | { env = "dev", location = "eastus" }    |
+| Object | A structured collection of values  | { name = "app", size = "Standard_B2s" } |
+| Tuple  | A sequence of different data types | ["dev", 3, true]                        |
 
 
 ### Types of Variables in Terraform
