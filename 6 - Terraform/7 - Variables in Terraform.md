@@ -47,3 +47,64 @@ resource "azurerm_resource_group" "example" {
 
 Now, when we run Terraform, we can set different values for these variables without changing the code.
 
+<br>
+
+### Why Use Variables in Terraform?
+
+Variables provide the following benefits:
+
+- **Reusability**: You can reuse the same configuration for different environments (e.g., dev, staging, prod) by changing variable values.
+- **Flexibility**: Variables allow you to customize your infrastructure without modifying the core Terraform code.
+- **Maintainability**: Centralized variable definitions make it easier to manage and update values.
+- **Security**: Sensitive data (e.g., passwords, API keys) can be managed securely using sensitive variables.
+
+<br>
+
+### Types of Variables in Terraform
+
+Terraform supports three types of variables:
+
+- **Input Variables**:
+  - Input variable is used to provide values to ```main.tf``` file.
+  - ```Input variables simply main.tf file मैं value provide करने के लिए होते हैं|```
+  - Let’s say we are creating a resource group and we want to pass the resource group name as an input variable.
+  
+- **Local Varibales**:
+  - Locals are temporary variables used within a Terraform module.
+
+  Example: Using Local Variables
+
+  Let’s say we need to generate a naming convention for Azure resources.
+
+  ```
+  locals {
+    project_name = "myproject"
+    location     = "eastus"
+    environment  = "dev"
+  
+    # Constructing a standard name
+    resource_name = "${local.project_name}-${local.environment}"
+  }
+
+  resource "azurerm_resource_group" "example" {
+    name     = local.resource_name
+    location = local.location
+  }
+  ```
+    
+- **Output Variables**:
+  - Output variables are used to display important values after Terraform finishes execution.
+  - These are useful for getting resource details like public IPs or storage account names.
+ 
+  Example: Displaying the Public IP of a VM:-
+
+  ```
+  output "vm_public_ip" {
+    description = "The public IP address of the VM"
+    value       = azurerm_public_ip.example.ip_address
+  }
+  ```
+
+  After running ```terraform apply```, you will see:
+
+  ```vm_public_ip = "52.168.23.45"```
