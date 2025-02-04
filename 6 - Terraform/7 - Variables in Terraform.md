@@ -394,6 +394,133 @@ admin_password     = "P@ssw0rd123!"
 
 
 <br>
+<br>
+
+## Example (LAB): Complete setup of variables in terraform
+
+**Step-1: Create main.tf file**:
+
+Create ```main.tf``` file
+
+```
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "4.14.0"
+    }
+  }
+
+  backend "azurerm" {
+      resource_group_name  = "Learning"
+      storage_account_name = "terraformpuneet"
+      container_name       = "terraform-blob"
+      key                  = "terraform.tfstate"
+      access_key           = "BzyGlaQa9ccnXlEzl8hHuGrCTUyinZhGWDz4LaSATxihSIyPCyabjAOgftRb4C0ORpCmi1QCdF/I+AStFipBcg=="
+  }
+
+}
+
+
+provider "azurerm" {
+  # Configuration options
+
+  subscription_id = var.subscription_id
+  tenant_id = var.tenant_id
+  client_id = var.client_id
+  client_secret = var.client_secret
+
+  features {
+    
+  }
+}
+
+resource "azurerm_resource_group" "rg" {
+  name     = var.azure_rm_resource_group_name
+  location = var.azure_rm_location_name
+}
+```
+
+**Step-2: Create variables.tf file**:
+
+Now create ```variables.tf``` file 
+
+```
+variable "resource_group_name" {
+    type = string
+    default = "Learning"
+    description = "resource group name"
+}
+
+
+variable "storage_account_name" {
+    default = "terraformpuneet"
+}
+
+variable "container_name" {
+    default = "terraform-blob"
+}
+
+variable "key" {
+    default = "terraform.tfstate"
+}
+
+variable "access_key" {
+    default = ""
+}
+
+variable "subscription_id" {
+    default = "f721bf30-04fd-4757-a7ad-e1aeeab1a6dc"
+}
+
+variable "tenant_id" {
+    default = ""
+}
+
+variable "client_id" {
+    default =""
+}
+
+variable "client_secret" {
+    default = ""
+}
+
+variable "azure_rm_resource_group_name" {
+    default = ""
+}
+
+variable "azure_rm_location_name" {
+    default =""
+}
+```
+
+**Step-3: Create terraform.tfvars file**:
+
+Create ```terraform.tfvars``` file 
+
+```
+subscription_id = "f721bf30-04fd-4757-a7ad-e1aeeab1a6dc"
+tenant_id = "b94db9d6-e2d9-4485-ba28-bd37e7a8d30c"
+client_id = "520c5958-2fd2-45ea-835d-dfcaa1934c0b"
+client_secret = "~VG8Q~ls_tVcyw1pOua7Pkr.cIaKjXKOs4l3jbGy"
+azure_rm_resource_group_name = "my-rg"
+azure_rm_location_name = "West Europe"
+```
+
+**Step-4: Run terraform init command**:
+
+Run ```terraform init``` command.
+
+**Step-5: Run terraform plan command**:
+
+Run ```terraform plan``` caommand.
+
+**Step-6: Run terraform apply command**:
+
+Run ```terraform apply``` command.
+
+<br>
+<br>
 
 ### Important Note:
 
