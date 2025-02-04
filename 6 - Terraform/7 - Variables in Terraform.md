@@ -128,7 +128,7 @@ Terraform supports three types of variables:
 <br>
 <br>
 
-## Variables usage
+## Steps to use variables in terraform.
 
 ### Defining Variables in Terraform.
 
