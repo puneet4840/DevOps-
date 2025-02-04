@@ -232,6 +232,7 @@ terraform {
     storage_account_name  = "terraformstate12345"
     container_name        = "tfstate"
     key                   = "prod.terraform.tfstate"
+    access_key            = "BzyGlaQa9ccnXlEzl8hHuGrCTUyinZhGWDz4LaSATxihSIyPCyabjAOgftRb4C0ORpCmi1QCdF/I+AStFipBcg=="
   }
 }
 ```
@@ -241,6 +242,7 @@ Explanation:
 - storage_account_name: The Azure Storage Account where Terraform will store the state file.
 - container_name: The Azure Storage Container inside the Storage Account.
 - key: The name of the Terraform state file (e.g., prod.terraform.tfstate).
+- access_key: It is the key to access the storage account directly from your terraform. Without this key, terrafomr will not work.
 
 **Step 3: Initialize Terraform with Remote Backend**:
 
@@ -268,4 +270,75 @@ Terraform will now:
 - Fetch the state file from Azure Storage.
 - Deploy infrastructure according to the Terraform configuration.
 - Update the state file and store it back in Azure Storage.
+
+<br>
+<br>
+
+## Example (LAB): Setup terraform backend on azure to store state file on remote backend (storage account).
+
+**Step:1 - Create main.tf file**
+
+```
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "4.14.0"
+    }
+  }
+
+  backend "azurerm" {
+      resource_group_name  = "Learning"
+      storage_account_name = "terraformpuneet"
+      container_name       = "terraform-blob"
+      key                  = "terraform.tfstate"
+      access_key           = "BzyGlaQa9ccnXlEzl8hHuGrCTUyinZhGWDz4LaSATxihSIyPCyabjAOgftRb4C0ORpCmi1QCdF/I+AStFipBcg=="
+  }
+  
+
+}
+
+
+provider "azurerm" {
+  # Configuration options
+
+  subscription_id = "f721bf30-04fd-4757-a7ad-e1aeeab1a6dc"
+  tenant_id = "b94db9d6-e2d9-4485-ba28-bd37e7a8d30c"
+  client_id = "520c5958-2fd2-45ea-835d-dfcaa1934c0b"
+  client_secret = "~VG8Q~ls_tVcyw1pOua7Pkr.cIaKjXKOs4l3jbGy"
+
+  features {
+    
+  }
+}
+
+resource "azurerm_resource_group" "rg" {
+  name     = "my-rg"
+  location = "West Europe"
+}
+```
+
+Explanation:
+
+- Define the azure provider block.
+  
+- Define the Remote Backend block.
+  - In the remote backend provide the details of storage account like resource group name, storage account name, container name, state file name and access key of storage account.
+  - This access key is most important thing. If you do not mention it inside backend then remote backend will not work.
+
+- Define the provider again.
+
+- Define your resource block.
+
+**Step-2: Run terraform init command**
+
+Now run ```terraform init``` command to initialize the provider and backend. This command will create a state file in resource group.
+
+**Step-3: Run terraform plan command**
+
+Now run ```terraform plan``` command to review the terraform apply command.
+
+**Step-4: Run terraform apply command**
+
+Now run ```terraform apply``` command to create resources on azure.
 
