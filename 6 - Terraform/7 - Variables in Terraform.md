@@ -446,29 +446,6 @@ resource "azurerm_resource_group" "rg" {
 Now create ```variables.tf``` file 
 
 ```
-variable "resource_group_name" {
-    type = string
-    default = "Learning"
-    description = "resource group name"
-}
-
-
-variable "storage_account_name" {
-    default = "terraformpuneet"
-}
-
-variable "container_name" {
-    default = "terraform-blob"
-}
-
-variable "key" {
-    default = "terraform.tfstate"
-}
-
-variable "access_key" {
-    default = ""
-}
-
 variable "subscription_id" {
     default = "f721bf30-04fd-4757-a7ad-e1aeeab1a6dc"
 }
