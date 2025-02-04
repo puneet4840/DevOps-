@@ -191,7 +191,7 @@ There are several ways to provide values to variables:
 
   If you define a default value in the variable block, Terraform will use it unless you override it.
  
-- **Command-Line Input**
+- **Command-Line Input**:
 
   You can pass values directly when running Terraform commands:
 
@@ -199,13 +199,21 @@ There are several ways to provide values to variables:
   terraform apply -var="resource_group_name=my-new-rg"
   ```
 
-- **Variable Files (.tfvars)**
+- **Variable Files (.tfvars)**:
 
   You can create a seperate ```terraform.tfvars``` file and create key-value pairs of variables to store values.
 
   ```
   resource_group_name = "my-rg"
   location           = "East US"
+  ```
+
+- **Using Environment Variables**:
+
+  You can export the variables as environment variables in terminal and terraform will automatically pick the variables.
+
+  ```
+  export TF_VAR_resource_group_name="myRG"
   ```
 
 ### Run terraform plan
@@ -245,6 +253,8 @@ Terraform will hide the secret in the output to keep it safe.
 
 Let’s create a complete example for deploying an Azure resource group and virtual machine using variables.
 
+**Step-1: Create a variables.tf file.**:
+
 ```variables.tf```: Define the variables in seperate file.
 
 ```
@@ -280,9 +290,19 @@ variable "admin_password" {
 
 <br>
 
+**Step-2: Create a main.tf file and assign the defined values**:
+
 ```main.tf```: Assign the defined variable.
 
 ```
+terraform {
+  required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "4.14.0"
+    }
+  }
+
 provider "azurerm" {
   features {}
 }
@@ -352,6 +372,8 @@ resource "azurerm_virtual_machine" "vm" {
 ```
 
 <br>
+
+**Step-3: Create terraform.tfvars file and provide the actual values to variables**:
 
 ```terraform.tfvars```: Provide the variable values.
 
