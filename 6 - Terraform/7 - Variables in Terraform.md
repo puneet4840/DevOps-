@@ -393,3 +393,10 @@ admin_password     = "P@ssw0rd123!"
 - Terraform will use the values from ```terraform.tfvars``` to deploy the infrastructure.
 
 
+<br>
+
+### Important Note:
+
+I create a backend configuration inside main.tf file and was assining the variable in backend. So, here I was getting error that variables not allowed.
+
+This means we can not use variables inside backend configuration of state file.
