@@ -123,3 +123,90 @@ Each of these files serves a specific purpose.
   admin_username  = "adminuser"
   admin_password  = "MySecurePassword123!"
   ```
+
+- ```outputs.tf``` file: **Displaying Important Information**
+  - Used to show useful details after Terraform finishes running.
+  - After running Terraform, we might want to see important details (like VM public IP). To display the variables we use this file.
+ 
+  Example: Displaying VM Public IP
+
+  ```
+  output "vm_public_ip" {
+    description = "Public IP address of the virtual machine"
+    value       = azurerm_network_interface.nic.private_ip_address
+  }
+  ```
+
+- ```provider.tf``` file: **Defining the Cloud Provider**
+  - Terraform needs to know which cloud it’s working with. So we define the cloud provider details in this file.
+
+  Example: Setting Up Azure Provider
+
+  ```
+  terraform {
+    required_providers {
+      azurerm = {
+        source  = "hashicorp/azurerm"
+        version = "~> 3.0"
+      }
+    }
+  }
+
+  provider "azurerm" {
+    features {}
+  }
+  ```
+
+- ```backend.tf``` file: **Configuring Remote State Storage**
+  - By default, Terraform stores its state file locally (terraform.tfstate). To collaborate with a team, it’s better to store this state file in Azure Storage. So we define the remote backend details in this file
+ 
+  Example: Using Azure Storage for State File
+
+  ```
+  terraform {
+    backend "azurerm" {
+      resource_group_name  = "terraform-backend-rg"
+      storage_account_name = "myterraformstate"
+      container_name       = "tfstate"
+      key                  = "terraform.tfstate"
+    }
+  }
+  ```
+
+- ```.terraform/```: **Hidden Terraform Folder**
+  - Terraform automatically creates this hidden folder.
+  - It stores downloaded provider plugins and modules.
+  - You should never manually edit this folder!.
+ 
+- ```.terraform.lock.hcl``` file: **Dependency Lock File**
+  - This file locks the Terraform provider versions to avoid unexpected changes.
+  - Ensures that your infrastructure does not break due to automatic provider updates.
+  - Think of this like a “freeze” file that locks software versions in a project.
+
+- ```terraform.tfstate``` file: **Terraform’s State File**
+  - Terraform tracks all created resources in this file.
+  - It remembers what’s been deployed to prevent duplicate creations.
+  - Never manually edit this file!
+  - Think of this like a database keeping track of everything you own.
+ 
+- ```terraform.tfstate.backup``` file: **Backup of State File**
+  - Terraform automatically creates a backup of the last working state file.
+  - If something goes wrong, you can use this to restore your infrastructure.
+
+- ```README.md``` file: **Documentation File**
+  - Describes the project purpose, usage, and instructions.
+
+  Example content:
+
+  ```
+  # Terraform Azure VM Project
+  This Terraform project deploys an Azure Virtual Machine.
+
+  ## Steps to Run:
+  1. Install Terraform
+  2. Authenticate with Azure using `az login`
+  3. Run `terraform init`
+  4. Run `terraform apply`
+  ```
+
+  
