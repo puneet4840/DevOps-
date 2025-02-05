@@ -92,7 +92,8 @@ Each of these files serves a specific purpose.
 - ```variables.tf``` file: **Defining Input Variables**
   - In this file we define the variables and assign values in ```terraform.tfvars```.
   - Instead of hardcoding values, we use variables for flexibility.
- 
+
+  Example: 
   ```
   variable "location" {
     description = "The Azure region where resources will be created"
