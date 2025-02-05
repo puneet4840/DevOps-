@@ -4,6 +4,10 @@ When you write terraform code, you need to organize your files properly so that 
 
 A directory structure in Terraform is the way we organize files and folders in a project. It helps manage different parts of the infrastructure efficiently.
 
+```अब तक हम simple एक main.tf file मैं ही resources, variables और बाकी terraform की configuration को define कर रहे थे लेकिन अब हम इसी configuration को उनकी अलग-अलग files मैं define करेंगे|```
+
+```ऐसा हम इसलिए कर रहे हैं क्युकी जब बहुत सारे resources को एक ही file मैं रखने से वो एक messy file बन जाती है और कुछ समझ नहीं आता या फिर कोई team member उस infrastructure पे work करेगा और terraform की scripts देखेगा तो उसको चीज़े समझ नहीं आएँगी इसलिए resources को उनकी अलग-अलग files मैं रखेंगे| ऐसा करने से terraform की कितनी भी बड़ी scripts को हम easily समझ सकते है|```
+
 ### Why Do We Need a Directory Structure?
 
 Imagine you are working on a large project where you need to manage:
