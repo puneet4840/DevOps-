@@ -10,3 +10,10 @@ There are pre-built function only. We can not make customized functions.
 function_name(argument1, argument2, ...)
 ```
 
+<br>
+
+## Type of Functions
+
+- ### String Function:
+
+  - ```lower()```:
