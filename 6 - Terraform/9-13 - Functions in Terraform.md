@@ -18,24 +18,24 @@ function_name(argument1, argument2, ...)
 
   String functions help manipulate text values.
 
-  - ```lower()```:
+- ```lower()```:
 
-    - Converts a string to lowercase.
-    - Use case: Azure storage account names must be lowercase.
+  - Converts a string to lowercase.
+  - Use case: Azure storage account names must be lowercase.
    
-    Syntax:
-    ```
-    lower(string)
-    ```
+  Syntax:
+  ```
+  lower(string)
+  ```
 
-    Example:
+  Example:
 
-    ```
-    locals {
-    storage_name = lower("MyAzureStorage")
-    }
-    # Output: "myazurestorage"
-    ```
+  ```
+  locals {
+  storage_name = lower("MyAzureStorage")
+  }
+  # Output: "myazurestorage"
+  ```
 
 <br>
 
