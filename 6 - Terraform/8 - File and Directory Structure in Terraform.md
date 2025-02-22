@@ -209,4 +209,104 @@ Each of these files serves a specific purpose.
   4. Run `terraform apply`
   ```
 
-  
+<br>
+<br>
+
+## Example LAB: Concept of file and directory structure with creating a resource group.
+
+Scenario: We are going to create resource group using file and directory structure.
+
+**Create the below files**:
+- main.tf
+- provider.tf
+- output.tf
+- backend.tf
+- variables.tf
+- terraform.tfvars
+
+**Step-1: Define the provider in provider.tf file**
+
+```provider.tf```
+
+```
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=3.0.0"
+    }
+  }
+}
+
+# Configure the Microsoft Azure Provider
+provider "azurerm" {
+  subscription_id = var.subscription_id
+  tenant_id = var.tenant_id
+  client_id = var.client_id
+  client_secret = var.client_secret
+  features {}
+}
+```
+
+**Step-2: Define main.tf**
+
+```main.tf```
+
+```
+resource "azurerm_resource_group" "rg" {
+  name     = var.resource_group_name
+  location = var.resource_group_location
+}
+```
+
+**Step-3: Define variables.tf**
+
+```variables.tf```
+
+```
+variable "subscription_id" {
+  type        = string
+}
+
+variable "tenant_id" {
+  type        = string
+}
+
+variable "client_id" {
+  type        = string
+}
+
+variable "client_secret" {
+  type        = string
+}
+
+variable "resource_group_name" {
+  type        = string
+  default     = ""
+}
+
+variable "resource_group_location" {
+  type        = string
+  default     = ""
+}
+
+```
+
+**Step-4: Define terraform.tfvars**
+
+```terraform.tfvars```
+
+```
+subscription_id = "f721bf30-04fd-4757-a7ad-e1aeeab1a6dc"
+tenant_id = "b94db9d6-e2d9-4485-ba28-bd37e7a8d30c"
+client_id = "520c5958-2fd2-45ea-835d-dfcaa1934c0b"
+client_secret = "~VG8Q~ls_tVcyw1pOua7Pkr.cIaKjXKOs4l3jbGy"
+resource_group_name = "Learning"
+resource_group_location = "West Europe"
+```
+
+**Step-5: Run below commands**
+
+- terraform.init
+- terraform.plan
+- terraform.apply
