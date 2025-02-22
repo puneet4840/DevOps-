@@ -103,7 +103,7 @@ function_name(argument1, argument2, ...)
 
 - ```format()```
 
-  -  The format function is used to create a formatted string by substituting values into a format specification. It is similar to the printf function in many programming languages.
+  -  The format function is used to create a formatted string by substituting values into a format specification. It is similar to the printf function in c programming languages.
  
 
   Syntax:
@@ -113,13 +113,14 @@ function_name(argument1, argument2, ...)
 
   Placeholder:
 
-  Specifier	Description
-  %s	String (converts the argument to a string).
-  %d	Integer (converts the argument to a decimal integer).
-  %f	Floating-point number (converts the argument to a floating-point number).
-  %v	Default format (converts the argument to its default string representation).
-  %t	Boolean (converts the argument to true or false).
-  %%	Literal percent sign (%).
+  | **Specifier** | **Description**                                                              |
+  |---------------|------------------------------------------------------------------------------|
+  | %s            | String (converts the argument to a string).                                  |
+  | %d            | Integer (converts the argument to a decimal integer).                        |
+  | %f            | Floating-point number (converts the argument to a floating-point number).    |
+  | %v            | Default format (converts the argument to its default string representation). |
+  | %t            | Boolean (converts the argument to true or false).                            |
+  | %%            | Literal percent sign (%).                                                    |
 
   Example:
 
