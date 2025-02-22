@@ -139,3 +139,7 @@ function_name(argument1, argument2, ...)
   }
   # Output: Hello, World!
   ```
+
+<br>
+
+### Numeric Functions
