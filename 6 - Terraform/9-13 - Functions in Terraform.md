@@ -122,11 +122,20 @@ function_name(argument1, argument2, ...)
   | %t            | Boolean (converts the argument to true or false).                            |
   | %%            | Literal percent sign (%).                                                    |
 
-  Example:
+  Example-1:
 
   ```
   locals {
   vm_name = format("%s-%s", "web", "01")
   }
   # Output: "web-01"
+  ```
+
+  Example-2:
+
+  ```
+  locals {
+  value = format("Hello, %s!", "World")
+  }
+  # Output: Hello, World!
   ```
