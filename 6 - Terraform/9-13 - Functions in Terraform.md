@@ -37,4 +37,24 @@ function_name(argument1, argument2, ...)
     # Output: "myazurestorage"
     ```
 
-    
+<br>
+
+- ```upper()```
+
+  - Converts a string to uppercase.
+ 
+  Syntax:
+  ```
+  upper(string)
+  ```
+
+  Example:
+
+  ```
+  locals {
+  vm_name = upper("myvm")
+  }
+  # Output: "MYVM"
+  ```
+
+  
