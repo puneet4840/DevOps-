@@ -99,4 +99,33 @@ function_name(argument1, argument2, ...)
   # Output: "My Resource Group"
   ```
 
-  
+<br>
+
+- ```format()```
+
+  -  The format function is used to create a formatted string by substituting values into a format specification. It is similar to the printf function in many programming languages.
+ 
+
+  Syntax:
+  ```
+  format(format_string, values...)
+  ```
+
+  Placeholder:
+
+  Specifier	Description
+  %s	String (converts the argument to a string).
+  %d	Integer (converts the argument to a decimal integer).
+  %f	Floating-point number (converts the argument to a floating-point number).
+  %v	Default format (converts the argument to its default string representation).
+  %t	Boolean (converts the argument to true or false).
+  %%	Literal percent sign (%).
+
+  Example:
+
+  ```
+  locals {
+  vm_name = format("%s-%s", "web", "01")
+  }
+  # Output: "web-01"
+  ```
