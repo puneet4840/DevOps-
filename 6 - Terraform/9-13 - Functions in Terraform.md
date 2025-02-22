@@ -14,7 +14,7 @@ function_name(argument1, argument2, ...)
 
 ## Type of Functions
 
-- ### String Function:
+### String Function:
 
   String functions help manipulate text values.
 
@@ -55,6 +55,48 @@ function_name(argument1, argument2, ...)
   vm_name = upper("myvm")
   }
   # Output: "MYVM"
+  ```
+
+<br>
+
+- ```replace()```
+
+  - Replaces specific characters in a string.
+ 
+  Syntax:
+  ```
+  replace(string, pattern, replacement)
+  ```
+
+  Example:
+
+  ```
+  locals {
+  clean_name = replace("My-Storage_Account!", "[^a-zA-Z0-9]", "")
+  }
+  # Output: "MyStorageAccount"
+  ```
+
+  So, [^a-zA-Z0-9] matches any single character that is not a letter (uppercase or lowercase) or a digit. This includes spaces, punctuation marks, symbols, and other special characters.
+
+<br>
+
+- ```trimspace()```
+
+  - Removes leading and trailing spaces.
+ 
+  Syntax:
+  ```
+  trimspace(string)
+  ```
+
+  Example:
+
+  ```
+  locals {
+  clean_input = trimspace("  My Resource Group  ")
+  }
+  # Output: "My Resource Group"
   ```
 
   
