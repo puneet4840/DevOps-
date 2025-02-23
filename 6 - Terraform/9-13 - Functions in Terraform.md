@@ -297,4 +297,32 @@ These functions help work with lists and maps.
   # Output: "Standard_D2s_v3"
   ```
 
-  
+<br>
+<br>
+
+## Working Example with Terraform Functions
+
+**Example 1: Creating a Valid Azure Storage Account Name**
+
+Azure storage account names must be all lowercase and only contain numbers and letters. You can use functions to sanitize a name:
+
+```
+variable "base_storage_name" {
+  description = "Base name for storage account"
+  type        = string
+  default     = "MyStorageAccount"
+}
+
+locals {
+  sanitized_storage_name = lower(replace(var.base_storage_name, "[^a-z0-9]", ""))
+}
+
+resource "azurerm_storage_account" "storage" {
+  name                     = local.sanitized_storage_name
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+```
+
