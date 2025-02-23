@@ -143,3 +143,158 @@ function_name(argument1, argument2, ...)
 <br>
 
 ### Numeric Functions
+
+Numeric functions help perform mathematical calculations.
+
+- ```min()```
+
+  - Returns the smallest number.
+
+  Syntax:
+  ```
+  min(number1, number2, ...)
+  ```
+
+  Example:
+
+  ```
+  locals {
+  smallest_value = min(10, 20, 5, 30)
+  }
+  # Output: 5
+  ```
+
+<br>
+
+- ```max()```
+
+  - Returns the largest number.
+ 
+  Syntax:
+  ```
+  max(number1, number2, ...)
+  ```
+
+  Example:
+
+  ```
+  locals {
+  largest_value = max(10, 20, 5, 30)
+  }
+  # Output: 30
+  ```
+
+<br>
+
+- ```abs()```
+
+  - Returns the absolute value.
+ 
+  Syntax:
+  ```
+  abs(number)
+  ```
+
+  Example:
+
+  ```
+  locals {
+  absolute_number = abs(-15)
+  }
+  # Output: 15
+  ```
+
+<br>
+
+### Collection (List & Map) Functions
+
+These functions help work with lists and maps.
+
+- ```length()```
+
+  - Returns the number of elements in a list or map.
+ 
+  Syntax:
+  ```
+  length(list_or_map)
+  ```
+
+  Example:
+
+  ```
+  locals {
+  resource_groups = ["dev-rg", "prod-rg", "test-rg"]
+  count_of_rgs    = length(local.resource_groups)
+  }
+  # Output: 3
+  ```
+
+<br>
+
+- ```merge()```
+
+  - Combines multiple maps.
+
+  Syntax:
+  ```
+  merge(map1, map2, ...)
+  ```
+
+  Example:
+
+  ```
+  locals {
+  default_tags = { "ManagedBy" = "Terraform", "Environment" = "Dev" }
+  extra_tags   = { "Project" = "Azure Deployment" }
+  final_tags   = merge(local.default_tags, local.extra_tags)
+  }
+  # Output: { "ManagedBy" = "Terraform", "Environment" = "Dev", "Project" = "Azure Deployment" }
+  ```
+
+<br>
+
+- ```concat()```
+
+  - Combines multiple lists.
+ 
+  Syntax:
+  ```
+  concat(list1, list2, ...)
+  ```
+
+  Example:
+
+  ```
+  locals {
+  list1 = ["eastus", "westus"]
+  list2 = ["centralus", "southindia"]
+  regions = concat(local.list1, local.list2)
+  }
+  # Output: ["eastus", "westus", "centralus", "southindia"]
+  ```
+
+<br>
+
+- ```lookup()```
+
+  - Retrieves a value from a map using a key.
+ 
+  Syntax:
+  ```
+  lookup(map, key, default_value)
+  ```
+
+  Example:
+
+  ```
+  locals {
+  vm_sizes = {
+    dev  = "Standard_B1s"
+    prod = "Standard_D2s_v3"
+  }
+  selected_size = lookup(local.vm_sizes, "prod", "Standard_B1s")
+  }
+  # Output: "Standard_D2s_v3"
+  ```
+
+  
