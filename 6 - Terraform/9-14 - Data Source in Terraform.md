@@ -61,3 +61,27 @@ Explanation:
 
 **Scenario**: Assume we already have a resource group named "my-existing-rg" in Azure, and we want to create a new Virtual Network inside it.
 
+```main.tf``` file
+
+```
+# Lookup the existing resource group
+data "azurerm_resource_group" "existing" {
+  name = "my-rg"
+}
+
+# Create a Virtual Network using the existing resource group
+resource "azurerm_virtual_network" "vnet" {
+  name                = "my-vnet"
+  location            = data.azurerm_resource_group.existing.location  # Dynamically fetched
+  resource_group_name = data.azurerm_resource_group.existing.name      # Dynamically fetched
+  address_space       = ["10.0.0.0/16"]
+}
+```
+
+Explanation:
+- **Purpose**: This block creates a new Azure Virtual Network (VNet) in the existing resource group fetched by the data source.
+- ```data```: Block
+  - ```"azurerm_resource_group"```: Specifies the type of data source. In this case, it’s an Azure resource group.
+  - ```"existing"```: A local name for the data source. This is used to reference the fetched data elsewhere in the configuration.
+  - ```name = "my-rg"```: Specifies the name of the existing resource group to fetch. This is a required argument for the ```azurerm_resource_group``` data source. It means there is already a resource group created ```my-rg``` for which we are telling here in data block to get data for.
+ 
