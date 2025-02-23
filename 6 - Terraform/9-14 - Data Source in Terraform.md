@@ -85,3 +85,91 @@ Explanation:
   - ```"existing"```: A local name for the data source. This is used to reference the fetched data elsewhere in the configuration.
   - ```name = "my-rg"```: Specifies the name of the existing resource group to fetch. This is a required argument for the ```azurerm_resource_group``` data source. It means there is already a resource group created ```my-rg``` for which we are telling here in data block to get data for.
  
+<br>
+
+### Example-2: Reusing an Existing Azure Storage Account
+
+**Scenario**: Another common scenario is when a Storage Account already exists, and you need to retrieve its details to create a Blob Storage container inside it.
+
+```main.tf```
+
+```
+data "azurerm_storage_account" "existing" {
+  name                = "myexistingstorage"
+  resource_group_name = "my-existing-rg"
+}
+
+resource "azurerm_storage_container" "container" {
+  name                  = "my-container"
+  storage_account_name  = data.azurerm_storage_account.existing.name
+  container_access_type = "private"
+}
+```
+
+Explanation:
+- Step 1: Retrieve the Existing Storage Account. This data source queries Azure and fetches details about the Storage Account "myexistingstorage".
+- Step 2: Use Retrieved Information in a New Resource
+
+**Why is this better?**
+- The "storage_account_name" is dynamically retrieved.
+- If the Storage Account changes (e.g., name, location), Terraform adapts automatically.
+
+<br>
+
+### Example-3: Reusing an Existing Virtual Network and Subnet
+
+**Scenario**: In Azure, you might already have a Virtual Network (VNet) and Subnet, and you want to create a new Virtual Machine inside that subnet.
+
+```main.tf```
+
+```
+# Fetch the existing Virtual Network
+data "azurerm_virtual_network" "existing" {
+  name                = "my-existing-vnet"
+  resource_group_name = "my-existing-rg"
+}
+
+# Fetch the existing Subnet
+data "azurerm_subnet" "existing" {
+  name                 = "my-existing-subnet"
+  virtual_network_name = data.azurerm_virtual_network.existing.name
+  resource_group_name  = data.azurerm_virtual_network.existing.resource_group_name
+}
+
+# Create a Network Interface
+resource "azurerm_network_interface" "example" {
+  name                = "example-nic"
+  location            = data.azurerm_virtual_network.existing.location
+  resource_group_name = data.azurerm_virtual_network.existing.resource_group_name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = data.azurerm_subnet.existing.id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
+# Create a Virtual Machine
+resource "azurerm_linux_virtual_machine" "example" {
+  name                = "example-vm"
+  location            = data.azurerm_virtual_network.existing.location
+  resource_group_name = data.azurerm_virtual_network.existing.resource_group_name
+  size                = "Standard_B1s"
+  admin_username      = "adminuser"
+  admin_password      = "P@ssw0rd1234!"
+
+  network_interface_ids = [azurerm_network_interface.example.id]
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "18.04-LTS"
+    version   = "latest"
+  }
+}
+```
