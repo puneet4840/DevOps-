@@ -232,7 +232,58 @@ In your browser, navigate to http://<LoadBalancerPublicIP>:80. You should see th
 
 ## Implementation using Terraform
 
-```main.tf```
+- ```providers.tf```
+
+```
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "=3.0.0"
+    }
+  }
+}
+
+# Configure the Microsoft Azure Provider
+provider "azurerm" {
+  subscription_id = var.subscription_id
+  tenant_id = var.tenant_id
+  client_id = var.client_id
+  client_secret = var.client_secret
+  features {}
+}
+```
+
+- ```terrafrom.tfvars```
+
+```
+subscription_id = "f721bf30-04fd-4757-a7ad-e1aeeab1a6dc"
+tenant_id = "b94db9d6-e2d9-4485-ba28-bd37e7a8d30c"
+client_id = "520c5958-2fd2-45ea-835d-dfcaa1934c0b"
+client_secret = "~VG8Q~ls_tVcyw1pOua7Pkr.cIaKjXKOs4l3jbGy"
+```
+
+- ```variables.tf```
+
+```
+variable "subscription_id" {
+  type        = string
+}
+
+variable "tenant_id" {
+  type        = string
+}
+
+variable "client_id" {
+  type        = string
+}
+
+variable "client_secret" {
+  type        = string
+}
+```
+
+- ```main.tf```
 
 ```
 # 1. Create a Resource Group
