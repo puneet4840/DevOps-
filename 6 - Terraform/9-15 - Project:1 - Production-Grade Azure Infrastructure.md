@@ -229,6 +229,186 @@ In your browser, navigate to http://<LoadBalancerPublicIP>:80. You should see th
 <br>
 <br>
 
+```main.tf```
+
+```
+# 1. Create a Resource Group
+resource "azurerm_resource_group" "rg" {
+  name     = "my-resource-group"
+  location = "West Europe"
+}
+
+# 2. Create a Virtual Network and a Subnet
+resource "azurerm_virtual_network" "vnet" {
+  name                = "my-vnet"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+}
+
+resource "azurerm_subnet" "subnet" {
+  name                 = "my-subnet"
+  resource_group_name  = azurerm_resource_group.rg.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = ["10.0.1.0/24"]
+}
+
+# 3. Create a NAT Gateway for Outbound Connectivity
+resource "azurerm_public_ip" "nat_public_ip" {
+  name                = "my-nat-pip"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  allocation_method   = "Static"
+  sku                 = "Standard"
+}
+
+resource "azurerm_nat_gateway" "nat_gateway" {
+  name                = "my-nat-gateway"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku_name            = "Standard"
+
+  public_ip_ids = [
+    azurerm_public_ip.nat_public_ip.id
+  ]
+}
+
+resource "azurerm_subnet_nat_gateway_association" "subnet_nat" {
+  subnet_id      = azurerm_subnet.subnet.id
+  nat_gateway_id = azurerm_nat_gateway.nat_gateway.id
+}
+
+# 4. Create a Public Load Balancer
+resource "azurerm_public_ip" "lb_public_ip" {
+  name                = "my-lb-pip"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  allocation_method   = "Static"
+  sku                 = "Standard"
+}
+
+resource "azurerm_lb" "lb" {
+  name                = "my-lb"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                 = "Standard"
+
+  frontend_ip_configuration {
+    name                 = "my-frontend"
+    public_ip_address_id = azurerm_public_ip.lb_public_ip.id
+  }
+}
+
+resource "azurerm_lb_backend_address_pool" "lb_backend_pool" {
+  name            = "my-backend-pool"
+  loadbalancer_id = azurerm_lb.lb.id
+}
+
+resource "azurerm_lb_probe" "lb_probe" {
+  name            = "my-probe"
+  loadbalancer_id = azurerm_lb.lb.id
+  protocol        = "Tcp"
+  port            = 80
+  interval_in_seconds = 5
+  number_of_probes    = 2
+}
+
+resource "azurerm_lb_rule" "lb_rule" {
+  name                           = "my-lb-rule"
+  resource_group_name            = azurerm_resource_group.rg.name
+  loadbalancer_id                = azurerm_lb.lb.id
+  protocol                       = "Tcp"
+  frontend_port                  = 80
+  backend_port                   = 80
+  frontend_ip_configuration_name = "my-frontend"
+  backend_address_pool_id        = azurerm_lb_backend_address_pool.lb_backend_pool.id
+  probe_id                       = azurerm_lb_probe.lb_probe.id
+}
+
+# 5. Create a Network Security Group (NSG) to Restrict Inbound Traffic
+resource "azurerm_network_security_group" "nsg" {
+  name                = "my-nsg"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+
+  security_rule {
+    name                       = "Allow-HTTP-From-LoadBalancer"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_address_prefix      = "AzureLoadBalancer"   # Service tag for LB traffic
+    destination_port_range     = "80"
+    destination_address_prefix = "*"
+    source_port_range          = "*"
+  }
+}
+
+# Associate the NSG with the Subnet so that only LB traffic is allowed into the subnet
+resource "azurerm_subnet_network_security_group_association" "subnet_nsg" {
+  subnet_id                 = azurerm_subnet.subnet.id
+  network_security_group_id = azurerm_network_security_group.nsg.id
+}
+
+# 6. Create a Linux VM Scale Set (VMSS) and associate with the LB backend pool
+resource "azurerm_linux_virtual_machine_scale_set" "vmss" {
+  name                = "my-vmss"
+  location            = azurerm_resource_group.rg.location
+  resource_group_name = azurerm_resource_group.rg.name
+  sku                 = "Standard_DS1_v2"
+  instances           = 2
+  admin_username      = "azureuser"
+  admin_ssh_key {
+    username   = "azureuser"
+    public_key = file("~/.ssh/id_rsa.pub")
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "20.04-LTS"
+    version   = "latest"
+  }
+
+  upgrade_policy {
+    mode = "Automatic"
+  }
+
+  network_interface {
+    name    = "myvmssnic"
+    primary = true
+
+    ip_configuration {
+      name                                   = "myvmssipconfig"
+      subnet_id                              = azurerm_subnet.subnet.id
+      load_balancer_backend_address_pool_ids = [
+        azurerm_lb_backend_address_pool.lb_backend_pool.id
+      ]
+    }
+  }
+
+  # Deploy a sample web app via a custom script extension.
+  # Make sure your install-web.sh is hosted in a publicly-accessible URL.
+  extension {
+    name                 = "CustomScript"
+    publisher            = "Microsoft.Azure.Extensions"
+    type                 = "CustomScript"
+    type_handler_version = "2.0"
+
+    settings = <<SETTINGS
+      {
+        "fileUris": ["https://<your-storage-account-or-GitHub-url>/install-web.sh"],
+        "commandToExecute": "./install-web.sh"
+      }
+SETTINGS
+  }
+}
+
+# 7. Output the Load Balancer Public IP
+output "load_balancer_public_ip" {
+  value = azurerm_public_ip.lb_public_ip.ip_address
+}
+```
 
 ## Implementation using Terraform
 
