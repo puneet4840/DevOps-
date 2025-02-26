@@ -165,3 +165,68 @@ This diagram shows the scenario.
     - Go to your VNet, select Subnets, click your subnet (MySubnet), and under Network security group, select MyVMSSNSG.
 
   - Or VMSS NIC Association:
+    - When creating your VM scale set, you can specify the NSG to attach to the VMSS network interfaces.
+
+**Step-6: Create a VM Scale Set (VMSS) and Link to Load Balancer**
+
+- Create a VM Scale Set:
+  - Click Create a resource and search for Virtual machine scale set.
+  - Click Create.
+ 
+  - Basics Tab:
+    - Subscription: Your subscription.
+    - Resource Group: MyResourceGroup.
+    - Name: e.g., MyVMSS.
+    - Region: Same as other resources.
+    - Image: Choose an image (for example, Ubuntu Server 20.04 LTS).
+    - Authentication: Set up SSH keys or password.
+
+  - Instance Details:
+    - Set the instance count as desired (for example, 2).
+    - Under Networking, select the virtual network (MyVNet) and subnet (MySubnet).
+    - Under Load balancing, choose Yes for load balancing.
+   
+    - Load Balancer:
+      - Select Existing and choose MyLoadBalancer.
+      - Under Backend pool, select MyBackEndPool.
+
+  - Advanced Options:
+    - For public IP configuration of the VMSS, choose None (so the instances remain private).
+    - Under Network Security Group, select Attach an existing NSG and choose MyVMSSNSG if not already associated with the subnet.
+
+  - Click Review + create then Create.
+ 
+- Wait for the VMSS Deployment:
+  - The VMSS will be provisioned and registered in the backend pool of the load balancer.
+ 
+**Step - 7: Deploy a Sample Web Application on the VM Scale Set**
+
+- Prepare a Web Installation Script:
+  - Create a simple bash script (for example, install-web.sh) that installs Apache and deploys a sample page:
+
+    ```
+    #!/bin/bash
+    sudo apt-get update
+    sudo apt-get install -y apache2
+    echo "<html><body><h1>Hello from Azure VMSS!</h1></body></html>" | sudo tee /var/www/html/index.html
+    sudo systemctl restart apache2
+    ```
+
+    Save this file and upload it to an accessible location (for example, an Azure Storage account with public blob access or GitHub).
+
+- Add the Custom Script Extension:
+  - In the Azure Portal, navigate to your VM scale set (MyVMSS).
+  - Under Settings, select Extensions.
+  - Click + Add and choose Custom Script Extension.
+  - In the extension settings, provide the URL(s) to your script (for example, https://<your-storage-account>/install-web.sh) and set the command to execute (for example, ./install-web.sh).
+  - Click Create.
+
+**Step-8: Testing the Setup**
+
+In your browser, navigate to http://<LoadBalancerPublicIP>:80. You should see the sample web page (e.g., “Hello from Azure VMSS!”).
+
+
+<br>
+<br>
+
+
