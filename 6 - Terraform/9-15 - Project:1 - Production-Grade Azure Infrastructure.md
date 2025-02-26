@@ -229,6 +229,9 @@ In your browser, navigate to http://<LoadBalancerPublicIP>:80. You should see th
 <br>
 <br>
 
+
+## Implementation using Terraform
+
 ```main.tf```
 
 ```
@@ -409,6 +412,3 @@ output "load_balancer_public_ip" {
   value = azurerm_public_ip.lb_public_ip.ip_address
 }
 ```
-
-## Implementation using Terraform
-
