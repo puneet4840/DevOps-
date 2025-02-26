@@ -230,3 +230,5 @@ In your browser, navigate to http://<LoadBalancerPublicIP>:80. You should see th
 <br>
 
 
+## Implementation using Terraform
+
