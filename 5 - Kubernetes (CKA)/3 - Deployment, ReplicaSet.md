@@ -129,6 +129,66 @@ spec:
 
 - **Selectors and Labels**: The selector helps the Deployment keep track of only the Pods with the label app: nginx. If the Pods created do not match this label, Kubernetes won’t manage them as part of this Deployment. Let the Deployment know which Pods to manage.
 
+### Example: Detailed Explaination - What Happens When We Apply a Deployment with replicas: 3 in Kubernetes?
+
+When you create a Kubernetes Deployment with replicas: 3, Kubernetes ensures that exactly three Pods are always running, even if one crashes or is deleted.
+
+- **Step 1: User Applies Deployment YAML**:
+
+  ```
+  kubectl apply -f deployment.yaml
+  ```
+
+  the following sequence of events occurs:
+
+- **Step 2: Request Reaches API Server**:
+  - The kubectl apply command sends an HTTP POST request to the Kubernetes API Server (kube-apiserver).
+  - The API Server validates the YAML file to ensure it is syntactically correct.
+  - The request is stored in etcd (the cluster’s distributed key-value store).
+  - The API Server acknowledges the request and updates the cluster state.
+ 
+- **Step 3: API Server Informs the Controller Manager**
+  - The Controller Manager continuously watches for changes in Deployments.
+  - It detects that a new Deployment (replicas: 3) has been created or updated.
+  - The Controller Manager creates a new ReplicaSet for this Deployment.
+
+- **Step 4: ReplicaSet Ensures Desired Pod Count**
+  - The ReplicaSet controller detects that zero Pods exist but three are required (replicas: 3).
+  - It creates three new Pods based on the template in the Deployment YAML.
+  - The API Server registers these new Pods in etcd.
+
+- **Step 5: Scheduler Assigns Pods to Nodes**
+  - Each new Pod is initially in a Pending state.
+  - The Kubernetes Scheduler detects these new unassigned Pods.
+  - It checks for available worker nodes based on:
+    - Resource availability (CPU, Memory).
+    - Node selectors, tolerations, and taints.
+    - Affinity/anti-affinity rules (if defined).
+  - It selects the best Node for each Pod and assigns it.
+  Now, the API Server updates the Pod objects with their assigned Worker Nodes.
+
+- **Step 6: Kubelet Pulls the Image and Starts the Containers**
+  - Each Worker Node runs a process called Kubelet, which is responsible for managing Pods.
+  - The Kubelet on each assigned Node detects that a new Pod has been scheduled.
+  - It reads the Pod specification and pulls the container image (e.g., nginx) from the configured container registry (Docker Hub, Azure Container Registry, etc.).
+  - Once the image is downloaded, Kubelet:
+    - Starts the container using the Container Runtime (Docker, containerd, etc.).
+    - Mounts any defined volumes.
+    - Configures networking (attaches it to the correct Service if defined).
+  - At this point, the Pods are running, but Kubernetes needs to check if they are truly ready.
+ 
+- **Step 7: Pod Becomes Ready and Exposed**
+  - The Pod runs a health check (livenessProbe, readinessProbe if defined).
+  - Once the checks pass, Kubernetes marks the Pod as "Ready".
+  - If a Service is defined for this Deployment, the new Pods are added to the Service’s Endpoint List.
+  - Traffic can now be distributed among the three running Pods.
+ 
+- **Step 8: Ongoing Monitoring & Self-Healing**
+  - The ReplicaSet controller keeps watching the Pod count.
+  - If a Pod crashes or gets deleted, the ReplicaSet automatically creates a new one.
+  - The entire system remains in a self-healing state.
+
+
 <br>
 
 ### Difference between Container, Pod and Deployment.
