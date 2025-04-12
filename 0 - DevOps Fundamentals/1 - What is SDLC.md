@@ -14,7 +14,12 @@ SDLC is the systematic appraoch to develop a software which has multiple phases 
 This process has multiple phases which helps to deliver a better and high quality product.
 - Requirement Collection.
 - Feasibility Study.
-- 
+- Design.
+- Testing.
+- Deployment.
+- Maintenance.
+
+<br>
 
 **1 - Requirement Collection**:
 
@@ -56,3 +61,64 @@ After discussing on the above points they come to a desicion. Whether to take th
 
 **3 - Design**
 
+In the Design phase a team of Architects creates the system design from requirements. It means how the software will be structured and implmented.
+
+This phase is divided into two levels of designs:
+- High Level Design (HLD).
+- Low Level Design (LLD).
+
+**High Level Design**:
+
+High Level Design means desiging the architecture of the application. HLD focuses on the structure of the application.
+
+e.g., Example for a Student Management System:
+
+There will be three components:
+- Student Dashboard.
+- Admin Dashboard.
+- Teacher Dashboard.
+
+They will interact with a central database.
+
+The backend will use Djange and frontend will use Angular.
+
+**Low Level Design**:
+
+Low Level Design focuses on how each and every module will work. 
+
+e.g., Example for a Student Management System:
+
+- The Student class with properties: id, name, grade, dob, attendance_record
+- API endpoint: GET /students/{id} returns student details.
+- SQL Table: students(id INT PRIMARY KEY, name TEXT, grade TEXT, dob DATE)
+- Logic: If attendance drops below 75%, send notification to parent.
+
+e.g., Example of Gmail:
+
+HLD defines that gmail has multiple components like Inbox, Compose, Draft, Spam and etc. This is the high level design.
+
+LL defines that when you compose mail there is ```TO``` to write receiver's mail, ```CC``` to write other users, Subject to give a topic to email and Body to write message to receiver.
+
+<br>
+
+**4 - Coding**
+
+In this phase Developers write the code in choosen programming language to develop the software. Developers use requirements and design to write the code.
+
+<br>
+
+**5 - Testing**
+
+In this phase testers test the software to check the bugs and failures. Perform unit testing (individual components), integration testing (combined modules), and system testing (entire application).
+
+<br>
+
+**6 - Deployment**
+
+In this phase deployment team deploy the software on customer environment.
+
+<br>
+
+**7 - Maintenance**
+
+In this phase if the client faces any issues with the software then dev and qa team work on the issue and resolve those issues.
