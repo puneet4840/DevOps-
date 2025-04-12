@@ -12,6 +12,9 @@ SDLC is the systematic appraoch to develop a software which has multiple phases 
 ### Phases of SDLC (Software Development Life Cycle)
 
 This process has multiple phases which helps to deliver a better and high quality product.
+- Requirement Collection.
+- Feasibility Study.
+- 
 
 **1 - Requirement Collection**:
 
@@ -36,8 +39,20 @@ Business analyst will gone through a meeting with client and ask the below requi
   - The school wants to reduce paperwork.
   - The company wants to track employee work hours digitally.
 
-Once the requirements gathered, then a team of product managers, developers, architects sits together and design the product.
+Once the requirements gathered, then a team desides whether to take up the project of not.
 
 <br>
 
-**2 - **
+**2 - Feasibility Study**
+
+In this phase a team of Product Managers, Finance Team, Architects, HR Team, Business Analysts decides whether to take this project or not. It means ```क्या ये प्रोजेक्ट इनको लेना चाहिए या नहीं```. They talk on three things:
+- Whether taking up this project will be beneficial for them.
+- Do they have enough resources to work on this project.
+- Do they have technology to work on this project.
+
+After discussing on the above points they come to a desicion. Whether to take this project or not. If they have decided to take this project they work on design.
+
+<br>
+
+**3 - Design**
+
