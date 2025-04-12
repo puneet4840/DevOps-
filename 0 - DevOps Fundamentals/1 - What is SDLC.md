@@ -1,5 +1,5 @@
 
-# SDLC Overview
+# SDLC
 
 SDLC (Software Development Life Cycle)
 
