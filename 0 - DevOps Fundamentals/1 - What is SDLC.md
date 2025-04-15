@@ -128,3 +128,7 @@ In this phase if the client faces any issues with the software then dev and qa t
 ### Before SDLC
 
 ```शुरुआत मैं जब software development नया नया था तब कोई process नहीं था, developer सीधा code लिखते थे बिना किसी planning, design और testing के तो result ये होता था या तो software delay हो जाता था या फिर fail हो जाता था|```
+
+```तब ये सोचा गया की एक systematic process होना चाइये software को develop करने के लिए जिससे हर step plan किया जा सके|```
+
+```फिर 1970s मैं Winston Royce SDLC के concept को लेके आये, जिसमे software को develop करने के अलग-अलग स्टेप्स बनाये गए जैसे की Requirement gathering -> Desing -> Development -> Testing -> Deployemnt -> Maintenance```
