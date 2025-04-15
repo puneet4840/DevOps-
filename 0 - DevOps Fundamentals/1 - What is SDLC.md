@@ -122,3 +122,9 @@ In this phase deployment team deploy the software on customer environment.
 **7 - Maintenance**
 
 In this phase if the client faces any issues with the software then dev and qa team work on the issue and resolve those issues.
+
+<br>
+
+### Before SDLC
+
+```शुरुआत मैं जब software development नया नया था तब कोई process नहीं था, developer सीधा code लिखते थे बिना किसी planning, design और testing के तो result ये होता था या तो software delay हो जाता था या फिर fail हो जाता था|```
