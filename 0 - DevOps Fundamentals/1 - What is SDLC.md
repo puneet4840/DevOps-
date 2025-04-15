@@ -137,4 +137,8 @@ In this phase if the client faces any issues with the software then dev and qa t
 
 ### Why different SDLC Models Created
 
-```To sabse pehle SDLC ke steps ko define kiya matlab create kiya gya, Lekin is steps ko practically apply kaise karna hai iske liye SDLC models banaye gaye.```
+```तो सबसे पहले SDLC के steps को define किया मतलब create किया गया, लेकिन फिर सोचा गया इन steos को practically apply कैसे करना है इसके लिए SDLC models बनाये गए.```
+
+**First Model Created: Waterfall**
+
+```अब ये steps तो बन गए लेकिन इनका implmentation कैसे हो.``` ```इस सवाल का जवाब दिया Winston Royce ने 1970 में जब उसने waterfall model का concept दिया. 
