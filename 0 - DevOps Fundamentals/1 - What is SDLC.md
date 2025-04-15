@@ -132,3 +132,9 @@ In this phase if the client faces any issues with the software then dev and qa t
 ```तब ये सोचा गया की एक systematic process होना चाइये software को develop करने के लिए जिससे हर step plan किया जा सके|```
 
 ```फिर 1970s मैं Winston Royce SDLC के concept को लेके आये, जिसमे software को develop करने के अलग-अलग स्टेप्स बनाये गए जैसे की Requirement gathering -> Desing -> Development -> Testing -> Deployemnt -> Maintenance```
+
+<br>
+
+### Why different SDLC Models Created
+
+```To sabse pehle SDLC ke steps ko define kiya matlab create kiya gya, Lekin is steps ko practically apply kaise karna hai iske liye SDLC models banaye gaye.```
