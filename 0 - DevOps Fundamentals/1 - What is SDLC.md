@@ -137,8 +137,30 @@ In this phase if the client faces any issues with the software then dev and qa t
 
 ### Why different SDLC Models Created
 
-```तो सबसे पहले SDLC के steps को define किया मतलब create किया गया, लेकिन फिर सोचा गया इन steos को practically apply कैसे करना है इसके लिए SDLC models बनाये गए.```
+```तो सबसे पहले SDLC के steps को define किया मतलब create किया गया, लेकिन फिर सोचा गया इन steps को practically apply कैसे करना है, इसके लिए SDLC models बनाये गए.```
 
 **First Model Created: Waterfall**
 
 ```अब ये steps तो बन गए लेकिन इनका implmentation कैसे हो.``` ```इस सवाल का जवाब दिया Winston Royce ने 1970 में जब उसने waterfall model का concept दिया.```
+
+We know that first model that is waterfall model is created. So, why did more SDLC models created?
+
+Because projects are not same like:
+- Har project ki requirement alag hoti hai – kabhi client clear hota, kabhi nahi.
+- Risk levels alag hote hain – jaise military projects mein zyada risk hota hai.
+- Delivery ka pressure hota hai – kuch projects mein jaldi delivery chahiye.
+- Feedback loop zaroori hota hai – jaise web/mobile apps mein.
+
+So creating projects with waterfall model will not work efficiently. Matlab sabke liye ek hi tarike ka model kaam nahi karta. har model ek specific problem solve karne ke liye aaya.
+
+<br>
+
+### Types of SDLC Models:
+
+- **Waterfall Model**.
+- **V-Model**.
+- **Incremental Model**.
+- **Prototyping Model**.
+- **Spiral Model**.
+- **Agile Model**.
+- **DevOps**.
