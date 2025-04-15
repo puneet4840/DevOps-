@@ -141,4 +141,4 @@ In this phase if the client faces any issues with the software then dev and qa t
 
 **First Model Created: Waterfall**
 
-```अब ये steps तो बन गए लेकिन इनका implmentation कैसे हो.``` ```इस सवाल का जवाब दिया Winston Royce ने 1970 में जब उसने waterfall model का concept दिया. 
+```अब ये steps तो बन गए लेकिन इनका implmentation कैसे हो.``` ```इस सवाल का जवाब दिया Winston Royce ने 1970 में जब उसने waterfall model का concept दिया.```
