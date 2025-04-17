@@ -10,7 +10,7 @@ This model is named waterfall because each phase flows one after other.
 
 It has 6 phases.
 
-<a href="https://drive.google.com/uc?export=view&id=1SQ5NjFL2PB2h6ALCX8yaevkUd3ZHgJPG"><img src="https://drive.google.com/uc?export=view&id=1SQ5NjFL2PB2h6ALCX8yaevkUd3ZHgJPG>" style="width: 650px; max-width: 100%; height: auto" title="Click to enlarge picture" />
+<img src="https://drive.google.com/uc?export=view&id=1SQ5NjFL2PB2h6ALCX8yaevkUd3ZHgJPG" height=500 weight=500>
 
 **1 - Requirement Gathering**:
 - Get the requirements from client.
