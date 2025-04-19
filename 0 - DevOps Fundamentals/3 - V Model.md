@@ -33,4 +33,4 @@ That’s where V-Model came in — as a refined and more test-driven evolution o
 
 ### V-Model Structure (Phase-by-Phase)
 
-<img src="https://drive.google.com/uc?export=view&id=1x74SD6sgJ6_V1DFSoQerEv0eGh8VZ2fs" height=250 weight=250>
+<img src="https://drive.google.com/uc?export=view&id=1x74SD6sgJ6_V1DFSoQerEv0eGh8VZ2fs" height=350 weight=350>
