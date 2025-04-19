@@ -34,3 +34,11 @@ That’s where V-Model came in — as a refined and more test-driven evolution o
 ### V-Model Structure (Phase-by-Phase)
 
 <img src="https://drive.google.com/uc?export=view&id=1x74SD6sgJ6_V1DFSoQerEv0eGh8VZ2fs" height=350 weight=350>
+
+         Verification Phase         |     Validation Phase
+------------------------------------|----------------------------
+        Requirements Analysis       |    → Acceptance Testing
+        System Design               |    → System Testing
+        Architecture Design         |    → Integration Testing
+        Module Design               |    → Unit Testing
+        Coding                      |    → Implementation
