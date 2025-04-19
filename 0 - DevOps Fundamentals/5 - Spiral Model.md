@@ -54,3 +54,90 @@ Each loop/iteration has four key phases:
   - Fir agla spiral ke liye naye features aur planning shuru hoti hai.
 
 Har spiral cycle ka result ek increment hota hai — aur har cycle ke baad software thoda aur mature ho jaata hai. Jab tak product final nahi hota, spiral chalta rehta hai — aur har spiral se risk aur uncertainty reduce hoti jaati hai.
+
+<br>
+
+### Advantages of Spiral Model
+
+- **Risk Handling is Excellent**:
+  - Har cycle (spiral) mein risk analysis hota hai.
+  - Aap nayi technology, integration issues, performance bottlenecks — sabko pehle identify karke solve karte ho.
+  - Ye ek aisa model hai jaha “risk-driven planning” hoti hai.
+ 
+- **Customer Feedback at every step**:
+  - Har iteration ke baad working version dikhaya jata hai.
+  - Client feedback le kar agle version mein usko improve kiya jata hai.
+  - Requirement change hone ka impact kam hota hai.
+ 
+- **Incremental Development**:
+  - Software step-by-step develop hota hai, aisa nahi ki pura ek saath ban gaya.
+
+- **Prototyping Support**:
+  - Har risky component ke liye prototype banaya ja sakta hai.
+  - Jisse development phase zyada smooth hoti hai.
+ 
+- **Better for Large & Critical Projects**:
+  - Spiral model mission-critical systems (healthcare, aerospace, banking) ke liye ideal hai.
+ 
+<br>
+
+### Disadvantages of Spiral Model
+
+- **Highly Dependent on Risk Assessment Skills**:
+  - Agar team ko risk analyze karna nahi aata, to model fail ho sakta hai.
+  - Not suitable for junior or inexperienced teams.
+ 
+- **Costly for Small Projects**:
+  - Small apps ya tools ke liye spiral model overkill ho sakta hai.
+  - Zyada planning, documentation aur meetings ki zarurat padti hai.
+ 
+- **Complex Project Management**:
+  - Har cycle mein proper documentation, approval, prototype, risk planning karna padta hai.
+  - Complexity aur overhead badh jaata hai.
+ 
+- **No Fixed Timeframe**:
+  - Har spiral ka time alag ho sakta hai, isliye deadline estimate mushkil hoti hai.
+ 
+<br>
+
+### Spiral Model Kab Use Karna Chahiye?
+
+- Project bahut bada ho.
+-  Requirements unclear ho ya frequently change hoti ho.
+-  System ka failure risk high ho (e.g., banking, military).
+-  Client continuously involved ho.
+
+<br>
+
+###  Kab Use Nahi Karna Chahiye?
+
+-  Jab project chhota ho ya clearly defined ho.
+-  Jab tight deadline aur low budget ho.
+-  Jab team ko prototyping aur risk evaluation ka experience na ho.
+-  Jab client involvement kam ho.
+
+<br>
+
+### Real Technical Example: Banking System
+
+Suppose aapko ek online banking platform banana hai:
+
+**Spiral 1**:
+- Plan: User login + session security.
+- Risk: SSL implementation kaise karein?
+- Prototype: SSL module test karte hain.
+- Engineering: Secure login banaate hain.
+- Evaluation: Client dekhta hai login flow.
+
+**Spiral 2**:
+- Plan: Fund transfer module.
+- Risk: Real-time balance sync ka risk.
+- Prototype: Database sync test karte hain.
+- Engineering: Fund transfer + transaction logging.
+- Evaluation: Stakeholder use-case test karta hai.
+
+**Spiral 3**:
+- Plan: Notifications, mobile support.
+- Risk: Push notification latency.
+- Engineering: Code deploy + feedback + fixes.
+
