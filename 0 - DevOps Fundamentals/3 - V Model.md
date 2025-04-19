@@ -17,3 +17,20 @@ In simple words, for every software development activity, there is directly asso
 ```Lekin phir kuch mahine baad client ne kaha, “Humein ek aur feature chahiye.” Tumhara poora structure hil gaya. Tumhein dobara planning se leke deployment tak sab kuch karna pada. Tum realize karte ho ki yeh model stable hai, lekin flexible nahi hai. Software banate waqt agar beech mein koi change aaye, toh yeh model bekaar ho jata hai.```
 
 ```Isi frustration ke beech aata hai V-Model. Tum sochte ho, “Agar development ke har step ke saath testing bhi karun, toh issues end mein nahi aayenge.” V-Model ke andar tum pehle requirement lete ho, aur saath hi acceptance test plan banate ho. Design ke saath system test plan. Coding ke saath unit tests. Tumhara code kaafi achha chalne lagta hai. Lekin ek problem ab bhi hai—client agar beech mein kuch badalna chahe, toh tum phir se poora flow mein jaate ho. Time zyada lagta hai, aur phir se wahi rigidness tumhe feel hoti hai.```
+
+<br>
+
+Before V-Model, we mostly used the Waterfall model, which had a major drawback:
+- Testing came only after development, which led to late discovery of bugs.
+
+So, the industry needed a model where:
+- Testing could be started early (before code is written).
+- Defects could be caught as soon as possible
+
+That’s where V-Model came in — as a refined and more test-driven evolution of Waterfall.
+
+<br>
+
+### V-Model Structure (Phase-by-Phase)
+
+<img src="https://drive.google.com/uc?export=view&id=1x74SD6sgJ6_V1DFSoQerEv0eGh8VZ2fs" height=250 weight=250>
