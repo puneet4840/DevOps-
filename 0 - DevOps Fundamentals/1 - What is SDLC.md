@@ -164,3 +164,23 @@ So creating projects with waterfall model will not work efficiently. Matlab sabk
 - **Spiral Model**.
 - **Agile Model**.
 - **DevOps**.
+
+<br>
+
+### SDLC Models Flow
+
+Shuruat main jab software development naya-naya tha, tab koi process nahi tha. Developers seedha code likhte the bina kisi planning, design, ya testing ke. Result ye hota tha ki software ya to delay hota ya fail ho jata. Tab socha gaya ki ek systematic process hona chahiye — jisse har step plan kiya ja sake. Is tarah SDLC concept aaya — jisme software develop karne ke liye alag-alag stages banaye gaye jaise requirement gathering, design, development, testing, deployment, aur maintenance.
+
+Lekin har project alag hota hai — isiliye sabke liye ek hi tarike ka model kaam nahi karta. Isi wajah se alag-alag SDLC models banaye gaye — har model ek specific problem solve karne ke liye aaya.
+
+Sabse pehla model **Waterfall** tha, jisme saari phases ek ke baad ek follow hoti thi bina peeche jaaye. Ye simple aur clear tha, lekin agar kisi stage main kuch galti ho gayi, to usse baad main theek karna mushkil hota tha. Phir aaya **V-Model**, jisme har development phase ke saath uska testing phase parallel chalta tha — jisse bugs jaldi pakad main aayein.
+
+Lekin log chahte the ki unhe software jaldi mil jaye, to is problem ko solve karne ke liye **Incremental Model** aaya. Isme software ko chhote-chhote parts main deliver kiya jata tha — har part ek feature hota. Is model ke baad Prototyping model aaya, jisme client ko ek dummy software dikhaya jata tha taaki wo feedback de sake — khas kar tab jab client ko khud clear nahi hota tha ki usse kya chahiye.
+
+Jab speed sabse important ban gayi, to **RAD (Rapid Application Development)** model introduce kiya gaya. Isme fast delivery hoti thi aur ready-made components ka use hota tha. Phir jab large aur complex projects aaye jisme risk high tha, to Spiral Model ne unka solution diya. Isme planning aur risk analysis baar-baar hota tha har round ke baad.
+
+Aur finally, market itna fast ho gaya ki log chahte the software baar-baar, jaldi aur unke feedback ke saath bane. Tab aaya **Agile Model**. Agile ne pura game change kar diya. Isme software chhoti-chhoti sprints main banta hai (jaise 2-4 week ke chunks), har sprint ke baad ek working version milta hai aur client se feedback liya jata hai. Team daily milti hai, discuss karti hai, aur process har baar improve hota hai.
+
+Lekin Agile ke sath ek nayi dikkat saamne aayi — software jaldi ban raha tha lekin usko baar-baar deploy karna, test karna, aur production main le jaana mushkil ho raha tha. Yaha se **DevOps** ka janm hua. DevOps ne Agile ke speed ko support karne ke liye automation laaya — jisme code likhne ke baad testing, deployment, monitoring sab automatically ho sake.
+
+Is tarah Agile ne development side improve ki, aur DevOps ne delivery & operations side streamline ki — dono milke software ko fast, reliable aur efficient banate hain.
