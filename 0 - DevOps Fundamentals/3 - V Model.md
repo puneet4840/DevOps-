@@ -35,4 +35,4 @@ That’s where V-Model came in — as a refined and more test-driven evolution o
 
 <img src="https://drive.google.com/uc?export=view&id=1x74SD6sgJ6_V1DFSoQerEv0eGh8VZ2fs" height=350 weight=350>
 
-<img src="https://drive.google.com/uc?export=view&id=1ccXQObGYrLmV-dgUqB4vHOWs9xet5Sjb" height=350 weight=350>
+<img src="https://drive.google.com/uc?export=view&id=1ccXQObGYrLmV-dgUqB4vHOWs9xet5Sjb" height=150 weight=150>
