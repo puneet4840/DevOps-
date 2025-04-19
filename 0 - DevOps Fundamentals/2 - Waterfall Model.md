@@ -69,3 +69,5 @@ It has 6 phases.
 - **Bad for Creative Projects**
   - The waterfall model is stiff—it doesn’t let you change direction or try new ideas. If you’re making something new, like a unique app, you might need to tweak things as you go. This model doesn’t allow that.
  
+- **Late customer Feedback**
+  - When the software is installed in client's environment, then client can able to give the software feedback.
