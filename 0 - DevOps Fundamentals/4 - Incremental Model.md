@@ -64,3 +64,20 @@ From a QA/DevOps viewpoint, testing happens continuously, but in layers:
 - Architecture must be designed from the start to support scalability and extensibility.
 - Integration between modules becomes increasingly complex as more increments are added.
 - If design is not modular, coupling increases and makes changes risky.
+
+<br>
+
+### What are the issues with the Incremental Model?
+
+- **Design Complexity Grows**:
+  - As you keep adding more increments, the codebase becomes complex.
+ 
+- **Requirement Freeze per Increment**:
+  - Once an increment starts, its scope is fixed — you can’t change the requirements mid-way for that piece.
+ 
+- **Not Fully Customer-Driven**:
+  - Feedback is considered after each increment, not continuously.
+  - Customers still don't get daily interaction or control over backlog priorities.
+ 
+- **Testing Overhead**:
+  - With every new increment, you must re-test the entire system.
