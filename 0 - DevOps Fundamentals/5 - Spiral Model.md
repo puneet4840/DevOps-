@@ -9,7 +9,7 @@ Iska main focus hai:**“Risk ko pahle samjho, fir develop karo.”**
 
 <br>
 
-<img src="https://drive.google.com/uc?export=view&id=1cHaUKie1sq_E3nvO3_wnvPcV0DFIvLE1" height=250 weight=250>
+<img src="https://drive.google.com/uc?export=view&id=1cHaUKie1sq_E3nvO3_wnvPcV0DFIvLE1" height=350 weight=350>
 
 <br>
 
