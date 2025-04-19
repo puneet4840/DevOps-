@@ -30,3 +30,35 @@ It has 6 phases.
 **6 - Maintenance**:
 - If any problem occured in the software on client's environment, it is fixed in this phase.
 
+<br>
+
+### When to use Waterfall Model?
+
+- **When requirements are clear and stable**
+  - When you know exactly what needs to be built from the start and those needs won’t change.
+
+- **When the end goal will not changes**
+  - When the end goal of project will not changed.
+
+<br>
+
+### Advantages
+
+- **Easy to follow**
+  - The steps are clear, so you always know what to do next.
+ 
+- **Tracks progress well**
+  - You finish one part before starting the next, so it’s simple to see at what step you are working.
+ 
+- **Lots of paperwork**
+  - Every step makes documents (like plans or test results), which are helpful later.
+ 
+- **Perfect for unchanging projects**
+  - If you know exactly what you need and it won’t change, this works great.
+
+<br>
+
+### Disadvantages
+
+- **Hard to fix mistakes**
+  - 
