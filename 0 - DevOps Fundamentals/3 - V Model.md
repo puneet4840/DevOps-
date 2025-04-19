@@ -36,3 +36,75 @@ That’s where V-Model came in — as a refined and more test-driven evolution o
 <img src="https://drive.google.com/uc?export=view&id=1x74SD6sgJ6_V1DFSoQerEv0eGh8VZ2fs" height=350 weight=350>
 
 <img src="https://drive.google.com/uc?export=view&id=1ccXQObGYrLmV-dgUqB4vHOWs9xet5Sjb" height=200 weight=250>
+
+Let’s go through each phase clearly:
+
+**Requirements Analysis → Acceptance Testing**:
+- What Happens: Understand exactly what the customer wants
+- Deliverable: Software Requirement Specification (SRS)
+- Testing Thought: Plan how to verify these final requirements through Acceptance Testing later.
+
+**System Design → System Testing**
+- What Happens: Define how the system will function as a whole. You plan how the entire system will behave — what modules are needed, what features connect where. And again, you're thinking, “How do I test the full system once it's built?”
+- Deliverable: High-Level Design (HLD)
+- Testing Thought: Plan System Tests that check overall system behavior
+
+**Architecture Design → Integration Testing**
+- What Happens: Break system into components/modules and design interactions.
+- Deliverable: Software Architecture Documents.
+- Testing Thought: Design Integration Tests to ensure modules talk to each other correctly.
+
+**Module Design → Unit Testing**
+- What Happens: Design each module's internal logic.
+- Deliverable: Low-Level Design (LLD).
+- Testing Thought: Prepare Unit Tests for each module individually.
+
+**Coding → Implementation**
+- What Happens: Actual development based on module designs.
+- Output: Working code.
+- Validation Side: Perform all planned tests (unit → integration → system → acceptance).
+
+<br>
+
+### Why V-Model is Valuable
+
+- **Early Testing Focus**: Catch issues before code is written.
+- **Clear Documentation**: Strong mapping of test cases to requirements. It means test cases are created at requirement phase.
+- **Low Risk**: Since everything is validated step-by-step, fewer surprises late in development.
+
+<br>
+
+### Limitations of the V-Model
+
+- Not flexible for changing requirements. (If client changes their mind mid-way, it’s hard to adjust).
+- A lot of planning required before coding even begins.
+
+<br>
+
+### When to Use V-Model
+
+- Requirements are clear and well-documented.
+- High risk or regulatory project (banking, medical, etc.).
+- Projects that need strong testing coverage.
+
+<br>
+
+### Example of V-Model in Real Life
+
+Imagine building an online banking app.
+
+- Requirements: "User can transfer money".
+  - You define Acceptance Tests for transfer success, failure, balance checks.
+ 
+- System Design: Includes login, transfer, history modules.
+  - You design System Tests that validate full user journeys.
+ 
+- Architecture Design: Break into API layer, DB, frontend.
+  - Plan Integration Tests to ensure DB + API + UI sync well.
+ 
+- Module Design: Design how transfer module handles limits, errors.
+  - Prepare Unit Tests for transfer logic.
+ 
+- Code: Developers build it.
+  - Run unit → integration → system → acceptance tests accordingly.
+ 
