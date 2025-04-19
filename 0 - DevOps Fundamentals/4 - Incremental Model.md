@@ -8,4 +8,4 @@ In this requirement divided into multiple modules. Then eash module goes through
 
 <br>
 
-<img src="https://drive.google.com/uc?export=view&id=19dUTcdQVkJz7q8SBzzXpXpC0fHo4j_oU" height=300 weight=350>
+<img src="https://drive.google.com/uc?export=view&id=19dUTcdQVkJz7q8SBzzXpXpC0fHo4j_oU" height=350 weight=400>
