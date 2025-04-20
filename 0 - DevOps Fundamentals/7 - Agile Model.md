@@ -18,12 +18,20 @@ Ye 17 log (jise "Agile Alliance" kaha gaya) snowboarding trip par **Utah, USA** 
 
 **4 Agile Values**:
 
-- Individuals and interactions over processes and tools.
-- Working software over comprehensive documentation.
-- Customer collaboration over contract negotiation.
-- Responding to change over following a plan.
-
-<br>
+- Individuals and interactions over processes and tools:
+  - The people on the team and their communication are more important than strictly following predefined processes (like step-by-step workflows) or relying on tools (like project management software). Effective teamwork drives success.
+    
+- Working software over comprehensive documentation:
+  - Delivering functional software (code that runs and meets user needs) is more valuable than producing detailed documentation (like extensive requirement specs or design diagrams). Documentation is useful but secondary.
+    
+- Customer collaboration over contract negotiation:
+  - Work closely with the customer (or their representative, like a product owner) throughout development to understand their needs, instead of locking everything into a rigid contract upfront. Regular feedback shapes the product.
+    
+- Responding to change over following a plan:
+  - Be ready to adapt to new requirements, issues, or priorities, even if it means changing the original project plan. Flexibility is key to delivering relevant software.
 
 **12 Agile Principles**:
 
+- Customer satisfaction through early & continuous delivery.
+- Welcome changing requirements, even late in development.
+- 
