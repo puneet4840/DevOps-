@@ -53,3 +53,51 @@ There are 6 agile principle mentioned below.
  
 - Working Software Is the Primary Measure of Progress:
   - The main way to judge progress is by delivering functional software, not by completing documents or tasks.
+
+<br>
+
+### Agile Ki Zarurat Kyun Padi?
+
+1990s mein software projects fail hone lage the:
+- Projects time par complete nahi hote the.
+- Clients ka expectation change hota tha lekin system rigid hota tha.
+- Testing last mein hoti thi – bugs late milte the.
+
+Isliye developers ne socha ki ek flexible, feedback-based aur fast approach honi chahiye — jisme changes ko welcome kiya ja sake aur client ko jaldi results mil sake.
+
+Agile is problem ka solution le kar aaya. Isme development aur feedback parallel chalte hain. Jab tum ek sprint complete karte ho (maan lo 2 hafton ka), to tumhare paas ek working software ka part hota hai. Client usse dekhta hai, use karta hai, aur turant batata hai ki kya thik hai aur kya badalna chahiye. Agla sprint fir usi feedback ko dhyan mein rakh kar hota hai.
+
+<br>
+
+### Agile Kaam Kaise Karta Hai? (Full Cycle)
+
+- **Product Backlog**:
+  - Client (ya Product Owner) batata hai ki usse software mein kya chahiye.
+    - Example: “As a user, I want to reset my password.”
+  - Ye stories ek To-Do list banai jati hai jise Product Backlog bolte hain.
+ 
+- **Sprint Planning (Plan Banana)**:
+  - Sprint ka matlab hota hai: 1–4 week ka time frame jisme kuch specific kaam complete hoga.
+  - Team product backlog se kuch stories select karti hai ek sprint ke liye (1–4 week ka time box).
+  - Jo user stories product backlog se sprint planning main select hoti hain unko sprint backlog kehte hain.
+ 
+- **Design + Development**:
+  - Har sprint mein selected stories ke liye coding + testing hoti hai.
+  - Roz ka Daily Stand-up hota hai (15 min meeting jisme sab update dete hain).
+ 
+- **Testing**:
+  - Agile mein testing har sprint ke sath hoti hai.
+  - Jaise hi feature ban jata hai, QA usse test karta hai.
+  - Automation + Manual testing dono ho sakti hai.
+  - Har sprint ke end mein ek working code ready hota hai.
+
+- **Delivery (Sprint Review)**:
+  - Sprint khatam hone ke baad team client ko demo dikhati hai.
+  - Client feedback deta hai.
+  - Agar koi change chahiye, to wo next sprint mein add hota hai.
+  - Fir next sprint start hota hai. 
+ 
+<br>
+
+### Agile Framework
+
