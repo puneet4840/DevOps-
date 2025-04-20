@@ -31,7 +31,25 @@ Ye 17 log (jise "Agile Alliance" kaha gaya) snowboarding trip par **Utah, USA** 
   - Be ready to adapt to new requirements, issues, or priorities, even if it means changing the original project plan. Flexibility is key to delivering relevant software.
 
 **12 Agile Principles**:
+There are 6 agile principle mentioned below.
 
-- Customer satisfaction through early & continuous delivery.
-- Welcome changing requirements, even late in development.
-- 
+- Customer satisfaction through early & continuous delivery:
+  - Make the customer happy by delivering working software often, starting early in the project. Each delivery should provide useful functionality.
+    
+- Welcome changing requirements, even late in development:
+  - Accept new or updated requirements at any stage, even near the project’s end. Agile is designed to handle changes smoothly.
+
+- Deliver Working Software Frequently:
+  - Release usable software often, ideally every 1–4 weeks, to show progress and get feedback. Shorter cycles are preferred.
+ 
+- Business People and Developers Work Together Daily:
+  - Developers (who write code) and business stakeholders (like customers or product owners) must communicate daily to align on goals.
+ 
+- Build Projects Around Motivated Individuals:
+  - Assemble a team of motivated, skilled people, give them the tools and support they need, and trust them to do the job.
+ 
+- Face-to-Face Communication Is the Most Effective Way to Share Information:
+  - Talking **In-person or video calls are the best ways for teams to share ideas and solve problems, rather than relying on emails or documents.
+ 
+- Working Software Is the Primary Measure of Progress:
+  - The main way to judge progress is by delivering functional software, not by completing documents or tasks.
