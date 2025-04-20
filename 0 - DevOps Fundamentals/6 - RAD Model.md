@@ -58,8 +58,36 @@ RAD Model has 4 phases:
 
 ### Advantages
 
-- **Fast Prototyping** → UI aur logic jaldi dikh jata hai
-- **Client Involvement** → Client har phase mein feedback deta hai
-- **Parallel Dev** → Teams alag-alag features bana sakti hain ek saath
-- **Less Documentation** → Time planning pe nahi, actual coding pe lagta hai
-- **Reusable Code** → Components baar-baar use ho sakte hain
+- **Fast Prototyping** → UI aur logic jaldi dikh jata hai.
+- **Fast Delivery**: Project jaldi complete hota hai.
+- **Client Involvement** → Client har phase mein feedback deta hai.
+- **Parallel Dev** → Teams alag-alag features bana sakti hain ek saath.
+- **Less Documentation** → Time planning pe nahi, actual coding pe lagta hai.
+- **Reusable Code** → Components baar-baar use ho sakte hain.
+
+<br>
+
+### Disadvantages
+
+- **Not Good for Big Enterprise Projects**: jaha tight integration aur complex rules hote hain.
+- **Client Availability Mandatory**: Agar client active nahi hai to RAD fail ho sakta hai.
+- **Highly Skilled Developers Required**: Har team ko independently kaam karna padta hai.
+- **Difficult to Manage**: Parallel development agar proper plan nahi hua to conflict ho sakte hain.
+
+<br>
+
+### When to Use RAD?
+
+- Project chhota ya medium size ka ho.
+- Client involvement full ho.
+- Deadline short ho.
+- Tools/frameworks already available ho.
+-  Team skilled ho.
+
+<br>
+
+### Why new model needed after RAD?
+
+RAD fast tha, par client dependency zyada, documentation kam, aur complex projects ke liye fit nahi tha.
+Isliye industry ne socha, "aise model kaise banaye jisme fast delivery bhi ho, aur flexibility + stability bhi mile?"
+Tab Agile aaya, jo RAD se inspired tha, but zyada balanced aur professional tha.
