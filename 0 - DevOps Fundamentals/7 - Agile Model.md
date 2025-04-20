@@ -8,3 +8,22 @@ Agile ek software development methodology hai jisme product ko small samll parts
 
 <br>
 
+### Agile Model Kab Aaya?
+
+Agile officially 2001 mein aaya jab 17 software developers ne milke ek document publish kiya jise "Agile Manifesto" kehte hain.
+
+### Agile Manifesto
+
+Ye 17 log (jise "Agile Alliance" kaha gaya) snowboarding trip par **Utah, USA** gaye the aur wahan brainstorming karke ek chhoti si file likhi – jise Agile Manifesto kaha gaya. Isme 4 core values aur 12 principles diye gaye.
+
+**4 Agile Values**:
+
+- Individuals and interactions over processes and tools.
+- Working software over comprehensive documentation.
+- Customer collaboration over contract negotiation.
+- Responding to change over following a plan.
+
+<br>
+
+**12 Agile Principles**:
+
