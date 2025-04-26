@@ -140,7 +140,7 @@ Scrum ek agile ka framework hai iska matlab agile ke steps ko implement karne ke
 
 <br>
 
-<img src="https://drive.google.com/uc?export=view&id=1MSob0dUB9ksghRc-h6fM607-A3m4O_Sl" width="300" height="300">
+<img src="https://drive.google.com/uc?export=view&id=1MSob0dUB9ksghRc-h6fM607-A3m4O_Sl" width="450" height="300">
 
 <br>
 
