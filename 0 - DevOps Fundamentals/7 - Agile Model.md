@@ -299,3 +299,22 @@ Here’s a simple flow:
 | Work-In-Progress (WIP) Limits | Maximum number of tasks allowed in each column          |
 | Swimlanes              | Horizontal rows to separate different types of work or teams   |
 | Cycle Time             | The total time taken for a task to move from start to end      |
+
+<br>
+
+**Kanban Example: Food Delivery App Support Team**
+
+Imagine you are managing support tickets for a food delivery app.
+- New support tickets come in → you add them to the "To Do" column.
+- The support team pulls a few tickets into "In Progress" — but because of the WIP limit (say 5 tickets max), no one overloads themselves.
+- As issues are resolved, tickets move to "Done."
+- Managers watch how quickly tickets are moving and spot any slowdowns (maybe payment issues take too long? Then they can add more training).
+
+<br>
+
+**Advantages of Kanban**
+- Flexibility: No fixed sprint cycle — you can deliver anytime.
+- Visibility: Everyone can see where tasks are at any time.
+- Reduces Waste: You don't overcommit and avoid multitasking.
+- Faster Delivery: Work moves through the system faster when bottlenecks are handled.
+- Continuous Improvement: Teams regularly tweak the process for better results.
