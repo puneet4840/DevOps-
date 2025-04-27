@@ -230,30 +230,11 @@ Agla sprint start hota hai, naye tasks ke saath — aur cycle repeat hoti hai.
 
 | Term                   | Simple Meaning                                                           | Example                                                 |
 | ---------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------- |
-| Product Backlog        | Saare kaam ki list jo product mein chahiye.                              | "Login page banana",
-
-"Payment gateway add karna".      |
-| Sprint                 | Ek fixed time ka period (1–4 weeks)
-
-jisme kaam complete karna hota hai. | 2 week Sprint mein
-
-"User Registration" complete karna. |
-| Sprint Backlog         | Sprint ke liye select kiye gaye kaam ki list.                            | Is Sprint mein hum login
-
-aur registration banayenge.   |
+| Product Backlog        | Saare kaam ki list jo product mein chahiye.                              | "Login page banana",  "Payment gateway add karna".      |
+| Sprint                 | Ek fixed time ka period (1–4 weeks)jisme kaam complete karna hota hai.   | 2 week Sprint mein  "User Registration" complete karna. |
+| Sprint Backlog         | Sprint ke liye select kiye gaye kaam ki list.                            | Is Sprint mein hum login  aur registration banayenge.   |
 | Increment              | Sprint ke baad tayar product ka working part                             | Sprint ke end mein working login feature.               |
-| Sprint Planning        | Sprint ke start mein meeting: kya kaam
-
-karna hai decide karte hain.     | "Is Sprint mein login aur logout banayenge."            |
-| Daily Scrum
-
-(Standup) | Roz ki 15 min ki meeting: kya kiya,
-
-kya karenge, kya dikkat hai.        | "Kal API likhi, aaj front-end karunga."                 |
-| Story Points           | Kaam ke difficulty ka estimation (number mein)                           | Login = 3 points, Payment = 8 points
-
-(zyada complex).  |
-| User Story             | Ek simple requirement jo user ke
-
-point of view se likhi hoti hai.       | "As a user, I want to reset my password."               |
-|                        |                                                                          |                                                         |
+| Sprint Planning        | Sprint ke start mein meeting: kya kaam karna hai decide karte hain.      | "Is Sprint mein login aur logout banayenge."            |
+| Daily Scrum (Standup)  | Roz ki 15 min ki meeting: kya kiya, kya karenge, kya dikkat hai.         | "Kal API likhi, aaj front-end karunga."                 |
+| Story Points           | Kaam ke difficulty ka estimation (number mein)                           | Login = 3 points, Payment = 8 points  (zyada complex).  |
+| User Story             | Ek simple requirement jo user ke point of view se likhi hoti hai.        | "As a user, I want to reset my password."               |
