@@ -124,6 +124,10 @@ It means agile ko practically implement karne ke liye agile framework create kiy
 
 Frameworks Agile philosophy ko real-life process mein badalte hain — jisme roles, rules, tools, time, meetings, sab kuch clearly defined hota hai.
 
+**Tools used for Scrum and Kanban**
+
+Jira, Trello are both used for Scrum and Kanban.
+
 
 **Why do we need Framework in Agile?**
 
@@ -238,3 +242,60 @@ Agla sprint start hota hai, naye tasks ke saath — aur cycle repeat hoti hai.
 | Daily Scrum (Standup)  | Roz ki 15 min ki meeting: kya kiya, kya karenge, kya dikkat hai.         | "Kal API likhi, aaj front-end karunga."                 |
 | Story Points           | Kaam ke difficulty ka estimation (number mein)                           | Login = 3 points, Payment = 8 points  (zyada complex).  |
 | User Story             | Ek simple requirement jo user ke point of view se likhi hoti hai.        | "As a user, I want to reset my password."               |
+
+<br>
+
+### Kanban
+
+Kanban is a very flexible Agile framework used to visualize work, limit work in progress (WIP), and optimize the flow of tasks from start to finish.
+
+It’s not based on time-boxed iterations (like Scrum’s sprints); instead, it focuses on continuous delivery — as soon as something is ready, it moves forward. The word "Kanban" in Japanese means "visual signal" or "card."
+
+**Core Principles of Kanban**
+
+- Visualize the Workflow:
+  - Map out all your work steps visually on a Kanban board.
+ 
+- Limit Work In Progress (WIP):
+  - Set limits on how much work can be "in progress" at one time to avoid overloading.
+ 
+- Manage Flow:
+  - Focus on how smoothly tasks move from start to finish. Identify bottlenecks early.
+
+- Make Process Policies Explicit:
+  - Clearly define rules for moving tasks (e.g., when is a task considered "done"?)
+ 
+- Implement Feedback Loops:
+  - Regular check-ins to review progress and adjust if needed.
+ 
+<br>
+
+**How Does Kanban Work Practically?**
+
+The main tool in Kanban is a Kanban Board — a visual system that tracks the flow of tasks.
+
+A basic Kanban board has three main columns:
+- To Do → tasks that need to be done.
+- In Progress → tasks currently being worked on.
+- Done → completed tasks.
+
+Each task is represented as a card that moves from left to right across the board.
+
+Here’s a simple flow:
+- You create tasks →
+- Place them in the “To Do” column →
+- Pull them into “In Progress” (only when there's capacity) →
+- Complete them and move to “Done”
+
+<br>
+
+**Key Components of Kanban**
+
+| Component              | Description                                                    |
+| ---------------------- | ---------------------------------------------------------------| 
+| Kanban Board           | Visual representation of tasks and workflow                    | 
+| Card                   | Units of work/tasks (features, bugs, etc.)                     |
+| Columns                | Stages of the workflow                                         |
+| Work-In-Progress (WIP) Limits | Maximum number of tasks allowed in each column          |
+| Swimlanes              | Horizontal rows to separate different types of work or teams   |
+| Cycle Time             | The total time taken for a task to move from start to end      |
