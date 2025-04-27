@@ -318,3 +318,37 @@ Imagine you are managing support tickets for a food delivery app.
 - Reduces Waste: You don't overcommit and avoid multitasking.
 - Faster Delivery: Work moves through the system faster when bottlenecks are handled.
 - Continuous Improvement: Teams regularly tweak the process for better results.
+
+<br>
+
+**Challenges with Kanban**
+- No strict time-boxing — so deadlines can sometimes feel "loose" if not properly managed.
+- Teams without discipline may ignore WIP limits.
+- Too much flexibility can cause confusion if rules aren’t clear.
+- Best for mature, responsible teams that can self-manage work.
+
+<br>
+
+### Comparison Between Scrum and Kanban
+
+| Feature                           | **Scrum**                                                                           | **Kanban**                                                                                     |
+| --------------------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| **Definition**                    | A structured Agile framework based on **fixed-length iterations** (called Sprints)  | A **flow-based** Agile method focused on **continuous delivery** and **visualization of work** |
+| **Process Type**                  | **Time-boxed**, Sprint-driven                                                       | **Flow-based**, continuous work                                                                |
+| **Work Organization**             | Work is selected at the beginning of the Sprint and remains fixed during the Sprint | Work items are continuously pulled from the backlog as capacity becomes available              |
+| **Iterations (Sprints)**          | Mandatory; usually 1–4 weeks                                                        | No formal iterations, delivery is continuous                                                   |
+| **Changes During Work**           | Not allowed during a Sprint (work is locked)                                        | Allowed anytime — very flexible                                                                |
+| **Roles Defined**                 | Yes: Product Owner, Scrum Master, Development Team                                  | No mandatory roles, but teams often self-organize                                              |
+| **Planning**                      | Heavy upfront planning during Sprint Planning meeting                               | Minimal planning — focus is on managing flow                                                   |
+| **Daily Meeting**                 | **Daily Scrum**: 15-min meeting with 3 questions (yesterday, today, blockers)       | Optional **Daily Stand-up** focused on flow and blockers                                       |
+| **Work Visualization**            | Scrum board (Backlog → Sprint Backlog → Work in Progress → Done)                    | Kanban board (To Do → In Progress → Done) with optional swimlanes                              |
+| **Work-in-Progress (WIP) Limits** | Not mandatory at the Sprint level, but implicitly limited by Sprint commitment      | Explicit WIP limits at each stage to control the flow                                          |
+| **Metrics Tracked**               | \- Sprint Velocity (story points per Sprint)<br>\- Burndown chart                   | \- Cycle Time (time taken for a task)<br>\- Lead Time<br>\- Cumulative Flow Diagram            |
+| **Delivery**                      | Product Increment delivered at the end of each Sprint                               | Continuous delivery as soon as work items are completed                                        |
+| **Customer Feedback**             | After every Sprint (during Sprint Review)                                           | Continuous (as soon as features are done)                                                      |
+| **Flexibility**                   | Less flexible during Sprint; changes made after Sprint                              | Highly flexible, changes made anytime                                                          |
+| **Team Size**                     | Ideal team: 5–9 people                                                              | No strict size limits                                                                          |
+| **Best Suited For**               | Projects with evolving requirements but needing structured delivery                 | Projects needing continuous output and dynamic priorities                                      |
+| **Learning Curve**                | Medium to High (because of strict rules and ceremonies)                             | Low to Medium (very natural and intuitive)                                                     |
+| **Documentation**                 | Scrum artifacts (Product Backlog, Sprint Backlog, Increment) are maintained         | Less emphasis on formal documentation                                                          |
+| **Focus Area**                    | Predictability, rhythm, collaboration                                               | Flow efficiency, flexibility, just-in-time delivery                                            |
