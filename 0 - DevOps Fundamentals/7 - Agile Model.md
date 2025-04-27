@@ -8,7 +8,7 @@ Agile ek software development methodology hai jisme product ko small samll parts
 
 <br>
 
-<img src="https://drive.google.com/uc?export=view&id=14CbtnlaYbig26XjJTFRtBMlpOt4G9nsB" width="450" height="300">
+<img src="https://drive.google.com/uc?export=view&id=14CbtnlaYbig26XjJTFRtBMlpOt4G9nsB" width="450" height="280">
 
 <br>
 
