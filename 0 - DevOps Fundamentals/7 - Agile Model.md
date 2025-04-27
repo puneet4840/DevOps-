@@ -8,6 +8,10 @@ Agile ek software development methodology hai jisme product ko small samll parts
 
 <br>
 
+<img src="https://drive.google.com/uc?export=view&id=14CbtnlaYbig26XjJTFRtBMlpOt4G9nsB" width="450" height="300">
+
+<br>
+
 ### Agile Model Kab Aaya?
 
 Agile officially 2001 mein aaya jab 17 software developers ne milke ek document publish kiya jise "Agile Manifesto" kehte hain.
