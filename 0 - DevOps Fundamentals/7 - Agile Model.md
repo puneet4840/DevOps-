@@ -228,27 +228,32 @@ Agla sprint start hota hai, naye tasks ke saath — aur cycle repeat hoti hai.
 
 ### Technical words used in Scrum
 
-Term | Simple Meaning | Example
-Product Backlog | Saare kaam ki list jo product mein chahiye. | "Login page banana", "Payment gateway add karna".
-Sprint | Ek fixed time ka period (1–4 weeks) jisme kaam complete karna hota hai. | 2 week Sprint mein "User Registration" complete karna.
-Sprint Backlog | Sprint ke liye select kiye gaye kaam ki list. | Is Sprint mein hum login aur registration banayenge.
-Increment | Sprint ke baad tayar product ka working part. | Sprint ke end mein working login feature.
-Definition of Done (DoD) | Jab kaam complete maana jayega uske rules. | Code likhna + Testing complete + Documentation likhna.
-Sprint Planning | Sprint ke start mein meeting: kya kaam karna hai decide karte hain. | "Is Sprint mein login aur logout banayenge."
-Daily Scrum (Standup) | Roz ki 15 min ki meeting: kya kiya, kya karenge, kya dikkat hai. | "Kal API likhi, aaj front-end karunga."
-Sprint Review | Sprint ke end mein product dikhana aur feedback lena. | "Ye raha login system — aap test karo."
-Sprint Retrospective | Sprint ke baad team apni working process ka analysis karti hai. | "Next time hum testing early start karenge."
-Story Points | Kaam ke difficulty ka estimation (number mein). | Login = 3 points, Payment = 8 points (zyada complex).
-Velocity | Ek Sprint mein kitne Story Points complete hue. | Sprint 1 mein 20 points complete kiye.
-Burndown Chart | Graph jo bacha hua kaam aur Sprint ke din dikhata hai. | Kaam jaldi ho raha hai ya late, pata chalta hai.
-Impediment | Koi bhi dikkat jo kaam rok rahi hai. | "Server down hai, coding nahi ho pa rahi."
-Product Owner (PO) | Jo product ke features decide karta hai aur priority set karta hai. | Customer ki zarurat ko samajhkar kaam prioritize karna.
-Scrum Master (SM) | Jo team ko Scrum process follow karne mein madad karta hai. | "Meeting time pe karwana, issues solve karwana."
-Developers | Jo actual product banate hain (coders, testers, designers). | Developer login page banata hai, tester testing karta hai.
-Epic | Bahut bada feature jo chhote tasks (stories) mein todna padta hai. | "E-commerce checkout process" ek Epic hai.
-User Story | Ek simple requirement jo user ke point of view se likhi hoti hai. | "As a user, I want to reset my password."
-Acceptance Criteria | Conditions jo fulfill honi chahiye ki User Story complete maani jaye. | "Reset password email send hona chahiye."
-Refinement (Backlog Grooming) | Regular meeting jisme Product Backlog items clear aur chhota banate hain. | "Login feature ko aur detail mein define karna."
-Time-boxing | Har Scrum event ke liye fixed maximum time limit set karna. | Sprint Planning max 8 ghante (1 month Sprint ke liye).
-Cross-functional Team | Team ke members ke paas sabhi required skills hain (coding, testing, designing). | Developer testing bhi karta hai, code bhi likhta hai.
-Self-managing Team | Team apna kaam khud manage karti hai, bina kisi boss ke bataye. | Developers decide karte hain kaise feature build hoga.
+| Term                   | Simple Meaning                                                           | Example                                                 |
+| ---------------------- | ------------------------------------------------------------------------ | ------------------------------------------------------- |
+| Product Backlog        | Saare kaam ki list jo product mein chahiye.                              | "Login page banana",
+
+"Payment gateway add karna".      |
+| Sprint                 | Ek fixed time ka period (1–4 weeks)
+
+jisme kaam complete karna hota hai. | 2 week Sprint mein
+
+"User Registration" complete karna. |
+| Sprint Backlog         | Sprint ke liye select kiye gaye kaam ki list.                            | Is Sprint mein hum login
+
+aur registration banayenge.   |
+| Increment              | Sprint ke baad tayar product ka working part                             | Sprint ke end mein working login feature.               |
+| Sprint Planning        | Sprint ke start mein meeting: kya kaam
+
+karna hai decide karte hain.     | "Is Sprint mein login aur logout banayenge."            |
+| Daily Scrum
+
+(Standup) | Roz ki 15 min ki meeting: kya kiya,
+
+kya karenge, kya dikkat hai.        | "Kal API likhi, aaj front-end karunga."                 |
+| Story Points           | Kaam ke difficulty ka estimation (number mein)                           | Login = 3 points, Payment = 8 points
+
+(zyada complex).  |
+| User Story             | Ek simple requirement jo user ke
+
+point of view se likhi hoti hai.       | "As a user, I want to reset my password."               |
+|                        |                                                                          |                                                         |
