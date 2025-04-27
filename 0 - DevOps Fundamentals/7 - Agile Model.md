@@ -253,7 +253,7 @@ It’s not based on time-boxed iterations (like Scrum’s sprints); instead, it 
 
 <br>
 
-<img src="https://drive.google.com/uc?export=view&id=1qXtV4t_WmzfTiEAxElEdPpIISHMtqgLe" width="550" height="350">
+<img src="https://drive.google.com/uc?export=view&id=1qXtV4t_WmzfTiEAxElEdPpIISHMtqgLe" width="550" height="300">
 
 <br>
 
