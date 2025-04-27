@@ -251,6 +251,12 @@ Kanban is a very flexible Agile framework used to visualize work, limit work in 
 
 It’s not based on time-boxed iterations (like Scrum’s sprints); instead, it focuses on continuous delivery — as soon as something is ready, it moves forward. The word "Kanban" in Japanese means "visual signal" or "card."
 
+<br>
+
+<img src="https://drive.google.com/uc?export=view&id=1qXtV4t_WmzfTiEAxElEdPpIISHMtqgLe" width="450" height="300">
+
+<br>
+
 **Core Principles of Kanban**
 
 - Visualize the Workflow:
@@ -286,6 +292,32 @@ Here’s a simple flow:
 - Place them in the “To Do” column →
 - Pull them into “In Progress” (only when there's capacity) →
 - Complete them and move to “Done”
+
+<br>
+
+**Kanban Process**:
+
+- Create a Kanban Board:
+  - Columns:
+    - "New Tickets" → "In Progress" → "Waiting for Customer Response" → "Resolved"
+   
+- WIP Limits:
+  - Set limits:
+    - Only 5 tickets allowed in "In Progress" at a time.
+   
+- Pull Work:
+  - As soon as a team member finishes one ticket (moves it to Resolved), they pull the next ticket from "New Tickets".
+ 
+- Continuous Flow:
+  - No sprint, no batch planning.
+  - New tickets keep coming, old ones keep resolving — continuous flow.
+ 
+- Daily Stand-up (Optional)
+  - Short meeting: Discuss stuck tickets, bottlenecks.
+  - Team tries to unblock issues quickly.
+ 
+- Monitor Flow:
+  - Use metrics like Cycle Time (how long a ticket takes) and Throughput (how many tickets closed per day).
 
 <br>
 
@@ -352,3 +384,27 @@ Imagine you are managing support tickets for a food delivery app.
 | **Learning Curve**                | Medium to High (because of strict rules and ceremonies)                             | Low to Medium (very natural and intuitive)                                                     |
 | **Documentation**                 | Scrum artifacts (Product Backlog, Sprint Backlog, Increment) are maintained         | Less emphasis on formal documentation                                                          |
 | **Focus Area**                    | Predictability, rhythm, collaboration                                               | Flow efficiency, flexibility, just-in-time delivery                                            |
+
+<br>
+
+### When to Choose What?
+
+| Situation                                                                | Recommendation                         |
+| ------------------------------------------------------------------------ | -------------------------------------- |
+| You need regular feature releases with clear deadlines                   | **Scrum**                              |
+| Your work is mostly maintenance, support, bug fixing, or unpredictable   | **Kanban**                             |
+| You want strict discipline and team ceremonies (e.g., planning, reviews) | **Scrum**                              |
+| You want lightweight process and continuous delivery                     | **Kanban**                             |
+| Your team is new to Agile and needs guidance                             | **Scrum** (because roles & rules help) |
+| Your team is mature and self-organizing                                  | **Kanban**                             |
+
+<br>
+
+**Example**:
+
+Imagine you’re running two types of teams in a company:
+- Scrum Team: Building a new mobile app feature like “payment integration”.
+- Kanban Team: Handling daily customer support tickets and small fixes.
+
+Each team uses the method that best fits their work nature.
+
