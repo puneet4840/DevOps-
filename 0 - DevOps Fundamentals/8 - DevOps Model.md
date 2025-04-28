@@ -125,3 +125,59 @@ DevOps ne kaha:
   - Rollback ke plans bane hue ho.
 - Infrastructure as Code laao — taaki servers bhi code ke jaisa deploy ho.
 - Downtime zero karo.
+
+<br>
+
+### DevOps Lifecycle
+
+There are 5 phases in DevOps lifecycle:
+
+- Continuous Development.
+- Continuous Integration.
+- Contibuous Testing.
+- Continuous Deployment.
+- Continuous Monitoring.
+
+Development -> Integration -> Testing -> Deployment -> Monitoring.
+
+Continuous means automation. It means when developer commit code into shared repostory then build, test, deploy and monitoring steps run using CI/CD pipeline.
+
+- **Continuous Development**:
+  - Continuous Development is the process in which team plan then write the code.
+  - Team plan their work in tools like Jira or Azure Boards. Once the plan is clear, developers start writing code.
+  - Developers is phase main apne work ko agile tools ke through plan karte hai fir usko code karte hain, lagataar naye naye features, bug fixes, improvements ka code likhte hain.
+  - Code likhne ke baad usko version control system (GitHub, GitLab) me dalte hain.
+  - Saath hi naye features ka planning bhi hota rehta hai.
+    
+  - Continuous Development phase ke ander Plan and Develop phase hote hain.
+    - Plan:
+      - Sabse pehle project ke features aur requirements plan karte hain.
+      - Kya banana hai, kya fix karna hai, naye changes kya honge.
+      - Agile methodology follow hoti hai — sprint, backlog, user stories.
+      - Tools: Jira, Trello, Azure Boards
+    - Develop:
+      - Developers code likhte hain.
+      - Code ko version control system (VCS) me dalte hain — taaki code track ho sake.
+      - Tools: Git, GitHub, GitLab, Bitbucket
+      - Branching Strategy: master/main, develop, feature branches
+     
+- **Continuous Integration**:
+  - Continuous Integration is the proces in which developer merge their code into central repository and a build pipeline autmatically triggers that build the code and generate the artifacts.
+  - Jab bhi koi developer code likh ke central repository main merge karta hai, turant:
+    - Code qualiity check hoti.
+    - Build banti hai.
+    - Build ke baad uske artifact ko store karaya jata hai.
+   
+  - Continuous Integration can be explained mainly in 4 stages in DevOps. They are as follows:
+    - Getting the SourceCode from SCM.
+    - Building the code.
+    - Code quality review.
+    - Storing the build artifacts.
+   
+  - Code Quality Checks in Continuous Integration:
+    - In Continuous Integration (CI), code quality checks typically happen both before and after the build process, depending on the specific checks and the CI pipeline configuration.
+    - Many code quality checks happen before the build to catch issues early, like Static Code Analysis (Linting), Security Scanning.
+    - Some code quality checks happen after the build to evaluate the compiled software or to perform more complex analyses that require the built artifact. Testing like, Code Coverage Analysis, SonarQube/SonarCloud Analysis, Dynamic Analysis.
+   
+- **Continuous Testing**:
+  - 
