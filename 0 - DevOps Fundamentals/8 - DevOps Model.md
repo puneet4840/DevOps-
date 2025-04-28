@@ -180,4 +180,4 @@ Continuous means automation. It means when developer commit code into shared rep
     - Some code quality checks happen after the build to evaluate the compiled software or to perform more complex analyses that require the built artifact. Testing like, Code Coverage Analysis, SonarQube/SonarCloud Analysis, Dynamic Analysis.
    
 - **Continuous Testing**:
-  - 
+  - Continuous Testing is the process in which build is tested. Once the code is build it is testing in this phase.
