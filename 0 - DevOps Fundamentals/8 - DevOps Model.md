@@ -244,9 +244,9 @@ Continuous means automation. It means when developer commit code into shared rep
   Continuous Testing ka Flow:
 
   | Stage                        | Testing Type                        | Kab hoti hai?                                        |
-| ---------------------------- | ----------------------------------- | ---------------------------------------------------- |
-| **Code Commit**              | Unit Testing                        | Jab developer code commit karta hai                  |
-| **Build Banate waqt**        | Static Code Analysis + Unit Testing | Build banate hi code analysis aur test run hote hain |
-| **Post Build**               | Integration Testing, API Testing    | Jab build successful hota hai                        |
-| **Pre-Deployment (Staging)** | UI Testing, Performance Testing     | Jab application deploy hone wali hoti hai            |
-| **Production ke baad**       | Smoke Testing, Monitoring           | Deploy hone ke turant baad                           |
+  | ---------------------------- | ----------------------------------- | ---------------------------------------------------- |
+  | **Code Commit**              | Unit Testing                        | Jab developer code commit karta hai                  |
+  | **Build Banate waqt**        | Static Code Analysis + Unit Testing | Build banate hi code analysis aur test run hote hain |
+  | **Post Build**               | Integration Testing, API Testing    | Jab build successful hota hai                        |
+  | **Pre-Deployment (Staging)** | UI Testing, Performance Testing     | Jab application deploy hone wali hoti hai            |
+  | **Production ke baad**       | Smoke Testing, Monitoring           | Deploy hone ke turant baad                           |
