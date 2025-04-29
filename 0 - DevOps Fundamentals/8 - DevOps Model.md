@@ -180,4 +180,46 @@ Continuous means automation. It means when developer commit code into shared rep
     - Some code quality checks happen after the build to evaluate the compiled software or to perform more complex analyses that require the built artifact. Testing like, Code Coverage Analysis, SonarQube/SonarCloud Analysis, Dynamic Analysis.
    
 - **Continuous Testing**:
-  - Continuous Testing is the process in which build is tested. Once the code is build it is testing in this phase.
+  - Continuous Testing is the process in which testing of product is done on each stage start from develop goes till deployment.
+  - Continuous Testing means automated testing is integrated at every stage of the software delivery pipeline — from development to deployment — so that quality is continuously validated, and feedback is given immediately.
+  - Continuous Testing is an essential DevOps practice where automated tests are performed at every step of the development and delivery process — from the time the developer writes the code to the moment it's deployed to production (and even after that).
+    
+  - So yes — testing is not just a final step. It happens throughout the DevOps lifecycle, including:
+    - During development (unit tests).
+    - After code is committed (build + integration tests).
+    - Before deployment (acceptance, performance, security tests).
+    - After deployment (smoke tests, monitoring, alerts).
+   
+  - The goal is to reduce risk, catch bugs early, and ensure high-quality software is delivered faster.
+ 
+  Continuous Testing in Each DevOps Stage:
+  - Development Stage:
+    - Tests Involved:
+      - Unit Tests – Test individual functions or components.
+      - Static Code Analysis – Tools like SonarQube check code quality, security, and maintainability.
+    - How it's done:
+      - Developer writes code and tests together.
+      - On every save or commit, tests run automatically (locally or via pre-commit hooks).
+    - Goal: Catch issues before pushing to shared repository.
+     
+  - Build Stage (CI/CD):
+    - Tests Involved:
+      - Unit Tests – Re-run after build to verify logic.
+      - Build Validation Tests – Does the code compile? Are dependencies correct.
+      - Security Scans – Tools like Snyk or SonarQube scan for known vulnerabilities.
+    - How it's done:
+      - CI server (like Jenkins, GitHub Actions) builds the code and runs tests automatically.
+      - Failures stop the pipeline early.
+    - Goal: Ensure build is stable and secure.
+   
+  - Testing/Staging Stage:
+    - Tests Involved:
+      - System Tests – End-to-end testing across the entire app.
+      - UI Tests – Automated frontend testing (e.g., Selenium, Cypress).
+      - Performance Tests – Check speed and load capacity.
+      - Security Tests – Vulnerability scanning, penetration testing.
+      - Regression Tests – Ensure existing features are not broken.
+    - How it's done:
+      - Test suite is run on a staging environment that mirrors production.
+      - Results are auto-reported back to the team.
+    - Goal: Validate business logic, user experience, security, and non-functional requirements.
