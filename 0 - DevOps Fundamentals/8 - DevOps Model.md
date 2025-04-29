@@ -223,3 +223,30 @@ Continuous means automation. It means when developer commit code into shared rep
       - Test suite is run on a staging environment that mirrors production.
       - Results are auto-reported back to the team.
     - Goal: Validate business logic, user experience, security, and non-functional requirements.
+   
+  - Deployment Stage (Release):
+    - Tests Involved:
+      - Smoke Tests – Basic functionality check after deployment.
+      - Canary Tests – Deploy to small subset of users and test.
+      - Monitoring-based Alerts – Real-time logs and behavior analysis.
+    - How it's done:
+      - After code goes live, test scripts run to confirm the app is working.
+      - Monitoring tools check app behavior (e.g., latency, errors, downtime).
+    - Goal: Ensure smooth release without introducing critical issues.
+   
+  - Post-Deployment Monitoring (Production):
+    - Tests Involved:
+      - Real User Monitoring (RUM) – How users are experiencing the app.
+      - Synthetic Monitoring – Simulated user tests run periodically.
+      - Alerting – Auto-notification on performance or functional issues.
+    - Goal: Detect live issues quickly and trigger rollback if needed.
+   
+  Continuous Testing ka Flow:
+
+  | Stage                        | Testing Type                        | Kab hoti hai?                                        |
+| ---------------------------- | ----------------------------------- | ---------------------------------------------------- |
+| **Code Commit**              | Unit Testing                        | Jab developer code commit karta hai                  |
+| **Build Banate waqt**        | Static Code Analysis + Unit Testing | Build banate hi code analysis aur test run hote hain |
+| **Post Build**               | Integration Testing, API Testing    | Jab build successful hota hai                        |
+| **Pre-Deployment (Staging)** | UI Testing, Performance Testing     | Jab application deploy hone wali hoti hai            |
+| **Production ke baad**       | Smoke Testing, Monitoring           | Deploy hone ke turant baad                           |
