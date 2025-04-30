@@ -163,6 +163,12 @@ There are 5 phases in DevOps lifecycle:
 
 Development -> Integration -> Testing -> Deployment -> Monitoring.
 
+<br>
+
+<img src="https://drive.google.com/uc?export=view&id=1zsS3XuUzIAVyqgPkkS3sqSsi0YfSQ3KB" height=250 weight=250>
+
+<br>
+
 Continuous means automation. It means when developer commit code into shared repostory then build, test, deploy and monitoring steps run using CI/CD pipeline.
 
 <br>
