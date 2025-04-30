@@ -4,7 +4,7 @@ DevOps is the combination of two words: Development and Operations.
 
 DevOps is the software development approach in which Development and Operations teams work together and deliver high quality software.
 
-### History of DevOps
+## History of DevOps
 
 Toh bhai scene aisa tha…
 
@@ -22,7 +22,7 @@ Bas, fir Agile aaya.
 
 <br>
 
-**Agile Ne Problem Kya Solve Ki?**
+### Agile Ne Problem Kya Solve Ki?
 
 Ab tumhari team short sprints mein kaam karne lagi. 2 hafte mein ek feature banta, uska demo hota, client feedback deta, usse agle sprint mein sudhar kar lete. Badiya chal raha tha bhai — delivery fast, client happy, development team satisfied.
 
@@ -43,7 +43,7 @@ Is divide ki wajah se product jaldi release nahi ho paata. Testing alag, deploym
 
 <br>
 
-**Rise of DevOps**
+### Rise of DevOps
 
 Phir ek din Ek conference hoti hai 2009 mein. Us conference main **Patrick Debois** ne kaha:
 
@@ -53,7 +53,7 @@ Sab sochne lagte hain, “Yeh toh accha idea hai!” Aur yahin se janm hota hai 
 
 Agile ne development culture badla. DevOps ne deployment aur operations culture badla.
 
-DevOps ne kaha:
+**DevOps ne kaha**:
 - Development aur Operations ek team banegi.
 - Har kaam automate hoga — build se leke deployment tak.
 - Har code commit pe automatic testing, build, deployment hoga.
@@ -62,6 +62,7 @@ DevOps ne kaha:
 
 Yani Agile ne feature banana fast kiya. DevOps ne feature ko safe, fast aur reliable tarike se client tak pohchana fast kiya.
 
+<br>
 <br>
 
 ### How does deployment happens before DevOps?
@@ -82,6 +83,8 @@ DevOps se phele deployment ka kaam **Operations Team** ka hota tha. Aur woh depl
   - Check karo sab sahi chal raha hai ya nahi.
 - Agar kuch galat ho gaya, to manual rollback.
 
+<br>
+
 **Kaun karta tha?**
 
 - Dedicated Operations Engineers.
@@ -94,6 +97,8 @@ Aur har deployment pe tension hoti:
 - Database corrupt ho gaya to?
 
 **Agile Mein Deployment Phase tha na?**
+
+<br>
 
 Agile ke SDLC mein "Deployment" aur "Maintenance" phase hote hain. Lekin woh phase bhi kaafi manual aur separate team driven hota tha.
 
@@ -112,6 +117,8 @@ Monitoring bhi manual:
 - CPU/Memory check kar lo.
 - Koi issue aaya to production team ko phone karo.
 
+<br>
+
 **Phir DevOps Ne Kya Badla?**
 
 DevOps ne kaha:
@@ -125,6 +132,8 @@ DevOps ne kaha:
   - Rollback ke plans bane hue ho.
 - Infrastructure as Code laao — taaki servers bhi code ke jaisa deploy ho.
 - Downtime zero karo.
+
+<br>
 
 **Ab DevOps Phases Ko Agile Se Relate Karte Hain**
 
@@ -140,8 +149,9 @@ DevOps ne kaha:
 | **Monitor**     | Continuous Monitoring                             | Live system ka health, errors, logs, performance ka real-time monitoring hota hai. Alerts aate hain, dashboard bana hota hai. Ye lagatar 24x7 chalta hai.                           |
 
 <br>
+<br>
 
-### DevOps Lifecycle
+## DevOps Lifecycle
 
 There are 5 phases in DevOps lifecycle:
 
@@ -157,7 +167,7 @@ Continuous means automation. It means when developer commit code into shared rep
 
 <br>
 
-- **Continuous Development**:
+### Continuous Development:
   - Continuous Development is the process in which team plan then write the code.
   - Team plan their work in tools like Jira or Azure Boards. Once the plan is clear, developers start writing code.
   - Developers is phase main apne work ko agile tools ke through plan karte hai fir usko code karte hain, lagataar naye naye features, bug fixes, improvements ka code likhte hain.
@@ -178,7 +188,7 @@ Continuous means automation. It means when developer commit code into shared rep
 
 <br>
      
-- **Continuous Integration**:
+### Continuous Integration:
   - Continuous Integration is the proces in which developer merge their code into central repository and a build pipeline autmatically triggers that build the code and generate the artifacts.
   - Jab bhi koi developer code likh ke central repository main merge karta hai, turant:
     - Code qualiity check hoti.
@@ -198,7 +208,7 @@ Continuous means automation. It means when developer commit code into shared rep
 
 <br>
    
-- **Continuous Testing**:
+### Continuous Testing:
   - Continuous Testing is the process in which testing of product is done on each stage start from develop goes till deployment.
   - Continuous Testing means automated testing is integrated at every stage of the software delivery pipeline — from development to deployment — so that quality is continuously validated, and feedback is given immediately.
   - Continuous Testing is an essential DevOps practice where automated tests are performed at every step of the development and delivery process — from the time the developer writes the code to the moment it's deployed to production (and even after that).
@@ -302,7 +312,7 @@ Continuous means automation. It means when developer commit code into shared rep
 
 <br>
 
-- **Continuous Deployment**
+### Continuous Deployment:
   - Continuous Deployment is the process of automatically deploying an application into production environment when it has completed testing and the build stages.
   - Jab build test me pass ho jata hai, to turant usko automatically:
     - Staging pe Ya production environment me Deploy kar dete hain.
@@ -324,5 +334,84 @@ Continuous means automation. It means when developer commit code into shared rep
 
 <br>
 
-- **Continuous Monitoring**
-  - Continuous Monitoring is the concept of monitor the deployed application 
+### Continuous Monitoring:
+- Continuous Monitoring is the process of monitoring the deployed application. After deployment, it’s important to keep an eye on the system’s health.
+- Continuous Monitoring involves tracking application performance, infrastructure health, security, and user experience in real time. It provides constant feedback to detect problems and improve future releases.
+
+- Continuous Monitoring means keeping a constant watch on:
+  - Your application (Is it working? Is it fast?).
+  - Your infrastructure (Are servers healthy? Is memory full?).
+  - Your pipelines (Did the deployment break anything?).
+
+**Why Do We Need It?**
+
+In DevOps, we deploy code many times a day. So we can’t rely on users to tell us something is broken.
+
+We need:
+- Live data about system health.
+- Alerts when something goes wrong.
+- Dashboards for visibility.
+- Logs and traces for root cause analysis
+
+**What Do We Monitor?**
+
+| Type               | What You Track                               | Example Metrics                         |
+| ------------------ | -------------------------------------------- | --------------------------------------- |
+| **Application**    | Is the app fast? Any errors? How many users? | Response time, error rate, requests/sec |
+| **Infrastructure** | Is the server or container healthy?          | CPU, memory, disk usage, node health    |
+| **Logs**           | Any error stack traces? Unexpected behavior? | HTTP 500 errors, Java exceptions        |
+| **Network**        | Any packet loss or DNS issues?               | Latency, traffic, dropped connections   |
+| **Pipeline**       | Did the build or deploy fail? How often?     | Failed builds, test failures            |
+| **Security**       | Who logged in? Was anything unusual?         | Suspicious IPs, audit logs              |
+
+**How It Works (Step-by-Step)**
+
+Let’s say you have a web app deployed in a Kubernetes cluster. Here's how monitoring works behind the scenes:
+
+- Telemetry Agents Collect Data:
+  - Agents run on servers, containers, or apps.
+  - They collect metrics, logs, and traces.
+
+  Examples:
+  - Prometheus scrapes app metrics (/metrics endpoint)
+  - Fluentd or Filebeat collects logs.
+  - OpenTelemetry collects traces.
+ 
+- Data is Sent to Monitoring Tools:
+  - All this raw data is sent to a monitoring platform like:
+  - Prometheus (metrics).
+  - ELK stack (logs).
+  - Jaeger (traces).
+  - Datadog / New Relic (all-in-one).
+ 
+- Dashboards Show You the Current Status:
+  - You create dashboards in Grafana, Kibana, or Datadog UI.
+  - These show:
+    - CPU usage.
+    - Active users.
+    - Errors over time.
+    - Slow APIs
+   
+- Alerts Are Triggered on Thresholds:
+
+  If something bad happens — say:
+    - Error rate > 5%.
+    - CPU > 90% for 5 minutes.
+    - Login from unknown IP.
+ 
+  Then an alert is triggered.
+
+  It can notify you via:
+  - Slack.
+  - Email.
+  - PagerDuty.
+  - Microsoft Teams.
+ 
+- You Investigate with Logs/Traces:
+
+  After an alert, you jump into:
+  - Logs (via Kibana, Loki).
+  - Traces (via Jaeger).
+  - K8s monitoring (via Lens, Grafana).
+
+  This helps you understand why something broke.
