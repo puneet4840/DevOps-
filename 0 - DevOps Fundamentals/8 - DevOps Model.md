@@ -169,7 +169,12 @@ Development -> Integration -> Testing -> Deployment -> Monitoring.
 
 <br>
 
+**What is Continous here?**
 Continuous means automation. It means when developer commit code into shared repostory then build, test, deploy and monitoring steps run using CI/CD pipeline.
+
+"Continuous" means that something happens automatically, again and again, without needing people to start it manually.
+
+In DevOps, "Continuous" refers to automated, repeatable workflows that run frequently (on every code change or event) and provide fast feedback.
 
 <br>
 
