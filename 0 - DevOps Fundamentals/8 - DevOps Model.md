@@ -142,6 +142,8 @@ Development -> Integration -> Testing -> Deployment -> Monitoring.
 
 Continuous means automation. It means when developer commit code into shared repostory then build, test, deploy and monitoring steps run using CI/CD pipeline.
 
+<br>
+
 - **Continuous Development**:
   - Continuous Development is the process in which team plan then write the code.
   - Team plan their work in tools like Jira or Azure Boards. Once the plan is clear, developers start writing code.
@@ -160,6 +162,8 @@ Continuous means automation. It means when developer commit code into shared rep
       - Code ko version control system (VCS) me dalte hain — taaki code track ho sake.
       - Tools: Git, GitHub, GitLab, Bitbucket
       - Branching Strategy: master/main, develop, feature branches
+
+<br>
      
 - **Continuous Integration**:
   - Continuous Integration is the proces in which developer merge their code into central repository and a build pipeline autmatically triggers that build the code and generate the artifacts.
@@ -178,6 +182,8 @@ Continuous means automation. It means when developer commit code into shared rep
     - In Continuous Integration (CI), code quality checks typically happen both before and after the build process, depending on the specific checks and the CI pipeline configuration.
     - Many code quality checks happen before the build to catch issues early, like Static Code Analysis (Linting), Security Scanning.
     - Some code quality checks happen after the build to evaluate the compiled software or to perform more complex analyses that require the built artifact. Testing like, Code Coverage Analysis, SonarQube/SonarCloud Analysis, Dynamic Analysis.
+
+<br>
    
 - **Continuous Testing**:
   - Continuous Testing is the process in which testing of product is done on each stage start from develop goes till deployment.
@@ -280,3 +286,7 @@ Continuous means automation. It means when developer commit code into shared rep
 
   - Har stage par kuch automated tests lage rahenge.
   - Developer ko jaldi pata chalega ki code tod gaya hai ya nahi.
+
+<br>
+
+- **Continuous Deployment**
