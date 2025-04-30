@@ -290,3 +290,4 @@ Continuous means automation. It means when developer commit code into shared rep
 <br>
 
 - **Continuous Deployment**
+  - Continuous Deployment is the process of automatically deploying an application into production environment when it has completed testing and the build stages.
