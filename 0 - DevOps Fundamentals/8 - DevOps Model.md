@@ -126,6 +126,19 @@ DevOps ne kaha:
 - Infrastructure as Code laao — taaki servers bhi code ke jaisa deploy ho.
 - Downtime zero karo.
 
+**Ab DevOps Phases Ko Agile Se Relate Karte Hain**
+
+| 📌 DevOps Phase | 🔄 Continuous Process                             | 📖 Kaise Juda Hai                                                                                                                                                                   |
+| --------------- | ------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Plan**        | Continuous Development                            | Yahan se continuous development start hota hai. Ham naye features, improvements aur bug fixes plan karte hain. Agile sprints bhi yahin decide hote hain.                            |
+| **Develop**     | Continuous Development                            | Developer lagatar code likhte hain. Har naye code ko Git pe commit karke version control me daalte hain. Continuous process hai kyunki ye lagatar hota rehta hai.                   |
+| **Build**       | Continuous Integration                            | Jab bhi koi code commit hota hai, automated build process start hota hai. Jenkins ya CI tool build banata hai. Har naye code ke sath ye automatically hota hai — isliye continuous. |
+| **Test**        | Continuous Testing                                | Build ke baad turant automated testing hoti hai. Unit test, integration test, functional test sab automate kiye hote hain. Har build pe test chalega — lagatar.                     |
+| **Release**     | Continuous Deployment (part of CD)                | Test pass hone ke baad build ko release karne ke liye ready karte hain. Approvals aur versioning handle hoti hai. Release candidate banate hain.                                    |
+| **Deploy**      | Continuous Deployment                             | Release ke baad turant automated deployment hota hai. Production ya staging environment me bina rukawat ke deploy hota hai. Har naye code ke liye ye process auto chalta hai.       |
+| **Operate**     | Continuous Operations (ye bhi DevOps ka part hai) | Live application ko chalana, scaling, load balancing, server health ka dhyan rakhna. Lagatar chalta rahta hai.                                                                      |
+| **Monitor**     | Continuous Monitoring                             | Live system ka health, errors, logs, performance ka real-time monitoring hota hai. Alerts aate hain, dashboard bana hota hai. Ye lagatar 24x7 chalta hai.                           |
+
 <br>
 
 ### DevOps Lifecycle
@@ -291,3 +304,25 @@ Continuous means automation. It means when developer commit code into shared rep
 
 - **Continuous Deployment**
   - Continuous Deployment is the process of automatically deploying an application into production environment when it has completed testing and the build stages.
+  - Jab build test me pass ho jata hai, to turant usko automatically:
+    - Staging pe Ya production environment me Deploy kar dete hain.
+  - In traditional systems, deployment was done manually by Operations teams, which was slow and risky. But in DevOps, deployment is automated.
+
+  Difference b/w Continuous Delivery and Continuous Deployment:
+
+  - Continuous Delivery: Coninuous Delivery is the process of deploying an application to production server manually. Here manually the build artifacts are deployed to production. Manually means approval before deployment is required. After the approval we click on deploy.
+  - Continuous Deployment: Continuous Deployment is the process of deploying an application on production automatically. Here no approval or manual intervention is required.
+
+  In real life scenarios, there are multiple environments such as Dev, QA, UAT and Prod. So seperate pipelines are created there for deployment.
+
+  | Environment | Kya hota hai ye?                                     |
+  | ----------- | ---------------------------------------------------- |
+  | **Dev**     | Developers yaha naya code test karte hain            |
+  | **QA**      | QA team yaha pe testing karti hai (automated/manual) |
+  | **UAT**     | Business ya client yaha final check karte hain       |
+  | **Prod**    | Live system — jo users use karte hain                |
+
+<br>
+
+- **Continuous Monitoring**
+  - Continuous Monitoring is the concept of monitor the deployed application 
