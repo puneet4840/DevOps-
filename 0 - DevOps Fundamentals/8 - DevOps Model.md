@@ -426,3 +426,83 @@ Let’s say you have a web app deployed in a Kubernetes cluster. Here's how moni
   - K8s monitoring (via Lens, Grafana).
 
   This helps you understand why something broke.
+
+<br>
+<br>
+
+## CI/CD Pipeline
+
+CI/CD = Continuous Integration and Continuous Deployment
+
+CI/CD pipeline is the automated process to build, test and deploy the application server.
+
+CI/CD stands for Continuous Integration and Continuous Delivery/Deployment. It is a DevOps practice that automates the processes of building, testing, and deploying applications to ensure faster, reliable, and more frequent software releases.
+
+CI/CD pipeline ek automated process hai jo software ko build karne, test karne, aur deploy karne ka kaam karti hai — bina manual intervention ke ya kam se kam manual kaam ke sath.
+
+- CI = Continuous Integration
+- CD = Continuous Deployment (ya Continuous Delivery)
+
+Dono ko mila ke ek pipeline banate hain.
+
+### CI/CD history
+
+Bahut pehle, ek zamane me software banana manual kaam hota tha.
+- Developer apni machine pe code likhta.
+- Fir wo code kisi folder me daal ke email kar deta ya pen drive me le jata.
+- Deploy karne wala banda manually production server pe le jaake deploy karta.
+
+Problem kya hoti thi?
+- Code merge karna mushkil.
+- Ek code change dusre ka kaam bigaad deta.
+- Deployment me ghanto lagte the.
+- Kabhi server down, kabhi dependency missing.
+- Bugs live me detect hote.
+- Aur fir hoti thi midnight production fix.
+
+Fir developers ne socha —
+
+"Code alag alag kyu likh rahe hain? Sab milke ek repository me daalte hain." Fir Aayi Git / SVN / CVS jisme developers code push karte
+
+Lekin problem ab bhi thi:
+- Code push karne ke baad manual build hota tha.
+- Test manually chalte the.
+- Bug tab milta jab client chillata.
+
+To yaha enter kiya — Continuous Integration (CI):
+- "Jab bhi koi developer code kare, turant system usko build aur test kare".
+
+Tools aaye: Jenkins, Bamboo, TeamCity
+
+Ab code push hota:
+- Jenkins automatically build karta.
+- Unit tests run karta.
+- Developer ko mail deta — "bhai tera build pass ho gaya" ya "fail"
+
+Isse fayda hua:
+- Code conflicts kam.
+- Early bugs milna start.
+
+Par deployment ab bhi manual tha.
+
+Fir industry me ek nayi demand aayi:
+- "Har naye feature ko jaldi production tak le jao".
+
+Manual deployment me problem:
+- Kaunsa version deploy hua, pata nahi.
+- Dependency issues.
+- Human error.
+
+CI ke baad automatically build ko Dev, QA, UAT, Prod me deploy karne ka system banaya gaya. 
+
+Deploy hone ke baad health check bhi automatic
+
+Ab:
+- Code push hua.
+- Build & test automatic.
+- Deployment automatic.
+- Monitoring automatic.
+- Error aaya to automatic rollback
+
+Is pure process ko bola gaya — CI/CD Pipeline.
+
