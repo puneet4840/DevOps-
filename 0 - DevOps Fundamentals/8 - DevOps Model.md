@@ -506,3 +506,25 @@ Ab:
 
 Is pure process ko bola gaya — CI/CD Pipeline.
 
+<br>
+
+### Explanation of Continuous Integration and Continuous Deployment
+
+**CONTINUOUS INTEGRATION (CI)**:
+
+CI is the process where developers merge their code changes (commits) frequently (at least daily) into a shared source code repository (like GitHub). After every merge, an automated process builds the app and runs tests to make sure everything still works.
+
+**How It Works (Step-by-Step)**:
+- Developer writes code on a branch (e.g., feature/add-login).
+- Developer pushes code to GitHub.
+- A CI tool (like Azure DevOps, Jenkins or GitHub Actions) detects the push via a webhook.
+- The CI pipeline starts:
+  - Pulls the code from Git.
+  - Installs dependencies (npm install, pip install, Maven install, etc.).
+  - Builds the code (e.g., compiles Java or bundles React).
+  - Runs tests (unit tests, linting, etc.).
+  - Store the build artifacts in storage or pipeline.
+
+**Continuous Deployment (CD)**:
+
+CD is the process in which build code or build artifacts automatically deployed on the production environment. But in case of Continuous delivery code is deployed on the production with manual approval.
