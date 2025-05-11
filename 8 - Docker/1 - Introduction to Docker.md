@@ -53,4 +53,14 @@ Imagine two devlopers working on a web application. Each developer has their own
 
 <br>
 
-### 
+### How Docker Solves that Problem?
+
+Docker solves that **It works on my machine** problem by introducing the concept of containers. Docker create containers, those containers ensuring same behaviour across different environments. Here, container encapsulate an application and its all dependencies. So, container can run on any machine where docker is installed.
+
+```हम Docker की help से application और उसकी dependencies की एक docker image बना देते हैं फिर वह image हम developer को forward करते हैं| अब developer इस image को run करेगा जिससे एक container बन जायेगा, जैसे ही container बनेगा वह application developer के system मैं run हो जाएगी|```
+
+**Note**:-
+
+In the docker world, developers build a docker container that includes their application and all its dependencies. When developer A creates a container and hands it over to developer B, both developers are working in the exact same environment. 
+
+In this scenario, Docker ensures that the "Is works on my machine" in no longer an issue.
