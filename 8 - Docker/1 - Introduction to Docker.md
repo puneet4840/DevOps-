@@ -2,11 +2,11 @@
 
 Docker is an open source tool which package an application and its all dependencies together in the form of container.
 
-Docker is a tool which create containers.
+Docker is a tool which create containers. Containers encapsulate everything an application needs to run, including code, runtime, system tools, and libraries.
 
 ```Docker एक tool है जो applications और उसकी dependencies जैसे code, libraries को combine करके एक अलग environment create कर देता है जिसको हम container कहते हैं|```
 
-Docker is a containerization tool by which you can pack your application and its all dependencies into a container.
+Docker is a containerization tool by which you can pack your application and its all dependencies into a container. 
 
 <br>
 
