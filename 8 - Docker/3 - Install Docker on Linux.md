@@ -30,7 +30,15 @@ This command states that add current user to docker group.
 
 <br>
 
-**Step-4: Check connectivity with docker daemon**
+**Step-4: Refresh Docker Group**
+
+After adding current user to docker group, you have to refresh the docker group.
+
+```newgrp docker```
+
+<br>
+
+**Step-5: Check connectivity with docker daemon**
 
 ```docker ps```
 
