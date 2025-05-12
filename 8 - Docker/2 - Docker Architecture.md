@@ -26,6 +26,8 @@ Docker client is a CLi tool which help to interact with docker daemon through co
 
 Docker Client ek command-line tool hai (CLI) jo user aur Docker daemon ke beech ek interface ka kaam karta hai. Jab bhi aap docker command chalate ho terminal mein — aap Docker Client se baat kar rahe hote ho.
 
+Docker client REST API ya Unix Socker ke through Docker daemon ko request send karta hai jo aap command likhte ho. Fir docker daemon us command ko process karta hai aur docker client ko response send karta hai.
+
 <br>
 
 **Docker Host**
@@ -39,7 +41,7 @@ Docker Host ek aisi machine hoti hai (physical ya virtual server) jahan Docker D
 
 Ye wo environment hai jahan aapke containers actually run hote hain.
 
-Components of Docker Host:
+**Components of Docker Host**:
 
 | Component                        | Description                                                           |
 | -------------------------------- | --------------------------------------------------------------------- |
@@ -49,3 +51,12 @@ Components of Docker Host:
 |    **Networks**                  | Bridge, host, overlay jaise networks                                  |
 |    **Volumes**                   | Persistent data ke liye storage units                                 |
 |    **Storage Driver**            | Image aur container layers ko manage karta hai (overlay2, aufs, etc.) |
+
+<br>
+
+**Local vs Remote Docker Host**:
+
+| Scenario        | Description                                                                                                                                        |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Local Host**  | Docker daemon same machine pe run ho raha hai jahan docker client chal hai (common dev setup)                                                      |
+| **Remote Host** | Docker daemon kisi aur server pe run ho raha hai, aur docker client kisi aur server pe run ho rha hai, aap remote se docker Docker daemon ko Docker client ke zariye control kar rahe ho (cloud servers, CI/CD, Swarm clusters) |
