@@ -94,3 +94,16 @@ Docker Daemon (binary: dockerd) ek background process hai jo:
   - container create karke run karta hai.
 - Response client ko wapas bhej diya jata hai (container ID, logs, etc.).
 
+Docker Daemon (dockerd) ek long-running background service hai jo Docker client ke instructions ko execute karta hai, aur sabhi containers, images, volumes, aur networks ka actual management karta hai.
+
+<br>
+
+### How It All Works Together
+
+- The user runs a command like ```docker run nginx```.
+- The client sends this to the Docker daemon.
+- The daemon checks for the image locally:
+  - If not found, it pulls it from the Registry.
+- The daemon creates a container using that image.
+- The container runs on the Docker Host.
+
