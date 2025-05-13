@@ -57,6 +57,8 @@ A container is an isolated and seperate environment to run an application with a
 
 Docker Container ek running instance hota hai Docker image ka.
 
+Container ek running application hota hai joki us application ke liye particularly ek os ki tarah hota hai.
+
 Ek container mein:
 - Aapka application chalta hai.
 - Saath hi uska environment, dependencies, libraries hoti hain.
