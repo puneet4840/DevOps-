@@ -49,3 +49,16 @@ Jab hum Dockerfile ko build karte hain to us Dockerfile se ek docker image gener
 
 ```जब हम Dockerfile को build करते हैं तो उस Dockerfile से एक docker image generate हो जाती है. वह image एक तरह से एक application होती है और हम उस image से फिर container create करते हैं|```
 
+<br>
+
+### Container
+
+A container is an isolated and seperate environment to run an application with all resources that application needed.
+
+Docker Container ek running instance hota hai Docker image ka.
+
+Ek container mein:
+- Aapka application chalta hai.
+- Saath hi uska environment, dependencies, libraries hoti hain.
+
+Jaise apne pc main application run karne ke liye code, libraries, files chaiye hoti hain vaise hi container main wahi sab hota hai application ko run karne ke liye.
