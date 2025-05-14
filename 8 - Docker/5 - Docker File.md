@@ -82,7 +82,7 @@ Yahaan, node:18-alpine ka matlab hai tum Node.js version 18 ka alpine version us
 
 ### LABEL:
 
-- LABEL instruction is used to add some key-value pair metadata about your image -  jaise ki image ko kisne banaya, image ka version kya hai, etc.
+- LABEL is used to add some key-value pair metadata about your image -  jaise ki image ko kisne banaya, image ka version kya hai, etc.
 - It is just used for information like in future any unknow person see your dockerfile, he or she will able to know who created that image.
 - This instruction does not affect your image.
 
@@ -133,3 +133,5 @@ This means a folder is created at root level with name app.
 <br>
 
 ### COPY
+
+- COPY is used to copy the files and folders from you local machine into container.
