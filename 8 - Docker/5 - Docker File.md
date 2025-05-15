@@ -208,3 +208,174 @@ EXPOSE 5000/tcp
 
 ### ENTRYPOINT
 
+- The ENTRPOINT specifies the command that will always be executed when a container starts. To start an application inside a container we use ENTRYPOINT instruction.
+- The ENTRYPOINT instruction defines the primary command to run when a container starts.
+- Ye instruction container start hone par run karta hai aur is instruction main application ko run karne ke liye command likhi hoti hai. Iska matlab jab ye instruction run hota hai to application ko run karta hai.
+- The commnds given to ENTRYPOINT can not be overridden using docker run commnds. This is the speciality of this instruction.
+- Is instruction main jo commands di jati hain usko hum docker run ke time par override nahi kar sakte iska matlab agar docker file ke ENTRYPOINT main jo bhi command humne mention kar di vo baad main bhi change nahi ki ja sakti hain.
+
+**Kyu use karte hain?**:
+```
+ENTRYPOINT ["executable", "arg"]
+```
+
+Example:
+```
+ENTRYPOINT ["python", "app.py"]
+```
+
+It will start app.py file inside the container.
+
+<br>
+
+### CMD
+
+- The CMD instruction in a Dockerfile specifies the default command to execute when a container starts from the image. It means to start an application inside a container we use CMD instruction.
+- ```अगर container start होने पर अपनी application run करनी है तो हम CMD instruction का use करेंगे. इस instruction मैं वो कमांड दी जाती है जो एप्लीकेशन को स्टार्ट करती है. और ये डिफ़ॉल्ट कमांड होती है|```
+- This is the default command we give in CMD which means the command given in CMD can be overridden during docker run.
+- Iska matlab docker run karte time bhi hum CMD ke ander command ko replace kar sakte hain.
+
+**Kyu use karte hain?**:
+- Ye tumhe batata hai ki container ko start karte waqt kya run hona chahiye.
+
+**Kaise likhna hai?**:
+```
+CMD ["command", "arg1"]
+```
+
+Example:
+```
+CMD ["python", "app.py"]
+```
+
+**Tips**:
+- Sirf ek CMD hona chahiye, agar multiple honge toh last wala hi run hoga.
+- Tum docker run command se override bhi kar sakte ho.
+
+
+<br>
+<br>
+
+### Example of Docker File
+
+```
+# Start with Python 3.11 base image
+FROM python:3.11-slim
+
+# Label the image
+LABEL maintainer="you@example.com"
+
+# Set working directory
+WORKDIR /app
+
+# Copy only requirements first (to leverage cache)
+COPY requirements.txt .
+
+# Install dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy rest of the files
+COPY . .
+
+# Expose port 5000
+EXPOSE 5000
+
+# Set an environment variable
+ENV ENVIRONMENT=production
+
+# Run the app
+CMD ["python", "app.py"]
+```
+
+<br>
+
+### How to build a Docker file
+
+Syntax:
+```
+docker build -t <image_name>:<tag_name> .
+```
+
+Explanation:
+- ```docker build``` to build a file.
+- ```-t``` is tag name for a image.
+- ```<image_name>```: Image name.
+- ```<tag_name>```: Tag name.
+- ```.``` means take the docker file from current directory. Current directory mein Dockerfile ko use karo.
+
+<br>
+
+### How to Build a Dockerfile and Create a Docker Image
+
+Steps to Build a Dockerfile
+
+**Create a Dockerfile**:
+- Make a new file named Dockerfile (without any extension).
+- Write your instructions inside it.
+
+Example Directory Structure:
+```
+/my-project/
+├── Dockerfile
+├── app.py
+├── requirements.txt
+```
+
+**Write Instructions in Dockerfile**:
+
+Example Dockerfile:
+```
+FROM python:3.11-slim             # Use base image
+LABEL maintainer="you@example.com" # Image info
+WORKDIR /app                       # Set working directory inside container
+COPY requirements.txt .            # Copy file into container
+RUN pip install --no-cache-dir -r requirements.txt  # Install dependencies
+COPY . .                           # Copy all project files
+EXPOSE 5000                        # Expose port
+CMD ["python", "app.py"]           # Run app when container starts
+```
+
+**Build the Docker Image**:
+
+Command:
+```
+docker build -t image-name:tag-name .
+```
+
+Explanation:
+- ```docker build``` → Build an image.
+- ```-t image-name``` → Give a tag and name to the image.
+- ```.``` → Use current directory (where Dockerfile is).
+
+Example:
+```
+docker build -t my-python-app:latest .
+```
+
+**Check the Created Image**:
+
+Command:
+```
+docker images
+```
+
+This will list all available images on your system.
+
+**Run a Container from the Image**:
+
+Command:
+```
+docker run -d -p host-port:container-port --name container-name image-name
+```
+
+Explanation:
+- ```-d``` → Run in detached (background) mode. It will not block your current shell.
+- ```-p``` → Map port from container to host. Using this you can access your application on host ip and port.
+- ```--name``` → Set a name for the container.
+- ```image-name``` → Name of the image to run.
+
+Example:
+```
+docker run -d -p 5000:5000 --name my-container my-python-app
+```
+
