@@ -37,7 +37,6 @@ INSTRUCTION arguments
 - WORKDIR
 - COPY
 - RUN
-- VOLUME
 - EXPOSE
 - ENTRYPOINT
 - CMD
@@ -111,7 +110,7 @@ LABEL description="Node.js application"
 ### WORKDIR
 
 - WORKDIR is used to set the current working directory for your container.
-- Sets the current directory for RUN, CMD, ENTRYPOINT, COPY, and ADD.
+- It sets the current directory for RUN, CMD, ENTRYPOINT, COPY, and ADD.
 - We have to set a place where the code and dependencies of your application reside in the container. So, first we specify a working directory so that the code can go to that place inside the container.
 - ```We know that की container एक seperate environment होता है, तो उस container मैं application run करने के लिए हमको application का data container के अंदर डालना होगा इसलिए जो भी working directory मैं path हम लिखेंगे वहां पर हमारी application जाकर store हो जाएगी|```
 
@@ -153,7 +152,7 @@ ADD app.tar.gz /app/
 
 - Here . in copy instruction means copy everything from current folder.
 - Yahaan, COPY tumhare current folder ko /app mein copy karta hai, aur ADD .tar.gz file ko /app/ mein extract kar ke daalta hai.
-
+  
 **Tips**:
 - COPY ka use karo agar tum sirf files ko copy kar rahe ho. ADD ka use tab karo jab tum compressed files extract karna ho ya URLs se files copy karna ho.
 - ```.dockerignore``` file ka use karo taaki unwanted files ko image mein copy hone se roka ja sake (jaise .git, node_modules etc).
@@ -162,4 +161,50 @@ ADD app.tar.gz /app/
 
 ### RUN
 
-- 
+- The RUN instructions executes shell commands inside the container during build time. This is where you can install software, libraries or dependencies that you application needs to run inside a container.
+- RUN ka use tum container build time pe commands execute karne ke liye karte ho. ```जैसे किसी application को पहली बार run करने से पहले कुछ libraries और dependencies install करनी पड़ती हैं. तो इस step मैं application के लिए वही सब dependencies container के अंदर install करनी पड़ती हैं|```
+
+**Kaise Use karna Hai**
+```
+RUN <command>
+```
+
+Example:
+```
+RUN apt update && apt install -y curl
+```
+
+**Tips**:
+- Best practice here includes chaining commands to reduce the number of image layers (each RUN creates a new layer) and cleaning up temporary files and cache to reduce final image size. For example:
+  ```
+    RUN apt-get update && apt-get install -y \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+  ```
+
+- Multiple commands ko ek hi RUN statement mein likho. Jaise:
+  ```
+  RUN apt update && apt install -y curl && rm -rf /var/lib/apt/lists/*
+  ```
+
+<br>
+
+### Expose
+
+- EXPOSE instruction is used to document the port number the application will listen on runtime. It does not publish the port — that’s done via ```-p``` at ```docker run```.
+- ```EXPOSE instruction को application के port number को document करने के लिए लिखते हैं, इसको लिखने से container पर कोई फरक नहीं पड़ता है, ये instruction सिर्फ user को बताने के लिए होता है की application मैं इस port number का use किया गया है|```
+
+Example:
+```
+EXPOSE 5000
+```
+OR
+
+```
+EXPOSE 5000/tcp
+```
+
+<br>
+
+### ENTRYPOINT
+
