@@ -135,3 +135,31 @@ This means a folder is created at root level with name app.
 ### COPY
 
 - COPY is used to copy the files and folders from you local machine into container.
+- COPY ka use tum apni local machine se files ya directories ko container ke andar copy karne ke liye karte ho.
+- ADD bhi wahi kaam karta hai, lekin ye extra functionality bhi provide karta hai — jaise ki tar files ko extract karna ya remote URLs se files ko download karna.
+- ```WORKDIR command मैं हमने working directory specify की थी, इस command के through हमारी application उसी working directory पर जाकर copy हो जाएगी, जो हमने path दिया था|```
+
+**Kaise Likhna Hai?**
+```
+COPY <source> <destination>
+ADD <source> <destination>
+```
+
+Example:
+```
+COPY . /app
+ADD app.tar.gz /app/
+```
+
+- Here . in copy instruction means copy everything from current folder.
+- Yahaan, COPY tumhare current folder ko /app mein copy karta hai, aur ADD .tar.gz file ko /app/ mein extract kar ke daalta hai.
+
+**Tips**:
+- COPY ka use karo agar tum sirf files ko copy kar rahe ho. ADD ka use tab karo jab tum compressed files extract karna ho ya URLs se files copy karna ho.
+- ```.dockerignore``` file ka use karo taaki unwanted files ko image mein copy hone se roka ja sake (jaise .git, node_modules etc).
+
+<br>
+
+### RUN
+
+- 
