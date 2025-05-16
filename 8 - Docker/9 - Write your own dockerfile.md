@@ -113,3 +113,68 @@ CMD ["python3", "app.py"]
 ```
 
 - ```जैसे python की file को run करने के लिए हम python file_name का use करते हैं|```
+
+
+<br>
+<br>
+
+# Example (LAB): Containerizing a Simple Python App
+
+**Scenario**: This python app is a simple python code which is returing the current date.
+
+**Directory structure**:
+```
+/my-python-app
+ ├── app.py
+ └── Dockerfile
+```
+
+<br>
+
+**app.py** File
+
+```
+from datetime import date
+
+current_date=date.today()
+
+print("Current Date is: ",current_date)
+```
+
+<br>
+
+**Dockerfile**
+
+```
+# 1. Choose base image
+FROM python:3.11-alpine
+
+# 2. Set working directory
+WORKDIR /app
+
+# 3. Copy python file into container
+COPY app.py /app
+
+# 4. Default comand to run the app
+CMD ["python3","app.py"]
+```
+
+<br>
+
+**Build & Run the Dockerfile**
+
+Build docker image:
+```
+docker build -t today_date:v1 .
+```
+
+Run the container:
+```
+docker run today_date:v1
+```
+
+<br>
+
+**Output**:
+
+Current Date is:  2025-05-16
