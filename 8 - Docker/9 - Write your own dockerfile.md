@@ -1,5 +1,15 @@
 # Write Your Own Dockerfile
 
+There are multiple steps we use to write docker file. Steps are:
+- Choose a Base Image.
+- Set Working Directory.
+- Copy files into image.
+- Install Dependencies.
+- Expose Network Ports.
+- Specify default command.
+
+<br>
+
 Below are the steps to write your own dockerfile from scratch.
 
 <br>
