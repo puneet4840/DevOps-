@@ -41,7 +41,7 @@ Prometheus follows a pull-based mechanism for collecting metrics from targets (a
 
 There are multiple components in the architecture:
 
-- **Prometheus Server**:
+**Prometheus Server**:
 
 This is the main componenet of prometheus which collects the data from applications and servers and stores it in TSDB (Time Series Data Base).
 
@@ -73,7 +73,7 @@ It has multiple components:
 
 <br>
 
-- **Prometheus Targets**
+**Prometheus Targets**
 
 Prometheus targets wo server hote hain jinko hum prometheus ke through monitor karna chte hain. In servers par expoerters yani agents ko install kiya jata jo specfied time par servers se promethues ko data behjte hain.
 
@@ -87,7 +87,7 @@ Yeh exporters ek HTTP endpoint pe apna health aur metrics batate hain — jise h
 
 <br>
 
-- **Short-lived jobs ka kya?**
+**Short-lived jobs ka kya?**
 
 Kuch aise jobs hote hain jo jaldi chalu hote hain aur turant khatam ho jaate hain (jaise ek cron job). Inke paas itna time nahi hota ki Prometheus baar-baar unse metrics le.
 
@@ -95,7 +95,7 @@ To yeh jobs Pushgateway ko apne metrics de dete hain. Pushgateway ek middleman h
 
 <br>
 
-- **Service Discovery**
+**Service Discovery**
 
 Prometheus ko batana padta hai ki usse kis machine ya exporter se data lena hai. Ye hum ```prometheus.yml``` file mein define karte hain. 
 
@@ -103,7 +103,7 @@ Lekin agar aapke paas 100 machines hain, ya Kubernetes cluster hai, to har ek ko
 
 <br>
 
-- **Prometheus Alerting**
+**Prometheus Alerting**
 
 Prometheus ke paas rules hote hain — jaise agar CPU usage 90% se upar gaya to alert bhejna hai. Jab aisa kuch hota hai to Prometheus ek alert Alertmanager ko bhejta hai.
 
@@ -115,7 +115,10 @@ Alertmanager ka kaam hota hai:
 
 <br>
 
-- **Data Visualization and Exports**
+**Data Visualization and Exports**
 
 Prometheus ke paas apna ek web UI hota hai jahan PromQL naam ki language se query karke graphs dekh sakte ho. Lekin zyada achhe aur interactive graphs ke liye log Grafana ka use karte hain. Grafana mein aap dashboards bana sakte ho, alerts configure kar sakte ho, aur multiple Prometheus servers ko connect kar sakte ho.
+
+<br>
+<br>
 
