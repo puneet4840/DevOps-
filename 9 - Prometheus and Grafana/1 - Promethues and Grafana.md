@@ -68,7 +68,7 @@ It has multiple components:
 
 
 - HTTP Server:
-  - Prometheus provides a built-in web based user interfact where user can use PromQL query to get the metrics from database.
+  - Prometheus provides a built-in web based user interfact on this HTTPS server where user can use PromQL query to get the metrics from database.
   - User ya developer ko ek web interface dena jahan wo queries kar sake, jaise CPU kitna chal raha hai? Memory ka use kitna ho raha hai?
 
 <br>
