@@ -31,4 +31,6 @@ Prometheus was built to solve these problems effectively.
 
 <br>
 
-### Promethues Architecture
+### Prometheus Architecture
+
+<img src="https://drive.google.com/uc?export=view&id=10PSfiEn2u5jjXKI4JaN6EG97fXwzNbp_" width="450" height="450">
