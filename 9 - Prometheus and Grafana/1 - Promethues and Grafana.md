@@ -122,3 +122,21 @@ Prometheus ke paas apna ek web UI hota hai jahan PromQL naam ki language se quer
 <br>
 <br>
 
+### Working of Prometheus
+
+Prometheus ek open-source monitoring system hai jo servers, apps (jaise Python/Java), ya containers se performance-related metrics collect karne ke liye bana hai.
+
+Yeh kaam Prometheus pull model se karta hai, matlab ki tum har system pe ek agent (jaise ```node_exporter``` Linux ke liye, ya ```prometheus_client``` Python ke liye) install karte ho jo ```/metrics``` endpoint pe data expose karta hai.
+
+Fir tum apne system par prometheus ko install karte ho jisko prometheus server bolte hain jo ek central component hota hai. 
+
+Before Prometheus can start collecting data, prometheus ko ye pta hona chaiye ki konse target server se data collect karna hai kitne-kitne time period par. Iske liye ek ```prometheus.yml`` file create karte ho jisme tum targer server ki information likhte ho aur kaafi detail bhi likhte ho. 
+
+Ab Prometheus server apne config file (```prometheus.yml```) ke zariye un endpoints ko register karta hai aur regular interval (default 15s) par un endpoints se metrics fetch karta hai. Yeh metrics time-stamped hote hain aur Prometheus unhe internally Time Series Database (TSDB) mein store karta hai.
+
+Pehle ye data **Write-Ahead Log** file main store karta hai to avoid losing it if the server crashes, fir har 2 ghante mein compress karke blocks bana ke efficient format mein store karta hai. Har metric ke saath labels (jaise instance, status code, method) hote hain jo query karne mein madad karte hain.
+
+Ab prometheus ke paas metrics data aa chuka hai. Fir user PromQL (Prometheus Query Language) se queries karta hai jaise rate() ya sum() jaise functions use karke data analyse karta hai, jo Prometheus UI ya Grafana dashboards par visualize kiya ja sakta hai. Saath hi, Prometheus mein alerting rules banaye ja sakte hain jo Alertmanager ko trigger karte hain aur Alertmanager fir Slack, Email ya webhook ke zariye notification bhejta hai. Agar tu Python ya Java app monitor kar raha hai, to Prometheus-compatible libraries ke through code ke andar custom metrics generate karta hai (jaise HTTP request count, latency), jise Prometheus /metrics endpoint se scrape karta hai, aur baaki process wahi rehta hai.
+
+Is tarah, Prometheus ek full pipeline provide karta hai: metrics collection → efficient storage → query → visualization → alerting, bina kisi agent push ke, sab kuch apne pull system aur label-based architecture pe chalata hai.
+
