@@ -34,4 +34,4 @@ We visualize data to make it easier to understand. Instead of looking at boring 
 
 ### Grafana Hight Level Architecture
 
-<img src="https://drive.google.com/uc?export=view&id=1XQcUlrndHrIs6bNNZ46iS3BmVZBTMQsV" width="850" height="480">
+<img src="https://drive.google.com/uc?export=view&id=1XQcUlrndHrIs6bNNZ46iS3BmVZBTMQsV" width="850" height="460">
