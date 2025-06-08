@@ -139,6 +139,8 @@ Kaise kaam karta hai:
 
 **Plugins**
 
+Plugins are extensions that allow users to add additional functionality and features to their Grafana instance.
+
 Plugins in Grafana are add-ons that extend its functionality. They allow Grafana to connect to new data sources, add custom visualization styles, or integrate with other tools.
 
 ```Grafana ka plugin system usko highly flexible banata hai. Iska use karke naye data sources, naye panel types (visualizations), ya even complete apps add kiye ja sakte hain. Plugin 4 type ke hote hain: Data source plugins (new APIs support karne ke liye), Panel plugins (new graph types jaise gauge, pie chart), App plugins (custom full-page apps, e.g., Kubernetes), aur Backend plugins (Go-based logic). Ye plugins Grafana ke lifecycle ke har part mein integrate ho sakte hain. Jab user koi plugin-based feature use karta hai (jaise ek custom graph), to backend plugin load karta hai aur request flow uske through bhi ja sakta hai. Plugin system Grafana ko ek extendable platform banata hai, sirf ek fixed tool nahi.```
