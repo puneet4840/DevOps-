@@ -39,6 +39,64 @@ We visualize data to make it easier to understand. Instead of looking at boring 
 <br>
 <br>
 
+### Grafana Request Flow Explained (Diagram-Based)
+
+Diagram ek full-stack Grafana system ko dikhata hai jisme:
+- Users (Viewer, Editor, Admin).
+- Grafana Core (Web UI, Backend/Server, Plugin System, Alerting Engine, Permissions Engine).
+- Dashboard Storage.
+- External Data Sources (MySQL, Prometheus, InfluxDB).
+- External Notification Systems.
+
+Hum maan ke chalte hain ek Viewer user Grafana par ek dashboard dekhna chahta hai jisme Prometheus se data aarha hai. Ab dekho poora flow:
+
+**User Initiates Request (via Web UI)**:
+- Viewer Grafana ke Web UI me login karta hai aur ek dashboard open karta hai.
+- Web UI ek request send karta hai Backend/Server ko to load the requested dashboard.
+
+**Permissions Check (via Permissions Engine)**:
+- Jaise hi request Backend tak aati hai, wo sabse pehle Permissions Engine se poochta hai:
+  - “Kya is user ko is dashboard ko dekhne ka access hai?”.
+- Permissions Engine check karta hai:
+  - User ka role (Viewer/Admin/Editor).
+  - Dashboard-level access.
+- Agar access allow hai to flow continue karta hai.
+
+**Read Dashboard Config (from Dashboard Storage)**:
+- Backend authorized hone ke baad Dashboard Storage (e.g. SQLite/PostgreSQL) se dashboard ka structure read karta hai.
+- Ye structure ek JSON document hota hai jisme panels, queries, layout etc. define hota hai.
+
+**Query Execution (to External Data Source)**:
+- Ab backend ko pata hai ki dashboard me kaunsi queries hain.
+- Backend query karta hai external data sources ko jaise:
+  - Prometheus se PromQL query bhejna.
+  - InfluxDB se Flux query.
+  - MySQL se SQL query.
+- Plugin System yahan kaam aata hai: har datasource ke liye ek plugin hota hai jo us API se connect karta hai.
+
+**Response from Data Source**:
+- External source jaise Prometheus ya MySQL us query ka result JSON/structured format me return karta hai backend ko.
+
+**Send Data to Web UI for Rendering**:
+- Backend us data ko receive karke Web UI ko bhejta hai.
+- Web UI panels ko render karta hai with graphs, tables, stat panels etc.
+
+**(Optional) Alerting Engine Trigger**:
+- Agar dashboard panel pe alert configured hai (e.g. “CPU > 90%”):
+  - Backend same query Alerting Engine ko bhi forward karta hai.
+  - Alerting Engine result evaluate karta hai.
+  - Condition match hone par External notification system ko alert bhejta hai (Slack, Email, Webhook etc).
+ 
+**(Optional) Plugin Extension**:
+- Agar dashboard me koi custom panel ya visualization use ho raha hai, to Plugin System usse extend karta hai.
+- Ye client-side aur server-side plugins dono include karta hai.
+
+**Dashboard Rendered to User**:
+- Final visual data user ke browser me display hota hai.
+- Viewer ya Editor real-time graphs, metrics, logs dekh sakta hai.
+
+<br>
+
 ### Explanation of Architecture
 
 Grafana works as a web server with a frontend and backend architecture. When you install Grafana on Linux (using apt, yum, or a standalone binary), it runs as a single integrated instance—but internally, it follows a client-server architecture with distinct frontend and backend components.
