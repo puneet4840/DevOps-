@@ -35,3 +35,40 @@ We visualize data to make it easier to understand. Instead of looking at boring 
 ### Grafana Hight Level Architecture
 
 <img src="https://drive.google.com/uc?export=view&id=1XQcUlrndHrIs6bNNZ46iS3BmVZBTMQsV" width="850" height="460">
+
+<br>
+<br>
+
+### Explanation of Architecture
+
+Grafana works as a web server with a frontend and backend architecture. When you install Grafana on Linux (using apt, yum, or a standalone binary), it runs as a single integrated instance—but internally, it follows a client-server architecture with distinct frontend and backend components.
+
+There are multiple components in Grafana architecture:
+- Frontend.
+- Backend.
+- Internal Database.
+- Data Source.
+- Plugins.
+- Alert System.
+
+
+**Frontend**:
+
+The frontend of grafana is a web ui where user access the grafana dashboard and controls grafana. It is build using **React** and **TypeScript**.
+
+Frontend wo interface hota hai jise users browser mein dekhte hain. Ye React aur TypeScript se bana hota hai.
+
+User yahan:
+- Dashboards dekhte hain.
+- Panels configure karte hain.
+- Graph banate hain.
+- Query likhte hain.
+- Alerts set karte hain.
+
+User jo bhi request karta hai (like ek graph open karna), wo backend ko forward hoti hai.
+
+```Grafana का frontend user के लिए वह visual interface होता है जिससे वो browser के ज़रिये dashboards देखते, edit करते और query लिखते हैं. ये React और TypeScript technologies का use करता है. जब user एक dashboard open करता है या एक graph के लिए query लिखता है या alert configure करता है तो ये सब actions frontend के ज़रिये होती हैं. लेकिन frontend सिर्फ एक UI layer है, उसका काम सिर्फ user input लेना और response को दिखाना होता है. जो भी request होती है (जैसे: “prometheus से CPU usage लेकर आओ”) वो HTTP/REST api के ज़रिये backend को भेजी जाती है. Backend फिर actual processing करता है. इसलिए frontend को हम presentation layer कहते हैं. जो user और grafana system के बीच bridge का काम करता है.```
+
+<br>
+
+**Backend**
