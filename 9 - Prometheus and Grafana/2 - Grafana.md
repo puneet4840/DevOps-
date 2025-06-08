@@ -72,3 +72,23 @@ User jo bhi request karta hai (like ek graph open karna), wo backend ko forward 
 <br>
 
 **Backend**
+
+Backend is the core engine of grafana and it is written in **GO** (Golang) language. The main work of backend is to handle the request coming from frontend.
+
+Backend Grafana ka core engine hai jo user se aayi request ko handle karta hai.
+
+Ye Go (Golang) language mein likha gaya hai.
+
+Iska kaam:
+- Frontend se request lena.
+- Data sources se connect hona.
+- Query run karna.
+- Result ko frontend tak bhejna.
+- Alert rules evaluate karna.
+- Authentication validate karna.
+- Plugin load karna.
+
+Ye APIs ke through kaam karta hai (RESTful APIs)
+
+```Grafana का backend एक Go (Golang) based HTTP server है जो frontend से आयी requests को receive करता है उन्हें process करता है और उनका response वापस भेजता है. ये system का core processing engine है. जब user कोई query submit करता है backend उस query को parse करता है फिर configured data source (e.g., prometheus, influxDb) से communicate करता है और वहां से जो result आता है उससे parse करके frontend को भेज देता है. इसके अलावा backend authentication check करता है, Alter evaluation करता है, plugin manage करता है और internal database से dashboard और settings retrieve/save करता है. Backend के पास APIs होती हैं जिनसे external tools भी grafana को programatically control कर सकते हैं (like provisioning, user management).```
+
