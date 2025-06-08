@@ -92,3 +92,20 @@ Ye APIs ke through kaam karta hai (RESTful APIs)
 
 ```Grafana का backend एक Go (Golang) based HTTP server है जो frontend से आयी requests को receive करता है उन्हें process करता है और उनका response वापस भेजता है. ये system का core processing engine है. जब user कोई query submit करता है backend उस query को parse करता है फिर configured data source (e.g., prometheus, influxDb) से communicate करता है और वहां से जो result आता है उससे parse करके frontend को भेज देता है. इसके अलावा backend authentication check करता है, Alter evaluation करता है, plugin manage करता है और internal database से dashboard और settings retrieve/save करता है. Backend के पास APIs होती हैं जिनसे external tools भी grafana को programatically control कर सकते हैं (like provisioning, user management).```
 
+<br>
+
+**Internal Database**
+
+Grafana ek internal DB use karta hai jisme sirf configuration aur metadata store hota hai, jaise:
+- User accounts.
+- Teams.
+- Dashboards.
+- Data source configs.
+- Alert definitions.
+- Permissions.
+
+By default ye SQLite use karta hai (lightweight), lekin production ke liye MySQL ya PostgreSQL recommend hai.
+
+Ye database metrics ka data store nahi karta, sirf config data store karta hai.
+
+```Grafana ke paas apna ek internal database hota hai jisme sirf configuration aur metadata store hota hai – actual monitoring data nahi. Default DB SQLite hota hai, lekin production mein MySQL ya PostgreSQL recommend kiya jata hai. Isme user accounts, team membership, dashboard definitions, data source configurations, alert rules, API tokens, plugin settings, aur permission mappings stored hote hain. Jab user ek dashboard create karta hai, to wo dashboard ek JSON object ke form mein DB mein save hota hai. Jab dashboard open hota hai, to backend DB se data fetch karke frontend ko deta hai. Internal DB Grafana ke stability aur consistency ke liye backbone ka kaam karta hai.```
