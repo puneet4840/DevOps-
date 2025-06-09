@@ -130,3 +130,6 @@ sudo systemctl start prometheus
 sudo systemctl status prometheus
 ```
 
+Now your prometheus is running on ```http://localhost:9090```.
+
+You can access prometheus on browser using ```http://localhost:9090```.
