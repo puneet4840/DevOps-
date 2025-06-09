@@ -140,3 +140,47 @@ Ab prometheus ke paas metrics data aa chuka hai. Fir user PromQL (Prometheus Que
 
 Is tarah, Prometheus ek full pipeline provide karta hai: metrics collection → efficient storage → query → visualization → alerting, bina kisi agent push ke, sab kuch apne pull system aur label-based architecture pe chalata hai.
 
+<br>
+<br>
+
+### Where Can Prometheus Run and Work Successfully?
+
+**On Local Machines**:
+
+You can run Prometheus directly on your local laptop, PC, or server.
+- Linux (most common).
+- Windows.
+- macOS.
+
+Installation: Download the binary, extract it, run it — no complex setup needed.
+
+Good for local development, testing, or PoC (Proof of Concept) setups.
+
+**In Docker Containers**:
+
+Prometheus has an official Docker image.
+
+Example command:
+```
+docker run -d -p 9090:9090 --name=prometheus prom/prometheus
+```
+
+You can mount your prometheus.yml config file as a Docker volume.
+
+Perfect for easy deployment, testing, or running on containerized infrastructure.
+
+**In Cloud VMs (IaaS)**:
+- You can deploy Prometheus on any cloud provider’s virtual machine.
+- Suitable for cloud-hosted infrastructure monitoring setups.
+
+**In Kubernetes Clusters**:
+
+Prometheus is built cloud-native, and works beautifully inside Kubernetes.
+
+Deployment methods:
+- Prometheus Operator (recommended for production).
+- Helm Charts.
+- YAML Manifests.
+
+You can monitor your entire Kubernetes cluster and workloads from within the cluster itself.
+
