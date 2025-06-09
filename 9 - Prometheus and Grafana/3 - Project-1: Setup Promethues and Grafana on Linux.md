@@ -66,3 +66,67 @@ sudo chown -R prometheus:prometheus /etc/prometheus
 sudo chown -R prometheus:prometheus /var/lib/prometheus
 ```
 
+<br>
+
+### Step-2: Create Prometheus Config File
+
+Create ```/etc/prometheus/prometheus.yml```
+
+```
+sudo touch /etc/prometheus/prometheus.yml
+```
+
+Write the below yaml code in prometheus.yml file.
+
+```
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['localhost:9100']
+```
+
+<br>
+
+### Step-3: Create Systemd Service for Prometheus
+
+Create ```/etc/systemd/system/prometheus.service```
+
+Write the below code in prometheus.service
+
+```
+[Unit]
+Description=Prometheus Monitoring
+After=network.target
+
+[Service]
+User=prometheus
+Group=prometheus
+Type=simple
+ExecStart=/usr/local/bin/prometheus \
+  --config.file=/etc/prometheus/prometheus.yml \
+  --storage.tsdb.path=/var/lib/prometheus/ \
+  --web.console.templates=/etc/prometheus/consoles \
+  --web.console.libraries=/etc/prometheus/console_libraries
+
+[Install]
+WantedBy=multi-user.target
+```
+
+- **Reload systemd, enable and start Prometheus**
+```
+sudo systemctl daemon-reload
+
+sudo systemctl enable prometheus
+
+sudo systemctl start prometheus
+
+sudo systemctl status prometheus
+```
+
