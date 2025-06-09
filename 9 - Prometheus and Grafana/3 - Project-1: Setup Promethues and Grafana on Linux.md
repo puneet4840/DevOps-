@@ -67,6 +67,7 @@ sudo chown -R prometheus:prometheus /var/lib/prometheus
 ```
 
 <br>
+<br>
 
 ### Step-2: Create Prometheus Config File
 
@@ -92,6 +93,7 @@ scrape_configs:
       - targets: ['localhost:9100']
 ```
 
+<br>
 <br>
 
 ### Step-3: Create Systemd Service for Prometheus
@@ -133,3 +135,74 @@ sudo systemctl status prometheus
 Now your prometheus is running on ```http://localhost:9090```.
 
 You can access prometheus on browser using ```http://localhost:9090```.
+
+<br>
+<br>
+
+### Step-4: Install Node Exporter on your local system (for system metrics).
+
+```
+# Download Node Exporter
+wget https://github.com/prometheus/node_exporter/releases/download/v1.9.1/node_exporter-1.9.1.linux-amd64.tar.gz
+
+# Extract and move binary
+tar -xvf node_exporter-1.9.1.linux-amd64.tar.gz
+sudo cp node_exporter-1.9.1.linux-amd64/node_exporter /usr/local/bin/
+
+# Create a system user
+sudo useradd --no-create-home --shell /bin/false node_exporter
+
+# Create systemd service
+sudo touch /etc/systemd/system/node_exporter.service
+
+# Write below code in node_exporter.service
+[Unit]
+Description=Node Exporter
+After=network.target
+
+[Service]
+User=node_exporter
+Group=node_exporter
+Type=simple
+ExecStart=/usr/local/bin/node_exporter
+
+[Install]
+WantedBy=multi-user.target
+
+
+# Start and enable Node Exporter
+sudo systemctl daemon-reload
+sudo systemctl enable node_exporter
+sudo systemctl start node_exporter
+sudo systemctl status node_exporter
+```
+
+Now Node_Exporter is running on ```http://localhost:9100```.
+
+You can access node_exporter in your browser using ```http://localhost:9100```.
+
+<br>
+<br>
+
+### Step-5: Install Grafana
+
+```
+# Add Grafana APT repository
+sudo apt-get install -y software-properties-common
+sudo add-apt-repository "deb https://packages.grafana.com/oss/deb stable main"
+
+# Add Grafana GPG key
+wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+
+# Install Grafana
+sudo apt-get update
+sudo apt-get install grafana
+
+# Start and enable Grafana
+sudo systemctl start grafana-server
+sudo systemctl enable grafana-server
+sudo systemctl status grafana-server
+```
+
+You can access grafana in your browser at ```http//:localhost:3000```.
+
