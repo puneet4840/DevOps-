@@ -184,3 +184,8 @@ Deployment methods:
 
 You can monitor your entire Kubernetes cluster and workloads from within the cluster itself.
 
+<br>
+<br>
+
+## Setup Promethues on Linux machine and view dashboards in grafana.
+
