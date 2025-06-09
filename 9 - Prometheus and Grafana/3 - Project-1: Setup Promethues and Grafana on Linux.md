@@ -206,3 +206,30 @@ sudo systemctl status grafana-server
 
 You can access grafana in your browser at ```http//:localhost:3000```.
 
+<br>
+<br>
+
+### Connect Prometheus Data Source in Grafana
+
+- Go to Grafana web UI.
+- Click on Connections in left sidebar.
+- Click on Data Sources.
+- Click in Add Data Source.
+- Choose Prometheus.
+- URL: ```http://localhost:9090```.
+- Click Save & Test
+
+Grafana is now connected with prometheus.
+
+<br>
+<br>
+
+### Import Ubuntu System Metrics Dashboard
+
+- In Grafana, click + → Import.
+- Enter Dashboard ID: ```1860```. (This is a popular premade Node Exporter dashboard).
+- Click Load.
+- Select Prometheus as the data source.
+- Click Import.
+
+**DONE !!!!!**
