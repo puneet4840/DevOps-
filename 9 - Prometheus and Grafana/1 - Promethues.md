@@ -187,5 +187,163 @@ You can monitor your entire Kubernetes cluster and workloads from within the clu
 <br>
 <br>
 
+### Prometheus.yml file Deep Dive
+
+```prometheus.yml``` **File Kya Hai?**
+
+prometheus.yml Prometheus ki core configuration file hai jo define karti hai ki kahan se metrics collect karne hain, kaise store karne hain, aur kaise alert bhejne hain — bina is file ke Prometheus kuch nahi kar sakta.
+
+```prometheus.yml``` prometheus ki ek configuration file hoti hai jisko prometheus use karta hai jo Prometheus ko batati hai:
+- Kahan se data lena hai? (target servers, exporters).
+- Kitne time pe data lena hai? (scrape interval).
+- Kis naam se job run karni hai?
+- Alerting rules kaha se load karne hain?
+- External systems (jaise Alertmanager, remote_write) se kaise connect hona hai?
+
+Yeh file Prometheus ke start hone se pehle hi load ho jaati hai.
+
+**Yeh File Kahan Located Hoti Hai?**
+
+By default:
+- To ```prometheus.yml``` usually milti hai:
+```
+/etc/prometheus/prometheus.yml  (Linux default)
+./prometheus/prometheus.yml     (binary folder ke andar)
+/app/config/prometheus.yml      (Docker Compose mein)
+```
+
+Par tum prometheus ko start karte waqt custom path bhi de sakta ho:
+```
+./prometheus --config.file=./my-config/prometheus.yml
+```
+
+**Prometheus Is File Ka Use Kaise Karta Hai?**
+
+Jab Prometheus start hota hai:
+- Sabse pehle woh ```prometheus.yml``` file ko parse karta hai.
+- Har section (like global, scrape_configs, alerting, rule_files) ko samajh ke internal memory mein laata hai.
+- Us config ke base pe woh:
+  - Targets ko scrape karta hai.
+  - Alert rules load karta hai.
+  - Alertmanager se connect karta hai.
+
+Agar file mein koi syntax error hai, to Prometheus start nahi karega. Tum log mein error dekh sakte ho.
+
+**Prometheus File Structure**
+
+```prometheus.yml``` file have mainly 4 sections:
+- Global.
+- scrape_configs.
+- rule_files.
+- alerting.
+
+High-Level Structure
+```
+prometheus.yml
+├── global
+├── scrape_configs
+│   ├── job_name
+│   ├── static_configs / file_sd_configs / relabel_configs
+├── alerting
+│   └── alertmanagers
+├── rule_files
+```
+
+Example:
+```
+global:
+ ...
+
+scrape_configs:
+ ...
+
+rule_files:
+ ...
+
+alerting:
+ ...
+
+```
+
+
+**1 - global**:
+
+We define the default behavior of prometheus in this section. ```global``` section wo jagah hai jahan tu Prometheus ke default behavior define karta hai — matlab agar tu kisi scrape job ke andar alag se nahi batata, to ye defaults use honge.
+
+Components:
+- ```scrape_interval```: Prometheus har kitni der baad data collect kare — e.g. har 15 seconds mein jaake exporters se metrics lega.
+- ```evaluation_interval```: Prometheus har kitni der mein alert rules evaluate kare — e.g. har 15 seconds mein dekhega ki koi alert condition to true nahi ho gayi.
+- ```scrape_timeout```: Agar target 10s mein response nahi deta, to Prometheus request ko cancel kar dega.
+
+Example:
+```
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  scrape_timeout: 10s
+```
+
+**2 - scrape_configs**:
+
+We define target in this section. Ye sabse important section hai jo batata hai ki Prometheus kis-kis system se data collect kare, unka IP address kya hai, port kya hai, aur kis naam se unhe identify karna hai.
+
+Components:
+- ```job_name```: Har target group ka naam — is naam se Grafana ya query mein use karte ho.
+- ```static_configs```: Target list manually define karta hai.
+- ```targets```: IP:Port list jahan Prometheus jaake metrics read karega (/metrics endpoint by default).
+- ```labels```: Extra info jaise environment, service type, location etc. (optional).
+
+Agar tu 10 Linux servers monitor kar raha hai jisme node_exporter chal raha hai, to un sabko ek job mein define karega.
+
+Example:
+```
+scrape_configs:
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['192.168.1.10:9100', '192.168.1.11:9100']
+```
+
+**3 - rule_files**
+
+Agar tum rule ko directly ```prometheus.yml``` file main nahi likh rahe ho to alert rules ko ek yaml file main likhkar ```rule_files``` section main us file ko define kar dete hain jisse prometheus files se directly rules ko fetch kar leta hai.
+
+Example:
+```
+rule_files:
+  - 'alerts.yml'
+```
+
+```alert.yml```:
+```
+groups:
+  - name: instance-down
+    rules:
+      - alert: InstanceDown
+        expr: up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Instance {{ $labels.instance }} down"
+```
+
+**4 - alerting**
+
+Yeh section batata hai ki alerts evaluate hone ke baad Prometheus kisko notify kare — Alertmanager ko.
+- Alertmanager fir woh alerts ko forward karega Slack, Email, Webhook ya PagerDuty pe.
+
+Example:
+```
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets: ['localhost:9093']
+```
+
+Tu chaahta hai ki agar CPU 90% se upar jaaye, to Slack pe message aaye. Tu Prometheus se Alertmanager connect karta hai, aur Alertmanager se Slack.
+
+<br>
+<br>
+
 ## Setup Promethues on Linux machine and view dashboards in grafana.
 
