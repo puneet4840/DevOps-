@@ -36,7 +36,7 @@ cd node_exporter-1.8.0.linux-amd64
 ./node_exporter
 ```
 
-You can access metrics on ```http://<vm-public-ip>:9100/metrics
+You can access metrics on ```http://<vm-public-ip>:9100/metrics```.
 
 <br>
 
