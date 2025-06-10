@@ -138,3 +138,94 @@ This will start:
 
 Node Exporter still running on your Ubuntu host at ```http://<vm-public-ip>:9100```.
 
+<br>
+
+### Step-4: Verify Prometheus Targets
+
+Go to ```http://localhost:9090/targets```.
+
+You should see:
+- node_exporter (up).
+
+<br>
+
+### Step-5: Access prometheus and grafana in browser
+
+Access prometheus and grafana in your browser.
+
+Prometheus: ```http://localhost:9090```
+
+Grafana: ```http://localhost:3000```
+
+<br>
+
+### Step-6: Connect Prometheus to Grafana
+
+After accessing the prometheus and grafana, Now connect grafana with prometheus.
+
+- Open ```http://localhost:3000```.
+- Login- Username: ```admin``` and Password: ```admin```.
+- Go to **Connections -> Data Sources**.
+- Click on **Add Data Source** and select **prometheus**.
+- Set URL to: ```http://prometheus:9090```.
+- Click **Save & Test**.
+
+**Note**:
+
+If you type ```http://localhost:9090``` when try to connect prometheus with grafana. It will an error.
+
+Because:
+- You have Prometheus and Grafana running as Docker containers using Docker Compose.
+- Both services are connected to a custom Docker network called connection (you did this part correctly in the Compose file).
+- But Grafana is trying to connect to localhost:9090 to reach Prometheus —and that won’t work inside Docker containers.
+
+Why?
+
+Inside Docker:
+- When Grafana tries to connect to localhost it tries to connect to itself (Grafana container).
+- But Prometheus is in a different container.
+- To talk to Prometheus, Grafana should use the service name you gave to Prometheus inside Docker Compose.
+
+You need to use the service name of the Prometheus container.
+
+Iska matlab hai ki jab do services container ke ander run ho rhi ho aur hum unko localhost se browser par access kar rhe ho to vo dono service ek dusre ke service name se connect hongi na ki localhost se. Esa isliye kyuki localhost se container khud ko access karne ka try karta hai.
+
+<br>
+<br>
+
+### Step-7: Create Dashboard or Import Dashboard in Grafana
+
+- Go to Dashboards → Import
+- Enter dashboard ID 1860 (official Node Exporter dashboard).
+- Click Load.
+- Select your Prometheus data source.
+- Click Import.
+
+Done !!! — you now have real-time Ubuntu system metrics monitored by Node Exporter → Prometheus → Grafana.
+
+<br>
+
+**What You'll See on the Dashboard**:
+- CPU Usage per core.
+- Memory utilization.
+- Disk space & I/O.
+- Network bandwidth.
+- Load average.
+- System uptime.
+- Filesystem stats
+
+<br>
+
+### Step-8: To Stop and Clean Everything
+
+To stop prometheus and grafana containers.
+
+```
+docker-compose down
+```
+
+
+And to stop Node Exporter (if still running in the foreground):
+- Press Ctrl+C.
+- Or kill its process via ```killall node_exporter```.
+
