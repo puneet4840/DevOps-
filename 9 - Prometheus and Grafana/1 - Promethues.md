@@ -342,6 +342,23 @@ alerting:
 
 Tu chaahta hai ki agar CPU 90% se upar jaaye, to Slack pe message aaye. Tu Prometheus se Alertmanager connect karta hai, aur Alertmanager se Slack.
 
+**Example prometheus.yml file**
+
+```
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+
+  - job_name: 'node_exporter'
+    static_configs:
+      - targets: ['localhost:9100']
+```
+
+
 <br>
 <br>
 
