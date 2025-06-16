@@ -98,3 +98,33 @@ There are multiple types of shell in linux:
   - Better history management.
 - Executable path: ```/bin/zsh```.
 
+<br>
+<br>
+
+### Write multiple commands and run at once.
+
+We can write multiple commands sperated by semi-colon(;) and it can be run as a single command.
+
+Syntax:
+```
+command-1;command-2
+```
+
+Example:
+```
+date;who
+```
+
+It will give ouput of current date and current user.
+
+### Check shell type in you linux machine.
+
+You can check which type of shell your linux is currently using by below command.
+
+Example:
+```
+echo $SHELL
+```
+
+Output: ```/bin/bash```
+
