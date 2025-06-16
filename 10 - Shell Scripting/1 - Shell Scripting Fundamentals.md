@@ -30,16 +30,71 @@ A shell script is essentially a text file containing a sequence of shell command
 
 Shell scripts ka extension hota hai: ```.sh```. 
 
-<br>
 
 ### What is Shell Scripting?
 
 ```Shell scripting एक तरह की programming होती है, जिसमे आप shell commands को sequence में लिखते हो एक file के अंदर ताकि वो सभी commands automatically चल सकें.```
 
-<br>
 
 ### Why Shell Scripting?
 
 ```हम shell scripting को कोई भी task automate करने के लिए use करते हैं|```
 
 ```Normally जब हम linux मैं काम करते हैं तो commands के through करते हैं तो linux terminal पर एक बार मैं एक ही command का use करते हैं, तो अगर हमको कोई task automate करना है मतलब खुद  से कोई task complete करना है तो उसके लिए हम shell script लिखते हैं, जिसमे हम वही linux की commands को sequence मैं लिख देते हैं और script file को run कर देते हैं| फिर script file को run करने पर वो script मैं लिखी हुई commands एक-एक करके run होने लगती हैं जिससे वो task automatically complete हो जाता है बिना बार-बार commands run किये|```
+
+
+### Types of Shell
+
+There are multiple types of shell in linux:
+
+**sh (Bourne Shell)**:
+- Developer: It is developed Stephen Bourne (AT&T Bell Labs).
+- It was the default shell in early Unix systems.
+- Simple, reliable, and portable.
+- Key Features:
+  - Supports basic scripting constructs: loops, conditions, variables.
+  - Highly portable across different Unix systems.
+- Executable path: ```/bin/sh```.
+ 
+**Bash (Bourne Again Shell)**:
+- Developer: GNU Project.
+- It is the enhancement and replacement for Bourne Shell.
+- Most widely used shell today in Linux distributions.
+- Supports:
+  - Command history.
+  - Auto-completion.
+  - Scripting improvements.
+  - Arithmetic operations.
+  - Job control.
+- Executable path: ```/bin/bash```.
+
+**C Shell (csh)**:
+- Developer: Bill Joy (University of California, Berkeley).
+- Syntax resembles C programming language.
+- Introduced features like:
+  - Aliases.
+  - Command history.
+  - Job control.
+- Executable path: ```/bin/csh```.
+
+**Korn Shell (ksh)**:
+- Developer: David Korn (AT&T Bell Labs).
+- Combines features of both Bourne Shell and C Shell.
+- Offers:
+  - Improved scripting capabilities.
+  - Better arithmetic operations.
+  - Command history.
+  - Aliases.
+ - Executable path: ```/bin/ksh```.
+
+**Z Shell (zsh)**:
+-  Highly powerful and customizable shell.
+-  Combines features from Bash, ksh, and csh.
+-  Supports:
+  - Plugin systems.
+  - Theme support (like ```oh-my-zsh```).
+  - Advanced tab-completion.
+  - Extended globbing patterns.
+  - Better history management.
+- Executable path: ```/bin/zsh```.
+
