@@ -117,6 +117,8 @@ date;who
 
 It will give ouput of current date and current user.
 
+<br>
+
 ### Check shell type in you linux machine.
 
 You can check which type of shell your linux is currently using by below command.
@@ -127,4 +129,8 @@ echo $SHELL
 ```
 
 Output: ```/bin/bash```
+
+<br>
+
+### Write Your First Shell Script
 
