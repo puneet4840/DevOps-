@@ -25,3 +25,21 @@ A shell script is a text file with ```.sh``` extension in which we write shell c
 A shell script is essentially a text file containing a sequence of shell commands. Instead of typing each command manually, you can write them all in a script and execute them together. It’s a way to automate tasks on a system.
 
 ```Shell script एक text फाइल होती है जिसमे आप multiple shell commands लिखते हो, और इस file को execute करते हो जिससे script के अंदर लिखी हुई commands एक-एक करके run होती है|```
+
+**File Extension**:
+
+Shell scripts ka extension hota hai: ```.sh```. 
+
+<br>
+
+### What is Shell Scripting?
+
+```Shell scripting एक तरह की programming होती है, जिसमे आप shell commands को sequence में लिखते हो एक file के अंदर ताकि वो सभी commands automatically चल सकें.```
+
+<br>
+
+### Why Shell Scripting?
+
+```हम shell scripting को कोई भी task automate करने के लिए use करते हैं|```
+
+```Normally जब हम linux मैं काम करते हैं तो commands के through करते हैं तो linux terminal पर एक बार मैं एक ही command का use करते हैं, तो अगर हमको कोई task automate करना है मतलब खुद  से कोई task complete करना है तो उसके लिए हम shell script लिखते हैं, जिसमे हम वही linux की commands को sequence मैं लिख देते हैं और script file को run कर देते हैं| फिर script file को run करने पर वो script मैं लिखी हुई commands एक-एक करके run होने लगती हैं जिससे वो task automatically complete हो जाता है बिना बार-बार commands run किये|```
