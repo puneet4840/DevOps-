@@ -172,3 +172,15 @@ It starts with the characters:
 
 When you run this script, the operating system will use ```/bin/bash``` to interpret and execute the commands inside the script.
 
+**How does Operating System handles it internally?**
+
+Jab aap koi script execute karte ho directly terminal se (jaise ```./script.sh```), to:
+- Linux OS script file ke first line ko read karta hai.
+- Wo line agar ```#!``` se start hoti hai, to OS samajh jaata hai ki:
+  - "Is script ko kaunse interpreter ke through chalana hai."
+- OS us interpreter program ko call karta hai (jaise ```/bin/bash```, ```/usr/bin/python```).
+- Interpreter baaki script ka code line-by-line execute karta hai.
+
+NOTE: Bina Shebang ke, agar aap script ko ```./``` ke saath run karoge, to aapko "command not found" ya syntax error mil sakta hai, ya OS default shell use karega (jo mismatch ho sakti hai).
+
+
