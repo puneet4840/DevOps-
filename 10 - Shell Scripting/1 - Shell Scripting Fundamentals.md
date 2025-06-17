@@ -421,10 +421,3 @@ Syntax:
 ```
 export varname=value
 ```
-
-Example:
-```
-export company=Nagarro
-```
-
-Ab agar aap new shell ya koi process call karte ho, to wo bhi ```$company``` access kar sakta hai.
