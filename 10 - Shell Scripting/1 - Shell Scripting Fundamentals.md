@@ -137,3 +137,23 @@ Output: ```/bin/bash```
 ```Shell script लिखने के लिए हमको एक file बनानी होती है जिसका extension .sh होता है. फिर उस file के अंदर हम linux की commands लिखते हैं|```
 
 ```Shell script की अंदर सबसे पहली चीज़ जो हम लिखते हैं वो she-bang लाइन होती है| फिर इसके बाद अपनी script लिखते हैं|```
+
+Example:
+```
+#!/bin/bash      #She-bang 
+```
+
+**What is She-Bang?**
+
+The shebang line is the very first line in a script file that tells the operating system which interpreter to use to execute the script.
+
+It starts with the characters:
+```
+#!
+```
+
+(called "shebang" or "hash-bang" because of the ```#``` and ```!``` characters), followed immediately (without any spaces) by the absolute path of the interpreter program which is the path of shell.
+
+```She-Bang shell script की सबसे पहली line होती है जो operating system को यह बताती है की script को execute करने के लिए कौन से shell का use करना है|```
+
+```क्युकी ऊपर हमने कुछ shell के बारे मैं पढ़ा था जो अलग-अलग type के थे, तो उनमे से कोनसा shell इस script को run करने के लिए use करना है ये हमको she-bang line को लिखकर operating system को बताना होता है| फिर operating system फिर उसी shell से इस script को run करता है|``` 
