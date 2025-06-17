@@ -417,3 +417,17 @@ Syntax:
 ```
 export varname=value
 ```
+
+<br>
+
+**NOTE**:
+
+Shell scripting mein sabhi variables by default string (text) hote hai.
+
+Jaise:
+```
+x=5
+y="hello"
+```
+
+Shell ```x``` ko bhi string maanta hai, aur ```y``` ko bhi, kyunki shell ke liye sab kuch ek character sequence hota hai.
