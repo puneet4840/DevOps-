@@ -134,7 +134,7 @@ Output: ```/bin/bash```
 
 ### Write Your First Shell Script
 
-```Shell script लिखने के लिए हमको एक file बनानी होती है जिसका extension .sh होता है. फिर उस file के अंदर हम linux की commands लिखते हैं| जिसको collectively shell script बोला जाता है| ```
+```Shell script लिखने के लिए हमको एक file बनानी होती है जिसका extension .sh होता है. और उस file को execute permission देनी होती है| फिर उस file के अंदर हम linux की commands लिखते हैं| जिसको collectively shell script बोला जाता है| ```
 
 ```Shell script की अंदर सबसे पहली चीज़ जो हम लिखते हैं वो she-bang लाइन होती है| फिर इसके बाद अपनी script लिखते हैं|```
 
