@@ -217,4 +217,214 @@ Example:
 - ```ctrl + c``` to terminate.
 - ```ctrl + z``` to stop.
 
+<br>
 
+### Comment in Shell Scripting
+
+Comments are not interpreted by shell.
+
+We can write comments in shell scripting in two ways:
+- Single line comment.
+- Multi-line comment.
+
+**Single Line Comment**:
+
+We can write single line comment using ```#``` symbol before any line.
+
+Example:
+```
+#!/bin/bash
+
+# This is a single line comment.
+```
+
+**Multi Line Comment**:
+
+We can write multi line comment using below syntax.
+
+Syntax:
+```
+<<comment
+
+write your multi line comment here
+
+comment
+```
+
+Example:
+```
+<<comment
+
+This is
+your
+multi line comment.
+
+comment
+```
+
+<br>
+
+### Variables in Shell Scripting
+
+A variable is a container to hold some data.
+
+A variable could contain any alphabet (a-z,A-Z) or any digit (0-9) or an underscore (_).
+
+Note:
+- A variable name must start with an alphabet or underscore.
+- It can never start with a number.
+- ```=``` ke aage ya peeche koi space nahi hota.
+- Shell scripting mein sabhi variables by default string (text) hote hai.
+
+Jaise:
+```
+
+```
+
+**Types of Variables**:
+
+There are two types of variables in shell:
+- User Defined Variables.
+- System Defined OR Environment Variables.
+
+**User Defined Variables**:
+
+Variables which are created by user in the script is are user defined variables.
+
+```वो variables जो user खुद define करता है shell script के अंदर, वो user defined variables होते हैं|```
+
+Ye variables:
+- Sirf current shell/session ke liye active hote hain. Jab tak shell band nahi hota, tab tak available rehte hain.
+
+User-defined variable ka scope hota hai:
+- Sirf us shell ya script tak jahan wo define hua hai.
+- Agar aap new terminal open karte ho, to variable fir se define karna padega.
+
+**Defining Variables**:
+
+Syntax:
+```
+variable_name=<variable_data>
+```
+
+Example:
+```
+name="Puneet"
+age=25
+```
+
+**Accessing Variables**:
+
+To access the value of a variable, use a ```$``` sign before the variable.
+
+Syntax:
+```
+$variable_name
+```
+
+Example:
+```
+echo $name
+echo $age
+```
+
+**Vaild variable names**:
+
+```
+ABC
+ab
+_AB_3
+AV232
+```
+
+**Invalid variable names**:
+- We can not use integer or any special character at the beginnig of variable.
+
+```
+2AN
+2_an
+!ABC
+$ABC
+&abc
+```
+
+<br>
+
+**System-defined (Environment) Variables**:
+
+These variables are predefined by the operating system.
+
+System defined OR Environment variables woh predefined ya exported variables hote hain:
+- Jo OS ke through define OR create kiye jate hain.
+- Ye variables poore system ya sabhi child processes ke liye accessible hote hain.
+- Inka use system configurations, user info, paths, language, terminal settings, etc. ko store karne ke liye hota hai.
+
+Environment variables:
+- Global level ke variables hote hain.
+- Jab aap koi command run karte ho (jaise bash, python, etc.), to wo bhi in variables ko access kar sakta hai.
+
+**Example of Common Environment Variables**:
+
+| Variable   | Purpose                                 |
+| ---------- | --------------------------------------- |
+| `$HOME`    | User ka home directory                  |
+| `$USER`    | Current logged in username              |
+| `$PATH`    | Commands ko search karne ke directories |
+| `$SHELL`   | Default shell                           |
+| `$PWD`     | Present Working Directory               |
+| `$LANG`    | System language setting                 |
+| `$EDITOR`  | Default text editor (like vim, nano)    |
+| `$LOGNAME` | Login name                              |
+| `$UID`     | User ID                                 |
+| `$TERM`    | Terminal type                           |
+
+**Accessing Environment Varibales**:
+
+To access these variables simple use ```$``` and variable name.
+
+Syntax:
+```
+$<variable_name>
+```
+
+Example:
+```
+echo $HOME
+echo $USER
+echo $SHELL
+```
+
+Output:
+```
+/home/puneet
+puneet
+/bin/bash
+```
+
+**Check All Environment Variables in Linux**:
+
+To check all environment variables present on your linux system use:
+
+```
+env
+
+OR
+
+printenv
+```
+
+**Environment Variable Banane Ka Tarika**:
+
+Agar aap apna variable environment mein export karna chahte ho (taaki wo child shells mein bhi kaam kare), to ```export``` command ka use karte hain.
+
+Syntax:
+```
+export varname=value
+```
+
+Example:
+```
+export company=Nagarro
+```
+
+Ab agar aap new shell ya koi process call karte ho, to wo bhi ```$company``` access kar sakta hai.
