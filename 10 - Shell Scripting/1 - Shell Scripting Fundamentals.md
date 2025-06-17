@@ -157,3 +157,18 @@ It starts with the characters:
 ```She-Bang shell script की सबसे पहली line होती है जो operating system को यह बताती है की script को execute करने के लिए कौन से shell का use करना है|```
 
 ```क्युकी ऊपर हमने कुछ shell के बारे मैं पढ़ा था जो अलग-अलग type के थे, तो उनमे से कोनसा shell इस script को run करने के लिए use करना है ये हमको she-bang line को लिखकर operating system को बताना होता है| फिर operating system फिर उसी shell से इस script को run करता है|``` 
+
+**Syntax of a Shebang Line**:
+
+```
+#!/path/to/interpreter
+```
+
+**Example for a Bash script**:
+
+```
+#!/bin/bash
+```
+
+When you run this script, the operating system will use ```/bin/bash``` to interpret and execute the commands inside the script.
+
