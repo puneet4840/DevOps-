@@ -186,7 +186,7 @@ NOTE: Bina Shebang ke, agar aap script ko ```./``` ke saath run karoge, to aapko
 
 <br>
 
-**First Shell Script**
+### First Shell Script
 
 This is a hello world script. It will print hello world.
 
@@ -198,3 +198,23 @@ echo "Hello World"
 ```
 
 Output: Hello World
+
+### Run Your Script
+
+Three methods to run your script:
+
+- ./script_name
+- /path/to/script
+- bash script_name
+
+Example:
+- ./first-script.sh
+- /home/puneet/first-script.sh
+- bash first-script.sh
+
+### Stop the Script
+
+- ```ctrl + c``` to terminate.
+- ```ctrl + z``` to stop.
+
+
