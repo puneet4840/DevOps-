@@ -276,10 +276,6 @@ Note:
 - ```=``` ke aage ya peeche koi space nahi hota.
 - Shell scripting mein sabhi variables by default string (text) hote hai.
 
-Jaise:
-```
-
-```
 
 **Types of Variables**:
 
