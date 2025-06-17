@@ -184,3 +184,17 @@ Jab aap koi script execute karte ho directly terminal se (jaise ```./script.sh``
 NOTE: Bina Shebang ke, agar aap script ko ```./``` ke saath run karoge, to aapko "command not found" ya syntax error mil sakta hai, ya OS default shell use karega (jo mismatch ho sakti hai).
 
 
+<br>
+
+**First Shell Script**
+
+This is a hello world script. It will print hello world.
+
+first-script.sh
+```
+#!/bin/bash
+
+echo "Hello World"
+```
+
+Output: Hello World
