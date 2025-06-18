@@ -431,3 +431,59 @@ y="hello"
 ```
 
 Shell ```x``` ko bhi string maanta hai, aur ```y``` ko bhi, kyunki shell ke liye sab kuch ek character sequence hota hai.
+
+<br>
+
+**Read Only Variables in Shell Scripting**
+
+We can also create a variable whose value can be changed that is read-only variable.
+
+Syntax:
+```
+readonly <variable_name>=<variable_data>
+```
+
+Example:
+```
+readonly name="Puneet"
+```
+
+<br>
+
+**Exercise**:
+
+```
+#!/bin/bash
+
+# This tutorial is for variables in shell script.
+
+
+echo "Variables"
+
+name="Puneet"
+age=25
+
+echo "My name is $name and age is $age"
+
+name="Ram"
+
+echo "My name is $name"
+
+
+# Envrionment Variables
+
+
+echo "Machine name is $HOSTNAME and username is $USER"
+
+
+# Readonly varibales
+
+
+readonly day="Monday"
+
+echo "Today's day is $day"
+
+day="Tuesday"
+
+echo "Today's day is $day"
+```
