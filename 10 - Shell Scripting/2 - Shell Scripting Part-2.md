@@ -1,7 +1,5 @@
 # Shell Scripting Part-2
 
-<br>
-
 ### Arrays in Shell Scripting
 
 Array is a variable that is used to store multiple values. 
