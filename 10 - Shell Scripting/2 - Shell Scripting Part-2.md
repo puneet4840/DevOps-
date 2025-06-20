@@ -77,3 +77,37 @@ Value at 4th position Hey Buddy!
 ```
 
 <br>
+
+**Print All Elements in Array**
+
+Syntax:
+```
+${array_name[*]}
+```
+
+Example-1:
+
+Print all values in array
+```
+echo ${myArray[*]}
+```
+
+Example-2:
+```
+#!/bin/bash
+
+# Print all values in array
+
+myArray=(1 20 30.5 "Puneet")
+
+echo "All values o array are: ${myArray[*]}"
+```
+
+<br>
+
+**Length of Array**
+
+Syntax
+```
+${#array_name[*]}
+```
