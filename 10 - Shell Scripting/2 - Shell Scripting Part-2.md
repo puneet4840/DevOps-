@@ -111,3 +111,53 @@ Syntax
 ```
 ${#array_name[*]}
 ```
+
+Example-1:
+```
+echo "${#myArray[*]}"
+```
+
+Example-2:
+```
+#!/bin/bash
+
+# Length of the Array
+myArray=(1 20 30.5 "Puneet")
+
+echo "${#myArray[*]}"
+```
+
+<br>
+
+**Slice the Array**
+
+Slicing the array means to retrieve the values from start of index to end of the index. e.g., the values start from 3rd index to 5th index.
+
+Syntax:
+```
+"${array_name[*]:start_index:number of values}"
+```
+Here,
+- number of values means ```की start index से कितनी values तुम slice करना चाहते हो, जैसे की अगर 2 values करनी हैं तो 2 लिखेंगे, अगर 4 values slice करनी है तो 4 लिखेंगे. यहाँ index नहीं लिखी जाती है|```
+
+Example-1:
+```
+echo "${myArray[*]:2:2}"
+```
+```2:2``` means that from the 2nd index take next 2 values.
+
+Example-2:
+```
+#!/bin/bash
+
+# Slice the array
+
+myArray=(1 20 30.5 "Puneet" "Hey Buddy!")
+
+echo "Sliced Values from 1st index to 3rd index are: ${myArray[*]:1:3}"
+```
+
+<br>
+<br>
+
+### String in Shell Scripting
