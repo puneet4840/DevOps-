@@ -157,3 +157,79 @@ Output:
 Division using let is:  5
 Division using (( )) is: 5
 ```
+
+<br>
+<br>
+
+### Conditional Statements
+
+Conditional statements are used to execute a particular block of code if the condition is true otherwise skips the block of code if condition is false.
+
+Conditional statements are decision making statements.
+
+```Conditional Statements आपको ये decide करने की power देते हैं की कोई command या code block कब execute होगा और कब नहीं|```
+
+Inka use aap decision making ke liye karte ho:
+- Agar condition true hai → kuch karo.
+- Agar false hai → kuch aur karo.
+
+
+**Types of Conditional Statements**:
+
+In Bash/shell scripting, the commonly used conditional statements are:
+- if statement.
+- if-else statement.
+- if-elif-else statement.
+- nested if statements.
+- case statement (switch alternative).
+
+
+**Conditional Expressions and Tests**
+
+Conditions inside these statements can test:
+- String values.
+- Numeric values.
+- File properties.
+- Command exit status.
+
+They typically use:
+- ```[ ]``` (test command).
+- ```[[ ]]``` (advanced Bash test).
+- ```(( ))``` (for arithmetic).
+
+
+**Operators in shell scripting**
+
+1 - String Comparison Operators:
+
+| Operator | Description                  |
+| :------- | :--------------------------- |
+| `=`      | Equal to                     |
+| `!=`     | Not equal to                 |
+| `-z`     | String is null (zero length) |
+| `-n`     | String is not null           |
+
+
+2 - Numeric Comparison Operators:
+
+```
+Equal: ==
+Greater Then: -gt
+Less Then: -lt
+Greater Then Equals To: -ge
+Less Then Equals To: -le
+Not Equals to: !=
+```
+
+3 - File test operators:
+
+| Operator  | Description                   |
+| :-------- | :---------------------------- |
+| `-e file` | Checks if file exists         |
+| `-f file` | True if it's a regular file   |
+| `-d dir`  | True if it's a directory      |
+| `-s file` | True if file size is non-zero |
+| `-r file` | Readable                      |
+| `-w file` | Writable                      |
+| `-x file` | Executable                    |
+
