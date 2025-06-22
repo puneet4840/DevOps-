@@ -173,6 +173,7 @@ Inka use aap decision making ke liye karte ho:
 - Agar condition true hai → kuch karo.
 - Agar false hai → kuch aur karo.
 
+<br>
 
 **Types of Conditional Statements**:
 
@@ -183,6 +184,7 @@ In Bash/shell scripting, the commonly used conditional statements are:
 - nested if statements.
 - case statement (switch alternative).
 
+<br>
 
 **Conditional Expressions and Tests**
 
@@ -197,6 +199,7 @@ They typically use:
 - ```[[ ]]``` (advanced Bash test).
 - ```(( ))``` (for arithmetic).
 
+<br>
 
 **Operators in shell scripting**
 
@@ -232,4 +235,6 @@ Not Equals to: !=
 | `-r file` | Readable                      |
 | `-w file` | Writable                      |
 | `-x file` | Executable                    |
+
+<br>
 
