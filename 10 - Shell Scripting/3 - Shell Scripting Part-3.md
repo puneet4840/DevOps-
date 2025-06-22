@@ -68,6 +68,16 @@ There are two methods to perform arithmetics operations:
 - Using Let Command.
 - Using (( )).
 
+Syntax using let:
+```
+let variable-name=value operator value
+```
+
+Syntax using (( )):
+```
+variable-name=$((valur operator value))
+```
+
 <br>
 
 **Addition**
@@ -131,3 +141,19 @@ Miltiplication using $(( )) is:  20
 <br>
 
 **Division**
+
+Example:
+```
+a=10
+b=2
+
+let div=a/b
+echo "Multiplication using let is:  ${div}"
+
+echo "Multiplication using (( )) is:  ${a/b}"
+```
+Output:
+```
+Division using let is:  5
+Division using (( )) is: 5
+```
