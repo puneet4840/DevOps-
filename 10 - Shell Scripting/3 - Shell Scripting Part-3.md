@@ -43,3 +43,77 @@ read -p "Enter you age here:  " age
 echo "Your name is ${name} and age is ${age}"
 ```
 
+<br>
+<br>
+
+### Arithmetic Operations
+
+Arithmetic Operations are mathemetical operations which includes Addition, Substraction, Multiplication and Division. 
+
+**Arithmetic Operators in Shell Scripting**
+
+| Operator | Description                             | Example  |
+| :------- | :-------------------------------------- | :------- |
+| `+`      | Addition                                | `3 + 2`  |
+| `-`      | Subtraction                             | `5 - 1`  |
+| `*`      | Multiplication                          | `4 * 3`  |
+| `/`      | Division                                | `8 / 2`  |
+| `%`      | Modulus (remainder)                     | `5 % 2`  |
+| `**`     | Exponentiation (in newer bash versions) | `2 ** 3` |
+
+
+<br>
+
+There are two methods to perform arithmetics operations:
+- Using Let Command.
+- Using (( )).
+
+<br>
+
+**Addition**
+
+Example:
+```
+a=10
+b=2
+
+let sum=a+b
+echo "Sum using Let is: $sum"
+
+echo "Sum using (( )) is:  $((10+2))"
+```
+Output:
+```
+Sum using Let is: 12
+Sum using (( )) is: 12
+```
+
+<br>
+
+**Substractions**
+
+Example:
+```
+a=10
+b=2
+
+let sub=a-b
+echo "Sub using let is:  $sub"
+
+echo "Sub using (( )) is:  $((a-b))"
+```
+Output:
+```
+Sub using let is: 8
+Sub using (( )) is: 8
+```
+
+<br>
+
+**Multiplication**
+
+Example:
+```
+a=10
+b=2
+```
