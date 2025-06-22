@@ -238,3 +238,88 @@ Not Equals to: !=
 
 <br>
 
+**Syntax of Conditional Statement**
+
+**1 - if statement**:
+
+```
+if [ condition ]
+then
+  # commands if condition is true
+fi
+```
+
+Example:
+```
+age=18
+if [ $age -ge 18 ]
+then
+  echo "You are eligible to vote."
+fi
+```
+
+<br>
+
+**2 - if-else statement**
+
+```
+if [ condition ]
+then
+  # commands if true
+else
+  # commands if false
+fi
+```
+
+Example:
+```
+read -p "Enter you age:  " age
+
+if [ $age -ge 18]
+then
+  echo "You are eligible to vote"
+else
+  echo "You can not vote!!!"
+fi
+```
+
+<br>
+
+**3 - if-elif-else statement**
+
+This if-elif-else statement is used when you have multiple conditions.
+
+```
+if [ condition1 ]
+then
+  # commands
+elif [ condition2 ]
+then
+  # commands
+else
+  # commands
+fi
+```
+
+Example:
+```
+read -p "Enter you marks: " marks
+
+if [ $marks -ge 90 ]
+then
+        echo "You are brilliant and have grade A."
+elif [ $marks -ge 80 ]
+then
+        echo "You are good student and have grade B"
+elif [ $marks -ge 60 ]
+then
+        echo "Thik Thik hai, lekin mehnat kar"
+else
+        echo "Padhle!!!, Tujhe padhne ki jaruat hai"
+fi
+```
+
+
+
+<br>
+
