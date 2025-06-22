@@ -161,3 +161,58 @@ echo "Sliced Values from 1st index to 3rd index are: ${myArray[*]:1:3}"
 <br>
 
 ### String in Shell Scripting
+
+String is a variable which stores the sequence of characters.
+
+OR
+
+String is the sequence of characters enclosed within single quotes (' '), double quotes (" "), or sometimes no quotes. In shell scripting, strings can contain letters, numbers, symbols, and whitespace.
+
+```String एक ऐसी value होती है जो characters का sequence होता है - जैसे```:\
+```
+"hello world"
+'DevOps'
+ThisIsAString123
+```
+
+Shell ke liye, jab aap koi variable banate ho:
+```
+name="Puneet"
+```
+To ```name``` ek string variable hota hai, aur ```"Puneet"``` uski value hoti hai.
+
+NOTE: ```Bash में by default सारे variables string होते हैं - जब तक आप उन्हें explicitly math या integer context में न ले जाएँ.```
+
+<br>
+
+**Defining a string**
+
+Syntax:
+```
+Way-1: Without Quotes:
+
+greeting=Hello
+
+
+Way-2: With Single Quotes:
+
+greeting=hello
+
+
+Way-3: With Double Quotes
+
+name="Puneet"
+greeting="Hello $name, How are you!"
+```
+
+Note:
+- ```String को double quotes मैं define करने पर string मैं variable use कर सकते हैं और command को भी use कर सकते हैं, लेकिन single और Without quotes वाली स्ट्रिंग मैं ऐसा नहीं कर सकते|```
+- Always use double-quotes string.
+
+Example:
+```
+name="Puneet"
+
+age="25"
+```
+
