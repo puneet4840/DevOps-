@@ -216,3 +216,127 @@ name="Puneet"
 age="25"
 ```
 
+<br>
+
+**Length of String**
+
+Syntax:
+```
+${#<string-name>}
+```
+
+Example-1:
+```
+name="Puneet"
+echo "Length of string is:  ${#name}"
+```
+OutPut:
+```
+Length of string is: 6
+```
+
+Example-2:
+```
+#!/bin/bash
+
+myString="Hey Puneet, How are you!"
+echo "Length of ${myString} is:  ${#myString}"
+```
+OutPut:
+```
+Length of Hey Puneet, How are you! is: 24
+```
+
+<br>
+
+**Convert String into Upper Case**
+
+To convert string into upper case letters, use ```^^``` (quotes) sign just after the string name.
+
+Syntax:
+```
+${string-name^^}
+```
+
+Example-1:
+```
+myString="Hey Puneet, How are you!"
+echo "Upper Case string is:  ${myString^^}"
+```
+Output:
+```
+Upper Case string is:  HEY PUNEET, HOW ARE YOU!
+```
+
+<br>
+
+**Convert String into Lower Case**
+
+To convert string into lower case letters, use ```,,``` sign just after the string name.
+
+Syntax:
+```
+${string-name,,}
+```
+
+Example-1:
+```
+myString="Hey Puneet, How are you!"
+echo "Lower Case string is:  ${myString,,}"
+```
+Output:
+```
+Lower Case string is:  hey puneet, how are you!
+```
+
+<br>
+
+**Replace the string**
+
+```Replace the string का मतलब है की एक word को दूसरे word से replace करना|```
+
+Syntax:
+```
+${string-name/जिस वर्ड को replace करना चाहते हो/जिस वर्ड से replace करना चाहते हो }
+
+${string-name/actual word in string/word you want to replace}
+```
+
+Example-1:
+```
+greeting="Hey Buddy!"
+echo "Replace String is:  ${greeting/Buddy/Puneet}"
+```
+Output:
+```
+Replaces String is: Hey Puneet
+```
+Buddy has been replaced by Puneet.
+
+<br>
+
+**Slicing the String**
+
+Slicing means retrieve a part from the string.
+
+Syntax:
+```
+${string-name:start index of sliced string:length of the sliced string}
+```
+Note: ```String को slice करने के लिए पहले जहा से string slice करनी होती है वो index value लेनी है दूसरा जहा तक की string हमको चाइये उतनी length हम दे देंगे|```
+
+Example-1:
+```
+myString="Hey Puneet, How are you!"
+
+# Slice the word Puneet from above string
+
+echo "Sliced string is:  ${myString:4:6}"
+```
+Output:
+```
+Sliced string is:  Puneet
+```
+
+Note: ```Uper string मैं Puneet word 4th index से शुरू हो रहा है और इसकी length 6 है|```
+
