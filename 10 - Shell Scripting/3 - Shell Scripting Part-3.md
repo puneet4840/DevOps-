@@ -116,4 +116,18 @@ Example:
 ```
 a=10
 b=2
+
+let mul=a*b
+echo "Multiplication usin let is:  ${mul}"
+
+echo "Multiplication using (( )) is:  $((a*b))"
 ```
+Output:
+```
+Multiplication using let is:  20
+Miltiplication using $(( )) is:  20
+```
+
+<br>
+
+**Division**
