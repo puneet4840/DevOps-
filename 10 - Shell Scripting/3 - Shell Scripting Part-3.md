@@ -319,7 +319,14 @@ else
 fi
 ```
 
-
-
 <br>
+
+**Logical Operators**:
+
+Logical operators are used to test multiple conditions. Logical operators allow you to combine multiple test conditions in a single if statement.
+
+Three logical operators:
+- AND (&& , -a): ```अगर दोनों condition TRUE हुई तो ये true होगा और code run हो जायेगा otherwise code run नहीं होगा.```
+- OR (|| , -o): ```अगर दोनों conditions मैं से एक भी condition TRUE होती है तो ये true होगा और code run हो जायेगा|```
+- NOT (!): It reverts the condition. ```ये TRUE को false करता है और FALSE को true करता है.```
 
