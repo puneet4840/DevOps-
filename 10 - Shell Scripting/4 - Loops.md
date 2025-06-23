@@ -8,3 +8,134 @@ A loop is a control structure that allows you to repeatedly execute a block of c
 
 ```जब हमको कोई command या कोई code बार-बार repeatative way मैं run करना हो तो उसके लिए हम loop का use करते हैं| वो code या command loop के through ही repeat हो पायेगी|```
 
+<br>
+
+### Why Use Loops?
+
+- Automate repetitive tasks.
+- Process lists of files, numbers, or strings.
+- Monitor system status continuously.
+- Perform batch operations.
+- Simplify complex operations requiring iteration.
+
+<br>
+
+### Types of Loops in Shell Scripting
+
+- for loop.
+- while loop.
+- until loop.
+- Nested loops.
+
+<br>
+
+### For Loop
+
+The ```for``` loop is used to iterate over a list of items and execute a set of commands for each item.
+
+```For loop को तब use करते हैं जब किसी list of item या do numbers की range के लिए command execute करनी हो|```
+
+**Syntax - 1: List ke upar loop**:
+```
+for var in list
+do
+    # execute command(s)
+done
+```
+
+Example-1:
+```
+for fruit in Banana Apple Grapes Orange
+do
+    echo "$fruits"
+done
+```
+Output:
+```
+Banana
+Apple
+Grapes
+Orange
+```
+
+Example-2:
+```
+for num in 1 2 3 4 5 6 7 8 9
+do
+    echo "$num"
+done
+```
+Output:
+```
+1
+2
+3
+4
+.
+.
+
+```
+
+<br>
+
+**Syntax - 2: Range ke saath loop**:
+```
+for var in {number-1..number-n}
+do
+    # execute commands
+done
+```
+
+Example:
+```
+for i in {1..5}
+do
+    echo "$i"
+done
+```
+Output:
+```
+1
+2
+3
+4
+5
+```
+
+<br>
+
+**Syntax-3: C-style loop**
+```
+for ((var=number; var<=number; var++ ))
+do
+    # execute command
+done
+```
+
+Example:
+```
+for ((i-0; i<=5; i++))
+do
+    echo "$i"
+done
+```
+
+**Practical Example**:
+
+Getting the list of from a text file using loop.
+
+```
+file=/home/puneet/names.txt
+
+for item in $(cat $file)
+do
+    echo "$item"
+done
+```
+Output
+```
+Apple
+Orage
+Guava
+```
+
