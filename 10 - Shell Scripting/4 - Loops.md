@@ -43,7 +43,7 @@ do
 done
 ```
 
-Example-1:
+Example-1: Print fruits in list
 ```
 for fruit in Banana Apple Grapes Orange
 do
@@ -58,7 +58,7 @@ Grapes
 Orange
 ```
 
-Example-2:
+Example-2: Print number 1 to 9
 ```
 for num in 1 2 3 4 5 6 7 8 9
 do
@@ -86,7 +86,7 @@ do
 done
 ```
 
-Example:
+Example-1: Print number 1 to 5
 ```
 for i in {1..5}
 do
@@ -112,15 +112,23 @@ do
 done
 ```
 
-Example:
+Example: Print number 1 to 5
 ```
 for ((i-0; i<=5; i++))
 do
     echo "$i"
 done
 ```
+Output:
+```
+1
+2
+3
+4
+5
+```
 
-**Practical Example**:
+**Practical Example-1**:
 
 Getting the list of from a text file using loop.
 
@@ -139,3 +147,23 @@ Orage
 Guava
 ```
 
+**Practical Example-2**:
+
+Access the elements of array using index.
+
+```
+num=( 1 2 3 "Puneet" "Hey Buddy!" )
+
+for i in {0..4}
+do
+    echo "${num[i]}"
+done
+```
+Output:
+```
+1
+2
+3
+Puneet
+Hey Buddy!
+```
