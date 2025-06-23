@@ -339,7 +339,7 @@ Note: Logical operators can be used with ```[ ]``` signle square brackets or wit
 
 <br>
 
-**AND Operator**:
+**AND Operator (&&)**:
 
 AND operator is used to check if both conditions in if statement is true.
 
@@ -347,7 +347,50 @@ Syntax:
 ```
 if [[ condition-1 && condition-2 ]]
 then
-    # execute if both are true
+    # execute command if both are true
+fi
+```
+
+Example:
+```
+# Example is you can only vote if your age is greater than equal to 18 and you are from india.
+
+read -p "Enter your age: " age
+read -p "Enter your country: " country
+
+if [[ $age -ge 18 && $country == 'India' ]]
+then
+    echo "You can vote."
+else
+    echo "You can not vote."
+fi
+```
+
+<br>
+
+**OR operator (||)**:
+
+OR operator is used to check if onw of the two conditions in if statement is true. ```इसका मतलब if statement मैं दो condition मैं से अगर एक भी true होती है तो if condition true होगी और code run हो जायेगा|```
+
+Syntax:
+```
+if [[ condition-1 || condition-2 ]]
+then
+    # execute command if one is true
+fi
+```
+
+Example:
+```
+# Checking if a character is vowel or not.
+
+read -p "Enter a character only: " char
+
+if [[ $char == 'a' || $char == 'e' || $char == 'i' || $char == 'o' || $char == 'u' ]]
+then
+        echo "Character is a Vowel."
+else
+        echo "No Vowel"
 fi
 ```
 
