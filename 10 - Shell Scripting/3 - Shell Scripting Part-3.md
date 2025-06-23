@@ -343,3 +343,11 @@ Note: Logical operators can be used with ```[ ]``` signle square brackets or wit
 
 AND operator is used to check if both conditions in if statement is true.
 
+Syntax:
+```
+if [[ condition-1 && condition-2 ]]
+then
+    # execute if both are true
+fi
+```
+
