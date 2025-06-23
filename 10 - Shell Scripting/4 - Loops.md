@@ -153,8 +153,9 @@ Access the elements of array using index.
 
 ```
 num=( 1 2 3 "Puneet" "Hey Buddy!" )
+length=${#num[*]}
 
-for i in {0..4}
+for ((i-0; i<$length; i++ ))
 do
     echo "${num[i]}"
 done
@@ -167,3 +168,4 @@ Output:
 Puneet
 Hey Buddy!
 ```
+
