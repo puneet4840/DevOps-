@@ -325,6 +325,8 @@ fi
 
 Logical operators are used to test multiple conditions. Logical operators allow you to combine multiple test conditions in a single if statement.
 
+```If statement मैं अगर multiple conditions check करनी है तो logical operators का use करेंगे|```
+
 Three logical operators:
 - AND (```&&``` , ```-a```):
   - ```अगर दोनों condition TRUE हुई तो ये true होगा और code run हो जायेगा otherwise code run नहीं होगा.```
@@ -332,4 +334,12 @@ Three logical operators:
   - ```अगर दोनों conditions मैं से एक भी condition TRUE होती है तो ये true होगा और code run हो जायेगा|```
 - NOT (```!```):
   - It reverts the condition. ```ये TRUE को false करता है और FALSE को true करता है.```
+
+Note: Logical operators can be used with ```[ ]``` signle square brackets or with double ```[[  ]]``` square brackets for advancements.
+
+<br>
+
+**AND Operator**:
+
+AND operator is used to check if both conditions in if statement is true.
 
