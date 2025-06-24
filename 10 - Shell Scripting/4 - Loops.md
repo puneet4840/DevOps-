@@ -231,3 +231,57 @@ do
     i=$((i+1))
 done
 ```
+
+<br>
+<br>
+
+### Break and Continue
+
+**Break**:  
+
+Break keyword is used to stop the loop immediately.
+
+```Break keyword loop को तुरंत rok देता है|```
+
+```अगर एक loop मैं आप चाहते हो की किसी condition पर वो loop रुक जाना चाइये तो उसमे आप break keyword का use करते हैं|```
+
+Example:
+```
+for i in {1..10}
+do
+    if [ $i -eq 5 ]; then
+        break
+    fi
+    echo "Loop: $i"
+done
+
+```
+Output:
+```
+1 2 3 4 (5 break)
+```
+
+<br>
+
+**Continue**:
+
+Continue keyword is used to skip the current iteration of loop and forward to next iteration.
+
+```Continue keyword loop के current iteration को skip कर देता है और अगले iteration पर पंहुचा देता है|```
+
+```अगर एक loop मैं आप चाहते हो की किसी condition पर current iteration skip हो जाये और loop अगली iteration पर पहुँच जाये तो इसके लिए continue keyword का use करते हैं|```
+
+Example:
+```
+for i in {1..5}
+do
+    if [ $i -eq 3 ]; then
+        continue
+    fi
+    echo "i: $i"
+done
+```
+Output:
+```
+1 2 4 5 (3 skip)
+```
