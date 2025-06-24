@@ -168,6 +168,27 @@ Explanation:
 - Agar ```cp``` command fail ho jaati hai to ```$?``` non-zero hota hai.
 - Is basis par script error ya success ka message deta hai.
 
+**Practical Example: Connectivity check script**:
+```
+#!/bin/bash
+
+
+# This script will check connectivity to website
+
+read -p "Enter the website you want to check connectivity: " web
+
+ping -c 1 $web
+
+if [[ $? -eq 0 ]]
+then
+        echo "Website successfully connected"
+else
+        echo "No Connectivity!!!"
+        exit 1
+
+fi
+```
+
 <br>
 
 **How $? Works Internally?**:
