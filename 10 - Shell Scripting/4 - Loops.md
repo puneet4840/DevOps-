@@ -208,9 +208,26 @@ Output:
 <br>
 <br>
 
-### Untill Loop
+### Until Loop
 
-Untill loop is just opposite of while loop. It execute the code inside the loop untill the condition if false.
+Until loop is just opposite of while loop. It execute the code inside the loop untill the condition if false.
 
-```Untill loop तब तक चलता है जब तक उसमे लिखी condition true नहीं हो जाती या फिर जब तक उसमे लिखी condition false रहती है, तब तक ये loop चलता है|```
+```Until loop तब तक चलता है जब तक उसमे लिखी condition true नहीं हो जाती या फिर जब तक उसमे लिखी condition false रहती है, तब तक ये loop चलता है|```
 
+**Syntax**:
+```
+until [ condition ]
+do
+    # execute command(s)
+done
+```
+
+Example:
+```
+i=0
+unitl [ $i -gt 5 ]
+do
+    echo "$i"
+    i=$((i+1))
+done
+```
