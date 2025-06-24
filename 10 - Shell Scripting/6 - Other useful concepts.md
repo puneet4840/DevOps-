@@ -106,3 +106,107 @@ Explanation:
 <br>
 
 ### $? variable in shell scripting
+
+```$?``` **kya hota hai?**
+
+```$?``` ek special built-in shell variable hai jo last executed command ka exit status ya return code store karta hai.
+
+```जब कोई script या command run होती है उसका last exit status $? variable में स्टोर जाता होता है.```
+
+<br>
+
+**$? ka kaam kya hai?**:
+- ```अगर $? के अंदर 0 store है तो इसका मतलब success है command सही चली|```
+- Non-zero (jaise 1, 2, 127 etc.) → failure ya error (command mein kuch problem hui).
+
+Ye value aap use kar sakte ho:
+- Decision making mein (if condition).
+- Logging/debugging.
+- Retry mechanism.
+- Script termination (exit) ke basis par.
+
+<br>
+
+**Example-1: Basic Example**
+```
+echo "Hello"
+echo $?
+```
+Output:
+```
+Hello
+0
+```
+
+**Example-2: Failure Case**
+```
+ls /folder/that/does/not/exist
+echo $?
+```
+Output:
+```
+ls: cannot access '/folder/that/does/not/exist': No such file or directory
+2
+```
+Explanation:
+- ```ls``` command fail ho gayi kyunki path galat tha.
+- Shell ne uska exit status ```2``` return kiya.
+- Yeh value ```$?``` variable mein store ho gayi.
+
+**Practical Example – Error Check in Script**:
+```
+cp myfile.txt /some/location/
+
+if [ $? -ne 0 ]; then
+  echo "Copy failed!"
+  exit 1
+else
+  echo "File copied successfully!"
+fi
+```
+Explanation:
+- Agar ```cp``` command fail ho jaati hai to ```$?``` non-zero hota hai.
+- Is basis par script error ya success ka message deta hai.
+
+<br>
+
+**How $? Works Internally?**:
+- Shell har command ke execution ke baad uska exit status internally memory mein store karta hai.
+- Jab aap echo ```$?``` likhte ho, to shell last stored value ko output karta hai.
+- Lekin dhyan rahe: ```$?``` sirf last command ka result deta hai. Uske baad koi bhi aur command run karoge to wo value overwrite ho jaayegi.
+
+**Example: Multiple Commands mein $? ka usage**
+```
+ls wrong_dir
+echo "First status: $?"
+
+date
+echo "Second status: $?"
+```
+Output:
+```
+ls: cannot access 'wrong_dir': No such file or directory
+First status: 2
+Second status: 0
+```
+ExplanationL:
+- ```ls``` fail hua – status 2.
+- ```date``` success hua – status 0.
+- ```$?``` ne dono ke alag-alag status correctly diya.
+
+<br>
+
+**Tip – set -e and $?**:
+
+Jab aap script mein ```set -e``` likh dete ho, to script automatically exit ho jaati hai jab bhi kisi command ka exit status ```$? != 0``` hota hai.
+
+Example:
+```
+#!/bin/bash
+set -e
+
+ls /wrong/path
+echo "This won't run"
+```
+
+Is case mein ```$?``` check karne ki zarurat nahi – script khud terminate ho jaayegi.
