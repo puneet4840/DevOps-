@@ -115,7 +115,7 @@ function_name arg1 arg2 ...
 ```
 <br>
 
-Example: Passing name and age to function
+**Example-1: Passing name and age to function**
 ```
 myfun() {
 
@@ -131,3 +131,74 @@ Your name is Puneet
 Your age is 25
 ```
 
+**Example-2: Addition using arguments**
+```
+sum_fun() {
+
+    sum=$(($1+$2))
+    echo "Sum of $1 and $2 is: $sum"
+}
+```
+Output:
+```
+Sum of 10 and 20 is: 30
+```
+
+**Example-3: Get total arguments and all arguments passed to function**
+```
+show_args() {
+
+    echo "Total arguments: $#"
+    echo "All arguments: $@"
+}
+
+show_args 1 2 3 4 5 6 7 8
+```
+Output:
+```
+Total arguments: 8
+All arguments: 1 2 3 4 5 6 7 8
+```
+
+**Example-4: Loop through all arguments**
+```
+loop_args() {
+
+    for args in $@
+    do
+        echo "$args"
+    done
+}
+
+loop_args 1 2 3 Puneet Hey_Buddy! Hii
+```
+Output:
+```
+1
+2
+3
+Puneet
+Hey_Buddy!
+Hii
+```
+
+**Example-5: Arguments Check / Validation**:
+
+Aap function ke andar ye bhi check kar sakte ho ki required arguments aaye ya nahi.
+
+```
+function greet() {
+  if [ $# -eq 0 ]; then
+    echo "Error: No name provided!"
+    return 1
+  fi
+  echo "Hello, $1!"
+}
+
+greet
+
+```
+Output:
+```
+Error: No name provided!
+```
