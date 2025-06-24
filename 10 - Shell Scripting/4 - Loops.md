@@ -174,3 +174,43 @@ Hey Buddy!
 
 ### While Loop
 
+A while continues to execute a block of code as long as specified condition is true.
+
+```While loop code को तब तक execute करता है जब तक उसमे लिखी condition true रहती है, जैसे ही condition false होती है loop exit हो जाता है|```
+
+**Syntax**:
+```
+while [ condition ]
+do
+    # command(s)
+done
+
+```
+
+Example:
+```
+i=0
+while [ $i -le 5 ]
+do
+    echo "$i"
+    i=$(($i+1))
+done
+```
+Output:
+```
+1
+2
+3
+4
+5
+```
+
+<br>
+<br>
+
+### Untill Loop
+
+Untill loop is just opposite of while loop. It execute the code inside the loop untill the condition if false.
+
+```Untill loop तब तक चलता है जब तक उसमे लिखी condition true नहीं हो जाती या फिर जब तक उसमे लिखी condition false रहती है, तब तक ये loop चलता है|```
+
