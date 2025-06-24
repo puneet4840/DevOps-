@@ -73,3 +73,61 @@ Your name is Puneet.
 
 ### Function mein Arguments Dena (Positional Parameters)
 
+Jab aap function call karte ho aur uske saath kuch values (data) pass karte ho, unhe arguments kehte hain. Ye arguments function ke andar use kiye ja sakte hain jaise ki aap script ke arguments use karte ho (```$1```, ```$2```, etc.).
+
+**Arguments inside the function**:
+
+```Function के अंदर arguments ```$1```, ```$2```, ```$3``` इस तरीके से डिफाइन किये जाते हैं|``` 
+
+```अगर हमको function के अंदर कोई value देनी है किसी task के लिए तो उस value को हम function call मैं pass करेंगे|```
+
+```अगर हम funtion call मैं एक value दे रहे हैं तो वो function के अंदर $1 से access होगा, अगर दूसरा function मैं दूसरा value दे रहे हैं तो $2 से access होगा. Function के अंदर arguments को $ और argument number से access किया जाता है|```
+
+```$<argument_number>```
+
+Syntax:
+```
+function_name() {
+    echo $1
+    echo $2
+    .
+    .
+    echo $n
+}
+```
+In above syntax I have just print the arguments passed to function but you can use these arguments in any way but the way to access these arguments is using ```$<argument_number>```.
+
+Function ke andar:
+- ```$1``` = pehla argument.
+- ```$2``` = dusra argument.
+- ```$@``` = sabhi arguments (array jaisa).
+- ```$#``` = total number of arguments.
+
+<br>
+
+**Passing values to function call**:
+
+```Function के अंदर arguments को use करने के लिए पहले उन arguments को हमको function call मैं देना होगा, तब वो function मैं pass होती है|```
+
+Syntax:
+```
+function_name arg1 arg2 ...
+```
+<br>
+
+Example: Passing name and age to function
+```
+myfun() {
+
+    echo "Your name is: $1"
+    echo "Your age is $2"
+}
+
+myfun Puneet 25
+```
+Output:
+```
+Your name is Puneet
+Your age is 25
+```
+
