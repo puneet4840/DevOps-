@@ -32,7 +32,7 @@ There are two redirection symbols:
 
 <br>
 
-```>```:
+**>**:
 
 This is the symbol of overwrite. It used to to overwrite the output or error of a command in a file.
 
@@ -86,3 +86,4 @@ Explanation:
 <br>
 <br>
 
+**>>**
