@@ -212,5 +212,103 @@ Tum node ke local folders ko container ke andar use kar sakte ho.
 hostPath ke saath tum define karte ho:
 - path → Node ke file system par exact path.
 -  type (optional) → Batata hai ki jo path tum specify kar rahe ho woh kya hona chahiye:
-  - Directory.
-  - File
+
+| Type              | Matlab                                                |
+| ----------------- | ----------------------------------------------------- |
+| DirectoryOrCreate | Agar woh directory nahi hai, to create kar do.        |
+| Directory         | Directory hona chahiye. Agar nahi mila, error aayega. |
+| FileOrCreate      | File create karo agar nahi hai.                       |
+| File              | File hona chahiye.                                    |
+| Socket            | Unix socket hona chahiye.                             |
+| CharDevice        | Character device hona chahiye.                        |
+| BlockDevice       | Block device hona chahiye.                            |
+
+<br>
+
+**Example 1 → Simple hostPath Directory Mount**
+
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hostpath-demo
+spec:
+  containers:
+    - name: busybox
+      image: busybox
+      command: ["/bin/sh", "-c", "ls /hostdata; sleep 3600"]
+      volumeMounts:
+        - mountPath: /hostdata
+          name: myhostpath
+  volumes:
+    - name: myhostpath
+      hostPath:
+        path: /data
+        type: DirectoryOrCreate
+```
+
+Explanation: Is example mein kya ho raha hai?
+- Tumne ek Pod banaya hai → ```hostpath-demo```.
+- Volume define kiya:
+  ```
+  hostPath:
+    path: /data
+    type: DirectoryOrCreate
+  ```
+
+Matlab:
+- Node ke filesystem par ```/data``` folder agar nahi mila → Kubernetes usko create kar dega.
+
+- Container ke andar woh mount ho raha hai → ```/hostdata```.
+
+- Container ke andar tum:
+```
+ls /hostdata
+```
+Karke dekh sakte ho kya contents hai.
+
+<br>
+
+**hostPath Kyu Use Karte Hain?**
+
+1 - Diagnostics aur Debugging:
+- Tum node ke logs dekhna chahte ho.
+- Jaise tum ```/var/log``` ko mount kar lo container ke andar → tum logs analyse kar sakte ho.
+
+
+2 - Configuration Files:
+- Agar tumhare paas node-specific configuration hai → woh container ko dikhana hai.
+
+3 - Local Storage:
+- Tum temporary ya permanent storage ke liye node ka koi path use kar sakte ho.
+- Pod ko ek node par hi sticky rakhna hai aur host ke local storage ko use karna hai.
+
+4 - Third-Party Applications:
+- Bahut saare third-party apps like monitoring tools (Prometheus node exporter, Fluentd, etc.) hostPath use karte hain taaki woh:
+  - Node ke logs read kar saken.
+  - Node ke metrics collect kar saken.
+ 
+<br>
+
+**Security Ka Concern**
+
+hostPath powerful hai lekin bahut dangerous bhi ho sakta hai.
+
+1 - Host File System Exposure:
+- Agar tum ```/``` mount kar doge, pura host file system container ke andar dikhai dega.
+- Bada security risk hai.
+Example:
+```
+hostPath:
+  path: /
+  type: Directory
+```
+- Container ke andar tum pura host file system dekh sakte ho:
+```
+ls /
+```
+
+2 - Privilege Escalation:
+- Agar container ke paas write access hai:
+  - Container host par files change kar sakta hai.
+  - Malicious code likh sakta hai host ke binaries mein.
