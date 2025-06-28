@@ -190,3 +190,27 @@ emptyDir:
 - Node ke RAM mein store hota hai.
 - Super fast because data RAM mein hai.
 - High-speed caching.
+
+<br>
+<br>
+
+### 2 - hostPath
+
+hostPath ek Kubernetes ka volume type hai jiska matlab hai:
+- Tum Kubernetes ke node (host machine) ke filesystem ka koi bhi path container ke andar mount kar sakte ho.
+
+Simple shabdon mein:
+- Tumhare node ke file system par jo path hai, use directly container ke andar mount karna Container ka data file system par store ho.
+- Container ke andar woh path ek normal folder ke jaise dikhega.
+
+```Host Path क्या करता है की node file system मैं बने हुए folder को container के किसी path पर mount करता है जिससे container के path का data node के folder पर store होता है|```
+
+Tum node ke local folders ko container ke andar use kar sakte ho.
+
+**hostPath Ka Basic Usage**
+
+hostPath ke saath tum define karte ho:
+- path → Node ke file system par exact path.
+-  type (optional) → Batata hai ki jo path tum specify kar rahe ho woh kya hona chahiye:
+  - Directory.
+  - File
