@@ -196,6 +196,8 @@ emptyDir:
 
 ### 2 - hostPath
 
+hostPath volume type se Node ke file system ke kisi bhi path ko container ke andar mount kar sakte ho.
+
 hostPath ek Kubernetes ka volume type hai jiska matlab hai:
 - Tum Kubernetes ke node (host machine) ke filesystem ka koi bhi path container ke andar mount kar sakte ho.
 
