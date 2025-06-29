@@ -193,10 +193,64 @@ kubectl describe pvc my-pvc
 
 Status Bound hona chahiye.
 
+**Step 4 – Pod mein PVC use karna**
 
+Ab tumhara PV aur PVC ready hai. Ab pod ko batana padta hai ki:
+- kaunsa volume use karna hai.
+- kaunsi mount path pe attach karna hai.
 
+Example Pod YAML:
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+    - name: myapp
+      image: nginx
+      volumeMounts:
+        - mountPath: "/usr/share/nginx/html"
+          name: mypvc-storage
+  volumes:
+    - name: mypvc-storage
+      persistentVolumeClaim:
+        claimName: my-pvc
+```
+Explanation:
+- ```mountPath```: container ke andar ka path.
+- ```claimName```: tumhara PVC ka naam.
 
+Apply karo:
+```
+kubectl apply -f pod.yaml
+```
+Check karo:
+```
+kubectl get pods
+kubectl describe pod mypod
+```
 
+Ab pod us volume ko use kar raha hai.
+
+**Step 5 – Clean-up**:
+
+- Agar tumhara pod delete hota hai → PVC abhi bhi rahega.
+- Agar tum PVC delete karte ho → reclaimPolicy decide karega PV ka kya hoga:
+  - Delete → PV aur data delete ho jayega.
+  - Retain → PV released state mein rahega.
+
+Delete PVC:
+```
+kubectl delete pvc my-pvc
+```
+Delete PV:
+```
+kubectl delete pv nfs-pv
+```
+
+<br>
+<br>
 
 ### Components of Persistent Volume
 
@@ -496,3 +550,5 @@ PVC delete hoti hai:
 - PV delete ho jaata hai.
 - Google Cloud disk physically delete ho jaati hai.
 
+
+### Automatic PV Provisioning
