@@ -99,8 +99,6 @@ Sabse pehle samajh lo ki capacity ka matlab yahan hai:
 
 Jaise tum apne laptop mein bolte ho – “Mere paas 500GB ki hard disk hai.” Waise hi Kubernetes mein bolte hain – “Mere PV ki capacity 10Gi hai.”
 
-<br>
-
 Capacity Define Kahan Hoti Hai?:
 
 Jab tum PV ka YAML likhte ho, usmein ek field hoti hai:
@@ -113,7 +111,6 @@ spec:
 - “Gi” ka matlab hai Gibibytes (1024 * 1024 * 1024 bytes).
 - Note karo: Kubernetes binary units (Ki, Mi, Gi, Ti) use karta hai. 1Gi = 1024 MiB = 1024 * 1024 KiB.
 
-<br>
 
 Capacity Constraints:
 
@@ -156,5 +153,82 @@ Agar storage class allow karti hai volume expansion, toh PVC expand ho jayega. A
 status:
   capacity:
     storage: 20Gi
+```
+
+<br>
+
+**Access Mode**:
+
+Access Mode define karta hai ki Persistent Volume ko kaun, kitne pods, aur kis tarah se access kar sakte hain.
+
+Matlab:
+- Ek pod use kare ya multiple pods.
+- Read kare ya read-write kare.
+- Same node pe access ho ya cluster ke kahin se bhi.
+
+Kubernetes mein 3 primary access modes hote hain:
+- ReadWriteOnce (RWO).
+- ReadOnlyMany (ROX).
+- ReadWriteMany (RWX).
+
+Aur kuch storage plugin allow karte hain ek 4th mode:
+- ReadWriteOncePod (RWO-Pod).
+
+1. ReadWriteOnce (RWO):
+- Allows all pods on a single node to mount the volume in read-write mode.
+- Ek baar main Ek hi node pe ek pod ya multiple pods read aur write kar sakte hai.
+- Ek time pe ek node pe attached rahega.
+
+Example:
+
+Maan lo tumhara PV definition:
+```
+spec:
+  accessModes:
+    - ReadWriteOnce
+```
+
+PVC banate ho:
+```
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+```
+
+- Agar tumhara pod Node1 pe scheduled hai, toh woh PV use karega.
+- Agar pod Node2 pe chala jaata hai, toh volume wahan attach nahi hoga, tab tak detach nahi hota Node1 se.
+
+2. ReadOnlyMany (ROX):
+
+“Multiple nodes aur multiple pods ek hi time pe PV ko sirf read kar sakte hain.”
+
+- Sab pods read-only access kar sakte hai.
+- Write allowed nahi hai.
+- Cluster ke kisi bhi node se access possible.
+
+3. ReadWriteMany (RWX):
+
+“Multiple pods across multiple nodes read aur write dono kar sakte hain.”
+
+- Sab pods ek saath read aur write kar sakte hain.
+- Cluster ke kahin se bhi access possible.
+
+
+4. ReadWriteOncePod (RWO-Pod):
+
+“Ek pod ke sath hi attach rahega, even agar woh pod same node pe restart ho.”
+
+- Single pod only.
+- Agar woh pod terminate ho gaya, tabhi doosra pod us PV ko use kar sakta hai.
+- Same node pe restart hone pe bhi allowed hai.
+
+Example:
+```
+spec:
+  accessModes:
+    - ReadWriteOncePod
 ```
 
