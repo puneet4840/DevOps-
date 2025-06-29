@@ -232,3 +232,149 @@ spec:
     - ReadWriteOncePod
 ```
 
+<br>
+
+**Storage Backend**:
+
+Storage backend wo system ya service hai jahan actual data store hota hai.
+
+PV ya PVC to Kubernetes ke objects hain. Wo sirf abstraction hain. Real storage to backend pe hoti hai — jaise NFS server, AWS EBS, Azure Disk, GCE Persistent Disk, ya koi SAN/NAS.
+
+Kubernetes PV sirf yeh batata hai:
+- Kahan data pada hai.
+- Kitni space hai.
+- Kaise access karna hai.
+
+Actual storage backend pe hi physically exist karti hai.
+
+Types of Storage Backend:
+- Block Storage.
+- File Storage (Shared File Systems).
+- Object Storage.
+- Local Disk.
+
+1. Block Storage:
+
+Block storage mein data blocks mein store hota hai — bilkul ek hard disk ki tarah. Iska matlab cloud provider ki disk attach karna.
+
+- Ek volume ek time pe ek node ko attach hota hai (mostly RWO).
+- Bahut fast performance deta hai.
+- Suitable for databases, single-node workloads.
+
+Example:
+- Microsoft Azure ki disk attach karna.
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: azure-disk
+spec:
+  capacity:
+    storage: 30Gi
+  accessModes:
+    - ReadWriteOnce
+  azureDisk:
+    diskName: mydisk
+    diskURI: /subscriptions/.../resourceGroups/.../providers/Microsoft.Compute/disks/mydisk
+```
+
+2. File Storage (Shared File Systems):
+
+File-level access deta hai – bilkul jaise Windows ke shared folder ya Linux ka NFS mount.
+
+- Directories, files ki tarah manage hota hai.
+
+Example:
+- NFS (Network File System).
+- Azure Files.
+
+3. Object Storage:
+
+Data objects ke form mein store hota hai – jaise file, metadata, aur unique ID.
+
+- Block aur file storage se different.
+
+Examples: S3, Azure Blob, GCS
+- Azure Blob direct PV nahi banta. Apps Azure SDK ke through integrate karte hain.
+- AWS S3 tum direct mount nahi kar sakte PV ke form mein. Apps jaise Minio use kar sakte hain S3 ke storage ko PV ke jaisa expose karne ke liye.
+
+<br>
+
+**Recliam Policy**
+
+Reclaim Policy yeh decide karti hai ki PV ka kya hoga jab PVC delete ho jaye.
+
+Maan lo tumhara pod delete ho gaya, PVC delete ho gayi. Ab Kubernetes ko decide karna padta hai:
+- PV ko delete kare?
+- PV ko free kare reuse ke liye?
+- Ya data wahan hi chhoda rahe?
+
+Isi ko kehte hain reclaim policy.
+
+Kubernetes mein Available Reclaim Policies:
+- Retain.
+- Delete.
+
+1. Retain Policy:
+
+“Data ko wahi rakho, manually clean ya reuse karo.”
+
+- PVC delete hoti hai → PV Released state mein chala jata hai.
+- Kubernetes PV ko automatically kisi naye PVC ko bind nahi karega.
+- Admin ko manually PV ko delete ya clean karna padta hai.
+
+Example:
+
+Maan lo tumhara PV:
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-retain
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /exports/data
+    server: 10.10.10.20
+```
+
+PVC delete hoti hai:
+- PV ab Released state mein hai.
+- Lekin data wahan pada hai.
+- Tum use manually clean kar sakte ho.
+- Ya PV ko naye claim ke liye manually reuse kar sakte ho.
+
+2. Delete Policy:
+
+“PVC delete ho jaaye toh PV aur data automatically delete ho jaaye.”
+
+- PVC delete hoti hai → Kubernetes backend storage ko bhi delete kar deta hai.
+- No manual work required.
+
+Example:
+
+Tumhara PV:
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-delete
+spec:
+  capacity:
+    storage: 20Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Delete
+  gcePersistentDisk:
+    pdName: my-disk
+    fsType: ext4
+```
+
+PVC delete hoti hai:
+- PV delete ho jaata hai.
+- Google Cloud disk physically delete ho jaati hai.
+
