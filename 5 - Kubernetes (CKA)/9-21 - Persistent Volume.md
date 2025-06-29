@@ -80,6 +80,124 @@ Matlab:
 <br>
 <br>
 
+### How to work with Persistent Volume and Persistent Volume Claim
+
+Kubernetes mein PV/PVC use karne ka process roughly 5 steps mein hota hai:
+- Step 1 → Decide Storage Backend.
+- Step 2 → Create PersistentVolume (PV) (static provisioning case).
+- Step 3 → Create PersistentVolumeClaim (PVC).
+- Step 4 → Pod mein PVC ko volume ke through use karna.
+- Step 5 → Clean-up / Delete if needed.
+
+**Step 1 – Decide Storage Backend**:
+
+Sabse pehle tumhe decide karna hai. Kaun sa storage backend use karna hai?:
+- NFS?
+- AWS EBS?
+- Azure Disk?
+- Local Disk?
+
+Example:
+- Tumhare paas NFS server hai → file storage.
+- Ya tum AWS pe ho → EBS.
+- Local disk use karni hai → local backend.
+
+Yahi decide karega tumhara PV ka config kaise hoga.
+
+
+**Step 2 – Create PersistentVolume (PV)**:
+
+Ab tum PV ka YAML banaoge.
+
+(Note: Dynamic provisioning mein yeh step tumhe manually nahi karna padta, StorageClass sambhalta hai.)
+
+PV YAML mein define karte ho:
+- capacity.
+- accessModes.
+- storage backend details.
+- reclaimPolicy.
+
+Example PV (NFS):
+```
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-pv
+spec:
+  capacity:
+    storage: 10Gi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /exports/data
+    server: 10.10.10.20
+```
+
+Commands:
+```
+kubectl apply -f pv.yaml
+```
+Check karo:
+```
+kubectl get pv
+```
+
+**Step 3 – Create PersistentVolumeClaim (PVC)**:
+
+Ab tum PV ko claim karne ke liye PVC banaoge. Iska matlab ab tum PV ko ye bataoge ki kitni storage tumahare pod ko chaiye.
+
+PVC YAML mein define karte ho:
+- kitni storage chahiye (e.g. 5Gi).
+- kaunse accessModes chahiye.
+- agar specific storageClass use karna hai toh woh.
+
+Example PVC:
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+```
+
+Commands:
+```
+kubectl apply -f pvc.yaml
+```
+Check karo:
+```
+kubectl get pvc
+```
+
+**Binding Process**:
+
+Binding process is to connect PVC with PV. Yaha pe kubernetes tumhare PVC ko PV se match karta hai agar match successful hua to in dono ko automatically connect kar deta hai.
+
+Agar tumhara PVC aur PV match ho gaya:
+- capacity ≥ PVC request (Kya storage ki capacity request ki hui capacity se jyada hai ya equal hai, If yes then check 1 passed).
+- accessModes match (PV aur PVC ke acces modes same hone chiye).
+- selector match (if any).
+
+Sab kuch thik match hone par Kubernetes automatically bind kar deta hai.
+
+Dekho:
+```
+kubectl describe pvc my-pvc
+```
+
+Status Bound hona chahiye.
+
+
+
+
+
+
 ### Components of Persistent Volume
 
 Components are:
