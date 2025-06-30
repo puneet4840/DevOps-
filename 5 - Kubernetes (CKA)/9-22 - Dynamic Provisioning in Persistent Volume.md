@@ -47,7 +47,9 @@ Kubernetes dynamic provisioning ka kaam StorageClass ke through hota hai.
 
 **StorageClass**:
 
-Storage Class is a kubernetes object that is used to provision the persistent volume from cloud to your pods.
+Storage Class is a kubernetes object that is used to register the register the details of cloud storage backend in your cluster.
+
+In storage class we give the information about the CSI Driver, type of storage, etc. That information is needed for kubernetes to register the storage backend in cluster.
 
 Storage class kubernetes ka object hota hai jise hum yaml ke through create karte hain jo cloud se disk ko register karta hai kubernetes main.
 
@@ -80,7 +82,9 @@ There are three components that works in dynamic provisioning:
 
 **1. StorageClass**:
 
-Storage Class is a kubernetes object that is used to provision the persistent volume from cloud to your pods.
+Storage Class is a kubernetes object that is used to register the register the details of cloud storage backend in your cluster.
+
+In storage class we give the information about the CSI Driver, type of storage, etc. That information is needed for kubernetes to register the storage backend in cluster.
 
 Storage class kubernetes ka object hota hai jise hum yaml ke through create karte hain jo cloud se disk ko register karta hai kubernetes main.
 
@@ -154,4 +158,188 @@ How it Works:
 Maan lo tumhara cluster Azure Kubernetes Service (AKS) pe hai. Tum chahte ho:
 - Tumhare pod ko 10Gi persistent storage mile.
 - Tumhe manually PV create nahi karna.
-- Tum dynamic provisioning use karna chahte ho
+- Tum dynamic provisioning use karna chahte ho.
+
+Below are the steps:
+
+
+### Step 1 → Azure CSI Driver Cluster Mein Deploy Karo
+
+Pehle check karo tumhara Azure Disk CSI driver enabled hai ya nahi.
+
+AKS clusters (latest) mein mostly driver pehle se installed hota hai. Par agar tum manually install karna chahte ho, to ye deploy karna padta hai:
+```
+kubectl apply -f https://raw.githubusercontent.com/kubernetes-sigs/azuredisk-csi-driver/master/deploy/install-driver.yaml
+```
+
+Ye 2 cheezein deploy karega:
+- Controller plugin (deployment).
+- Node plugin (daemonset).
+
+### Step 2 → StorageClass Create Karo
+
+Ab tumhe StorageClass banana hai. Ye batata hai:
+- Provisioner kaun hai? → disk.csi.azure.com.
+- Disk ka SKU (Standard_LRS, Premium_LRS, UltraSSD_LRS, etc.).
+- Kaunse resource group mein banana hai (optional).
+
+
+Example StorageClass – Premium SSD:
+```
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: azure-disk-premium
+provisioner: disk.csi.azure.com
+parameters:
+  skuName: Premium_LRS
+  kind: Managed
+  cachingMode: ReadOnly
+reclaimPolicy: Delete
+volumeBindingMode: WaitForFirstConsumer
+allowVolumeExpansion: true
+```
+
+Explanation:
+- ```provisioner: disk.csi.azure.com```: batata hai Azure Disk CSI driver use hoga.
+- ```skuName: Premium_LRS```: Premium SSD banana hai.
+- ```volumeBindingMode: WaitForFirstConsumer```: disk tab create hogi jab pod schedule hoga.
+- ```allowVolumeExpansion: true```: disk future mein resize kar sakte ho.
+
+Apply karo:
+```
+kubectl apply -f sc-azure-disk.yaml
+```
+
+Check karo:
+```
+kubectl get storageclass
+```
+
+Ise create karne se plugin azure main ek disk create kar dega.
+
+### Step 3 → PVC Create Karo
+
+We need to define the PVC here.
+
+Example PVC:
+```
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: azure-disk-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: azure-disk-premium
+  resources:
+    requests:
+      storage: 10Gi
+```
+
+Explanation:
+- PVC ko 10Gi disk chahiye. Premium SSD chahiye (jo tumne StorageClass mein define kiya)
+
+Apply karo:
+```
+kubectl apply -f pvc.yaml
+```
+
+Check karo:
+```
+kubectl get pvc
+```
+
+Status pehle Pending dikh sakta hai jab tak pod deploy nahi hota (kyunki tumne WaitForFirstConsumer lagaya hai).
+
+### Step 4 → Pod Deploy Karo jo PVC Use Kare
+
+Ab tumhara pod deploy karo jise ye PVC chahiye.
+
+Example Pod YAML:
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: azure-disk-pod
+spec:
+  containers:
+    - name: myapp
+      image: nginx
+      volumeMounts:
+        - mountPath: "/mnt/azure"
+          name: diskstorage
+  volumes:
+    - name: diskstorage
+      persistentVolumeClaim:
+        claimName: azure-disk-pvc
+```
+
+Pod ke andar tumhara volume mount hoga → /mnt/azure
+
+Apply karo:
+```
+kubectl apply -f pod.yaml
+```
+
+### Step 5 → Azure Disk Create Hota Hai (Automatically)
+
+Jaise hi tumhara pod schedule hota hai:
+- Kubernetes dekhta hai ```PVC``` → ```StorageClass``` → ```disk.csi.azure.com```.
+- CSI driver ko call karta hai:
+  - CreateVolume.
+- CSI driver Azure API ko bolta hai:
+  - “Creat 10Gi Premium SSD!”.
+- Azure tumhare subscription mein disk create kar deta hai:
+  - Name: pvc-xxxxxxxxxxx.
+  - Size: 10Gi.
+  - Type: Premium_LRS.
+
+- Check karo Azure portal mein:
+  - Resource group → Disks → New disk created dikhega.
+ 
+### Step 6 → Disk Node Pe Attach Hoti Hai
+
+- Azure tumhari disk AKS node ke VM pe attach kar deta hai:
+  - CSI driver ```ControllerPublishVolume``` call karta hai → disk attach hoti hai VM ke ```/dev/sdX``` ya ```/dev/mapper``` pe.
+- Phir CSI driver ```NodePublishVolume``` call karta hai → disk file system ke andar mount hoti hai:
+  - Tumhare container ke path pe: ```/mnt/azure```.
+ 
+### Step 7 → Pod Use Kar Sakta Hai Storage
+
+Ab tumhare pod ke andar jaake check karo:
+```
+kubectl exec -it azure-disk-pod -- /bin/bash
+```
+
+Dekho:
+```
+df -h /mnt/azure
+```
+
+Output kuch aisa:
+```
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sdc        9.8G   33M  9.8G   1% /mnt/azure
+```
+
+DONE!!! - Tumhari Azure Disk pod ke andar mounted hai.
+
+
+### Step 8 → Clean-Up
+
+Agar tum PVC delete karte ho:
+```
+kubectl delete pvc azure-disk-pvc
+```
+
+Aur reclaimPolicy agar Delete hai:
+- CSI driver firse Azure ko call karta hai:
+  - DeleteVolume.
+- Azure tumhari disk delete kar deta hai.
+
+Agar reclaimPolicy Retain hoti:
+- Disk Azure mein padhi rahegi.
+- Tum manually manage karoge.
+
+
