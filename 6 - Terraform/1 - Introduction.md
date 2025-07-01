@@ -110,6 +110,18 @@ Terraform is an Infrastructure as Code (IaC) tool that allows users to manage an
 
 ```क्युकी हमको Terraform की जरुरत इसलिए हुई क्युकी Terraform सभी Cloud providers के साथ compatible है. हम terrafrom से Azure, AWS, Google Cloud सभी पर resources create कर सकते हैं```
 
+Matlab:
+- Har cloud ka apna format, syntax, aur tool tha. Agar aap multi-cloud environment chalana chahte hain (jaise kuch infra AWS pe aur kuch Azure pe), to aapko do alag-alag IaC tool seekhne, maintain karne aur likhne padte the. To terraform ne sabhi cloud providers ke saath compatibility badhai jisse hum ek hi syntax use karke alag-alag cloud pe resources create kar sakte hain.
+
+**Ek real-world use case**:
+
+Maan lijiye aapki company kuch workloads AWS pe chala rahi hai aur kuch Azure pe migrate kar rahi hai. Agar aap CloudFormation aur ARM Templates alag-alag likhenge to:
+- 2 teams chahiye.
+- 2 alag knowledge base.
+- 2 deployment pipelines.
+
+Terraform se aap ek hi language (HCL) mein dono infra define kar sakte hain, deploy kar sakte hain, aur ek hi workflow se manage kar sakte hain.
+
 - **Speed**: It's much faster to write code using terraform than to manually click through web interfaces.
 - **Accuracy**: Less chance of mistakes when using code to provision infrastructure.
 - **Consistency**: You can easily recreate your infrastructure.
