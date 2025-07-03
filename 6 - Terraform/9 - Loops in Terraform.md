@@ -223,3 +223,136 @@ Explanation:
 - each.key refers to "dev", "uat", "prod".
 - each.value refers to "East US", "West US", etc.
 
+
+<br>
+<br>
+<br>
+
+### Limitation of count
+
+**Problem Statement**:
+
+Terraform mein jab tum count ya for_each se multiple resources banate ho, to tum sochoge ki agar ek resource hata diya jaye (delete kar diya jaye variable ya list se), to Terraform kaise behave karega?
+
+Count ke saath Problem – Index Shifting
+
+**Scenario – Azure Resource Groups**
+
+Socho tumhare paas 3 environments hain:
+- dev.
+- qa.
+- prod.
+
+Tum inke liye alag-alag Resource Groups banana chahte ho. Fir maan lo tumhe beech ka ek environment delete karna pade – tab kya hoga, yeh dekhenge.
+
+**Example**
+```
+variable "envs" {
+  default = ["dev", "qa", "prod"]
+}
+
+resource "azurerm_resource_group" "rg" {
+  count    = length(var.envs)
+  name     = "rg-${var.envs[count.index]}"
+  location = "East US"
+}
+```
+
+Pehla ```terraform apply```.
+
+Ye resources banenge:
+- rg-dev.
+- rg-qa.
+- rg-prod.
+
+Terraform state mein resources ka address hoga:
+```
+azurerm_resource_group.rg[0] → dev
+azurerm_resource_group.rg[1] → qa
+azurerm_resource_group.rg[2] → prod
+```
+
+Ab maan lo tum qa ko hata dete ho:
+```
+variable "envs" {
+  default = ["dev", "prod"]
+}
+```
+
+Dusra ```terraform apply```
+- ```qa``` resource delete hoga.
+- prod ka index shift ho jayega → pehle index 2 pe tha, ab index 1 pe ho jayega.
+- Terraform prod resource ko destroy karke naye index pe recreate karega
+
+Terraform yeh karega:
+```
+- Destroy azurerm_resource_group.rg[1]  # qa
+- Destroy azurerm_resource_group.rg[2]  # prod (old index)
++ Create azurerm_resource_group.rg[1]   # prod (new index)
+```
+
+Yani unnecessary destroy-create ho raha hai, prod resource bhi recreate hoga sirf index shift ke chakkar mein.
+
+**Note**:  Isme terraform prod resource ko destroy karke naye index pe recreate karega. Agar ye resource critical hota (e.g. EC2 instance), to downtime ya data loss bhi ho sakta hai.
+
+<br>
+
+**Example 2 – For_each ke saath Resource Groups**
+
+```
+variable "envs" {
+  default = ["dev", "qa", "prod"]
+}
+
+resource "azurerm_resource_group" "rg" {
+  for_each = toset(var.envs)
+
+  name     = "rg-${each.key}"
+  location = "East US"
+}
+```
+
+Pehla ```terraform apply```:
+
+Ye resources banenge:
+```
+azurerm_resource_group.rg["dev"]
+
+azurerm_resource_group.rg["qa"]
+
+azurerm_resource_group.rg["prod"]
+```
+
+Ab maan lo tum qa ko hata dete ho:
+```
+variable "envs" {
+  default = ["dev", "prod"]
+}
+```
+
+Dusra ```terraform apply```:
+
+Terraform karega:
+```
+- Destroy azurerm_resource_group.rg["qa"]
+```
+
+Baaki resources untouched rahenge:
+- dev → unchanged.
+- prod → unchanged.
+
+No shifting, no unwanted recreate.
+
+
+**Note**:
+
+count ka use karo jab:
+- sab resources identical ho.
+- tumhe bas quantity chahiye.
+- shifting se koi farak nahi padta (jaise test infra)
+
+for_each ka use karo jab:
+- resources unique ho (name, config).
+- tum kabhi bhi list ya map me se element hata/adda kar sakte ho.
+- tumhe resource stability chahiye
+
