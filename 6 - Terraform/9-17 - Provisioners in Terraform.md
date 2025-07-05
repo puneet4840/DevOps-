@@ -59,3 +59,24 @@ Example: ```Suppose आपको एक file मैं ये store करना
 ```Terraform के help से आप जो भी resources create करते हो| ये remote provisioner उन remote resources जैसे virtual machine, app service jaise resources पर command रन करता है|```
 
 It connects to remote resources like virtiual machine, app service, etc using the SSH command.
+
+<br>
+
+**File Provisioner**:
+
+```File provisioner किसी भी file को local machine से remote machine पर copy करने के लिए use होता है|```
+
+Example: To copy any type of nginx configuration file to remote server.
+
+<br>
+<br>
+
+### Best Practice
+
+Use karo jab:
+- Resource ke baad kuch simple automation chahiye.
+- Testing/demo environment ho.
+
+Avoid karo jab:
+- Production ke liye repeatable, reliable configuration chahiye.
+- Configuration management tool available ho (e.g. Ansible, Chef, Puppet).
