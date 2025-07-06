@@ -64,6 +64,18 @@ root/
 <br>
 <br>
 
+### Types of Modules
+
+Two types of modules:
+- **Local Module**: ```जब तुम module को अपने local system पर खुद से create करके use करते हो मतलब तुमने अपने local system मैं module की configuration खुद से लिखी है उसको local module बोलते हैं|```
+  - We are going to learn local module below.
+
+- **Remote Module**: ```जब हम किसी module को local directory के बजाये किसी remote source से impot करते हैं - जैसे GitHub, Terraform registry, BitBucket, Azure Storage. - तो उसे हम remote module कहते हैं.```
+  - We will learn remote module in next file.
+
+<br>
+<br>
+
 ### Structure of Module
 
 A module is typically a directory containing:
