@@ -452,13 +452,32 @@ Root Module (main.tf)
 
 हम modules ऐसे arrange करेंगे:
 ```
-Root Module
+terraform-nested-lab/
 │
-├── network module
-│      ├── subnet module
-│      ├── nsg module
+├── main.tf
+├── variables.tf
+├── outputs.tf
 │
-└── vm module
+└── modules/
+     ├── network/
+     │     ├── main.tf
+     │     ├── variables.tf
+     │     ├── outputs.tf
+     │     └── modules/
+     │            ├── subnet/
+     │            │     ├── main.tf
+     │            │     ├── variables.tf
+     │            │     └── outputs.tf
+     │            └── nsg/
+     │                  ├── main.tf
+     │                  ├── variables.tf
+     │                  └── outputs.tf
+     │
+     └── vm/
+           ├── main.tf
+           ├── variables.tf
+           └── outputs.tf
+
 ```
 
 यानि:
@@ -658,5 +677,51 @@ variable "vm_name" {}
 variable "vm_size" {}
 variable "admin_username" {}
 variable "ssh_key" {}
+```
+
+**Kaise Run Karein?**
+
+Step-1: Initialize Terraform
+```
+terraform init
+```
+- Sab modules load होंगे.
+- Providers download होंगे.
+
+Step-2: Plan Dekho
+```
+terraform plan
+```
+- इससे तुम देख पाओगे कि क्या-क्या create होने वाला है।
+
+Sample output:
+```
+Plan: 6 to add, 0 to change, 0 to destroy.
+
+  + azurerm_resource_group.this
+  + azurerm_virtual_network.this
+  + module.network.module.subnets["subnet1"].azurerm_subnet.this
+  + module.network.module.subnets["subnet2"].azurerm_subnet.this
+  + module.network.module.nsg.azurerm_network_security_group.this
+  + module.vm.azurerm_linux_virtual_machine.this
+```
+
+Step-3: Deploy Kar Do
+```
+terraform apply
+```
+
+जब confirm करोगे, terraform poora infra bana देगा।
+
+Step-4: Outputs Check Karo
+
+Apply के baad tum output dekh सकते हो:
+```
+terraform output
+```
+
+Example:
+```
+vm_id = "/subscriptions/xxxx.../my-vm"
 ```
 
