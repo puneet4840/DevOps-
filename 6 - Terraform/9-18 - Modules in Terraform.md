@@ -399,6 +399,264 @@ module "storage" {
 **Step-3: Run the commands**
 ```
 terraform plan
-terraform apply
+terraform appl|`
+```
+
+<br>
+<br>
+
+### Nested Module in Terraform
+
+Terraform में module kya hota hai?
+- Terraform module = एक folder जिसमें terraform files (.tf) होती हैं.
+- उसमें variables, resources, outputs define होते हैं
+- Ek module basically reusable code block hai.
+
+जैसे तुम ek code likhते हो Virtual Network create करने का, वही code tum 10 बार use करना चाहोगे अलग-अलग projects में, to module बना दो।
+
+अब nested module मतलब:
+- ek module ke andar, tum dusra module call karte ho.
+
+```एक मॉडल के अंदर दूसरा मॉडल कॉल करना इस नेस्टेड मॉडल होता है|```
+
+Yani ek hierarchy create ho जाती है – जैसे parent → child → grandchild modules.
+
+Example hierarchy:
+```
+Root Module (main.tf)
+└── Network Module
+      ├── Subnet Module
+      └── NSG Module
+```
+
+तो subnet aur NSG module दोनों network module ke andar call हुए हैं – यही nested module का concept है।
+
+<br>
+
+**Advantages of Nested Modules**:
+- Code Reuse – एक बार module बना लो, कई जगह इस्तेमाल करो.
+- Team Work – हर team अपना module manage करे.
+- Clarity & Clean Code – बड़ा code छोटे-छोटे logical parts में divide हो जाता है.
+- Dynamic Architecture – infra को easily change कर सकते हो.
+- Speed – बड़े infra जल्दी deploy होते हैं क्योंकि logic पहले ही लिख रखा होता है.
+
+
+**Step-by-Step Nested Module Example**:
+
+चलो मान लो तुम्हें ये infra बनाना है:
+- Resource Group.
+- Virtual Network.
+- Multiple Subnets.
+- Network Security Group (NSG).
+- Virtual Machine.
+
+हम modules ऐसे arrange करेंगे:
+```
+Root Module
+│
+├── network module
+│      ├── subnet module
+│      ├── nsg module
+│
+└── vm module
+```
+
+यानि:
+- Root module → top level orchestration.
+- network module → VNet aur usse related cheezein.
+- subnet module → network module ke andar.
+- nsg module → network module ke andar.
+- vm module → network resources ke upar depend karega.
+
+<br>
+
+**Root Module**:
+
+यह हमारा main.tf होगा:
+
+```
+provider "azurerm" {
+  features {}
+}
+
+resource "azurerm_resource_group" "this" {
+  name     = "rg-nested-demo"
+  location = "East US"
+}
+
+module "network" {
+  source              = "./modules/network"
+  resource_group_name = azurerm_resource_group.this.name
+  location            = azurerm_resource_group.this.location
+  vnet_name           = "my-vnet"
+  address_space       = ["10.0.0.0/16"]
+}
+
+module "vm" {
+  source              = "./modules/vm"
+  resource_group_name = azurerm_resource_group.this.name
+  location            = azurerm_resource_group.this.location
+  subnet_id           = module.network.subnet_ids["subnet1"]
+  vm_name             = "myvm"
+  vm_size             = "Standard_B1s"
+  admin_username      = "azureuser"
+  ssh_key             = "ssh-rsa AAAAB3..."
+}
+```
+
+**Network Module**:
+
+अब network module बनाते हैं। यह VNet banayega aur nested modules ko call karega (subnet + NSG).
+
+```modules/network/main.tf```
+```
+resource "azurerm_virtual_network" "this" {
+  name                = var.vnet_name
+  address_space       = var.address_space
+  location            = var.location
+  resource_group_name = var.resource_group_name
+}
+
+module "subnets" {
+  source = "./modules/subnet"
+  for_each = {
+    subnet1 = "10.0.1.0/24"
+    subnet2 = "10.0.2.0/24"
+  }
+
+  subnet_name          = each.key
+  address_prefixes     = [each.value]
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = azurerm_virtual_network.this.name
+}
+
+module "nsg" {
+  source              = "./modules/nsg"
+  resource_group_name = var.resource_group_name
+  location            = var.location
+  nsg_name            = "my-nsg"
+}
+```
+
+**Subnet Module (Nested)**
+
+यह network module के अंदर है। यह nested module कहलाएगा।
+
+```modules/network/modules/subnet/main.tf```
+```
+resource "azurerm_subnet" "this" {
+  name                 = var.subnet_name
+  resource_group_name  = var.resource_group_name
+  virtual_network_name = var.virtual_network_name
+  address_prefixes     = var.address_prefixes
+}
+```
+
+```modules/network/modules/subnet/variables.tf```
+```
+variable "subnet_name" {}
+variable "resource_group_name" {}
+variable "virtual_network_name" {}
+variable "address_prefixes" {
+  type = list(string)
+}
+```
+
+```modules/network/modules/subnet/outputs.tf```
+```
+output "subnet_id" {
+  value = azurerm_subnet.this.id
+}
+```
+
+**NSG Module (Nested)**
+
+network module के अंदर NSG भी nested module होगा।
+
+```modules/network/modules/nsg/main.tf```
+```
+resource "azurerm_network_security_group" "this" {
+  name                = var.nsg_name
+  location            = var.location
+  resource_group_name = var.resource_group_name
+}
+```
+
+```modules/network/modules/nsg/variables.tf```
+```
+variable "nsg_name" {}
+variable "resource_group_name" {}
+variable "location" {}
+```
+
+**Network Module Outputs**
+
+अब network module ke outputs likho, taaki root module ko subnet_ids mile.
+
+```modules/network/outputs.tf```
+```
+output "subnet_ids" {
+  value = {
+    for k, mod in module.subnets :
+    k => mod.subnet_id
+  }
+}
+```
+यह बहुत important step है क्योंकि nested module ka output root module tak propagate करना पड़ता है।
+
+**VM Module**
+
+VM deploy करने के लिए subnet_id chahiye, जो network module se aayega.
+
+```modules/vm/main.tf```
+```
+resource "azurerm_network_interface" "this" {
+  name                = "${var.vm_name}-nic"
+  location            = var.location
+  resource_group_name = var.resource_group_name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = var.subnet_id
+    private_ip_address_allocation = "Dynamic"
+  }
+}
+
+resource "azurerm_linux_virtual_machine" "this" {
+  name                  = var.vm_name
+  location              = var.location
+  resource_group_name   = var.resource_group_name
+  size                  = var.vm_size
+  admin_username        = var.admin_username
+  network_interface_ids = [azurerm_network_interface.this.id]
+
+  admin_ssh_key {
+    username   = var.admin_username
+    public_key = var.ssh_key
+  }
+
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "Canonical"
+    offer     = "UbuntuServer"
+    sku       = "18.04-LTS"
+    version   = "latest"
+  }
+}
+```
+
+```modules/vm/variables.tf```
+```
+variable "resource_group_name" {}
+variable "location" {}
+variable "subnet_id" {}
+variable "vm_name" {}
+variable "vm_size" {}
+variable "admin_username" {}
+variable "ssh_key" {}
 ```
 
