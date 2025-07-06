@@ -2,6 +2,8 @@
 
 ```जब हम किसी module को local directory के बजाये किसी remote source से import करते हैं - जैसे Github, Terraform registry, BitBucket, Azure Storage. - तो उसे हम remote module कहते हैं.```
 
+```Local module मैं हम क्या कर रहे थे की अपने system पर module बना कर उसको root main.tf file मैं use कर रहे थे| लेकिन remote module मैं ऐसा नहीं होता है remote module मैं module remote location पर होता है उस remote location से directly हम वह module अपने terraform script मैं use करना होता है और resource create हो जाता है|```
+
 <br>
 
 ### Local vs Remote module
