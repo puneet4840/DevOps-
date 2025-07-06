@@ -402,5 +402,3 @@ terraform plan
 terraform apply
 ```
 
-<br>
-<br>
