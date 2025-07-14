@@ -13,9 +13,116 @@ It was developed by google but now it is maintained by Cloud Native Computing Fo
 
 Before kubernetes applications were built based on **Monotlithic architecture** that means applications have single codebase for entire application and hosted on physical servers or virtual machines. During that time scaling was slow, updates cause downtime and resources were often wasted. 
 
+Monolithic architecture mein application ke saare components ek hi codebase ke andar ek single deployable unit ke roop mein bundled hote hain matlab sabhi functionality ek hi code ke ander hoti hain:
+- Application ka poora business logic, UI layer, data access layer, background jobs, integrations sab kuch ek hi executable (jar, war, dll, exe) ya ek hi deployment package mein hota hai.
+- Yani deployment bhi ek single artifact ke through hota hai.
+- Agar tumhe application run karni hai, to bas woh ek hi monolithic service run kar do.
+
+Example:
+
+Socho ek e-commerce website hai. Uska:
+- Order management.
+- Inventory management.
+- User management.
+- Payment processing.
+- Product catalog.
+
+Sab ek hi codebase mein likha hua hai, aur deploy bhi ek hi server pe hota hai as a single application.
+
+Advantages of Monolithic Architecture:
+
+- Development Simple Hoti Hai:
+  - Initial stage mein monolith banana easy hota hai. Tumhe bas ek hi project maintain karna hota hai.
+  - Developers ko distributed systems ki complexity nahi samajhni padti.
+ 
+- Easier Testing:
+  - Poori application ka integration testing ek hi environment mein hota hai.
+  - Single process mein sab kuch test ho jaata hai.
+ 
+- Monolithic application fast hoti hain:
+  - Monolith mein module-to-module communication local method calls se hoti hai, network ke through nahi.
+  - Isse latency kam hoti hai aur performance acchi hoti hai.
+ 
+Disadvantages of Monolithic Architecture:
+
+- Scalability Issues:
+  - Monolith ko independently scale nahi kar sakte.
+  - Socho tumhara payment processing high traffic generate karta hai, par tumhe poora monolith scale up karna padta hai.
+  - Isse resource waste hoti hai aur cost badh jaati hai.
+ 
+- Large Codebase Becomes Unmanageable:
+  - Jaise-jaise team aur features badhte hain, codebase bada hota jaata hai.
+  - Code tightly coupled ho jaata hai.
+  - Matlab bade code ko manage karna bohot mushkil ho jata hai.
+ 
+- Slow Build and Deployment:
+  - Choti si change bhi karni ho, to poora monolith build aur redeploy karna padta hai.
+  - Build karne main time lag jata hai.
+ 
+- Technology Lock-in:
+  - Tumne shuruaat mein Java choose kiya, ab tum Python use karna chahte ho kisi naye feature ke liye.
+  - Par puri monolith ek hi language pe dependent hoti hai.
+  - Alag-alag technologies easily integrate nahi hoti.
+ 
+- Ek point ke baad monolithic codebase itna bada ho jaata hai ki naye developers ke liye samajhna mushkil ho jaata hai.
+
+Monolithic architecture ki inhi kami ko dekhte hue microservice architecture laya gaya.
+
+
 **After Kubernetes**
 
 With the rise of **Containerization**(like Docker) and **Kubernetes** the applications started building based on **Microservice Architecture** that means applications are broken into microservices where each part (e.g., user service, payment service) codebase is seperate and developed, deployed and scaled seperately. 
+
+Microservices architecture ek aisa architecture style hai jisme ek bada application chhoti-chhoti, independently deployable services mein split hota hai.
+- Har microservice ek specific business functionality ko handle karti hai jaise payment service, user service, login service.
+- Har service ka apna codebase, apni data store, apna lifecycle hota hai.
+- Har microservice independently deploy, scale, aur manage ki ja sakti hai.
+
+Example:
+
+E-commerce application:
+- User Service → Users manage karti hai.
+- Order Service → Orders process karti hai.
+- Inventory Service → Stock maintain karti hai.
+- Payment Service → Payment gateway handle karti hai.
+- Notification Service → Emails/SMS bhejti hai.
+
+Monolith ke inhi disadvantages ko address karne ke liye microservices architecture popular hua. Microservices:
+- Microservice architecutre main har service ko alag alag scale kar sakte hain.
+- Isme agar ek service down hui to dusri chalti rehti hai.
+- Microservice architecture main services ko independently deploy kar sakte hain.
+- Tum ek service Python mein, dusri Node.js mein likh sakte ho.
+- Codebase chhota hota hai.
+
+Isi wajah se, jab applications complex aur large scale hone lagi, tab microservices architecture zyada suitable laga, specially cloud aur Kubernetes jaise orchestration tools ke aane ke baad, kyunki woh microservices ko deploy aur manage karna easy bana dete hain.
+
+Disadvantages of Microservice Architecture:
+
+Sab kuch acha nahi hota. Microservices ke major disadvantages bhi hain:
+
+- Increased Complexity:
+  - Ab tumhare paas ek nahi, multiple deployable units hain.
+  - Service discovery manage karna padta hai:
+    - Kaun si service kahan chal rahi hai?
+  - Load balancing configure karna padta hai.
+  - API Gateways lagane padte hain.
+
+  Monolith mein sab ek hi process mein hota tha.
+
+- Network Latency:
+  - Services apas mein network ke through baat karti hain.
+  - Har call mein latency add hoti hai.
+  - Matlab microservice architecture thoda slow rehta hai.
+
+- Deployment Overhead:
+  - Deployment ke liye har service ke liye multiple pipelines maintain karni padti hain.
+  - Infrastructure ka complexity badh jaata hai:
+    - Logging.
+    - Monitoring.
+    - Tracing.
+    - Security.
+  
+
 
 <br>
 <br>
