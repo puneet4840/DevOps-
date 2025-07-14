@@ -4,6 +4,8 @@ Kubernetes is the container management tool which is used to manage conatiner de
 
 ```Kubernetes containers को manage करने के लिए एक tool होता है जिससे हम containers की automatic deployment करना, Scaling और De-scaling करना और containers के बीच मैं load को balance करना ये सब operations हम kubernetes के through करते हैं```
 
+Kubernetes (k8s) ek open-source platform hai jo tumhari containerized applications ko deploy, manage, scale, aur automate karta hai.
+
 It was developed by google but now it is maintained by Cloud Native Computing Foundation (CNCF).
 
 <br>
