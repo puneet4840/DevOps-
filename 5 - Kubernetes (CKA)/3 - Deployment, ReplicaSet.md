@@ -119,6 +119,8 @@ spec:
 
   The ports section opens up specific ports on the container. The line containerPort: 80 means that inside the container, Nginx will listen for requests on port 80, which is the standard HTTP port for web servers.
 
+<br>
+
 **How Kubernetes uses this above YAML file**
 
 - **Create and Configure a Deployment**:  When this YAML file is applied in Kubernetes (```using kubectl apply -f deployment.yaml```), Kubernetes will create a Deployment named ```nginx-deployment```.
@@ -129,64 +131,107 @@ spec:
 
 - **Selectors and Labels**: The selector helps the Deployment keep track of only the Pods with the label app: nginx. If the Pods created do not match this label, Kubernetes won’t manage them as part of this Deployment. Let the Deployment know which Pods to manage.
 
-### Example: Detailed Explaination - What Happens When We Apply a Deployment with replicas: 3 in Kubernetes?
+<br>
+<br>
 
-When you create a Kubernetes Deployment with replicas: 3, Kubernetes ensures that exactly three Pods are always running, even if one crashes or is deleted.
+## Example: Detailed Explaination - What Happens When We Apply a Deployment with replicas: 3 in Kubernetes?
 
-- **Step 1: User Applies Deployment YAML**:
+**High-Level Flow**:
+```
+kubectl apply -f deployment.yaml
+    ↓
+kubectl → kube-apiserver
+    ↓
+kube-apiserver → etcd
+    ↓
+Deployment Controller dekhega desired vs actual state
+    ↓
+ReplicaSet create hoga
+    ↓
+ReplicaSet pods create karega
+    ↓
+Scheduler pods ko nodes pe assign karega
+    ↓
+kubelet pods ko start karega
+    ↓
+Pods run ho jaayenge
+```
 
+<br>
+
+### Step-1: Kubectl Apply:
+- Tum ```deployment.yaml``` file create karte ho aur usme application ko deploy karne ki configuration likhte ho.
+- Fir ```kubectl apply -f deployment.yaml``` command run karte ho.
+- kubectl ka kaam:
+  - Tumhara YAML file ko parse karta hai aur usse ek HTTP request mein convert karta hai. Fir kubernetes cluster ke Api Server ko HTTP POST request bhejta hai.
+
+<br>
+ 
+### Step 2 – API Server Receives the Request:
+- Kubernetes cluster ke Api Server par request aati hai.
+
+**Authentication**:
+- Api Server request ko Authenticate karta hai:
+- Check karega:
+  - Tumhara user valid hai ya nahi?
+  - Certificates sahi hain?
+  - Tokens valid hain?
+
+**Authorization**:
+- Fir Api Server request ko authenticate karne ke baad us request ko authorize karta hai:
+- Check karega:
+  - Kya tumhare paas permission hai Deployment create karne ki?
+  - e.g. RBAC roles check karta hai.
+
+**Validation**:
+- Api Server is request ko Admission Controller ko bhej deta hai, fir admission controller ka role aata hai aur apna kaam shuru karta hai:
+- Admission Controllers validation karta hai:
+  - Yeh request allow karni hai ya nahi?
+  - Tumhari YAML correct hai ya nahi?
+  - Tumne mandatory fields diye hain ya nahi?
+  - E.g. agar tumne deployment file main:
   ```
-  kubectl apply -f deployment.yaml
+  selector: ...
   ```
+  miss kar diya to API Server error throw karega.
 
-  the following sequence of events occurs:
-
-- **Step 2: Request Reaches API Server**:
-  - The kubectl apply command sends an HTTP POST request to the Kubernetes API Server (kube-apiserver).
-  - The API Server validates the YAML file to ensure it is syntactically correct.
-  - The request is stored in etcd (the cluster’s distributed key-value store).
-  - The API Server acknowledges the request and updates the cluster state.
+  - Yaml file main kuch default value fill karne hain ya nahi?
+  Example:
+  - Agar tum deployment file main replicas mention nahi karte ho to → Admission Controller default set kar sakta hai replicas = 1.
  
-- **Step 3: API Server Informs the Controller Manager**
-  - The Controller Manager continuously watches for changes in Deployments.
-  - It detects that a new Deployment (replicas: 3) has been created or updated.
-  - The Controller Manager creates a new ReplicaSet for this Deployment.
+**Persistence in etcd**:
+-  Sab kuch pass ho gaya? Toh API Server cluster ke etcd database mein tumhari Deployment ki definition store kar deta hai.
+Example:
+```
+/registry/deployments/default/nginx-deployment
+```
+Wahan tumhari Deployment ki YAML store ho gayi.
 
-- **Step 4: ReplicaSet Ensures Desired Pod Count**
-  - The ReplicaSet controller detects that zero Pods exist but three are required (replicas: 3).
-  - It creates three new Pods based on the template in the Deployment YAML.
-  - The API Server registers these new Pods in etcd.
+<br>
 
-- **Step 5: Scheduler Assigns Pods to Nodes**
-  - Each new Pod is initially in a Pending state.
-  - The Kubernetes Scheduler detects these new unassigned Pods.
-  - It checks for available worker nodes based on:
-    - Resource availability (CPU, Memory).
-    - Node selectors, tolerations, and taints.
-    - Affinity/anti-affinity rules (if defined).
-  - It selects the best Node for each Pod and assigns it.
-  Now, the API Server updates the Pod objects with their assigned Worker Nodes.
+### Step-3: Deployment Controller Triggers
 
-- **Step 6: Kubelet Pulls the Image and Starts the Containers**
-  - Each Worker Node runs a process called Kubelet, which is responsible for managing Pods.
-  - The Kubelet on each assigned Node detects that a new Pod has been scheduled.
-  - It reads the Pod specification and pulls the container image (e.g., nginx) from the configured container registry (Docker Hub, Azure Container Registry, etc.).
-  - Once the image is downloaded, Kubelet:
-    - Starts the container using the Container Runtime (Docker, containerd, etc.).
-    - Mounts any defined volumes.
-    - Configures networking (attaches it to the correct Service if defined).
-  - At this point, the Pods are running, but Kubernetes needs to check if they are truly ready.
- 
-- **Step 7: Pod Becomes Ready and Exposed**
-  - The Pod runs a health check (livenessProbe, readinessProbe if defined).
-  - Once the checks pass, Kubernetes marks the Pod as "Ready".
-  - If a Service is defined for this Deployment, the new Pods are added to the Service’s Endpoint List.
-  - Traffic can now be distributed among the three running Pods.
- 
-- **Step 8: Ongoing Monitoring & Self-Healing**
-  - The ReplicaSet controller keeps watching the Pod count.
-  - If a Pod crashes or gets deleted, the ReplicaSet automatically creates a new one.
-  - The entire system remains in a self-healing state.
+Kubernetes ke andar ek **Controller Manager** hota hai. Uske andar bohot saare controllers hain:
+- Deployment Controller.
+- ReplicaSet Controller.
+- Node Controller.
+- Job Controller.
+- etc.
+
+
+**Deployment Controller’s Job**:
+- Deployment controller desired state aur actual state ko compare karta hai.
+
+Example:
+- Tumne apni ```deployment.yaml``` file main likha:
+```
+replicas=3
+```
+
+Ab deployment controller check karega:
+- Cluster mein already koi pods hai ya nahi?
+- Agar nahi → To deployment controller **ReplicaSet** create karega.
+
 
 
 <br>
