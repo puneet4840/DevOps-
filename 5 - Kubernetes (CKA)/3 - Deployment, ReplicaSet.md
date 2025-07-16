@@ -168,7 +168,7 @@ Pods run ho jaayenge
 <br>
  
 ### Step 2 – API Server Receives the Request:
-- Kubernetes cluster ke Api Server par request aati hai.
+- Kubernetes cluster ke Api Server par request aati hai. Api server authentication, authorization aur validation karta hai.
 
 **Authentication**:
 - Api Server request ko Authenticate karta hai:
@@ -218,6 +218,7 @@ Kubernetes ke andar ek **Controller Manager** hota hai. Uske andar bohot saare c
 - Job Controller.
 - etc.
 
+Jaise hi deployment configuration yaml ke ander store hoti hai uske baad api server deployment controller ko inform karta hai fir deployment controller apni job karta hai.
 
 **Deployment Controller’s Job**:
 - Deployment controller desired state aur actual state ko compare karta hai.
@@ -231,6 +232,40 @@ replicas=3
 Ab deployment controller check karega:
 - Cluster mein already koi pods hai ya nahi?
 - Agar nahi → To deployment controller **ReplicaSet** create karega.
+
+Iska matlab hai jaise hi nayi deployment create karne ki request aati hai, to deployment controller us deployment ke liye ek replica-set create kar deta hai. Deployment controller ka kaam hi deployment ke liye replica set create karna hai.
+
+<br>
+
+### Step-4: ReplicaSet Created
+
+Deployment controller har deployment ke liye ek replica-set create kar deta hai.
+
+Replica set job is to maintain the desired state in the cluster. 
+
+Replica set ka kaam hota hai ki jitne pod user ek application ke run karna chata hai utne pod run karke rakhna.
+
+Replica set ki responsibility hoti hai:
+- Jitne replicas ```deployment.yaml``` main define hai utne pods cluster main hamesha running rahe.
+- “Mujhe 3 Pods hamesha running chahiye jinke paas label app=nginx ho.”
+
+Example:
+- Tumne ```deployment.yaml``` file main define kiya:
+```
+replicas: 3
+```
+- Agar kubernetes cluster main running pods 2 hain, to replica set ek aur pod create karega.
+- Agar 5 pods running hain, to replica set 2 delete karega.
+
+Relationship:
+```
+Deployment → ReplicaSet → Pods
+```
+Deployment controller ReplicaSet manage karta hai aur ReplicaSet pods manage karta hai.
+
+<br>
+
+### Step 5: Scheduler In Action
 
 
 
