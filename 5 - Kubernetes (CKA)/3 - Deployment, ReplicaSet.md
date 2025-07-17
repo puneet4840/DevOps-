@@ -218,7 +218,7 @@ Kubernetes ke andar ek **Controller Manager** hota hai. Uske andar bohot saare c
 - Job Controller.
 - etc.
 
-Jaise hi deployment configuration yaml ke ander store hoti hai uske baad api server deployment controller ko inform karta hai fir deployment controller apni job karta hai.
+Deployment controller ek watch loop main api server ko ping karta rehta hai ki koi nayi deployment request aayi hai kya. Agar deployement request aayi hoti hai to deployment controller apni job start karta hai.
 
 **Deployment Controller’s Job**:
 - Deployment controller desired state aur actual state ko compare karta hai.
@@ -267,8 +267,66 @@ Deployment controller ReplicaSet manage karta hai aur ReplicaSet pods manage kar
 
 ### Step 5: Scheduler In Action
 
+ReplicaSet bolta hai:
+- “Mujhe 3 pods banane hain.”
 
+Tab trigger hota hai Kubernetes Scheduler.
 
+Scheduler ek watch loop main api server ko request karta hai ki koi unscheduled pod to nahi hai. Jaise hi koi unscheduled pod hota hai scheduler apni job start karta hai.
+
+Scheduler ek-ek karke har worker node par jata hai aur check karta hai:
+- Kaunsi nodes available hain pod ko schedule karne ke liye.
+- Kaunse nodes ke paas:
+  - Enough CPU hai?
+  - Enough Memory hai?
+  - Labels ya taints tolerate karte hain ya nahi?
+
+Worker nodes main se best node choose karke scheduler api server ko inform karta hai, Api server isko etcd main store kar deta hai tabhi apke pod ka status scheduled dikhta hai.
+
+<br>
+
+### Step-6: kubelet On Worker Node
+
+Scheduler ke baad pod abhi tak run nahi hua. Uska sirf spec exist karta hai. Ab kubelet ka kaam start hota hai.
+
+Kubelet ek loop main api server ko request karta hai ki kya koi naya pod assign hua hai us worker node ko.
+
+Jaise hi uske worker node ko pod assign hota hai to kubelet container runtime ko request bhejta hai ki container registry se image pull karke container start kardo.
+
+Fir container runtime container registry se image pull karke container start kar deta hai.
+
+Container run hone ke baad pod ke status ko kubelet api server ko bhejta hai ki pod running hai.
+
+<br>
+
+### Step-7: Pods Running
+
+Ab tumhare 3 pods running hain:
+```
+NAME                                READY
+nginx-deployment-xxxxx              1/1
+nginx-deployment-yyyyy              1/1
+nginx-deployment-zzzzz              1/1
+```
+Har pod ke paas:
+- Container nginx running hai.
+- Port 80 pe sun raha hai.
+- Label app=nginx laga hai.
+
+<br>
+
+### Step-8: Networking Setup
+
+Ab pods running hain. Kubernetes automatically:
+- IP allocate karta hai:
+  - Har pod ko ek unique IP milti hai:
+  ```
+  10.244.2.5
+  ```
+- Networking rules set karta hai:
+  - Pod-to-pod communication enable karta hai.
+
+<br>
 <br>
 
 ### Difference between Container, Pod and Deployment.
