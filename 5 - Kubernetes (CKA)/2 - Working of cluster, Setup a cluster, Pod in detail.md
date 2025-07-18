@@ -141,7 +141,84 @@ We create pod or any resource in kubernetes using the yaml file. This is the bes
 In the next section we are going to learn it.
 
 <br>
-<hr>
+
+### How IP assigned to pod?
+
+- Jab hum Kubernetes mein koi workload deploy karte hain (deployment, job, daemonset, etc.), to Kubernetes uske liye Pod banata hai.
+- Ek pod ke andar ek ya zyada containers ho sakte hain (generally ek hi hota hai).
+- Pod container ke uper create hota hai jo container ke liye storage aur networking manage karne ke liye hota hai.
+- To har pod ke liye ek Ip address assign hota hai internal communication ke liye.
+
+**Question: Pod ko IP kab assign hoti hai?**
+
+Jab bhi Kubernetes scheduler kisi pod ko kisi node pe schedule karta hai, tab:
+- Har worker node pe ek kubelet (node agent) hota hai wo pod ko create karta hai.
+- Wo pod ke liye ek pause container banata hai (ye ek infra container hota hai, namespace maintain karta hai).
+- Yahan CNI plugin call hota hai.
+- CNI plugin ko call kiya jaata hai with a command like: ADD.
+- Plugin ek IP pool maintain karta hai (like 10.244.0.0/16).
+- Wo us IP pool se ek free IP uthakar pod ko assign karta hai.
+- IP net namespace ke andar inject ki jaati hai.
+- Ab pod ke paas ek IP hai, jaise: 10.244.0.15.
+- Ab ye pod cluster ke andar kisi bhi doosre pod se is IP ke through baat kar sakta hai.
+
+**CNI Plugin ka kaam kya hota hai?**
+
+| Role                       | Description                                                                                             |
+| -------------------------- | ------------------------------------------------------------------------------------------------------- |
+| 🧠 IP Address Assign Karna | Har pod ko ek unique IP dena                                                                            |
+| 🔗 Veth Pair banana        | Pod aur host ke beech ek virtual Ethernet interface create karna                                        |
+| 📡 Routing Setup           | Networking path create karna taaki pod ke andar ka traffic bahar ja sake ya doosre pod tak pahunch sake |
+| 🌐 DNS Setup               | Pod ke andar DNS resolve karwana (usually CoreDNS)                                                      |
+
+**Pod IP ka Kaam Kya Hota Hai?**
+- Cluster ke andar pods ek dusre se baat karte hain IP ya DNS ke through.
+- Example: curl http://10.244.1.5:8080 (pod-to-pod HTTP call).
+
+**Pause Container kya hai?**
+
+Pause container ek invisible but powerful helper container hota hai jo har pod ke andar pehle se chalu hota hai — iska kaam sirf ek network namespace aur IP maintain karna hota hai.
+
+**Kaise kaam karta hai? (Step-by-step)**
+
+Chalo ek real-world example lete hain: Hum ek NGINX pod bana rahe hain.
+
+Step 1: Pod Definition:
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-nginx
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 80
+
+```
+
+Step 2: Kubernetes Kya Karta Hai?
+
+Pod schedule hota hai ek node pe.
+
+kubelet us node pe following steps karta hai:
+- Sabse pehle Pause container create karta hai.
+- Yeh container chalta hai ek chhoti si image se, jo bas ek "sleeping" process run karta hai.
+- Yeh container kuch nahi karta, sirf zinda rehta hai.
+
+Ab yeh pause container:
+- Ek network namespace create karta hai.
+- Ek IP assign karta hai (via CNI plugin).
+- Ek veth (virtual ethernet pair) host aur pod ke beech banata hai.
+- Ab jo bhi actual containers hain (jaise nginx), wo pause container ke namespace ke andar launch hote hain.
+- Iska matlab: wo IP, ports, routes sab pause container se share karte hain
+
+To jab tum ```curl http://10.244.0.10``` karte ho (kisi aur pod se), to traffic actually Pause container ke IP pe aata hai, aur wahan se NGINX container ke port 80 par route hota hai — kyunki dono same namespace me hain.
+
+
+<br>
+<br>
 
 ### YAML in Kubernetes.
 
