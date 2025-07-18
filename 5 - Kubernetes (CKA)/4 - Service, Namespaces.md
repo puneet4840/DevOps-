@@ -8,6 +8,42 @@ In kubernetes setup, each Pod has its own Ip Address, But since pods are tempora
 
 <br>
 
+### How IP assigned to pod?
+
+- Jab hum Kubernetes mein koi workload deploy karte hain (deployment, job, daemonset, etc.), to Kubernetes uske liye Pod banata hai.
+- Ek pod ke andar ek ya zyada containers ho sakte hain (generally ek hi hota hai).
+- Pod container ke uper create hota hai jo container ke liye storage aur networking manage karne ke liye hota hai.
+- To har pod ke liye ek Ip address assign hota hai internal communication ke liye.
+
+**Question: Pod ko IP kab assign hoti hai?**
+
+Jab bhi Kubernetes scheduler kisi pod ko kisi node pe schedule karta hai, tab:
+- Har worker node pe ek kubelet (node agent) hota hai wo pod ko create karta hai.
+- Wo pod ke liye ek pause container banata hai (ye ek infra container hota hai, namespace maintain karta hai).
+- Yahan CNI plugin call hota hai.
+- CNI plugin ko call kiya jaata hai with a command like: ADD.
+- Plugin ek IP pool maintain karta hai (like 10.244.0.0/16).
+- Wo us IP pool se ek free IP uthakar pod ko assign karta hai.
+- IP net namespace ke andar inject ki jaati hai.
+- Ab pod ke paas ek IP hai, jaise: 10.244.0.15.
+- Ab ye pod cluster ke andar kisi bhi doosre pod se is IP ke through baat kar sakta hai.
+
+**CNI Plugin ka kaam kya hota hai?**
+
+| Role                       | Description                                                                                             |
+| -------------------------- | ------------------------------------------------------------------------------------------------------- |
+| 🧠 IP Address Assign Karna | Har pod ko ek unique IP dena                                                                            |
+| 🔗 Veth Pair banana        | Pod aur host ke beech ek virtual Ethernet interface create karna                                        |
+| 📡 Routing Setup           | Networking path create karna taaki pod ke andar ka traffic bahar ja sake ya doosre pod tak pahunch sake |
+| 🌐 DNS Setup               | Pod ke andar DNS resolve karwana (usually CoreDNS)                                                      |
+
+**Pod IP ka Kaam Kya Hota Hai?**
+- Cluster ke andar pods ek dusre se baat karte hain IP ya DNS ke through.
+- Example: curl http://10.244.1.5:8080 (pod-to-pod HTTP call).
+
+
+<br>
+
 ### Why do we need Services?
 
 Imagine you have miltiple pods running the same part of your application like one is running front-end part and one other pod is running a database part. If a users request comes in, it should go to any one these pods. Here why services are useful:
