@@ -261,7 +261,7 @@ Explanation:
 
 - **Midnight Trigger**:
 
-  - At midnight each day, Kubernetes triggers this CronJob.
+  - At midnight each day, ```cron-job controller``` triggers this CronJob.
 
 - **Job Creation**:
 
