@@ -32,8 +32,13 @@ Imagine you have miltiple pods running the same part of your application like on
 ### Types of Serives:
 
 Kubernetes has three types of services but mst common are top three services:-
+- ClusterIP.
+- NodePort.
+- Load Balancer.
 
-- **ClusterIP (Default)**
+<br>
+
+**ClusterIP (Default)**
 
   ClusterIP is the default service created when we create the Kubernetes cluster. Cluster Ip is used for the internal communication between pods within the cluster. It exposes the application on an internal clsuter ip. When pod is created then application is not accessible from outside the cluster.
 
