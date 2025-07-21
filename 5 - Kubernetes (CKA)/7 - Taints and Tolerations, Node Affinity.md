@@ -51,7 +51,9 @@ A taint has three components:
 
 Let’s say you have a node that you want to reserve for database workloads only. You might add a taint to it as follows:
 
-```kubectl taint nodes <node-name> dedicated=database:NoSchedule```
+```
+kubectl taint nodes <node-name> dedicated=database:NoSchedule
+```
 
 This command adds a taint to the node named <node-name>, with the key dedicated, value database, and effect NoSchedule. This means that only pods with a matching toleration will be able to run on this node.
 
