@@ -257,7 +257,7 @@ Node Affinity is the feature of kubernetes which is used to schedule pods on nod
 
 Node affinity is a way to tell kubernetes scheduler that these pods need to run on those particular nodes based on labels assigned to those nodes.
 
-```Suppose kubernetes cluster मैं 2 worker nodes हैं| एक node पर HDD memory है और दूसरे node पर SSD memory है| तो हम कुछ pods को SSD memory वाले pods पर run करना चाहते है| तो उन pods को SSD memory वाले pods पर रन करने के लिए Node Affinity feature के through हम scheduler को बताते है की इन pods को इन nodes पर run करना है|```
+```Suppose kubernetes cluster मैं 2 worker nodes हैं| एक node पर HDD memory है और दूसरे node पर SSD memory है| तो हम कुछ pods को SSD memory वाले node पर run करना चाहते है| तो उन pods को SSD memory वाले node पर रन करने के लिए Node Affinity feature के through हम scheduler को बताते है की इन pods को इन nodes पर run करना है|```
 
 Node affinity is a way to define where you want or require your pods to run based on labels assigned to nodes. It’s like saying, “I prefer my workload to run on a node with a certain characteristic,” or “I require it to be on a specific type of node.” Node affinity uses labels on nodes and helps ensure that pods are scheduled on nodes with specific properties, like SSD storage or GPUs, or in particular zones for regulatory or geographic reasons.
 
