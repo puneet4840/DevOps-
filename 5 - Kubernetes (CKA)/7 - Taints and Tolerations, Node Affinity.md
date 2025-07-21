@@ -9,6 +9,8 @@ In Kubernetes, taints and tolerations work together to control which pods can be
 
 A taint is a special setting applied to a node to indicate that certain pods should not be scheduled on that particular node. When you apply a taint to a node, you’re essentially saying, "Don’t allow pods here unless they have permission."
 
+Yeh ek property hoti hai jo ek node pe lagayi jati hai. Taint ka matlab hai ki node ko "restrict" karna, taki uspe normally koi pod (container ka group) schedule na ho, jab tak ki pod ke paas us taint ko tolerate karne ki capability na ho. Soch lo, taint ek tarah ka "no-entry" sign hai node ke liye.
+
 If you want to restrict who can enter a room, you can put a “No Entry” sign on it. In Kubernetes, these “No Entry” signs are called taints.
 
 For example:
@@ -38,8 +40,12 @@ A taint has three components:
   - **Effect**: Specifies the action to take when a pod doesn't tolerate the taint:
   
     - **NoSchedule**: Pods without a matching toleration won’t be scheduled on this node.
+      - Agar koi pod us node ke taint ko tolerate nahi karta, to woh pod us node pe schedule nahi hoga. 
     - **PreferNoSchedule**: Kubernetes tries to avoid scheduling pods here, but it’s not a strict rule.
+      - Yeh ek "soft" restriction hai. Kubernetes koshish karega ki pod us node pe schedule na ho, lekin agar koi aur node available nahi hai, to pod schedule ho sakta hai.
     - **NoExecute**: If a pod without a matching toleration is already on the node, it will be evicted.
+      - Yeh sabse strict effect hai. Agar node pe yeh taint apply hota hai, to existing pods jo taint ko tolerate nahi karte, woh node se evict (hataye) ja sakte hain, aur naye pods schedule nahi honge.
+        
 
 **Example of Applying a Taint**
 
@@ -54,6 +60,8 @@ This command adds a taint to the node named <node-name>, with the key dedicated,
 ### What are Tolerations?
 
 A toleration is like a permission slip that a pod has to run on a tainted node. If a pod has a matching toleration, it’s allowed to ignore the taint and be scheduled on that node.
+
+Yeh ek property hoti hai jo pod ke configuration mein define ki jati hai. Toleration ka matlab hai ki pod bolta hai, "Mujhe is taint wale node pe chalne ki permission hai." Yani, agar pod ke paas specific taint ko tolerate karne ka toleration hai, tab hi woh us node pe schedule ho sakta hai.
 
 Tolerations are like permission badges.
 
