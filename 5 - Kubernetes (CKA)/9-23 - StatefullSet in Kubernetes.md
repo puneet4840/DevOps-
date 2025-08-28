@@ -73,3 +73,24 @@ Maan lo tum ek E-commerce application bana rahe ho (Amazon jaisi).
 
 ### Kubernetes main StatefulSet ki jarurat kyu padi
 
+We know that ki agar humko kubernetes main koi application deploy karni ho to hum deployment create karte hain aur deployement create karne se pods ke ander application run ho jati hai, agar humko isi application ko higly available banana ho to to hum deployment main replicas de dete hain jisse usi application ke aur pods create ho jate hain.
+
+Suppose karo ki tumne nginx server kubernetes par deploy kiya aur vo pods ke ander run ho rha hai, agar isko highly available banana ho to tum iske 3 ya 4 pods run kar doge to jyada traffic ko handle kar lenge.
+
+Normally, deployment main agar ek hi application ke multiple pods hain, to un pods pe jo traffic distribute hota hai vo service randomly distribute karti hai, jaise pehli request pod-1 aa gyi fir dusri request pod-3 fir tisri request pod-1 pe to ese traffic distribute hota hai.
+
+Ab samjho:
+
+Toh imagine karo, hum Kubernetes cluster mein ek MySQL database run kar rahe hain. Simple start: Hum ek single Pod create karte hain MySQL ke liye. Yeh Pod ek container hai jisme MySQL server chal raha hai. Ab, agar hum isko highly available banana chahte hain, matlab agar ek Pod crash ho jaaye toh service down na ho, toh hum replicas add karte hain. Replicas matlab multiple copies of the same Pod – jaise 3 ya 5 Pods MySQL ke.
+
+Agar MYSQL ka sirf ek hi pod hai aur vo tumne deployment ke through run kiya hai to koi problem nahi hai, lekin agar tumne deployement ke thorugh MYSQL ke multiple replicas bana diye to isme ek problem shuru ho jati hai Aur isi problem ko deal karne ke liye Stateful set ka concept kubernetes main introduce kiya gaya.
+
+Kya Problem Hui:
+
+Suppose hum ek e-commerce app ke liye MySQL use kar rahe hain. Aur humne isko highly available banane ke liye MYSQL ke 5 replicas run kar diye. Ab humare paas 5 pods main alag-alag MYSQL database run ho rha hai jo deployment se replica banake run kiya hai. Pod-1 mein data save ho jaata hai, jaise "```order_id```: ```101```, ```user```: ```A```, ```item```: ```Phone```". Ab, User B usi order ko check karta hai (read request), lekin Kubernetes ki service is request ko Pod-2 pe bhej deti hai. Pod-2 mein yeh data nahi hai kyuki uska storage alag hai! Toh User B ko error milta hai ya wrong data. "```No such order found```". Yeh inconsistency hai matlab ek pod ke paas alag data, dusre pod ke paas alag data.
+
+To yaha kya hua ki deployement se stateful application jaise database usko humne scale kiya, lekin scale karne se data isme consistent nahi rha. Jisse humara application bekar ho gya.
+
+To yaha pe humne ye seekha ki, stateful applications jaise databases ko hum deployment se run to kar sakte hain lekin unko scale nahi kar sakte kyuki scale karne par un application main data sync nahi ho pata hai.
+
+To StatefulSet ke concept ne isi problem ko solve kiya. Aage hum dekhenge ki statefulset ne is problem ko kaise solve kiya.
