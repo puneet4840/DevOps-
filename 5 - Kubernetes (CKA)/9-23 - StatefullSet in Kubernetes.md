@@ -335,3 +335,303 @@ mysql-2.mysql.default.svc.cluster.local
 Ye DNS records predictable aur permanent hote hain. Agar pod delete ho jaye aur wapas aaye, fir bhi uska DNS wahi rehta hai.
 
 Cluster ke dusre pods hamesha ek pod ko uske DNS naam se access karte hain, jo kabhi badalta nahi.
+
+<br>
+
+**5 - Update Strategy**:
+
+StatefulSet ke paas 2 update strategies hoti hain:
+- RollingUpdate (default):
+  - Pods ko ek ek karke update karega, aur order maintain karega.
+- OnDelete:
+  - Pods automatically update nahi hote. Tumhe manually pod delete karna padega tabhi wo nayi version se recreate hoga.
+ 
+Databases aur stateful apps mein update karte time careful hona padta hai. Agar sab pods ek sath update ho jaaye toh cluster crash ho sakta hai. RollingUpdate ensure karta hai ki safe tarike se update ho.
+
+
+<br>
+<br>
+<br>
+
+## Example LAB: Ultimate MySQL StatefulSet Lab (with Replication)
+
+<br>
+
+**Lab ka Objective**:
+- Kubernetes cluster mein MySQL deploy karna using StatefulSet.
+- Har pod ke paas stable identity aur PVC hona.
+- MySQL pods ek dusre ko stable DNS se access kar saken.
+- Ek pod (```mysql-0```) master ho aur baaki pods (```mysql-1```, ```mysql-2```) slaves ho.
+- Master par jo writes honge wo slaves tak replicate ho jayein, aur slaves ko read ke liye use kiya jaye.
+
+<br>
+
+**Pre-Requisites**:
+- Kubernetes cluster running (Minikube, Kind, AKS, GKE, EKS – koi bhi).
+- kubectl configured aur cluster se connected.
+- Basic knowledge of YAML aur MySQL commands.
+
+<br>
+
+**Step 1: Namespace Banana**:
+
+Sabse pehle ek dedicated namespace banate hain:
+```
+kubectl create namespace mysql-lab
+```
+Namespace alag banane se MySQL ke resources (pods, PVCs, services) isolated rahenge aur manage karna easy hoga.
+
+<br>
+
+**Step 2: Headless Service Banana**:
+
+Headless service se pods ko ek stable DNS milega:
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+  namespace: mysql-lab
+spec:
+  ports:
+  - port: 3306
+    name: mysql
+  clusterIP: None
+  selector:
+    app: mysql
+```
+
+Har pod ka DNS kuch aisa hoga:
+- ```mysql-0.mysql.mysql-lab.svc.cluster.local```.
+- ```mysql-1.mysql.mysql-lab.svc.cluster.local```.
+- ```mysql-2.mysql.mysql-lab.svc.cluster.local```.
+
+<br>
+
+**Step 3: Master aur Slave Services Banana**:
+
+Taaki applications master aur slaves ko alag-alag access kar saken.
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-master
+  namespace: mysql-lab
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: mysql
+    role: master
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-slaves
+  namespace: mysql-lab
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: mysql
+    role: slave
+```
+
+- ```mysql-master``` service sirf master pod (```mysql-0```) ko target karegi.
+- ```mysql-slaves``` service saare slave pods (```mysql-1```, ```mysql-2```) ko target karegi.
+
+<br>
+
+**Step 4: ConfigMap Banana (MySQL Configs)**:
+
+MySQL ko kuch basic configuration chahiye hota hai (jaise root password, DB name). Iske liye ek ConfigMap use karenge.
+
+Master aur slaves ke liye alag configs:
+
+```
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mysql-config
+  namespace: mysql-lab
+data:
+  master.cnf: |
+    [mysqld]
+    log-bin=mysql-bin
+    server-id=1
+  slave.cnf: |
+    [mysqld]
+    server-id=2
+    relay-log=relay-bin
+```
+- Master ke liye binary logs enable karne hote hain (replication ke liye).
+- Slaves ke liye alag server-id aur relay logs set karne hote hain.
+- ConfigMap/Secret ka use karna best practice hai, taaki credentials aur configs YAML mein hardcode na ho. (Yaha maine simple rakha hai, best hai Secrets use karo).
+
+<br>
+
+**Step 5: StatefulSet with Replication**:
+
+Ab aata hai main part: StatefulSet. Ye define karega kaise MySQL pods deploy honge, kaunsa PVC milega aur pods ka naam kya hoga.
+
+```
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mysql
+  namespace: mysql-lab
+spec:
+  serviceName: mysql
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mysql
+  template:
+    metadata:
+      labels:
+        app: mysql
+    spec:
+      containers:
+      - name: mysql
+        image: mysql:8.0
+        ports:
+        - containerPort: 3306
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: rootpassword
+        - name: MYSQL_DATABASE
+          value: mydb
+        volumeMounts:
+        - name: config
+          mountPath: /etc/mysql/conf.d
+        - name: data
+          mountPath: /var/lib/mysql
+      initContainers:
+      - name: init-mysql
+        image: bash:5.0
+        command:
+        - "sh"
+        - "-c"
+        - |
+          HOSTNAME=$(hostname)
+          if [ "$HOSTNAME" = "mysql-0" ]; then
+            echo "I am master, skipping slave config."
+          else
+            echo "Configuring as slave..."
+            mysql -h mysql-0.mysql.mysql-lab.svc.cluster.local -u root -prootpassword \
+            -e "CHANGE MASTER TO MASTER_HOST='mysql-0.mysql.mysql-lab.svc.cluster.local', MASTER_USER='root', MASTER_PASSWORD='rootpassword', MASTER_LOG_FILE='mysql-bin.000001', MASTER_LOG_POS=4; START SLAVE;"
+          fi
+      volumes:
+      - name: config
+        configMap:
+          name: mysql-config
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 2Gi
+```
+
+- ```mysql-0``` automatically master banega.
+- ```mysql-1```, ```mysql-2``` pods init container ke through master ke sath connect ho jaayenge aur slaves banenge.
+- Har pod ke paas apna PVC hoga jisme uska data store hoga.
+
+<br>
+
+**Step 6: Verify Deployment**:
+
+Check resources:
+```
+kubectl get pods -n mysql-lab -o wide
+kubectl get pvc -n mysql-lab
+kubectl get svc -n mysql-lab
+```
+
+Expected:
+- Pods: mysql-0, mysql-1, mysql-2 (Running).
+- PVCs: data-mysql-0, data-mysql-1, data-mysql-2.
+- Services: mysql, mysql-master, mysql-slaves.
+
+<br>
+
+**Step 7: Testing Replication**:
+
+Connect to master (mysql-0):
+```
+kubectl exec -it mysql-0 -n mysql-lab -- mysql -u root -p
+```
+Password: rootpassword
+
+```
+USE mydb;
+CREATE TABLE test (id INT PRIMARY KEY, name VARCHAR(50));
+INSERT INTO test VALUES (1, 'Hello from Master');
+```
+
+Ab slave pod (mysql-1) pe connect karo:
+```
+kubectl exec -it mysql-1 -n mysql-lab -- mysql -u root -p
+```
+
+```
+USE mydb;
+SELECT * FROM test;
+```
+Output: Tumhe wahi data milega jo master pe insert kiya tha → replication kaam kar rahi hai.
+
+<br>
+
+**Step 8: Scaling Test**:
+
+Scale StatefulSet ko 5 replicas tak:
+```
+kubectl scale statefulset mysql --replicas=5 -n mysql-lab
+```
+Naye pods mysql-3, mysql-4 slaves ban jayenge. Check karo:
+```
+kubectl get pods -n mysql-lab
+```
+
+Aur test karo ki mysql-3 pe bhi master ka data available hai.
+
+<br>
+
+**Step 9: Failover Test**:
+
+Master pod delete karo:
+```
+kubectl delete pod mysql-0 -n mysql-lab
+```
+
+- Kubernetes mysql-0 ko wapas se banayega with same PVC.
+- Data safe rahega aur master ke wapas aate hi replication restore ho jayegi.
+
+<br>
+<br>
+<br>
+
+### Kyun StatefulSet apne aap Data Sync nahi karta?
+
+- StatefulSet ka kaam sirf ye ensure karna hai ki pods ke paas stable identity ho, stable storage ho, aur predictable DNS ho.
+- Lekin database replication / data synchronization application ka kaam hota hai, Kubernetes ka nahi.
+- Matlab Kubernetes tumhe ek environment deta hai jisme cluster bana sakte ho, lekin cluster ke andar ka replication tumhe manually setup karna padta hai.
+
+Example:
+- MongoDB StatefulSet me pods stable banenge, lekin tumhe MongoDB ka replicaSet init command chalana padega data sync ke liye.
+- Waise hi MySQL me bhi tumhe manually master-slave replication setup karna padega.
+
+<br>
+<br>
+
+### How we did MySQL Master-Slave Replication with StatefulSet
+
+Ab hum dekhte hain ki kaise achieve karenge proper data sync:
+
+**Step 1: Decide the Roles**:
+- mysql-0 hamesha master hoga (kyunki wo pehle banega aur uska DNS fixed hai).
+- mysql-1, mysql-2 slaves honge jo master se replicate karenge.
