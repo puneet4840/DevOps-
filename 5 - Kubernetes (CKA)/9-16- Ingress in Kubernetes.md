@@ -81,31 +81,102 @@ Ingress offers a more centralized and scalable way to manage access to multiple 
 <img src="https://drive.google.com/uc?export=view&id=1OI23Rgntu7TK5QnTBKZIBzBIxI1lMIaE">
 
 <br>
+<br>
 
-### Key components of Ingress
+### Working of Ingress Example
 
-- Ingress resource.
-- Ingress Contoller.
+- Ek nginx app hai aur ek notes app hai.
+- Dono sirf ClusterIP service ke saath expose kiye gaye hain (matlab cluster ke andar hi accessible hain, bahar se nahi).
+- Requirement: Dono ko ek hi IP se access karna hai, jaise:
+  - ```http://<same-ip>/nginx``` → nginx app.
+  - ```http://<same-ip>/notes``` → notes app.
+ 
+Yehi kaam Ingress karta hai.
+
+**Traditional Approach (NodePort / LoadBalancer)**:
+- Agar tum NodePort/LB service banate toh har ek app ke liye alag port/IP lagti.
+- Har app ke liye alag IP/port manage karna padta → messy & costly.
+
+**Ingress Approach**:
+- Step 1: Ingress Controller Install Karo:
+  - Ingress tabhi kaam karta hai jab ek Ingress Controller cluster me run ho (jaise NGINX Ingress Controller).
+  - Ye ek pod/deployment hota hai jo sab external traffic receive karta hai.
+    
+- Step 2: Applications Deploy Karo:
+  - Har app (nginx + notes) ko Deployment aur ClusterIP service ke saath deploy karo.
+  - Example:
+    - nginx-service (port 80 → nginx pods).
+    - notes-service (port 80 → notes pods).
+  - Dono sirf cluster ke andar available rahenge.
+
+- Step 3: Ingress Resource Banao:
+  - Ek Ingress YAML likho jisme path-based routing rules ho.
+  - Ye Ingress Controller ko bata dega ki kaunsi request kahan forward karni hai.
+ 
+- Step 4: Access From Outside:
+  - Ingress Controller ek LoadBalancer/NodePort service ke saath expose hota hai.
+  - Us IP/domain ko use karke tumhar apps accessible ho jaate hain:
+    - ```http://<Ingress-IP>/nginx``` → nginx app.
+    - ```http://<Ingress-IP>/notes``` → notes app.
+
+<br>
+<br>
+
+### Components of Ingress
+
+Ingress ek API object hai jo cluster ke andar chalne wale applications (services/pods) ko bahar se HTTP/HTTPS traffic ke liye expose karta hai.
+
+Iske andar kuch core components hote hain jo milke kaam karte hain.
+
+- Ingress Resource (YAML Congiguration).
+- Ingress Controller (Pod and Service).
 - Ingress Class.
+- Backend Services (ClusterIP/NodePort/LoadBalancer).
 
 <br>
 
-### How does Ingress works?
+**1 - Ingress Resource (YAML Configuration)**:
 
-- **Ingress Resource**:
+Ye ek YAML configuration object hai jo define karta hai ki traffic ko kaise route karna hai. Actual main ye ek yaml file hoti hai jisme hum likhte hain ki request ko kaise aur kaha route karna hai.
 
-  The Ingress resource in Kubernetes is a configuration file (YAML) that defines how external requests should be routed to internal services.
+```Ingress resource ingress को define करने के लिए एक Yaml file होती है जिसमे मैं हम define करते हैं की जब ingress से kubernetes service पर external request आएगी तो उस request को कोनसी kubernetes service पर transfer करना है|```
 
-  ```Ingress resource ingress को define करने के लिए एक Yaml file होती है जिसमे मैं हम define करते हैं की जब ingress से kubernetes service पर external request आएगी तो उस request को कोनसी kubernetes service पर transfer करना है|```
+Isme hum define karte hain:
+- Hostnames (domain names) → jaise app.example.com
+- Paths (URL routes) → jaise /api, /shop, /blog
+- Backend services → kis service ko request bhejni hai
 
-  Each Ingress resource mainly contains:
+Ye sirf ek rule set hai. Ye khud se traffic handle nahi karta. Traffic ko handle karne ka kaam Ingress Controller karega.
 
-  - **Routing Rules**: For routing traffic to services based on Path based routing OR Host based routing. For example, it can route requests based on the URL path (e.g., ```/app1, /app2```) or hostname (e.g., ```app1.example.com, app2.example.com```).
- 
-  - **TLS settings** (optional): Allow HTTPS traffic using SSL/TLS certificates.
+Example of Ingress Resource:
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+spec:
+  rules:
+  - host: shop.example.com
+    http:
+      paths:
+      - path: /cart
+        pathType: Prefix
+        backend:
+          service:
+            name: cart-service
+            port:
+              number: 80
+      - path: /order
+        pathType: Prefix
+        backend:
+          service:
+            name: order-service
+            port:
+              number: 80
+```
+<br>
 
-Exmaple of Ingress resource:
-
+Example of Ingress Resource:
 ```
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -203,59 +274,133 @@ Explaination:
   - Requests to myapp.example.com/app1 will be routed to the app1-service service on port 80.
   - Since pathType is Prefix, requests to /app1/page will also match this rule.
 
-<br>
-
-- **Ingress Controller**
-
-  An Ingress Controller is a component that reads the Ingress resource rules and processes them. It means ingress contoller reads the ingress resource yaml file and decide to which service has to forward the incoming request.
-
-  It’s an add-on that watches for changes to Ingress resources and adjusts routing accordingly.
-
-  Kubernetes does not come with a default Ingress Controller. You need to install one separately, and there are several popular options, such as:
-
-  - NGINX Ingress Controller (most widely used).
-  - Traefik.
-  - HAProxy.
-  - Istio Gateway (for Istio service mesh).
-  - Azure Application Gateway Ingress Controller.
-
 
 <br>
 
-- **Ingress Class**
+**2 - Ingress Controller**:
 
-  Ingress Class is a way to define which Ingress Controller should manage a particular Ingress resource. You can have multiple Ingress Controllers in the same cluster, each handling different Ingress resources based on their Ingress Class.
+Ingress Controller ek software component (controller pod) hai jo Kubernetes ke andar run hota hai aur Ingress Resources (rules) ko implement karta hai.
+- Kubernetes sirf ek Ingress API object deta hai, matlab ek yaml configuration deta hai (rules likhne ke liye).
+- Lekin vo rules tab tak kaam nahi karenge jab tak ek Ingress Controller na ho jo unko implement kare.
 
-  Suppose we have mentioned the nginx ingress in yaml then kubernetes will use nginx ingress contoller for that situation.
+Kubernetes ek built-in Ingress Controller provide nahi karta. Tumhe apna controller install karna padta hai.
 
-  **How Does an Ingress Controller Work?**
+Kuch popular Ingress Controllers hain:
+- NGINX Ingress Controller → sabse zyada use hota hai, open-source aur stable.
+- HAProxy Ingress Controller → high performance.
+- Traefik → simple, modern, auto-discovery.
+- Envoy/Istio Gateway → service mesh world me
+- Cloud Specific:
+  - AWS ALB Ingress Controller
+  - Azure Application Gateway Ingress Controller
+  - GCP Load Balancer Controller
 
-  Here’s a step-by-step overview of how an Ingress Controller works:
+Tumko ingress use karne ke liye alag se ingres ko setup karna hoga, jisme ingres controller setup hota hai.
 
-  - **Monitors for Ingress Resources**:
+Jab hum Ingress Controller (jaise NGINX Ingress Controller) deploy karte hain, vo ek Deployment/DaemonSet ke form mein pods run karta hai.
 
-    The Ingress Controller constantly monitors the Kubernetes API for any Ingress resources (YAML configurations) that are created, updated, or deleted.
+Lekin pods ke paas apna public IP nahi hota. Pods to cluster ke andar internal IPs pe chalte hain.
 
-  - **Parses Ingress Rules**:
+Client ko agar bahar se access karna hai (internet se), to hume Ingress Controller ko expose karna padta hai.
 
-    When a new Ingress resource is created, the Ingress Controller reads the routing rules defined in the resource, such as hostnames, paths, and backend services. It then configures itself to route traffic according to these rules.
+Yahan aati hai Service ki zarurat.
 
-  - **Routes Incoming Traffic**:
+Ingress Controller Service:
+- Jab hum Ingress Controller install karte hain (Helm/YAML se), uske saath ek Service create hoti hai jo Ingress Controller ke pods ko expose karti hai.
 
-    - The Ingress Controller listens for HTTP and HTTPS requests on specified ports (usually 80 and 443).
-    - When it receives a request, it checks the request’s hostname and path against the Ingress rules. Based on the match, it routes the request to the appropriate service within the cluster.
-   
-  - **Handles SSL/TLS Termination**:
+Ye service kuch is tarah hoti hai:
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: ingress-nginx-controller
+  namespace: ingress-nginx
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  - name: https
+    port: 443
+    targetPort: https
+  selector:
+    app.kubernetes.io/name: ingress-nginx
+```
+- ```type: LoadBalancer``` → Yeh batata hai ki Kubernetes cloud provider ko bolega ek external load balancer allocate karo.
+- ```ports: 80, 443``` → Yehi ports se client traffic aayega.
+- ```selector``` → Yeh service Ingress Controller pods ko select karegi.
 
-    If HTTPS is enabled in the Ingress resource, the Ingress Controller handles SSL/TLS termination, meaning it decrypts incoming HTTPS traffic and forwards it to the appropriate backend services as HTTP traffic. This is done using SSL certificates configured in the Ingress resource.
+Agar tum Cloud Provider (AWS, Azure, GCP) pe Kubernetes cluster main ho:
+- Jaise hi Service ```type=LoadBalancer``` banti hai, cloud provider automatically ek external Load Balancer create kar deta hai.
+- Is load balancer ko ek public IP assign hoti hai.
+- Aur ye hi public ip ingres controller ko assign ho jati hai.
 
-  - **Load Balancing**:
+Iska matlab hai ki Ingres Controller ko jab hum apne cluster main setup karte hain to sabse pehle ek ingres controller pod create hota hai, us pod ko expose karne ke liye ek load balancer type ki service create hoti hai, fir vo service cloud main ek Load Balancer create karti hai aur load balancer ki public ip ingres controller pod ko assign ho jati hai.
 
-    If multiple replicas of a service are running, the Ingress Controller distributes incoming requests among these replicas, providing load balancing.
+Isi ip ko use karke hum applications ko access karte hain.
+
+Agar tum KIND ya miki-kube cluster use kar rahe ho to controller ko nodePort ki ip assign hoti hai.
+
+Flow with LoadBalancer IP:
+- Tumne Ingress Controller Service type=LoadBalancer banayi.
+- Azure/AWS automatically ek load balancer banata hai aur usko ek IP deta hai, maan lo:
+  ```
+  20.55.88.10
+  ```
+- Ab client jab bhi http://20.55.88.10 ya tumhara domain (jo is IP pe point kiya hai) access karega →
+  - Request pehle Cloud Load Balancer pe aayegi.
+  - Cloud Load Balancer request ko cluster ke ek node ke NodePort pe bhejega.
+  - Wahan se Ingres Service → Ingress Controller pod ko forward karegi.
+  - Ingress Controller apne ingres rules ke hisaab se backend services ko forward karega.
 
 <br>
 
-**How to Set Up an Ingress Controller (Example: NGINX Ingress Controller)**
+**3 - Ingress Class**:
+- Ingress class ek selector/identifier hai jo batata hai ki kaunsa Ingress Controller is Ingress ko handle karega.
+- Ek cluster me multiple Ingress Controllers ho sakte hain. Example:
+  - ```nginx``` Ingress Controller.
+  - ```traefik``` Ingress Controller.
+
+Agar apke cluster main multiple ingres controller installed hain to apko ingress claas main mention karna hoga ki konsa ingress controller ingress resource ko handle karega, sirf ye hi use hota hai ingress class ka.
+
+Example:
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: api-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: api.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: api-service
+            port:
+              number: 80
+```
+- Yahan ```ingressClassName: nginx``` ka matlab hai ki sirf NGINX Ingress Controller isko process karega.
+
+<br>
+
+**4 - Backend Services (ClusterIP/NodePort/LoadBalancer)**:
+- Pods ko expose karne ke liye jo service created hoti hain, jaise nginx pod ko expose karna hai uske liye hum clusterIp type ki service bana denge, to isi ko hum bakend services bolte hain.
+- Ingress ka ultimate kaam hai request ko ek Kubernetes Service tak bhejna.
+- Service ka type mostly ClusterIP hota hai (kyunki Ingress controller already LoadBalancer ya NodePort ke through expose hota hai).
+- Service ke peeche Pods hote hain jo actual application run kar rahe hote hain.
+
+Example Flow:
+- Ingress rule → /order → order-service (ClusterIP: 10.96.23.15) → pods of order-service.
+
+<br>
+<br>
+
+### How to Set Up an Ingress Controller (Example: NGINX Ingress Controller)
 
 Setting up an Ingress Controller involves deploying it within your cluster, configuring the necessary services, and then defining Ingress resources to route traffic to services.
 
@@ -268,6 +413,11 @@ Setting up an Ingress Controller involves deploying it within your cluster, conf
   ```
 
   This deployment sets up the NGINX Ingress Controller within your cluster. By default, it creates a LoadBalancer service to expose the Ingress Controller, allowing external traffic to be routed through it.
+
+Ye install karega:
+- ```nginx-ingress-controller``` pod (Deployment).
+- Ek ```Service type=LoadBalancer``` jo external IP expose karega.
+- Ek ```ConfigMap``` for custom settings
 
 - **Verify the Ingress Controller**:
 
@@ -285,6 +435,7 @@ Setting up an Ingress Controller involves deploying it within your cluster, conf
 - **Test Access**:
   - Open ```http://myapp.example.com/app1``` and ```http://myapp.example.com/app2``` in a browser.
 
+<br>
 <br>
 
 ### What is path based routing OR host based routing
@@ -413,42 +564,22 @@ In Kubernetes, path-based routing and host-based routing in an Ingress resource 
   For most use cases, Prefix is the preferred pathType, as it provides more flexibility.
 
 <br>
+<br>
 
 ### Ingress Workflow (When a user send a request to load balancer).
 
-Now let’s walk through what happens when a user sends a request to your application using the Load Balancer IP.
+**Scenario Setup**:
+- Tumne ek todo app deploy kiya hai Kubernetes me.
+- ```todo-service``` ek ClusterIP service hai jo pods ko map karti hai.
+- Tumne ek Ingress Resource banaya hai jisme ```/todo``` path ```todo-service``` pe jaata hai.
+- Tumne ek Ingress Controller (NGINX) install kiya hai with Service type=LoadBalancer.
+- Cloud provider (jaise Azure/AWS) ne tumhare Ingress Controller ko ek public IP allocate ki:
+```
+20.55.100.25
+```
+- Ab user isi IP ko use karke app access karega.
 
-- **Step 1: User Makes a Request to the Load Balancer IP**
 
-  - A user opens a browser and types in the Load Balancer IP address (e.g., ```http://<LoadBalancer-IP>/```).
-  - This request goes over the internet and reaches the Azure Load Balancer, which is the public entry point to your cluster.
-
-- **Step 2: Azure Load Balancer Forwards Traffic to the Ingress Controller**
-
-  - The Load Balancer is configured to forward traffic on ports 80 (HTTP) and 443 (HTTPS) to the Ingress Controller.
-  - The Ingress Controller is running inside your AKS cluster as a Kubernetes Pod, listening for incoming traffic from the Load Balancer.
-
-- **Step 3: Ingress Controller Checks Ingress Rules**
-
-  - The Ingress Controller receives the user’s request from the Load Balancer.
-  - It checks the request against the Ingress resource rules that you defined for your web application.
-  - For example, if you set up the Ingress resource to match requests to the path ```/``` and route them to a Service named ```webapp-service```, the Ingress Controller recognizes this rule and decides to forward the request to ```webapp-service```.
-
-- **Step 4: Ingress Controller Forwards the Request to the Service**
-
-  - Based on the matched rule, the Ingress Controller forwards the request to ```webapp-service```.
-  - In Kubernetes, Services act as a load balancer within the cluster, distributing traffic to the application Pods (replicas of your web app) running behind the service.
-
-- **Step 5: Service Directs Traffic to Application Pods**
-
-  - The ```webapp-service``` sends the request to one of the Pods running your web application.
-  - These Pods handle the request, generate a response, and send it back to the Service.
-
-- **Step 6: Response Travels Back to the User**
-
-  - The Service sends the response back to the Ingress Controller.
-  - The Ingress Controller then sends the response to the Load Balancer, which in turn forwards it to the user’s browser.
-  - The user sees the response, which could be a web page or any other content served by your application.
 
 <br>
 
