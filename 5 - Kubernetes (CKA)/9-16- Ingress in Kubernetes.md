@@ -6,6 +6,7 @@ Ingress is a resource in kubernetes which is used to manage external access to s
 
 In a Kubernetes cluster, applications often need to be accessed from outside the cluster, such as a website that users access via the internet. Ingress is a Kubernetes resource designed to expose such services to external clients, typically via HTTP or HTTPS.
 
+
 ### Why do we need Ingress?
 
 ```हमको पता है की जब appllication को kubernetes cluster पर deploy करते है तो उस application को access करने के लिए हम service बनाते हैं खासकर application को internet कर access करना होता है तो Load Balancer type की service बनाते है| तो ये Load Balancer type की service cloud पर एक Load Balancer create कर देती है जिससे Load Balancer पर request भेजकर application को access करते हैं| जब यहाँ तक सब चीज़ ठीक चल रही थी तो ये Ingree नाम की चीज़ क्यों आयी|```
@@ -16,6 +17,40 @@ In a Kubernetes cluster, applications often need to be accessed from outside the
 
 - ```अगर Kubernetes Cluster मैं हमने एक web application deploy की, तो उस web application को internet पर access करने के लिए load balancer type की service बनानी पड़ेगी जिससे एक load balancer web application के लिए cloud पर create हो जायेगा| Suppose अगर हमारे पास ऐसी 10 web applications है और वो हम kubernetes पर deploy कर रहे हैं तो उन सभी वेब एप्लीकेशन को इंटरनेट पर एक्सेस करने के लिए अलग-अलग load balancers क्रिएट करने होंगे मतलब 10 web applications के लिए 10 load balancers create होंगे जिससे होगा ये की इतने सारे load balancers की cost हमको pay करनी पड़ेगी और ऐसा scenario efficient नहीं है तो हर application को internet पर expose करने के लिए load balancer का use न करके हम Ingress resource का use करते हैं|```.
 
+<br>
+<br>
+
+Kubernetes mein agar humein apne cluster ke andar chal rahi applications ko bahar se access karna hota hai, toh humein ek mechanism chahiye hota hai jo external traffic (jaise user ka browser ya API client) ko correct pod/service tak le jaye.
+
+By default, pods ek cluster-internal IP par run karte hain, jo directly bahar se accessible nahi hota. Iske liye hum Service banate hain (ClusterIP, NodePort, LoadBalancer). Lekin agar tumhare paas multiple microservices hain aur tum chahte ho ki ek hi domain (jaise myapp.com) ke andar alag-alag paths/hostnames ke through traffic route ho, toh waha Ingress use hota hai.
+
+Ingress = ek tarah ka Smart HTTP/HTTPS router jo request ko route karta hai based on hostname aur path.
+
+Example:
+- ```myapp.com/api``` → backend service-1
+- ```myapp.com/web``` → backend service-2
+- ```shop.myapp.com``` → backend service-3
+
+<br>
+
+### Ingress Kyu Zaroori Hai? (Use Cases)
+
+Socho tumhare paas ek ecommerce app hai jisme multiple microservices hain:
+- frontend-service (React/Angular UI).
+- catalog-service (product list API).
+- order-service (order API).
+- payment-service (payment API).
+
+Agar tum har ek service ko NodePort/LoadBalancer banate ho toh har service ke liye alag public IP / port manage karna padega. Ye complex ho jaata hai.
+
+Ingress ke saath:
+- Tum bas ek hi LoadBalancer use karte ho.
+- Baaki sab traffic routing rules Ingress handle karta hai.
+- SSL/TLS termination easily ho jata hai (HTTPS setup).
+- Host-based aur path-based routing dono milta hai.
+
+<br>
+<br>
 
 Kubernetes provides several ways to expose services, including:
 
