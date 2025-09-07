@@ -440,128 +440,262 @@ Ye install karega:
 
 ### What is path based routing OR host based routing
 
-In Kubernetes, path-based routing and host-based routing in an Ingress resource allow you to control traffic routing to specific services within a cluster based on the URL’s hostname or path. These routing options give you flexibility to organize how users access different applications and services under one or more domains.
+Socho tumhare paas ek cluster hai jisme tumne multiple services deploy ki hain. Example:
+- ek **Todo App** service.
+- ek **Notes App** service.
+- ek **User Profil**e service.
+- ek **Analytics** service.
 
-- **Host-Based Routing**:
+Ab problem kya hoti hai?
+- Har ek service ki apni ClusterIP hoti hai jo cluster ke andar hi accessible hai.
+- Agar tum directly external world se connect karna chahte ho to ya to har ek service ko LoadBalancer type service banana padega (jo har ek service ke liye ek alag external IP allocate karega), ya phir ek Ingress banakar ek hi external IP se sabhi services ko route kar sakte ho.
 
-  Host-based routing in an Ingress resource directs traffic based on the hostname (domain) in the URL. This means that requests to different hostnames can be routed to different services within the cluster.
+Ingress ka kaam hi ye hai ki ek single entry point (LoadBalancer IP ya domain) ke through multiple applications/services ko expose kare.
+- Lekin question ye hota hai: traffic ko kis service tak bhejna hai?
+- Aur ye decide karna ki kis request ko kis service tak bhejna hai, wahi kaam karte hain routing rules:
 
-  - **When to Use Host-Based Routing**:
+Iske liye Ingress 2 main mechanisms deta hai:
+- **Host-based Routing** → Hostname (domain) ke basis pe route hota hai.
+- **Path-based Routing** → URL path ke basis pe route hota hai.
 
-    Host-based routing is ideal when:
-    - You have multiple applications that you want to access under different domains or subdomains.
-    - You need to organize traffic to different services based on their hostnames.
-    - You’re handling multi-tenant scenarios where different domains serve different clients or teams.
-   
-  Example: Host-Based Routing
+<br>
 
-  In the following example, we’ll set up host-based routing for two different applications: app1 and app2, accessible under app1.example.com and app2.example.com, respectively.
+**Path-Based Routing**:
 
-  ```
-    apiVersion: networking.k8s.io/v1
-    kind: Ingress
-    metadata:
-      name: example-host-based-ingress
-    spec:
-      rules:
-      - host: app1.example.com
-        http:
-          paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: app1-service
-                port:
-                  number: 80
-      - host: app2.example.com
-        http:
-          paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: app2-service
-                port:
-                  number: 80
-  ```
+Path-based routing me tum ek hi host/domain (ya IP) ke andar multiple URL paths define karte ho aur unko alag-alag backend services ke saath map karte ho.
 
-  Explanation of the YAML:
-  - host: app1.example.com and host: app2.example.com: These are the hostnames used for host-based routing. Requests with Host: app1.example.com will be directed to app1-service, while requests with Host: app2.example.com will be directed to app2-service.
- 
-  - path: /: This is the URL path. Since we specified /, it matches any URL path on the domain (e.g., /, /page1, /api).
- 
-  - backend.service.name and backend.service.port.number: These specify the Kubernetes services that should receive the traffic based on the hostname.
- 
+Iska matlab:
+- Agar request me path ```/todo``` aaya to wo todo-service tak jaye.
+- Agar request me path ```/notes``` aaya to wo notes-service tak jaye.
+- Agar request me path ```/profile``` aaya to wo profile-service tak jaye.
 
-  With this setup:
-  - Requests to http://app1.example.com will be routed to app1-service.
-  - Requests to http://app2.example.com will be routed to app2-service.
+Example Scenario:
 
-  Note: For this to work, DNS records should point app1.example.com and app2.example.com to the Ingress Controller’s IP address, usually provided by a cloud LoadBalancer.
+Maan lo tumhare paas ek external IP hai: ```20.55.100.25```:
+- ```http://20.55.100.25/todo``` → todo-service.
+- ```http://20.55.100.25/notes``` → notes-service.
+- ```http://20.55.100.25/profile``` → profile-service.
+
+Ek hi IP par tumne teen alag alag microservices chala diye. Ye hi fayda hota hai ingress ka. Agar tumne simple load balancer service ke through in applications ko expose karna hota to tumko 3 alag alag load balancers banane padte, jo thik nahi hai.
+
+<br>
+
+**YAML (Path-based Example)**:
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: todo-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /todo
+        pathType: Prefix
+        backend:
+          service:
+            name: todo-service
+            port:
+              number: 80
+      - path: /notes
+        pathType: Prefix
+        backend:
+          service:
+            name: notes-service
+            port:
+              number: 80
+      - path: /profile
+        pathType: Prefix
+        backend:
+          service:
+            name: profile-service
+            port:
+              number: 80
+```
+
+<br>
+
+**Request Flow (Path-based)**:
+- User ne apne browser me request dali:
+```
+http://20.55.100.25/todo
+```
+- Request pehle jaati hai Cloud LoadBalancer (jo Ingress controller ke liye allocate hua hai).
+- LoadBalancer request ko forward karta hai Ingress Controller pod ko (jaise NGINX Ingress Controller).
+- Ingress controller apni rules ki table check karta hai.
+  - Rule: agar path ```/todo``` se start hota hai → backend service: todo-service.
+- Ingress controller request ko todo-service ke ClusterIP pe bhej deta hai.
+- Kube-proxy ya kube-proxy ka iptables rule request ko actual pod tak pahucha deta hai.
+- User ko response milta hai directly todo-service ka.
+
+<br>
+<br>
+
+**Host-Based Routing**:
+
+Host-based routing me path important nahi hota. Yaha domain name (host) decide karta hai ki request kis service ko jaye.
+
+Example:
+- ```http://todo.example.com``` → todo-service.
+- ```http://notes.example.com``` → notes-service.
+- ```http://profile.example.com``` → profile-service.
+
+Example Scenario:
+
+Maan lo tumne DNS configure kiya hua hai load balancer ki ip par:
+- ```todo.example.com``` → IP ```20.55.100.25```.
+- ```notes.example.com``` → IP ```20.55.100.25```.
+- ```profile.example.com``` → ```IP 20.55.100.25```.
+
+Yani 3 alag domains ek hi LoadBalancer IP pe map hote hain, aur Ingress unke host header ke basis pe decide karta hai ki kaunsi service ko bhejna hai.
+
+**YAML (Host-based Example)**:
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: todo-ingress
+spec:
+  rules:
+  - host: todo.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: todo-service
+            port:
+              number: 80
+  - host: notes.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: notes-service
+            port:
+              number: 80
+  - host: profile.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: profile-service
+            port:
+              number: 80
+```
+
+<br>
+
+**Request Flow (Host-based)**:
+- User ne apne browser me request dali:
+```
+http://todo.example.com
+```
+- Request LoadBalancer IP pe aayi.
+- LoadBalancer ne isko Ingress Controller ko bheja.
+- Ingress controller HTTP request ka Host header check karega.
+  - Host header: ```todo.example.com```
+  - Rule: agar ```host = todo.example.com``` → backend service: ```todo-service```.
+- Request todo-service tak forward ho gayi.
+- Pod ne response bhej diya user ko.
+
+<br>
+
+**Combined Use Case – Host + Path**:
+
+Real production systems me dono concepts ek saath use hote hain.
+
+Example:
+- ```shop.example.com/cart``` → cart-service.
+- ```shop.example.com/order``` → order-service.
+- ```blog.example.com/``` → blog-service
 
 
-- **Path-Based Routing**
+Example Scenario:
 
-  Path-based routing in an Ingress resource directs traffic based on the URL path. This allows different URL paths on the same domain to route to different services.
+Socho tum ek company ke paas do alag applications chala rahe ho:
+- Ecommerce App (shop related services).
+- Blog App (articles related services).
 
-  When to Use Path-Based Routing:
-  - You have multiple applications or APIs that you want to expose under a single domain.
-  - You want to organize a large application by routing different sections (e.g., /app1, /app2, /api) to different services.
+Aur unke andar bhi multiple microservices hain:
+- Ecommerce App → services:
+  - ```/cart``` → cart-service.
+  - ```/order``` → order-service.
+  - ```/products``` → product-service
+- Blog App → services:
+  - ```/ (homepage)``` → blog-service.
+  - ```/admin``` → blog-admin-service
 
-  Example: Path-Based Routing:
+Combined YAML Example:
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: combined-ingress
+spec:
+  rules:
+  - host: shop.example.com
+    http:
+      paths:
+      - path: /cart
+        pathType: Prefix
+        backend:
+          service:
+            name: cart-service
+            port:
+              number: 80
+      - path: /order
+        pathType: Prefix
+        backend:
+          service:
+            name: order-service
+            port:
+              number: 80
+      - path: /products
+        pathType: Prefix
+        backend:
+          service:
+            name: product-service
+            port:
+              number: 80
 
-  In the following example, we’ll set up path-based routing for two different applications on the same domain, example.com. The applications will be accessible at /app1 and /app2.
+  - host: blog.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: blog-service
+            port:
+              number: 80
+      - path: /admin
+        pathType: Prefix
+        backend:
+          service:
+            name: blog-admin-service
+            port:
+              number: 80
+```
 
-  ```
-    apiVersion: networking.k8s.io/v1
-    kind: Ingress
-    metadata:
-      name: example-path-based-ingress
-    spec:
-      rules:
-      - host: example.com
-        http:
-          paths:
-          - path: /app1
-            pathType: Prefix
-            backend:
-              service:
-                name: app1-service
-                port:
-                  number: 80
-          - path: /app2
-            pathType: Prefix
-            backend:
-              service:
-                name: app2-service
-                port:
-                  number: 80
-  ```
+Flow Example:
 
-  Explanation of the YAML:
-  - host: example.com: All requests to example.com are handled by this Ingress rule.
-  - path: /app1: Routes traffic with the URL path /app1 to app1-service.
-  - path: /app2: Routes traffic with the URL path /app2 to app2-service.
-  - pathType: Prefix: Indicates that any URL starting with /app1 (e.g., /app1, /app1/section) will match this rule.
-
-  With this setup:
-  - Requests to http://example.com/app1 will be routed to app1-service.
-  - Requests to http://example.com/app2 will be routed to app2-service.
-
-  Note: Path-based routing works well for organizing services under a single domain. Each path should ideally correspond to a specific service in the cluster.
-
-  - **Path Types in Path-Based Routing**
-
-    In Kubernetes, each path rule in an Ingress resource has a pathType field, which specifies how the path should be matched. There are three main path types:
-
-    - Prefix: Matches if the URL path starts with the specified path. For example, if you specify path: /app1 with pathType: Prefix, requests to /app1, /app1/subpath, etc., will match.
-   
-    - Exact: Matches only if the URL path exactly matches the specified path. So if you use path: /app1 with pathType: Exact, only requests to /app1 will match, while /app1/anything-else will not.
-   
-    - ImplementationSpecific: Allows the Ingress Controller to decide how to match paths. This behavior can vary between Ingress Controllers and is usually not recommended unless you have a specific controller requirement.
-
-  For most use cases, Prefix is the preferred pathType, as it provides more flexibility.
+Case 1: Ecommerce App (shop.example.com)
+- User request →
+```
+http://shop.example.com/cart
+```
+- Request LoadBalancer IP → Ingress Controller.
+- Ingress rule check:
+  - Host = ```shop.example.com```
+  - Path = ```/cart```
+  - Service = cart-service.
+- Request cart-service ke pod tak pahunchti hai.
 
 <br>
 <br>
@@ -578,6 +712,96 @@ In Kubernetes, path-based routing and host-based routing in an Ingress resource 
 20.55.100.25
 ```
 - Ab user isi IP ko use karke app access karega.
+
+<br>
+
+**Ingress Workflow**:
+
+<br>
+
+**Step 1: User Request Initiates**:
+- User browser kholta hai aur likhta hai:
+```
+http://20.55.100.25/todo
+```
+- Ye request ek normal HTTP GET request hoti hai.
+
+<br>
+
+**Step 2: Request Reaches Cloud Load Balancer**:
+- ```20.55.100.25``` jo IP hai, vo actually cloud provider ke Load Balancer ki IP hai.
+- Request pehle external Load Balancer pe aati hai.
+
+Example: Azure Application Gateway / AWS NLB.
+
+<br>
+
+**Step 3: Load Balancer to Kubernetes Node**:
+- Cloud Load Balancer check karta hai ki uske backend me kaunse Kubernetes nodes associated hain.
+- Ye request kisi ek healthy node pe bhej deta hai.
+- Jaise maan lo cluster me 3 nodes hain → Node1, Node2, Node3.
+- Load Balancer ne request Node2 ke ek port pe bhej diya (jo NodePort automatically assign hua hai service ke liye).
+
+<br>
+
+**Step 4: Service (LoadBalancer Type) → Ingress Controller Pods**:
+- Cluster ke andar ```Service type=LoadBalancer``` bana tha jo Ingress Controller pods ko expose karta hai.
+- Ye service NodePort/IPVS/iptables ke through request ko Ingress Controller Pod tak route karti hai.
+- Ab request Ingress Controller (NGINX) pod ke paas aa gayi.
+
+<br>
+
+**Step 5: Ingress Controller Processing**:
+- Ingress Controller apne paas stored Ingress Resource rules check karega.
+- Rule kuch aisa hoga:
+```
+rules:
+- http:
+    paths:
+    - path: /todo
+      pathType: Prefix
+      backend:
+        service:
+          name: todo-service
+          port:
+            number: 80
+```
+- Controller dekhta hai ki request ka path ```/todo``` hai.
+- Match milta hai → Rule ke hisaab se backend service = ```todo-service```.
+
+<br>
+
+**Step 6: Ingress Controller → Backend Service (todo-service)**:
+- Ingress Controller ab request ko ClusterIP service ```todo-service``` ke IP pe forward karega.
+- Example:
+```
+todo-service → ClusterIP: 10.96.12.45, Port: 80
+```
+
+<br>
+
+**Step 7: Service → Pod Selection**:
+- ```todo-service``` ke backend me multiple pods run ho rahe hain (replicas). Example:
+  - Pod1: 10.244.1.15:8080
+  - Pod2: 10.244.2.20:8080
+- Kube-proxy + iptables/IPVS decide karega ki request kis pod ko bhejna hai (round-robin ya random).
+- Maan lo is request ko Pod1 mila.
+
+<br>
+
+**Step 8: Pod Processes the Request**:
+- Ab request Pod1 (todo container) ke andar app ke HTTP server (Flask/Express/Spring etc.) pe chali gayi.
+- Pod request process karega → DB se data fetch karega (agar needed) → response generate karega.
+
+<br>
+
+**Step 9: Response Returns**:
+- Pod response Ingress Controller ko deta hai.
+- Ingress Controller response wapas LoadBalancer ko deta hai.
+- LoadBalancer response wapas client ko bhej deta hai.
+- Browser me user ko todo app ka response show ho jaata hai.
+
+
 
 
 
