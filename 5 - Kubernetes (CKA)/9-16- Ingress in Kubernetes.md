@@ -802,9 +802,286 @@ todo-service → ClusterIP: 10.96.12.45, Port: 80
 - Browser me user ko todo app ka response show ho jaata hai.
 
 
+<br>
+<br>
+
+### TLS Ka Basic Concept
+
+**TLS Kya Hota Hai?**:
+
+TLS (Transport Layer Security) ek encryption protocol hai jo ensure karta hai ki jab client (browser ya app) aur server (Ingress controller, services) ke beech data transfer ho, to data secure aur encrypted ho.
+
+Without TLS (HTTP):
+- Data plain text me travel karta hai.
+- Agar koi attacker (man-in-the-middle) beech me traffic sniff kare to wo tumhara data padh lega (jaise password, credit card info).
+
+With TLS (HTTPS):
+- Data encrypted hota hai.
+- Agar koi attacker packets sniff bhi kare to usko random encrypted gibberish milega.
+
+TLS mainly 3 chiz ke liye use hota hai:
+- Encryption → Data secure rahega.
+- Authentication → Server ki identity verify hoti hai (yeh original site hai ya fake?).
+- Integrity → Data modify nahi ho sakta transmission ke beech me.
+
+<br>
+
+**TLS in Ingress – Kubernetes Context**:
+- Ingress me TLS ka use tab hota hai jab tum apne apps ko HTTPS ke through expose karna chahte ho instead of plain HTTP.
+- Ingress controller (jaise NGINX Ingress Controller) ko tumhe ek certificate aur private key provide karni hoti hai. Ye dono ek Kubernetes Secret ke andar store hote hain.
+
+Ingress controller (jaise NGINX Ingress Controller) ko tumhe ek certificate aur private key provide karni hoti hai. Ye dono ek Kubernetes Secret ke andar store hote hain.
+
+High-Level Flow:
+- Client browser request bhejta hai:
+```
+https://shop.example.com/cart
+```
+- Browser TLS handshake karta hai Ingress Controller ke sath (certificate check hota hai).
+- Agar certificate valid hai, to secure HTTPS connection ban jata hai.
+- Uske baad encrypted data request → Ingress → backend service → pod tak jata hai.
+
+**TLS Ingress YAML Example**:
+- Maan lo tumhare paas ek domain hai: ```shop.example.com```.
+- Aur tumne uske liye ek TLS certificate aur private key li hai (ya to Let's Encrypt, ya koi paid CA).
+- Sabse pehle tum ek Kubernetes Secret banao jo certificate store kare:
+```
+kubectl create secret tls shop-tls-secret \
+  --cert=shop.example.com.crt \
+  --key=shop.example.com.key
+```
+
+Ab ye secret Ingress me reference karna hoga:
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: shop-ingress
+spec:
+  tls:
+  - hosts:
+    - shop.example.com
+    secretName: shop-tls-secret   # TLS certificate secret
+  rules:
+  - host: shop.example.com
+    http:
+      paths:
+      - path: /cart
+        pathType: Prefix
+        backend:
+          service:
+            name: cart-service
+            port:
+              number: 80
+      - path: /order
+        pathType: Prefix
+        backend:
+          service:
+            name: order-service
+            port:
+              number: 80
+```
+
+**TLS Handshake – Step by Step Flow**:
+- Client Request:
+  - User apne browser me likhta hai:
+```
+https://shop.example.com/cart
+```
+
+- DNS Resolution:
+  - Domain ```shop.example.com``` ka DNS resolve hota hai aur uska IP LoadBalancer IP hota hai (Ingress controller ka).
+
+- Connection Initiation:
+  - Browser Ingress controller ke LoadBalancer IP par port 443 (HTTPS) par connection banata hai.
+ 
+- TLS Handshake Process:
+  - Server Hello: Ingress controller apna certificate bhejta hai client ko.
+  - Certificate Verification: Browser check karta hai:
+    - Kya certificate trusted CA se issue hua hai?
+    - Kya certificate ka domain ```shop.example.com``` match karta hai?
+    - Kya certificate abhi valid hai (expiry nahi hua)?
+  - Key Exchange: Client aur server ek session key decide karte hain jisse actual communication encrypt hoga.
+
+- Secure Communication:
+  - Agar sab kuch sahi hai to ek secure TLS channel ban jata hai. Ab sabhi HTTP requests aur responses is secure tunnel ke andar encrypted rahenge.
+ 
+- Ingress Routing:
+  - Ab Ingress controller apne rules check karta hai:
+    - Host = ```shop.example.com```
+    - Path = ```/cart```
+    - Backend = cart-service
+  - Aur request secure channel ke andar pod tak forward ho jati hai.
+
+**Benefits of TLS in Ingress**:
+- Data Security: Har ek sensitive info (password, tokens, payments) encrypted hota hai.
+- User Trust: Browser me “🔒 Secure” dikhata hai, warna “Not Secure” warning aati hai.
+- Compliance: Industries (finance, healthcare) ke liye HTTPS mandatory hota hai (PCI-DSS, HIPAA).
+- SEO Benefits: Google HTTPS websites ko priority deta hai ranking me.
+- Multi-domain TLS: Tum Ingress me multiple hosts ke liye multiple TLS certs configure kar sakte ho.
+
+<br>
+
+### Types of TLS in Kubernetes
+
+Ingress me TLS ko 2 tarike se handle kiya ja sakta hai:
+- TLS Termination.
+- TLS Passthrough.
+
+**TLS Termination**:
+- Ingress controller khud hi TLS terminate karta hai (certificate uske paas hota hai).
+- Uske baad wo backend services ko plain HTTP pe forward kar deta hai.
+- Advantage: Backend services ko TLS manage nahi karna padta, simple HTTP chalta hai.
+- Disadvantage: Internal network encrypted nahi hota (lekin cluster ke andar generally safe hota hai).
+
+**TLS Passthrough**:
+- Ingress controller TLS terminate nahi karta.
+- Wo directly encrypted traffic backend service ko forward kar deta hai.
+- Backend service apna khud ka TLS handle karti hai.
+- Advantage: End-to-end encryption maintain hota hai.
+- Disadvantage: Backend services pe load zyada hota hai (har ek ko TLS samjhna padta hai).
+
+**Note**: Most of the time TLS Termination preferred hota hai Ingress controller level par.
+
+<br>
+
+**TLS Termination**:
+- TLS Termination ka matlab hota hai ki TLS/SSL handshake aur decryption Ingress controller (ya load balancer) ke paas hi ruk jata hai (terminate ho jata hai):
+  - Client (browser / app) → Ingress controller ke sath secure TLS handshake karega.
+  - Ingress controller data ko decrypt karega.
+  - Uske baad Ingress controller backend service/pod ko plain HTTP request bhejega.
+  - Matlab backend services ko HTTPS/TLS samajhne ki zaroorat hi nahi hai, wo simple HTTP pe kaam karenge.
+
+TLS Termination ka matlab hai TLS ko Ingress controller pe end karna.
+
+**TLS Termination Flow Step by Step**:
+- Maan lo ek user request bhejta hai:
+```
+https://todo-app.example.com
+```
+
+Step-1: Client → Ingress (Secure Channel):
+- Browser LoadBalancer IP pe port 443 (HTTPS) par connect karta hai.
+- TLS handshake hota hai (Ingress apna certificate show karta hai jo tumne secret me diya tha).
+- Browser aur Ingress ke beech secure channel ban jata hai.
+
+Step-2: Ingress → Backend (Plain HTTP):
+- Ingress controller handshake complete hone ke baad encrypted request ko decrypt kar deta hai.
+- Ab us request ko backend service ko simple HTTP (port 80) me bhejta hai.
+- Backend service ko TLS/SSL ke baare me kuch nahi pata, wo normal HTTP request handle karta hai.
+
+Step-3: Backend → Ingress → Client:
+- Backend response Ingress ko plain HTTP me deta hai.
+- Ingress phir us response ko encrypt karke client ko HTTPS me bhejta hai.
+
+TLS Termination main TLS ka pura kaam sirf Ingress controller handle karta hai. Backend services free rehti hain.
+
+**TLS Termination Example in Kubernetes**:
+```
+spec:
+  tls:
+  - hosts:
+    - shop.example.com
+    secretName: shop-tls-secret   # Ingress ke paas certificate hai
+  rules:
+  - host: shop.example.com
+    http:
+      paths:
+      - path: /cart
+        pathType: Prefix
+        backend:
+          service:
+            name: cart-service
+            port:
+              number: 80   # Backend plain HTTP use kar raha hai
+```
+- Yaha ```cart-service``` ko TLS/HTTPS ki zaroorat nahi hai.
+- Wo sirf port 80 (HTTP) par sun raha hai. Iska matlab yaha TLS termination use ho rha hai.
+- TLS ka pura kaam Ingress controller (NGINX, HAProxy, Traefik, etc.) karta hai.
+
+<br>
+
+**TLS Passthrough Kya Hai?**:
+- TLS Passthrough ka matlab hai ki Ingress controller TLS ko terminate nahi karega.
+  - Matlab Ingress encrypted data ko decrypt nahi karega..
+  - Wo data ko as-is (encrypted) backend service ko forward kar dega.
+  - Backend service khud TLS/SSL certificate rakhegi aur handshake karegi.
+
+Yaha end-to-end encryption hota hai → Client → Ingress (just forwarder) → Backend Service (TLS terminate hota hai yaha is step pe).
+
+**TLS Passthrough Flow – Step by Step**:
+- Maan lo ek user request bhejta hai:
+```
+https://todo-app.example.com
+```
+
+Step-1: Client → Ingress:
+- Browser request bhejta hai port 443 par (HTTPS).
+- Normally TLS termination me Ingress controller handshake karta, but Passthrough mode me Ingress kuch nahi karta, bas traffic forward kar deta hai.
+
+Step-2: Ingress → Backend Service:
+- Ingress encrypted TLS traffic ko backend service (jaise ```todo-service```) ke paas forward karta hai.
+- Backend service khud apna certificate use karke TLS handshake complete karti hai.
+
+Step-3: Backend Service → Client:
+- Backend service khud hi certificate dikhati hai, handshake karti hai, aur secure channel banati hai.
+- Client aur backend service ke beech end-to-end TLS encryption hota hai.
+
+**TLS Passthrough Kubernetes Example**:
+
+Step 1: Backend Service ke paas apna TLS certificate hona chahiye:
+- Maan lo tumhare paas ek service hai ```todo-service``` jo apna khud ka HTTPS (port 443) pe sun raha hai.
+- Tum us pod me TLS cert aur key mount kar doge, aur wo service HTTPS pe expose hogi.
+
+Step 2: Ingress Resource with Passthrough:
+- Normal Ingress resource me ```tls:``` section likhne se TLS termination hota hai.
+- Passthrough ke liye tumhe NGINX Ingress Annotations use karne padenge.
+
+Example:
+```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: todo-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"   # Passthrough enable
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS" # Backend service HTTPS bolna
+spec:
+  rules:
+  - host: todo.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: todo-service
+            port:
+              number: 443   # Backend service is HTTPS
+```
+
+Is example me kya ho raha hai?:
+- Client → ```https://todo.example.com```.
+- NGINX Ingress controller bas encrypted data ko ```todo-service:443``` pe forward karega.
+- ```todo-service``` apna khud ka TLS certificate dikhayega aur handshake karega.
+- Client aur service ke beech direct secure tunnel banega.
+
+Ingress yaha middleman nahi hai, sirf forwarder hai.
+
+<br>
+
+**TLS Termination VS TLS Passthorugh**:
+
+| Feature                      | **TLS Termination**                        | **TLS Passthrough**                                                   |
+| ---------------------------- | ------------------------------------------ | --------------------------------------------------------------------- |
+| TLS Handshake kaha hota hai? | Ingress Controller par                     | Backend Service par                                                   |
+| Backend ko TLS ki zaroorat?  | ❌ Nahi                                     | ✅ Haan                                                                |
+| Backend request type         | Plain HTTP                                 | Encrypted HTTPS                                                       |
+| Performance                  | Faster (Ingress ek baar decrypt karta hai) | Thoda slow (har pod TLS handle karega)                                |
+| Use Case                     | Normal apps, microservices                 | Strict security, end-to-end encryption (finance, healthcare, banking) |
 
 
-
+<br>
 <br>
 
 ### More about ingress
