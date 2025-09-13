@@ -4,7 +4,7 @@
 
 ### What is Git?
 
-Git ek distributed version control system hai, jo ki software development de dauran code main hue changes ko track karta hai.
+Git ek distributed version control system hai, jo ki software development de dauran code main hue changes ko track karta hai. Isko Linus Torvalds ne 2005 mein banaya tha Linux kernel ke liye.
 
 Git ek distributed version control system (DVCS) hai. Iska matlab hai ki yeh aisa tool hai jo tumhare code ka history (jaise code main konsi line code kya code change hua hai) track karta.
 
