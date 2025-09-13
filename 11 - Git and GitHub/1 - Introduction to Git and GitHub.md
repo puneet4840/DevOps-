@@ -42,7 +42,9 @@ addition = num1+num2
 subtraction = num2-num1
 ```
 
-Fir se tumne is file ko commit kar diya, to git yaha jo is file main changes hye hain unko apne paas store kar lega, Jaise:
+Fir se tumne is file ko commit kar diya, to git yaha jo is file main changes hye hain unko apne paas store kar lega, Jaise ye subtraction wala code jo tumne add kiya hai iske liye ek alag se commit number banakar apne save karlega jisse ye pta lagega ki is particular moment par file main kya subtraction wali line add hui.
+
+Aur bhi changes git track karta hai jaise:
 - Kaunsi line add hui, kaunsi remove hui.
 - Nayi file add hui.
 - Koi file delete hui.
