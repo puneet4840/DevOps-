@@ -90,3 +90,20 @@ Git basically teen main chizen track karta hai:
 - Tumne nayi branch banayi.
 - Merge kiya.
 - Conflict resolve kiya.
+
+<br>
+<br>
+
+### What is GitHub?
+
+GitHub ek cloud-based hosting platform hai jaha tum git repositories ko store, manage aur share kar sakte ho.
+
+GitHub ek website hai jaha pe tum apni local repositories ko store karte ho aur team ke saath us repository ko share karte ho.
+
+GitHub ek server hai jaha hum code push karte hain aur koi aur dusra waha se code pull karta hai.
+
+- Git ek tool hai (local machine par chalta hai).
+- GitHub ek service hai (internet pe host hoti hai).
+
+Jaise tumhare paas code hai to tum Git se version control karoge. Aur GitHub par tum use store karke team members ke sath collaborate karoge.
+
