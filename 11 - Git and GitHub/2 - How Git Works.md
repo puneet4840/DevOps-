@@ -9,4 +9,4 @@ Git uses Three stage acrhitecture to track the files.
 
 ### Git Three stage architecture
 
-<img src="https://drive.google.com/uc?export=view&id=1RKKCRWpMcQt6D2kIeXEik96GmDtjfmSV" width="750" height="420">
+<img src="https://drive.google.com/uc?export=view&id=1RKKCRWpMcQt6D2kIeXEik96GmDtjfmSV" width="650" height="390">
