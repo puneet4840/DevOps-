@@ -91,3 +91,80 @@ git commit -m "first commit"
 <br>
 
 ## Example LAB: Track files using git
+
+**Step-1: Create a python file in working directory.**
+
+Tum Python file likhte ho ```calc.py```:
+```
+def add(a,b):
+    return a+b
+print(add(2,3))
+```
+
+Yeh abhi file Working Directory me hai. 
+
+<br>
+
+**Step-2: Check status of file**:
+
+Jab ```git status``` command run karoge to ye untracked hogi, kyuki ye file abhi staging area main nhi gyi hai aur commit nhi hui hai:
+
+Example:
+```
+git status
+```
+Output:
+```
+Untracked files:
+  calc.py
+```
+
+Matlab abhi ye file Git ne track karna start nhi ki hai.
+
+<br>
+
+**Step-3: File ko staging area main leke jao**:
+
+Ab file ko staging area main leke jao, below command ko use karke:
+
+Example:
+```
+git add <calc.py>
+```
+
+<br>
+
+**Step-4: Fir se file ka status check karo**:
+
+File ko staging area main daalne ke baad fir se file ka status check karo.
+
+Example:
+```
+git status
+```
+Output:
+```
+Changes to be committed:
+  new file: calc.py
+```
+
+<br>
+
+**Step-5: File ko commit karo**:
+
+Ab staging area se file ko commit kardo.
+
+Example:
+```
+git commit -m "Initial addition program"
+```
+Output:
+```
+[master cb335c9] Initial addition program
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+ create mode 100644 calc.py
+```
+
+Ab file commit ho chuki hai, iska matlab file ko git ab track kar rha hai.
+
+
