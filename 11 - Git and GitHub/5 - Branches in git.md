@@ -55,6 +55,8 @@ Maan lo tum ek team mein ho – ek developer new login system bana raha hai, doo
 
 ### Commands to do operations on branch
 
+<br>
+
 - **Create a branch and remain on the current branch**:
 
 Syntax:
@@ -66,6 +68,8 @@ Example:
 ```
 git branch feature/login
 ```
+
+<br>
 
 - **Create a branch and immediately switch to it**:
 
@@ -81,6 +85,8 @@ Example:
 git checkout -b feature/signup-form
 ```
 
+<br>
+
 - **Create a branch based on an existing branch**:
 
 To create a new branch based on another existing branch:
@@ -95,12 +101,16 @@ Example:
 git branch develop/new-module develop
 ```
 
+<br>
+
 - **See total branches in git**:
 
 Example:
 ```
 git branch
 ```
+
+<br>
 
 - **Delete a branch**:
 
@@ -114,6 +124,8 @@ Example:
 git branch -d develop
 ```
 
+<br>
+
 - **Switching to an existing branch**:
 
 Syntax:
@@ -125,6 +137,8 @@ Example:
 ```
 git checkout develop
 ```
+
+<br>
 
 Alternatively, with newer Git versions:
 
