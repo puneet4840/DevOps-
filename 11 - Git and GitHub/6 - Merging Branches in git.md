@@ -110,4 +110,11 @@ Uper example mein ```master``` branch ki ```calc.py``` file main result variable
 git merge <source_branch_name>
 ```
 
+<br>
+<br>
 
+### Alternatives to Merge
+
+- **Rebase**: Tum commits ko re-write kar ke history linear kar sakte ho.
+
+- **Squash merge**: Tum saare commits ko ek commit me mila sakte ho merge karte waqt (GitHub option deta hai).
