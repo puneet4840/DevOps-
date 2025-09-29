@@ -733,7 +733,101 @@ Matlab:
 - Group = 5 (r-x).
 - Others = 5 (r-x)
 
+**Commands**:
 
-chown command is used to change the file or directory owenership.
+```chmod``` (change mode): Ye commnad file aur directory ki permission change karne ke liye use hoti hai.
 
-Syntax: _**chown [username] [file_name]**_
+Syntax:
+```
+chmod <permission> file_name
+```
+
+Examples:
+- Symbolic way:
+```
+chmod u+x file.sh       # Owner ko execute permission do
+chmod g-w file.sh       # Group se write permission hatao
+chmod o-r file.sh       # Others se read permission hatao
+chmod a+r file.sh       # Sabko read permission do
+```
+
+- Numeric Way:
+```
+chmod 644 file.txt  # Owner=rw-, Group=r--, Others=r--
+chmod 700 script.sh # Owner=rwx, Group=---, Others=---
+```
+
+```chown``` (change owner/group): Ye command file aur directory ke user aur group change karne ke liye hoti hai.
+
+Syntax:
+```
+chown [new_owner]:[new_group] filename
+```
+
+Example:
+```
+sudo chown puneet file.txt        # Owner ko puneet banao
+sudo chown puneet:devteam file.txt  # Owner & group dono change karo
+sudo chown -R www-data:www-data /var/www  # Recursively change ownership
+```
+
+
+```chgrp``` (Change Group Ownership): Ye command specifically file ya directory ke group ownership change karti hai.
+
+Syntax:
+```
+chgrp [new_group] filename
+```
+
+Example:
+- File ka group change karna:
+```
+sudo chgrp testgrp file.txt
+```
+- Directory ke andar ke sab files ka group change karna:
+```
+sudo chgrp -R devteam /project
+```
+
+```umask``` (User Mask): umask ek default permission mask hota hai jo nayi files aur directories ke liye default permissions decide karta hai. Matlab jab bhi aap linux main koi nayi file ya directory create karenge uske liye default permission set ho jayegi jo hum umask ke through denge.
+
+Default file permissions:
+- File = ```666 (rw-rw-rw-)```.
+- Directory = ```777 (rwxrwxrwx)```.
+
+Umask in defaults se subtract hota hai. Aur jo bhi umask ki value aati hai vo permission ki default value ban jati hai, jaise without umask aap file create karoge to uski permissions 666 hogi, lekin 
+
+Syntax:
+```
+umask value
+```
+
+Examples:
+- Default umask check karna:
+```
+umask
+```
+Output:
+```
+0022
+```
+By default, umask 0022 hota hai, agar apko 022 karna hai to example follow karo.
+
+- Umask ```022``` set karna:
+```
+umask 022
+```
+
+Files: ```666 - 022 = 644 (rw-r--r--)```.
+Directories: ```777 - 022 = 755 (rwxr-xr-x)```.
+
+- Umask ```027``` set karna:
+```
+umask 027
+```
+
+Files: 640 (rw-r-----).
+Directories: 750 (rwxr-x---).
+
+Real-World Use Case:
+- Servers par sensitive data ke liye umask ```027``` set karte hain taaki files sirf owner aur group access kar saken, others ke liye deny ho.
