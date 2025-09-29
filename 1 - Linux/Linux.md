@@ -634,7 +634,105 @@ su - , but it will require password. Without password we can use **sudo su -**.
 <br>
 <br>
 
-### chown command in linux
+### Permission and Ownership in Linux
+
+Linux ek multi-user OS hai. Iska matlab hai ki ek hi system par ek saath alag-alag log login karke kaam kar sakte hain.
+
+Isliye har file/directory par ye define karna zaroori hai ki:
+- Kaun file ko access kar sakta hai (ownership).
+- Kaise access kar sakta hai (permissions: read/write/execute).
+
+Isliye har file/directory par 3 cheezein define hoti hain:
+- **Owner (User)** – Kaun iska malik hai.
+- **Group** – Kaunse user group ko access hai.
+- **Permissions (r, w, x)** – Kaun kya kar sakta hai (read/write/execute).
+
+Ye sab mila ke tum decide karte ho ki ek file/directory kaun access karega aur kaise karega. Ye hi Linux ka core security mechanism hai.
+
+**Ownership – User aur Group**:
+
+Linux mein har file/directory par do ownership hote hain:
+- User (Owner): File ka asli malik. Default me ye woh user hota hai jisne file banai hai.
+- Group: Ek group ek saath me kai users ka collection hota hai. Group ke members ko ek hi set of permissions diye ja sakte hain.
+
+Example:
+```
+ls -l file.txt
+-rw-r----- 1 puneet devteam 2048 Sep 29 12:00 file.txt
+```
+
+Yahan:
+- ```puneet``` = file ka owner hai, matlab ```puneet``` ne ye file banai hai.
+- ```devteam``` = file ka group hai.
+- ```-rw-r-----``` = permissions hain.
+
+Group ka concept important isliye hai kyunki agar 5 developers ek project par kaam kar rahe hain to un sabko ek group me daal do (jaise ```devteam```). Phir file ka group ```devteam``` set karo. Ab sab members ko ek saath permissions mil jayengi.
+
+**Permissions: r, w, x ka matlab**:
+
+Linux har file/directory ke liye 3 set of permissions rakhta hai:
+
+| Set            | Kiske liye hota hai                              |
+| -------------- | ------------------------------------------------ |
+| **User (u)**   | File ke owner ke liye                            |
+| **Group (g)**  | File ke group members ke liye                    |
+| **Others (o)** | Baaki sab users (jo owner ya group me nahi hain) |
+
+Har set me teen types of permissions hoti hain:
+
+| Symbol | Number | Matlab                                                           |
+| ------ | ------ | ---------------------------------------------------------------- |
+| **r**  | 4      | Read (file ka content dekh sakte ho)                             |
+| **w**  | 2      | Write (file ko modify/delete kar sakte ho)                       |
+| **x**  | 1      | Execute (file ko run kar sakte ho / directory open kar sakte ho) |
+
+Agar kisi file ko koi permission nahi deni hai to uski permission hum 0 de sakte hain.
+
+| **-**  | 0      | No Permission |
+
+Inko add karke numeric form me likhte hain.
+
+Example:
+- rwx = 4+2+1 = 7
+- rw- = 4+2+0 = 6
+- r-x = 4+0+1 = 5
+
+**Files aur Directories par Permission ka Difference**:
+
+| Permission | File par                                 | Directory par                             |
+| ---------- | ---------------------------------------- | ----------------------------------------- |
+| **r**      | File ka content read karna               | Directory ke contents list karna (ls)     |
+| **w**      | File me changes karna                    | Directory me new file create/delete karna |
+| **x**      | File ko execute/run karna (jaise script) | Directory me `cd` karke enter karna       |
+
+Example:
+- Agar directory par ```x``` nahi hai to tum ```cd``` karke usme nahi ja paoge.
+- Directory par write (w) nahi hai → usmein new file nahi bana sakte.
+
+**Numeric (Octal) Notation Detail**:
+
+Linux mein permissions ko numeric values se bhi set karte hain:
+
+| Value | Permission |        Matlab          |
+| ----- | ---------- | --------------------   |
+| 7     | rwx        |     Full Control       |
+| 6     | rw-        |     Read + Write       |
+| 5     | r-x        |     Read + Execute     |
+| 4     | r--        |     Read               |
+| 3     | -wx        |     Write + Execute    |
+| 2     | -w-        |     Write              |
+| 1     | --x        |     Execute            |
+| 0     | ---        |     No Permission      |
+
+Example:
+```
+chmod 755 file.txt
+```
+Matlab:
+- Owner = 7 (rwx).
+- Group = 5 (r-x).
+- Others = 5 (r-x)
+
 
 chown command is used to change the file or directory owenership.
 
