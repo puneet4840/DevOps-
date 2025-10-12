@@ -229,3 +229,130 @@ Ciphertext → [Private Key] → Plaintext
 <br>
 
 ## SSL Kaise Kaam Karta hai?
+
+Samjho tum apne browser mein koi bank ya shopping website open karte ho (jaise https://example.com). Tumhara browser (client) aur website ka server aapas mein kaise secure connection banate hain, ye hai SSL ka kaam. Is poori process ko 'SSL handshake' kehate hain, jisme encryption, authentication aur secure session establish hota hai.
+
+<br>
+
+**Step-1: Browser(Client) Send Connection request to Server**:
+
+Client (browser) server ko connect karne ki request bhejta hai.
+
+Jab hum browser mein koi https website type karke search karte hain to browser us website ke server ko ek connection request bhejta hai, matlab browser apni kuch information server ko send karta hai.
+
+Connection Request mein server ke paas kya information jati hai:
+| Field                            | Description                                                            |
+| -------------------------------- | ---------------------------------------------------------------------- |
+| **TLS version supported**        | e.g. TLS 1.2, 1.3                                                      |
+| **Cipher Suites**                | List of algorithms client support karta hai (AES, ChaCha20, RSA, etc.) |
+| **Compression Methods**          | (usually none)                                                         |
+| **Random Number**                | Ek random 32-byte number, session security ke liye                     |
+| **Session ID**                   | Reconnection ke liye (optional)                                        |
+| **SNI (Server Name Indication)** | Domain name (e.g. example.com), taaki multi-host servers identify ho   |
+
+
+Yahan tak communication unencrypted hota hai, kyunki abhi encryption establish hi nahi hua.
+
+<br>
+
+**Step-2: Server send response to Client(Browser)**:
+
+Server apna SSL certificate client(browser) ko bhejta hai.
+
+Us response mein ye information client ke paas aati hai:
+
+| Field                         | Description                        |
+| ----------------------------- | ---------------------------------- |
+| **Domain Name (CN / SAN)**    | example.com                        |
+| **Organization Name**         | Example Inc.                       |
+| **Public Key**                | Server ki public key               |
+| **Issuer**                    | CA (Certificate Authority) ka naam |
+| **Validity Period**           | Start & end dates                  |
+| **Digital Signature (by CA)** | Proof of authenticity              |
+
+<br>
+
+**Step-3: Browser(Client) server ke SSL certificate ko verify karta hai**:
+
+Client(Browser) server ke SSL certificate ko verify karta hai, ki:
+- Kya certificate valid hai (expire to nahi hua)?
+- Kya certificate trusted CA (Certificate Authority) ne issue kiya hai (e.g. DigiCert, Let's Encrypt)?
+- Kya certificate domain se match karta hai? Certificate me (CN=example.com, request bhi example.com pe gaya?)
+
+Agar Server ka SSL certificate valid hota hai, browser aage badhta hai. Agar nahi, toh warning deta hai ("Site not secure").
+
+<br>
+
+**Step-4: Session Key Generation**:
+
+Ab browser(cleint) aur server ko ek session key banani hoti hai, jo same data ko encrypt bhi karegi aur decrypt bhi karege. Agar ek hi key se data encrypt aur decrypt ho rha hai to usko symmetric encryption kehte hain. Esa isliye kyu browser(client) aur server ko data fast encrypt aur decrypt karna hota hai, Aur data ko fast encrypt aur decrypt symmetric encryption se hi kar sakte hain, isliye yaha ek key jisko session key bolte hain uska use hota hai.
+
+Ab browser(client) aur server ko ek session key banani hoti hai, yahan pe 2 cases hote hain:
+
+Case-1 - RSA (older TLS 1.2):
+
+Ye older version hai TLS ka, isme:
+- Client ek randome secret key generate karta hai, jisko hum Pre-Master Secret (PMS) kehte hain.
+- Is random secret key ko client, server ki public key se encrypt kar deta hai (public key jo ssl certificate mein aayi thi).
+- Ab ye encrypted PMS client, server ko bhej deta hai.
+- Server apni Private Key se us encrypted PMS ko decrypt karta hai.
+- Ab dono (client aur server) ke paas same Pre-Master Secret aa gaya.
+- Isi key ko session key kehte hain, client aur server isi session key se data ko encrypt aur decrypt karenge.
+- Ye Session Key dono ke paas same hoti hai — par kisi third party ko nahi pata chalti, kyunki Pre-Master Secret secure way se exchange hua tha. Ye Session Key use hoti hai actual data encrypt/decrypt karne ke liye.
+
+<br>
+
+Case-2 - ECDHE / DHE (modern TLS 1.3):
+
+Client aur Server — ek shared secret key banate hain jisse data encrypt/decrypt hoga.
+
+Ye new version hai TLS ka, Jisme:
+- Is method mein client aur server ECDHE algorithm ka use karke ek shared secret key create karte hain, vo ese:
+```
+Server elliptic curve par ek temporary key pair (private + public) generate karta hai.
+
+Example:
+ServerPrivateKey = s
+ServerPublicKey = s * G
+
+(G ek point hota hai elliptic curve par)
+
+Server apna public part (ServerPublicKey) client ko bhejta hai.
+
+
+Client bhi apna temporary key pair banata hai.
+
+Example:
+ClientPrivateKey = c
+ClientPublicKey = c * G
+
+Aur apna ClientPublicKey server ko bhejta hai.
+```
+- Ab dono ke paas ek dusre ke public keys hain:
+  - Client ke paas → ServerPublicKey.
+  - Server ke paas → ClientPublicKey
+ 
+- Ab dono same shared secret calculate karte hain:
+```
+SharedSecret = (ServerPublicKey * ClientPrivateKey)
+             = (s * G * c)
+             = (ClientPublicKey * ServerPrivateKey)
+```
+- Mathematical property ke wajah se dono ko exact same secret milta hai, bina usse kabhi network pe bheje hue.
+- Us secret key ka use karke dono client aur server ek session key generate karte hain.
+- Ye session key data ko encrypt aur decrypt karegi.
+
+
+Yaha pe ab browser(client) aur server ke paas session key aa jati hai.
+
+<br>
+
+**Step-5: Secure Data Transfer**:
+
+Ab client aur server ke paas session key hai, ab client aur server ke beech jo data transfer hoga vo session key se hi encrypt hoga aur session key se hi decrypt hoga.
+
+Is step mein ab symmetric encryption hota hai.
+
+Ab browser aur server ke beech mein encrypted communication hai.
+
+DONE!!!
