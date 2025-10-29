@@ -51,4 +51,5 @@ resource "resource_name" "local_name" {
 
 **Output Block**
 
-```Variable block resource की information को print करने के लिए use होता है, जैसे हमने azure मैं एक resource group बनाया. अब हम चाहते हैं की उस resource group का नाम print करे तो उसके लिए हम एक output block बना देंगे और resource group के नाम को print करा देंगे|```
+```Output block resource की information को print करने के लिए use होता है, जैसे हमने azure मैं एक resource group बनाया. अब हम चाहते हैं की उस resource group का नाम print करे तो उसके लिए हम एक output block बना देंगे और resource group के नाम को print करा देंगे|```
+
