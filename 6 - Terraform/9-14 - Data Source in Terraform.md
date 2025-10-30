@@ -59,7 +59,7 @@ Explanation:
 
 ### Example-1: Reusing an Existing Azure Resource Group
 
-**Scenario**: Assume we already have a resource group named "my-existing-rg" in Azure, and we want to create a new Virtual Network inside it.
+**Scenario**: Assume we already have a resource group named "my-rg" in Azure, and we want to create a new Virtual Network inside it.
 
 ```main.tf``` file
 
@@ -84,6 +84,7 @@ Explanation:
   - ```"azurerm_resource_group"```: Specifies the type of data source. In this case, it’s an Azure resource group.
   - ```"existing"```: A local name for the data source. This is used to reference the fetched data elsewhere in the configuration.
   - ```name = "my-rg"```: Specifies the name of the existing resource group to fetch. This is a required argument for the ```azurerm_resource_group``` data source. It means there is already a resource group created ```my-rg``` for which we are telling here in data block to get data for.
+  - Jis naam se cloud pe resource group bana hua hai, to data block mein name argument mein bhi wahi name dena hoga, jaise is example mein ```my-rg``` name diya hai.
  
 <br>
 
