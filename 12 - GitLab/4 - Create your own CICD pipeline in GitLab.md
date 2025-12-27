@@ -22,4 +22,4 @@ Project
 |- .gitlab-ci.yml
 ```
 
-<img src="https://drive.google.com/uc?export=view&id=1QqPntxivEQ-fuYxf5ellY9GppXWzHPaf" width="350" height="520">
+<img src="https://drive.google.com/uc?export=view&id=1QqPntxivEQ-fuYxf5ellY9GppXWzHPaf" width="650" height="820">
