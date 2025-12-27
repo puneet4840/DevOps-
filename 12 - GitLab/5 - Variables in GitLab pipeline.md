@@ -1,1 +1,3 @@
+# Variables in GitLab pipeline
+
 
