@@ -129,4 +129,23 @@ build_job:
 
 **2 - GitLab UI mein variable define karna**:
 
-Hum GitLab ke UI mein variables defin ekar sakte hain.
+Hum GitLab ke UI mein variables defin ekar sakte hain. Ye sabse zyada used method hai.
+
+📍 Path:
+
+Project → Settings → CI/CD → Variables
+
+Wahan Add Variable click karo.
+
+Example:
+```
+Key   = DB_PASSWORD
+Value = s3cr3t@123
+```
+
+Options:
+- Mask (logs me hidden). 
+- Protect (sirf protected branches me).
+
+UI ke through variables create karne par unko mask bhi kar sakte hain matlab logs in variables ki value hidden rehti hai. Aur protected branch mein bhi use kar sakte hain.
+
