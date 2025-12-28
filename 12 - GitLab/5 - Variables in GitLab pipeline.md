@@ -149,3 +149,21 @@ Options:
 
 UI ke through variables create karne par unko mask bhi kar sakte hain matlab logs in variables ki value hidden rehti hai. Aur protected branch mein bhi use kar sakte hain.
 
+Use in YAML:
+```
+deploy:
+  stage: deploy
+  script:
+    - echo $DB_PASSWORD
+```
+
+Use case:
+- DB credentials.
+- API keys.
+- App configs.
+
+Benefit:
+- Secure.
+- Centralized.
+- GUI based (non-dev bhi manage kar sakta).
+
