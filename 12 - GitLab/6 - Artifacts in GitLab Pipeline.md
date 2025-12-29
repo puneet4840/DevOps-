@@ -337,3 +337,116 @@ build_job:
       - build/
     expire_in: 2 weeks
 ```
+
+<br>
+<br>
+
+### Important: Artifacts Temporary Hote Hain
+
+Artifacts gitlab server par permanently save nahi hote unless:
+- manually download karo.
+- ya ```expire_in``` increase karo.
+
+Default expiry ```30 days``` hota hai. Matlab 30 days tak last gitlab server par artifacts pade rahenge.
+
+Example with Test Reports:
+
+Suppose tum Selenium tests run karte ho aur screenshots/report generate hoti hai:
+```
+run_tests:
+  stage: test
+  script:
+    - ./run_tests.sh
+  artifacts:
+    paths:
+      - reports/
+      - screenshots/
+    expire_in: 3 days
+    when: always
+```
+
+```when: always``` ka matlab Chahe job pass ho ya fail 👉 artifacts phir bhi save honge. Yeh bahut useful hota hai debugging ke liye.
+
+<br>
+<br>
+
+### Artifacts Forwarding (Next Stage Ko Dena)
+
+Normally gitlab ki pipeline mein artifacts sabhi jobs ke liye available rehte hain, jaise first job se kuch artifact generate kiye to vi pipeline ki sabhi job ke liye available rahenge matlab koi si job un artifacts ko use kar sakti hai.
+
+Lekin aap chate ho ki test stage ko sirf build stage ke artifacts hi mile baaki kisi job ka artifact na mile, to aap ```dependencies``` ka use karoge.
+
+Ab maan lo:
+
+Stage 1 → Build
+```
+build:
+  stage: build
+  script:
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+```
+
+Stage 2 → Test
+```
+test:
+  stage: test
+  script:
+    - npm test
+  dependencies:
+    - build
+```
+
+Yahaan:
+- ```dependencies``` ensure karta hai ki sirf build job ke artifacts test job ko mile. ```dependencies``` mein apko stage ka naam dena hota hai.
+
+Agar Dependencies na do toh?
+- Tab GitLab pichle saare jobs ke artifacts de sakta hai, jo shayad tumhe na chahiye.
+
+<br>
+<br>
+
+### Artifact Expiry Detail Mein
+
+Tum set kar sakte ho:
+- minutes.
+- hours.
+- days.
+- weeks.
+
+Example:
+```
+expire_in: 1 hour
+expire_in: 2 days
+expire_in: 3 weeks
+expire_in: never
+```
+
+```never``` use karo toh storage khatam ho sakta hai kyuki iska matlab hai ki artifact kabhi delete hi nhi hoga.
+
+<br>
+<br>
+
+### Artifacts size limit?
+
+By default:
+```
+100 MB per job
+```
+Lekin self-hosted admins iska limit change kar sakte hain. Kyuki self-hosted agents pe apne according storage use kar sakte hain artifacts store karne ke liye.
+
+<br>
+<br>
+
+### GitLab UI Mein Artifacts Kaise Dikhenge?
+
+Pipeline → Job → Artifacts section
+
+Wahan tum:
+- download kar sakte ho.
+- inspect kar sakte ho.
+- expire time dekh sakte ho.
+
