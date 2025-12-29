@@ -450,3 +450,43 @@ Wahan tum:
 - inspect kar sakte ho.
 - expire time dekh sakte ho.
 
+<br>
+<br>
+
+### Real-world DevOps Use Case
+
+Tum ek Docker image build karte ho:
+
+Build Stage:
+```
+build_image:
+  stage: build
+  script:
+    - docker build -t app:latest .
+    - docker save app:latest -o app.tar
+  artifacts:
+    paths:
+      - app.tar
+    expire_in: 2 days
+```
+
+Deploy Stage:
+```
+deploy:
+  stage: deploy
+  script:
+    - docker load -i app.tar
+    - docker run -d app:latest
+  dependencies:
+    - build_image
+```
+
+Yahaan:
+- Docker image file artifact ban gayi.
+- Deploy stage ne use reload karke run kiya.
+
+**Edge Case — Fail hone par bhi save karo**:
+```
+artifacts:
+  when: always
+```
