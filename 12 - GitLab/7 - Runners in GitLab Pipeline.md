@@ -147,7 +147,7 @@ Example:
 
 **2 - Docker Executor**:
 
-Job host machine ke docker container mein run hogi. Har job ke liye docker container create hota hai.
+Job host machine ke docker container mein run hogi. Har job ke liye docker container create hota hai. To us docker container ke ander commands run hoti hain.
 
 Example:
 ```
