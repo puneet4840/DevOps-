@@ -359,3 +359,44 @@ Yeh karta kya hai?
 
 Tum GitLab UI se download kar sakte ho.
 
+<br>
+<br>
+
+## NodeJs Explanation
+
+<br>
+
+### Sabse Pehle — Node.js Kya Hai?
+
+Normally:
+- JavaScript browser ke andar chalti hai (Chrome, Edge, Firefox etc.).
+
+Lekin Node.js ek software hai jo JavaScript ko browser ke bahar, server par run karta hai.
+
+Matlab:
+- Tum JavaScript likh kar Server / CLI par program chala sakte ho.
+
+Jaise Python script chalate ho waise hi Node program chal sakta hai।
+
+<br>
+
+### Ek Simple Node.js Application Kaisa Dikhta Hai?
+
+Ek file hoti hai ```app.js```:
+```
+console.log("Hello Node!");
+```
+Bas itna hi.
+
+Ab agar node installed hai, tum run karoge:
+```
+node app.js
+```
+Output:
+```
+Hello Node!
+```
+
+Yahi hota hai Node.js application ka output.
+
+
