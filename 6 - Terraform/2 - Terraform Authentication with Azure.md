@@ -206,3 +206,55 @@ A Service Principal is a non-interactive account that Terraform can use to authe
 ###  Authenticate Using Managed Identity (For Azure Resources)
 
 If Terraform is running from an Azure resource (e.g., an Azure VM, Azure Function, or Azure DevOps), you can use a **Managed Identity** to authenticate.
+
+<br>
+<br>
+
+### I Faced a problem
+
+Mai terraform se azure par resources create kar rha tha, VSCode ka use karke terraform script likhi thi aur VSCode mein git bash ka use kar rha tha terraform command ko run karne ke liye. 
+
+To maine azure ke service principle ka use kiya terraform ko azure ke saath authenticate karne ke liye, aur service principle ke credentials ko ek powershell open karke wha pe export kar diye environment variables ke liye, Inko terraform khud se read kar leta hai.
+
+Lekin jab maine VSCode mein terraform plan command run ki to mujhe error aane lga ki terraform azure ke saath authenticate nhi kar pa rha hai.
+
+Kyuki maine environment variables ko powershell mein create kiya tha lekin mai terraform ko git bash mein use kar rha hu. To git bash ko vo variables milenge hi nhi kyuki git bash ek linux style terminal hai.
+
+Agar aap environment variables ko powershell mein set karte hain to ye variables temporary hote hain. Jaise hi aap VS Code band karenge ya terminal kill karenge, ye delete ho jayenge.
+
+PowerShell mein environment variables "Session-specific" hote hain, yaani agar aapne ek window mein set kiye aur dusri mein plan chala rahe ho, toh kaam nahi karega.
+
+**To maine kya kiya**:
+
+To maine in variable ko git bash ke liye permanently system mein store kar diya. Kyuki main VSCode mein git bash ka use kar rha hu to maine git bash ke liye ye variables store kiye.
+
+To in variables ko permanently system mein store karne ke liye do tarike hote hain. 
+
+1 - Pehla tarika hai windows mein permanently variables set karne ke liye: Agar aap baar-baar set nahi karna chahte, toh Windows ke "Edit the system environment variables" mein jaakar ye manually add kar dein. Phir terminal restart karein.
+
+2 - Dusra tarike ```.env``` file (Sirf Git Bash users ke liye): 
+
+Kyunki aap VS Code mein Git Bash terminal use kar rahe hain, toh aap ek aur smart tarika apna sakte hain:
+- Apne user home folder mein (```C:\Users\AapkaNaam```) ek file banayein jiska naam ho ```.bashrc```.
+- Us file mein ye lines likh dein:
+```
+export ARM_CLIENT_ID="xxx"
+export ARM_CLIENT_SECRET="xxx"
+export ARM_SUBSCRIPTION_ID="xxx"
+export ARM_TENANT_ID="xxx"
+```
+- Ab jab bhi aap Git Bash kholenge, ye variables automatically load ho jayenge.
+
+Check kaise karein?
+ 
+VSCode ko restart kare.
+
+```.bashrc``` ko update karne ke baad, sirf VS Code restart karne se kaam nahi chalega. Aapko terminal ko batana padega ki file badal gayi hai. VS Code terminal mein ye command chalayein, Is command se nayi values load ho jayengi:
+
+```
+source ~/.bashrc
+```
+
+Ab verify karne ke liye ye chalao: ```echo $ARM_CLIENT_SECRET```. Dekho ki kya wahi value dikh rahi hai jo aapne abhi portal se li hai.
+
+Agar value aa rhi hai to ab aap ```terraform plan``` command run karenge to koi problem nhi aayegi.
